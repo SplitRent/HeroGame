@@ -10,6 +10,7 @@ using HeroGame.Runtime.Player;
 using HeroGame.Runtime.Population;
 using HeroGame.Runtime.Presentation;
 using HeroGame.Runtime.UI;
+using HeroGame.Runtime.Vehicles;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -80,6 +81,13 @@ namespace HeroGame.Editor
             var inspector = systems.AddComponent<WorldInspectorOverlay>();
             inspector.Player = player.transform;
             inspector.Population = population;
+
+            var vehicles = new GameObject("Vehicles").AddComponent<VehiclePresenter>();
+            vehicles.Observer = player.transform;
+            vehicles.CarPrefab = BuildCarPrefab(materials);
+            var traffic = new GameObject("Traffic").AddComponent<TrafficPresenter>();
+            traffic.Observer = player.transform;
+            traffic.CarPrefab = BuildTrafficCarPrefab(materials);
 
             var streamer = systems.AddComponent<WorldStreamer>();
             streamer.Focus = player.transform;
@@ -344,6 +352,82 @@ namespace HeroGame.Editor
             var prefab = PrefabUtility.SaveAsPrefabAsset(go, path);
             Object.DestroyImmediate(go);
             return prefab.GetComponent<NpcAvatar>();
+        }
+
+        /// <summary>Drivable placeholder car: rigidbody, 4 WheelColliders with visual wheels, enter/exit.</summary>
+        private static VehicleController BuildCarPrefab(MaterialLibrary m)
+        {
+            var root = new GameObject("Car (placeholder)");
+            var rb = root.AddComponent<Rigidbody>();
+            rb.mass = 1400f;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            body.name = "Body";
+            body.transform.SetParent(root.transform, false);
+            body.transform.localPosition = new Vector3(0f, 0.55f, 0f);
+            body.transform.localScale = new Vector3(1.8f, 0.7f, 4.4f);
+            body.GetComponent<Renderer>().sharedMaterial = m.Get("car_paint", new Color(0.5f, 0.5f, 0.52f));
+            var cabin = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            cabin.name = "Cabin";
+            cabin.transform.SetParent(root.transform, false);
+            cabin.transform.localPosition = new Vector3(0f, 1.1f, -0.2f);
+            cabin.transform.localScale = new Vector3(1.6f, 0.55f, 2.2f);
+            cabin.GetComponent<Renderer>().sharedMaterial = m.Get("car_glass", new Color(0.1f, 0.12f, 0.15f));
+            Object.DestroyImmediate(cabin.GetComponent<Collider>());
+
+            var controller = root.AddComponent<VehicleController>();
+            WheelCollider Wheel(string name, float x, float z, out Transform visual)
+            {
+                var go = new GameObject(name);
+                go.transform.SetParent(root.transform, false);
+                go.transform.localPosition = new Vector3(x, 0.35f, z);
+                var wc = go.AddComponent<WheelCollider>();
+                wc.radius = 0.34f;
+                wc.suspensionDistance = 0.2f;
+                wc.mass = 20f;
+                var spring = wc.suspensionSpring;
+                spring.spring = 35000f;
+                spring.damper = 4500f;
+                spring.targetPosition = 0.5f;
+                wc.suspensionSpring = spring;
+                var v = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                v.name = name + " Visual";
+                Object.DestroyImmediate(v.GetComponent<Collider>());
+                v.transform.SetParent(root.transform, false);
+                v.transform.localScale = new Vector3(0.68f, 0.12f, 0.68f);
+                v.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                v.GetComponent<Renderer>().sharedMaterial = m.Get("tire", new Color(0.05f, 0.05f, 0.05f));
+                visual = v.transform;
+                return wc;
+            }
+            controller.FrontLeft = Wheel("FL", -0.8f, 1.4f, out controller.FrontLeftVisual);
+            controller.FrontRight = Wheel("FR", 0.8f, 1.4f, out controller.FrontRightVisual);
+            controller.RearLeft = Wheel("RL", -0.8f, -1.35f, out controller.RearLeftVisual);
+            controller.RearRight = Wheel("RR", 0.8f, -1.35f, out controller.RearRightVisual);
+            var exit = new GameObject("DriverExit").transform;
+            exit.SetParent(root.transform, false);
+            exit.localPosition = new Vector3(-2f, 0.2f, 0.2f);
+            var entry = root.AddComponent<VehicleEntry>();
+            entry.DriverExit = exit;
+
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, GeneratedFolder + "/Car_Placeholder.prefab");
+            Object.DestroyImmediate(root);
+            return prefab.GetComponent<VehicleController>();
+        }
+
+        /// <summary>Ambient traffic body: kinematic, collidable, no wheel physics (moved by TrafficPresenter).</summary>
+        private static GameObject BuildTrafficCarPrefab(MaterialLibrary m)
+        {
+            var root = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            root.name = "Traffic Car (placeholder)";
+            root.transform.localScale = new Vector3(1.8f, 1.2f, 4.3f);
+            root.GetComponent<Renderer>().sharedMaterial = m.Get("traffic_paint", new Color(0.35f, 0.38f, 0.45f));
+            var rb = root.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, GeneratedFolder + "/TrafficCar_Placeholder.prefab");
+            Object.DestroyImmediate(root);
+            return prefab;
         }
 
         private static Color ColorFor(PlaceKind kind)

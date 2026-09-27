@@ -429,5 +429,29 @@
     ],
     "FootTrafficSensitivity": 0.5,
     "OperatingExpenseRatio": 0.25
+  },
+  {
+    "Id": "car_dealership",
+    "DisplayName": "Car Dealership",
+    "PlaceKind": "Shop",
+    "BaseCustomersPerHour": 0.35,
+    "AverageTicketCents": 3200000,
+    "CostOfGoodsRatio": 0.86,
+    "OperatingExpenseRatio": 0.06,
+    "StaffRequired": 6,
+    "HourlyWageCents": 2200,
+    "OpenMinute": 540,
+    "CloseMinute": 1200,
+    "PriceElasticity": 1.3,
+    "WeatherSensitivity": 0.3,
+    "NightlifeFactor": 0,
+    "FootTrafficSensitivity": 0.3,
+    "DailyFixedCostCents": 40000,
+    "PurchasePriceCents": 350000000,
+    "InventoryDays": 20,
+    "Tags": [
+      "automotive",
+      "retail"
+    ]
   }
 ]

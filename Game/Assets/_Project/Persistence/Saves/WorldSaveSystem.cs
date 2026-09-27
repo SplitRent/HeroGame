@@ -167,6 +167,9 @@ namespace HeroGame.Persistence.Saves
             foreach (var p in ReadChunk<PropertiesChunk>(manifest, SaveChunks.Properties).Properties) world.Properties.Add(p);
             foreach (var b in ReadChunk<BusinessesChunk>(manifest, SaveChunks.Businesses).Businesses) world.Businesses[b.Id] = b;
 
+            if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Vehicles))
+                foreach (var v in ReadChunk<VehiclesChunk>(manifest, SaveChunks.Vehicles).Vehicles) world.Vehicles.Restore(v);
+
             var history = ReadChunk<HistoryChunk>(manifest, SaveChunks.History);
             world.History.Major.AddRange(history.Major);
             world.History.Recent.AddRange(history.Recent);
@@ -241,6 +244,11 @@ namespace HeroGame.Persistence.Saves
                     env.Places.Sort((a, b) => a.Id.CompareTo(b.Id));
                     env.AnomalyLog.AddRange(world.AnomalyLog);
                     return env;
+                case SaveChunks.Vehicles:
+                    var vehicles = new VehiclesChunk();
+                    vehicles.Vehicles.AddRange(world.Vehicles.All);
+                    vehicles.Vehicles.Sort((a, b) => a.Id.CompareTo(b.Id));
+                    return vehicles;
                 case SaveChunks.History:
                     var h = new HistoryChunk();
                     h.Major.AddRange(world.History.Major);

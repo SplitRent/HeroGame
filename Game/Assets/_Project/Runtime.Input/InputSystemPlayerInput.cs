@@ -21,6 +21,9 @@ namespace HeroGame.Runtime.Input
         private readonly InputAction _console;
         private readonly InputAction _inspector;
         private readonly InputAction _pause;
+        private readonly InputAction _enterExit;
+        private readonly InputAction _horn;
+        private readonly InputAction _phone;
 
         public bool GameplayEnabled { get; set; } = true;
 
@@ -58,7 +61,14 @@ namespace HeroGame.Runtime.Input
             _pause = new InputAction("Pause", InputActionType.Button, "<Keyboard>/escape");
             _pause.AddBinding("<Gamepad>/start");
 
-            foreach (var a in new[] { _move, _look, _zoom, _sprint, _walk, _jump, _interact, _crouch, _console, _inspector, _pause }) a.Enable();
+            _enterExit = new InputAction("EnterExit", InputActionType.Button, "<Keyboard>/f");
+            _enterExit.AddBinding("<Gamepad>/buttonNorth");
+            _horn = new InputAction("Horn", InputActionType.Button, "<Keyboard>/h");
+            _horn.AddBinding("<Gamepad>/leftStickPress");
+            _phone = new InputAction("Phone", InputActionType.Button, "<Keyboard>/upArrow");
+            _phone.AddBinding("<Gamepad>/dpad/up");
+
+            foreach (var a in new[] { _move, _look, _zoom, _sprint, _walk, _jump, _interact, _crouch, _console, _inspector, _pause, _enterExit, _horn, _phone }) a.Enable();
         }
 
         public PlayerInputState Read()
@@ -71,6 +81,10 @@ namespace HeroGame.Runtime.Input
                 Sprint = _sprint.IsPressed(),
                 Walk = _walk.IsPressed(),
                 JumpPressed = _jump.WasPressedThisFrame(),
+                JumpHeld = _jump.IsPressed(),
+                EnterExitPressed = _enterExit.WasPressedThisFrame(),
+                Horn = _horn.IsPressed(),
+                PhonePressed = _phone.WasPressedThisFrame(),
                 InteractPressed = _interact.WasPressedThisFrame(),
                 CrouchHeld = _crouch.IsPressed(),
                 ToggleConsolePressed = _console.WasPressedThisFrame(),

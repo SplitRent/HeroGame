@@ -4,6 +4,7 @@ using HeroGame.Core.Crime;
 using HeroGame.Core.Population;
 using HeroGame.Core.Powers;
 using HeroGame.Core.Social;
+using HeroGame.Core.Vehicles;
 
 namespace HeroGame.Core.World
 {
@@ -22,6 +23,8 @@ namespace HeroGame.Core.World
         public List<CrimeType> CrimeTypes = new List<CrimeType>();
         public WorldLayout Layout = new WorldLayout();
         public List<BarkLine> Barks = new List<BarkLine>();
+        public List<VehicleModel> VehicleModels = new List<VehicleModel>();
+        public List<VehicleMod> VehicleMods = new List<VehicleMod>();
 
         public CrimeType FindCrime(string id)
         {

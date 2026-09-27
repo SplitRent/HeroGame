@@ -6,6 +6,7 @@ using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
 using HeroGame.Core.Population;
 using HeroGame.Core.Property;
+using HeroGame.Core.Vehicles;
 using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
@@ -32,6 +33,7 @@ namespace HeroGame.Core.Simulation
 
             AssignResidentialOwnership(world, propertyByPlace);
             CreateBusinesses(world, expanded, propertyByPlace);
+            CreateVehicles(world);
 
             world.Properties.Reassess(world.Geography, world.Macro, config.Economy.PropertyPriceMultiplier);
             world.Weather.AdvanceTo(world.Clock.Now);
@@ -203,6 +205,72 @@ namespace HeroGame.Core.Simulation
                 }
                 world.Businesses[business.Id] = business;
             }
+        }
+
+        /// <summary>
+        /// Household cars parked at home (the most car-dependent metro in the country, so most working households
+        /// drive) plus emergency-service fleets at their stations. NPC cars are real, persistent and stealable.
+        /// </summary>
+        private static void CreateVehicles(World world)
+        {
+            var civilian = new List<VehicleModel>();
+            var weights = new List<double>();
+            foreach (var m in world.Content.VehicleModels)
+            {
+                if (!m.Civilian || m.Class == VehicleClass.Boat || m.Class == VehicleClass.Helicopter) continue;
+                civilian.Add(m);
+                weights.Add(1.0 / Math.Max(0.3, m.BasePriceCents / 2500000.0)); // cheaper cars are more common
+            }
+            civilian.Sort((a, b) => string.CompareOrdinal(a.Id, b.Id));
+            if (civilian.Count > 0)
+            {
+                foreach (var household in SortedHouseholds(world))
+                {
+                    var head = world.Population.Get(household.Members[0]);
+                    if (head == null || head.AgeYears(world.Today) < 18) continue;
+                    var rng = DeterministicRandom.For(world.Seed, household.Id.Value, 0xCA7);
+                    var district = world.Geography.GetDistrict(world.Geography.GetPlace(household.Home)?.District ?? EntityId.None);
+                    var wealth = district != null ? district.Wealth : 0.5f;
+                    var ownsCar = head.Employment == EmploymentStatus.Employed ? 0.72 + wealth * 0.25 : 0.35;
+                    if (!rng.Chance(ownsCar)) continue;
+                    // Wealthier households skew toward pricier models.
+                    var w = new List<double>(weights);
+                    for (var i = 0; i < w.Count; i++) w[i] *= Math.Pow(civilian[i].BasePriceCents / 2500000.0, wealth * 1.6);
+                    var model = civilian[Math.Max(0, rng.PickWeighted(w))];
+                    var home = world.Geography.GetPlace(household.Home);
+                    var pos = home != null ? new WorldPosition(home.Position.X + rng.Range(-4f, 4f), 0, home.Position.Z - 10f) : default;
+                    var v = world.Vehicles.Spawn(model.Id, head.Id, pos, 90f, world.Clock.Now);
+                    v.ColorHex = CarColors[rng.NextInt(0, CarColors.Length)];
+                    v.FuelLitres = model.FuelCapacityLitres * (0.2f + rng.NextFloat() * 0.8f);
+                    v.OdometerKm = rng.Range(2000f, 180000f);
+                    v.BodyHealth = 0.7f + rng.NextFloat() * 0.3f;
+                    head.Vehicle = v.Id;
+                }
+            }
+
+            SpawnFleet(world, PlaceKind.PoliceStation, VehicleClass.Police, 6);
+            SpawnFleet(world, PlaceKind.FireStation, VehicleClass.FireEngine, 2);
+            SpawnFleet(world, PlaceKind.FireStation, VehicleClass.Ambulance, 2);
+            SpawnFleet(world, PlaceKind.Hospital, VehicleClass.Ambulance, 3);
+        }
+
+        private static readonly string[] CarColors = { "#1C1C1E", "#E8E8E6", "#8A8D91", "#5B6770", "#7A1E1E", "#1E3A5F", "#2F4F3A", "#C0B283", "#B5651D", "#4A4E69" };
+
+        private static void SpawnFleet(World world, PlaceKind station, VehicleClass cls, int perStation)
+        {
+            VehicleModel model = null;
+            foreach (var m in world.Content.VehicleModels) if (m.Class == cls) { model = m; break; }
+            if (model == null) return;
+            foreach (var place in world.Geography.PlacesOfKind(station))
+                for (var i = 0; i < perStation; i++)
+                    world.Vehicles.Spawn(model.Id, world.Accounts.Government, new WorldPosition(place.Position.X - 12f + i * 4f, 0, place.Position.Z - 18f), 0f, world.Clock.Now);
+        }
+
+        private static List<Household> SortedHouseholds(World world)
+        {
+            var list = new List<Household>(world.Population.Households);
+            list.Sort((a, b) => a.Id.CompareTo(b.Id));
+            return list;
         }
 
         private static void Seed(World world, EntityId account, Money amount, string memo)

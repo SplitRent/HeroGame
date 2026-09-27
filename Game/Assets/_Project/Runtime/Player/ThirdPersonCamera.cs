@@ -28,6 +28,15 @@ namespace HeroGame.Runtime.Player
         private float _pitch = 12f;
         private float _currentDistance;
 
+        /// <summary>Switch what the camera follows (on foot ↔ vehicle) with suitable framing.</summary>
+        public void SetTarget(Transform target, Vector3 pivotOffset, float distance)
+        {
+            Target = target;
+            PivotOffset = pivotOffset;
+            Distance = Mathf.Clamp(distance, MinDistance, Mathf.Max(MaxDistance, distance));
+            MaxDistance = Mathf.Max(MaxDistance, distance + 4f);
+        }
+
         private void Start()
         {
             if (Input == null) Input = PlayerInputRegistry.Create();

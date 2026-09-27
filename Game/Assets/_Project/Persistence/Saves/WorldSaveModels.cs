@@ -79,6 +79,11 @@ namespace HeroGame.Persistence.Saves
         public List<AnomalyEvent> AnomalyLog = new List<AnomalyEvent>();
     }
 
+    public sealed class VehiclesChunk
+    {
+        public List<Core.Vehicles.VehicleRecord> Vehicles = new List<Core.Vehicles.VehicleRecord>();
+    }
+
     public sealed class HistoryChunk
     {
         public List<HistoryRecord> Major = new List<HistoryRecord>();

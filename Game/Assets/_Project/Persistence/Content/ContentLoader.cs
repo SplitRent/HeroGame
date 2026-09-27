@@ -27,6 +27,8 @@ namespace HeroGame.Persistence.Content
         public const string CrimeTypes = "crime_types.json";
         public const string DefaultLayout = "layout_vertical_slice.json";
         public const string Barks = "barks.json";
+        public const string VehicleCatalog = "vehicle_catalog.json";
+        public const string VehicleMods = "vehicle_mods.json";
         public const string DefaultServerConfig = "server_default.json";
 
         public static ContentSet Load(string dataDirectory, string layoutFile = DefaultLayout)
@@ -42,6 +44,8 @@ namespace HeroGame.Persistence.Content
                 CrimeTypes = Read<List<CrimeType>>(dataDirectory, CrimeTypes),
                 Layout = Read<WorldLayout>(dataDirectory, layoutFile),
                 Barks = Read<List<Core.Social.BarkLine>>(dataDirectory, Barks),
+                VehicleModels = Read<List<Core.Vehicles.VehicleModel>>(dataDirectory, VehicleCatalog),
+                VehicleMods = Read<List<Core.Vehicles.VehicleMod>>(dataDirectory, VehicleMods),
             };
             return set;
         }
@@ -114,6 +118,23 @@ namespace HeroGame.Persistence.Content
             foreach (var required in new[] { "greet", "idle", "weather", "work", "economy", "sports", "gossip", "customer", "gift", "thanks", "insulted", "threatened",
                                              "compliment_accepted", "compliment_rejected", "flirt_accepted", "flirt_rejected", "number_shared", "number_refused" })
                 if (!topics.Contains(required)) r.Error("barks", "No lines for topic '" + required + "'.");
+
+            var modelIds = new HashSet<string>();
+            foreach (var v in c.VehicleModels)
+            {
+                if (!modelIds.Add(v.Id)) r.Error("vehicle_catalog." + v.Id, "Duplicate id.");
+                if (v.Civilian && v.BasePriceCents <= 0) r.Error("vehicle_catalog." + v.Id, "Civilian model needs a price.");
+                if (v.MassKg <= 0 || v.FuelCapacityLitres <= 0) r.Error("vehicle_catalog." + v.Id, "Mass and fuel capacity must be positive.");
+            }
+            foreach (var required in new[] { "Police", "Ambulance", "FireEngine" })
+                if (!c.VehicleModels.Exists(v => v.Class.ToString() == required)) r.Error("vehicle_catalog", "Emergency services need a " + required + " model.");
+            var modIds = new HashSet<string>();
+            foreach (var m in c.VehicleMods)
+            {
+                if (!modIds.Add(m.Id)) r.Error("vehicle_mods." + m.Id, "Duplicate id.");
+                foreach (var cls in m.AllowedClasses)
+                    if (!System.Enum.TryParse(cls, out Core.Vehicles.VehicleClass _)) r.Error("vehicle_mods." + m.Id, "Unknown vehicle class " + cls);
+            }
 
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)

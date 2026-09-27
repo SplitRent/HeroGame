@@ -12,6 +12,8 @@ using HeroGame.Core.Powers;
 using HeroGame.Core.Property;
 using HeroGame.Core.Social;
 using HeroGame.Core.Time;
+using HeroGame.Core.Traffic;
+using HeroGame.Core.Vehicles;
 using HeroGame.Core.Weather;
 using HeroGame.Core.World;
 
@@ -64,6 +66,7 @@ namespace HeroGame.Core.Simulation
         public const string Businesses = "businesses";
         public const string Environment = "environment";
         public const string History = "history";
+        public const string Vehicles = "vehicles";
         public const string CharacterPrefix = "character/";
         /// <summary>NPCs are saved in fixed-size shards by id so large populations serialize in parallel.</summary>
         public const string PopulationShardPrefix = "population/";
@@ -71,7 +74,7 @@ namespace HeroGame.Core.Simulation
 
         public static string PopulationShard(int index) => PopulationShardPrefix + index;
         public static int ShardOf(EntityId npc) => (int)((npc.Sequence - 1) / NpcsPerShard);
-        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History };
+        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles };
     }
 
     /// <summary>
@@ -119,6 +122,9 @@ namespace HeroGame.Core.Simulation
         public readonly Dictionary<EntityId, ServerCharacter> Characters = new Dictionary<EntityId, ServerCharacter>();
         /// <summary>Player ↔ NPC conversations and memory (distinct from <see cref="Interactions"/>, the power/material rules).</summary>
         public readonly InteractionService Conversations;
+        public readonly VehicleService Vehicles;
+        public RoadNetwork Roads { get; private set; }
+        public TrafficModel Traffic { get; private set; }
         public readonly PhoneService Phone;
 
         public WellKnownAccounts Accounts = new WellKnownAccounts();
@@ -162,6 +168,8 @@ namespace HeroGame.Core.Simulation
             Wanted = new WantedSystem(new WantedSettings { ResponseMultiplier = config.Gameplay.PoliceResponseMultiplier });
 
             Conversations = new InteractionService(this, content.Barks);
+            Vehicles = new VehicleService(content.VehicleModels, content.VehicleMods, Transactions, Ownership, Taxes, Ids, Seed);
+            RebuildRoads();
             Phone = new PhoneService(this);
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
@@ -170,6 +178,13 @@ namespace HeroGame.Core.Simulation
         }
 
         public long Today => Clock.Now.DayIndex;
+
+        /// <summary>Rebuilds the road graph from layout data (after load or layout edits).</summary>
+        public void RebuildRoads()
+        {
+            Roads = RoadNetwork.Build(Content.Layout.Roads);
+            Traffic = new TrafficModel(Roads, Seed, Config.Gameplay.TrafficDensity);
+        }
 
         public LifeSimContext CreateLifeContext()
         {

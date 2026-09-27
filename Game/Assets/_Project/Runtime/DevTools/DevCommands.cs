@@ -38,6 +38,7 @@ namespace HeroGame.Runtime.DevTools
             Add("status", "World status", (s, a) => Status(s));
             Add("save", "Save now", (s, a) => { var r = s.Save(); return "Saved generation " + r.Generation + " (" + r.ChunksWritten + " chunks)"; });
             Add("buyable", "List properties for sale", Buyable);
+            Add("car", "car MODEL — buy a new car at list price (needs cash) and park it next to you; 'car' lists models", Car);
         }
 
         public IEnumerable<string> Names => _commands.Keys;
@@ -170,6 +171,27 @@ namespace HeroGame.Runtime.DevTools
                 if (++count >= 15) break;
             }
             return count == 0 ? "Nothing for sale." : sb.ToString();
+        }
+
+        private string Car(GameSession s, string[] a)
+        {
+            if (a.Length == 0)
+            {
+                var sb = new StringBuilder();
+                foreach (var m in s.World.Vehicles.Models)
+                    if (m.Civilian) sb.AppendLine(m.Id.PadRight(20) + m.DisplayName.PadRight(26) + new Money(m.BasePriceCents));
+                return sb.ToString();
+            }
+            if (s.LocalCharacter == null) return "No character.";
+            var dealer = EntityId.None;
+            foreach (var b in s.World.Businesses.Values) if (b.TemplateId == "car_dealership") dealer = b.Account;
+            if (!dealer.IsValid) return "No dealership in this world.";
+            var result = s.World.Vehicles.BuyNew(a[0], s.LocalCharacter.CharacterId, s.LocalCharacter.CheckingAccount, dealer, s.World.Accounts.Treasury,
+                s.World.Clock.Now, "dev-car:" + s.World.Clock.Now.TotalSeconds, s.World.Config.Economy.PropertyPriceMultiplier, "", out var v);
+            if (!result.Success) return result.Error;
+            var pos = PlayerPosition != null ? PlayerPosition() + UnityEngine.Vector3.right * 4f : UnityEngine.Vector3.zero;
+            s.World.Vehicles.TakeOut(v, pos.ToWorld(), 0f);
+            return "Bought " + s.World.Vehicles.Model(v.ModelId).DisplayName + " (" + v.Plate + ").";
         }
 
         private static string Status(GameSession s)

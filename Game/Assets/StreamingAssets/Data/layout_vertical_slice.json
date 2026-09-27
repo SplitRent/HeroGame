@@ -930,6 +930,40 @@
           "OpenMinute": 0,
           "CloseMinute": 0,
           "Tags": []
+        },
+        {
+          "Key": "hr_dealer",
+          "Name": "Gulfline Motors",
+          "Kind": "Shop",
+          "X": 805,
+          "Z": 5,
+          "Width": 40,
+          "Depth": 28,
+          "Height": 7,
+          "RotationY": 0,
+          "Capacity": 30,
+          "OpenMinute": 540,
+          "CloseMinute": 1200,
+          "Tags": [
+            "dealership"
+          ],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 1400,
+            "LotAreaSqm": 4000,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 240000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "car_dealership",
+            "Name": "Gulfline Motors",
+            "Owner": "npc",
+            "Staff": -1
+          }
         }
       ],
       "Blocks": [

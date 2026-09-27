@@ -12,6 +12,12 @@ namespace HeroGame.Runtime.Player
         public bool Sprint;
         public bool Walk;
         public bool JumpPressed;
+        public bool JumpHeld;
+        /// <summary>Enter/exit vehicle (F / gamepad Y).</summary>
+        public bool EnterExitPressed;
+        public bool Horn;
+        /// <summary>Open the phone (Up arrow / gamepad D-pad up).</summary>
+        public bool PhonePressed;
         public bool InteractPressed;
         public bool CrouchHeld;
         public bool ToggleConsolePressed;

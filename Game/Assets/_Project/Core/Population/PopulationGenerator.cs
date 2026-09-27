@@ -13,6 +13,7 @@ namespace HeroGame.Core.Population
     public sealed class PopulationGenerator
     {
         private readonly ulong _seed;
+        public const int VacantHomePercent = 7;
         private readonly IdAllocator _ids;
         private readonly OccupationTable _occupations;
         private readonly NameTables _names;
@@ -62,6 +63,8 @@ namespace HeroGame.Core.Population
                 var wealth = district != null ? district.Wealth : 0.5f;
                 var units = home.Kind == PlaceKind.ApartmentBuilding ? Math.Max(1, (int)Math.Round(home.Capacity / 2.5f * density)) : 1;
                 if (home.Kind == PlaceKind.Residence && density < 1f && !rng.Chance(density)) continue;
+                // Housing-market vacancy: some homes are empty and on the market (keyed by place, not RNG order).
+                if (home.Kind == PlaceKind.Residence && StableHash.Combine(_seed, home.Id.Value, 0x7AC) % 100 < VacantHomePercent) continue;
                 for (var u = 0; u < units; u++)
                     CreateHousehold(registry, home, wealth, startDay, rng, workplaces, schools, leisure);
             }
