@@ -102,6 +102,12 @@ namespace HeroGame.Core.Property
         /// <summary>Unpaid property tax. Long arrears lead to a tax sale.</summary>
         public long TaxArrearsCents;
         public long ArrearsSinceDay;
+        /// <summary>Outstanding cost to repair sudden damage (storms, fire, vandalism). Normal wear is not included.</summary>
+        public long DamageRepairCents;
+        /// <summary>Condition lost to that damage; restored by a repair.</summary>
+        public float DamageConditionLoss;
+        /// <summary>Portion of <see cref="DamageRepairCents"/> already settled by insurance (no double claims).</summary>
+        public long InsuranceClaimedCents;
 
         public Money MarketValue => new Money(MarketValueCents);
     }

@@ -116,6 +116,12 @@ namespace HeroGame.Runtime.Bootstrap
             return result;
         }
 
+        private long _requestCounter;
+
+        /// <summary>A fresh idempotency key for one player request (network clients will send their own).</summary>
+        public string NextRequestKey(string operation) =>
+            operation + ":" + (LocalCharacter != null ? LocalCharacter.CharacterId.ToString() : "-") + ":" + World.Clock.Now.TotalSeconds + ":" + (++_requestCounter);
+
         /// <summary>Player-facing purchase with an idempotency key, the way network requests will call it.</summary>
         public OpResult BuyProperty(EntityId property)
         {

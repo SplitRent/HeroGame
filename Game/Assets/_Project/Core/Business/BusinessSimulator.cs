@@ -69,6 +69,7 @@ namespace HeroGame.Core.Business
             if (!b.Open || ctx.ForcedClosure)
             {
                 report.WasClosed = true;
+                report.ForcedClosure = ctx.ForcedClosure;
                 report.Note = ctx.ForcedClosure ? "Closed by emergency order." : "Closed by owner.";
                 // Fixed costs still accrue while closed.
                 report.FixedCostsCents = (long)(t.DailyFixedCostCents * ctx.PriceLevel);
@@ -111,7 +112,7 @@ namespace HeroGame.Core.Business
             report.Customers = (int)Math.Round(served);
             var ticket = t.AverageTicketCents * b.PriceLevel * ctx.PriceLevel;
             report.RevenueCents = (long)(served * ticket * ctx.RevenueMultiplier);
-            report.WagesCents = (long)(b.Staff * t.HourlyWageCents * OpenHours(t) * ctx.WageMultiplier * ctx.PriceLevel);
+            report.WagesCents = (long)(b.Staff * t.HourlyWageCents * OpenHours(t) * ctx.WageMultiplier * ctx.PriceLevel * Math.Max(0.5f, b.WageLevel));
             report.FixedCostsCents = (long)(t.DailyFixedCostCents * ctx.PriceLevel) + b.AdvertisingCents + (long)(report.RevenueCents * t.OperatingExpenseRatio);
 
             // Restocking: buy back to target level at wholesale cost.
@@ -139,7 +140,8 @@ namespace HeroGame.Core.Business
             }
 
             // Reputation drifts toward the quality customers perceive.
-            var perceived = 0.5 + (1.0 - b.PriceLevel) * 0.35 + (staffRatio - 1.0) * 0.5 - (demand > 0 ? unmet / demand : 0) * 0.3;
+            var perceived = 0.5 + (1.0 - b.PriceLevel) * 0.35 + (staffRatio - 1.0) * 0.5 - (demand > 0 ? unmet / demand : 0) * 0.3
+                            + (Math.Max(0.5f, b.WageLevel) - 1.0) * 0.15;
             b.Reputation = (float)Math.Max(0, Math.Min(1, b.Reputation + (perceived - b.Reputation) * 0.01));
             return Finish(b, report);
         }

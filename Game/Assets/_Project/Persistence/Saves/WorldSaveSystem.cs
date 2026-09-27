@@ -155,6 +155,7 @@ namespace HeroGame.Persistence.Saves
             foreach (var a in tx.Accounts) world.Ledger.Restore(a);
             foreach (var o in tx.Ownership) world.Ownership.AssignInitial(o.Asset, o.Owner);
             foreach (var l in tx.Loans) world.Loans.Restore(l);
+            if (tx.Policies != null) foreach (var p in tx.Policies) world.Insurance.Restore(p);
 
             var pop = ReadChunk<PopulationChunk>(manifest, SaveChunks.Population);
             foreach (var h in pop.Households) world.Population.Add(h);
@@ -187,6 +188,7 @@ namespace HeroGame.Persistence.Saves
             result.CorruptJournalEntries = journal.CorruptEntries;
             result.JournalEntriesReplayed = world.Transactions.Replay(entries);
             if (result.JournalEntriesReplayed > 0) world.Dirty.Mark(SaveChunks.Transactional);
+            world.EnsureInstitutions();
             if (result.CorruptJournalEntries > 0) result.Report.Warn("journal", result.CorruptJournalEntries + " unreadable journal entries skipped.");
 
             if (!world.Ledger.VerifyInvariant(out var sum)) result.Report.Error("ledger", "Invariant broken after load: sum " + sum);
@@ -218,6 +220,7 @@ namespace HeroGame.Persistence.Saves
                     t.Accounts.AddRange(world.Ledger.Accounts);
                     t.Ownership.AddRange(world.Ownership.Entries);
                     t.Loans.AddRange(world.Loans.Loans);
+                    t.Policies.AddRange(world.Insurance.All);
                     t.Accounts.Sort((a, b) => a.Id.CompareTo(b.Id));
                     t.Ownership.Sort((a, b) => a.Asset.CompareTo(b.Asset));
                     return t;

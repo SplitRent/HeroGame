@@ -83,6 +83,8 @@ namespace HeroGame.Core.World
         public int CloseMinute;
         /// <summary>Property record that physically contains this place, if any.</summary>
         public EntityId Property;
+        /// <summary>Staffed by its (player) owner: the NPC labour market does not hire into it.</summary>
+        public bool PlayerStaffed;
 
         public bool IsOpenAt(int minuteOfDay)
         {

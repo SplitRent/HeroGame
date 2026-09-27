@@ -33,6 +33,8 @@ namespace HeroGame.Core.Simulation
         public EntityId PropertyManagementAccount;
         /// <summary>Contractors, suppliers and other businesses outside the simulated area.</summary>
         public EntityId Contractors;
+        public EntityId Insurer;
+        public EntityId InsurerAccount;
     }
 
     /// <summary>Simulation bookkeeping that must survive restarts.</summary>
@@ -43,6 +45,7 @@ namespace HeroGame.Core.Simulation
         public float DayBadWeatherSum;
         public int DayHours;
         public float DayOutageHours;
+        public int DayPropertiesDamaged;
         public AnomalyEvent PendingAnomaly;
     }
 
@@ -133,6 +136,11 @@ namespace HeroGame.Core.Simulation
         public RoadNetwork Roads { get; private set; }
         public TrafficModel Traffic { get; private set; }
         public readonly PhoneService Phone;
+        public readonly InsuranceBook Insurance = new InsuranceBook();
+        public readonly FinanceService Finance;
+        public readonly BusinessOperations BusinessOps;
+        /// <summary>Bumped when the set of NPC-hireable workplaces changes (player takes over staffing, etc.).</summary>
+        public int WorkplaceVersion;
 
         public WellKnownAccounts Accounts = new WellKnownAccounts();
         public SimulationCursor Cursor = new SimulationCursor();
@@ -181,6 +189,9 @@ namespace HeroGame.Core.Simulation
             Rentals = new RentalService(Properties, Transactions, Ownership, Taxes);
             Rentals.Event += OnRentalEvent;
             Phone = new PhoneService(this);
+            Finance = new FinanceService(this);
+            BusinessOps = new BusinessOperations(this);
+            Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
             Transactions.Committed += tx => Dirty.Mark(SaveChunks.Transactional);
@@ -188,6 +199,44 @@ namespace HeroGame.Core.Simulation
         }
 
         public long Today => Clock.Now.DayIndex;
+
+        /// <summary>Registers records that arrived with a transaction (live or during journal replay).</summary>
+        private void RegisterRecords(WorldTransaction tx)
+        {
+            var r = tx.Records;
+            if (r == null) return;
+            if (r.Loan != null) Loans.Restore(r.Loan);
+            if (r.Policy != null) Insurance.Restore(r.Policy);
+            if (r.Business != null)
+            {
+                Businesses[r.Business.Id] = r.Business;
+                BusinessOps.OnRegistered(r.Business);
+                Dirty.Mark(SaveChunks.Businesses);
+            }
+        }
+
+        /// <summary>
+        /// Opens institutions added after a world was first generated (older saves) and tops up their capital.
+        /// Idempotent; called after generation and after every load.
+        /// </summary>
+        public void EnsureInstitutions()
+        {
+            BusinessOps.Reconcile();
+            var a = Accounts;
+            if (!a.Insurer.IsValid) a.Insurer = Ids.Next(EntityKind.Organization);
+            if (!a.InsurerAccount.IsValid || !Ledger.Exists(a.InsurerAccount))
+            {
+                if (!a.InsurerAccount.IsValid) a.InsurerAccount = Ids.Next(EntityKind.LedgerAccount);
+                Ledger.Open(a.InsurerAccount, a.Insurer, LedgerAccountKind.Organization, FinanceService.InsurerName + " reserves");
+                Transactions.Execute(new WorldTransaction
+                {
+                    Source = TransactionSource.Simulation,
+                    Timestamp = Clock.Now,
+                    Description = "Insurer capitalisation",
+                    Money = LedgerTransaction.Transfer(Accounts.External, a.InsurerAccount, Money.FromDollars(200000000L), TransactionReason.WorldGeneration, "Reserves"),
+                });
+            }
+        }
 
         /// <summary>The checking account of a player character, or None.</summary>
         public EntityId CheckingAccountOf(EntityId character) => Characters.TryGetValue(character, out var c) ? c.CheckingAccount : EntityId.None;

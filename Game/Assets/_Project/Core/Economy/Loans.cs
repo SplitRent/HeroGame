@@ -84,8 +84,18 @@ namespace HeroGame.Core.Economy
         public Loan Originate(EntityId loanId, LoanKind kind, EntityId borrower, EntityId borrowerAccount, EntityId lenderAccount,
             Money principal, double annualRate, int termMonths, GameDateTime now, EntityId collateral, out LedgerTransaction disbursement)
         {
+            var loan = Create(loanId, kind, borrower, borrowerAccount, lenderAccount, principal, annualRate, termMonths, now, collateral);
+            disbursement = LedgerTransaction.Transfer(lenderAccount, borrowerAccount, principal, TransactionReason.LoanDisbursement, kind + " loan " + loanId);
+            _loans[loanId] = loan;
+            return loan;
+        }
+
+        /// <summary>Builds a loan record without registering it (it is registered when its transaction applies).</summary>
+        public static Loan Create(EntityId loanId, LoanKind kind, EntityId borrower, EntityId borrowerAccount, EntityId lenderAccount,
+            Money principal, double annualRate, int termMonths, GameDateTime now, EntityId collateral)
+        {
             if (principal.Cents <= 0) throw new ArgumentOutOfRangeException(nameof(principal));
-            var loan = new Loan
+            return new Loan
             {
                 Id = loanId,
                 Kind = kind,
@@ -101,9 +111,6 @@ namespace HeroGame.Core.Economy
                 NextPaymentDue = now.AddDays(30),
                 Status = LoanStatus.Active,
             };
-            disbursement = LedgerTransaction.Transfer(lenderAccount, borrowerAccount, principal, TransactionReason.LoanDisbursement, kind + " loan " + loanId);
-            _loans[loanId] = loan;
-            return loan;
         }
 
         /// <summary>Discards a loan whose disbursement transaction failed to commit.</summary>

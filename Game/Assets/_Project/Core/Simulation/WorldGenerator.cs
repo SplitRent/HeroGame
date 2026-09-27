@@ -43,6 +43,7 @@ namespace HeroGame.Core.Simulation
             world.History.Record(world.Today, HistoryCategory.Server, 5,
                 config.Identity.CityName + " opens its doors",
                 "A new chapter begins for " + config.Identity.CityName + ". Population " + world.Population.Count + ".");
+            world.EnsureInstitutions();
             world.Dirty.MarkAll(SaveChunks.WorldChunks);
 
             if (!world.Ledger.VerifyInvariant(out var sum)) throw new InvalidOperationException("Ledger invariant broken after generation: " + sum);
@@ -209,6 +210,13 @@ namespace HeroGame.Core.Simulation
                     var ownerOrg = world.Ids.Next(EntityKind.Organization);
                     world.Ownership.AssignInitial(business.Id, ownerOrg);
                     if (business.Property.IsValid) world.Ownership.AssignInitial(business.Property, ownerOrg);
+                    // Some owners are ready to retire: roughly one business in six is on the market from day one.
+                    var h = StableHash.Mix(business.Id.Value ^ world.Seed ^ 0xB12);
+                    if (h % 6 == 0)
+                    {
+                        business.ForSale = true;
+                        business.AskingPriceCents = template.PurchasePriceCents / 100 * (100 + (long)(h / 6 % 30));
+                    }
                 }
                 world.Businesses[business.Id] = business;
             }

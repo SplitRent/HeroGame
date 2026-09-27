@@ -11,6 +11,8 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Ground / canal water | plane / cube | greybox | terrain, water system | PLACEHOLDER |
 | Rain | stretched particles | greybox | VFX Graph rain, splashes, wet shader | PLACEHOLDER |
 | HUD | IMGUI `PrototypeHud` | Runtime/UI | UI Toolkit HUD (Phase 24) | PLACEHOLDER |
+| Build mode UI | IMGUI side panel in `BuildModeController`; greybox cube walls/furniture from `LayoutRenderer` | Runtime/Building | UI Toolkit build palette + catalog prefabs | PLACEHOLDER |
+| Business office / bank & insurance apps | IMGUI `BusinessPanel`, `FinancePanel` | Runtime/UI | phone apps + office screen (Phases 23–24) | PLACEHOLDER |
 | Dev console / inspector | IMGUI | dev builds only | stays IMGUI (developer-only) | OK (not shipped) |
 | Main menu backdrop | flat colour | MainMenu.uss | live city flythrough / key art | PLACEHOLDER |
 | Server list | mock JSON | `server_list_mock.json` | master server query (Phase 9) | PLACEHOLDER |

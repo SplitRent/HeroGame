@@ -35,6 +35,7 @@ namespace HeroGame.Core.Simulation
 
         private readonly World _world;
         private LifeSimContext _lifeContext;
+        private int _lifeContextVersion;
         public readonly SimulationStats Stats = new SimulationStats();
 
         public event Action<long> DayCompleted;
@@ -88,6 +89,12 @@ namespace HeroGame.Core.Simulation
             if (rng.Chance(effects.PowerOutageRiskPerHour)) c.DayOutageHours += 1f + rng.NextFloat() * 3f;
             CheckPendingAnomaly(t);
             _world.Wanted.Tick(t, null);
+            var storm = _world.Weather.State.ActiveSystem;
+            if (storm != null && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane)
+            {
+                var damaged = _world.Finance.ApplyStormDamage(t.HourIndex, storm.Category);
+                c.DayPropertiesDamaged += damaged;
+            }
         }
 
         private void OnDayEnded(long day)
@@ -102,7 +109,11 @@ namespace HeroGame.Core.Simulation
 
             // --- Population.
             var popWatch = Stopwatch.StartNew();
-            if (_lifeContext == null) _lifeContext = _world.CreateLifeContext();
+            if (_lifeContext == null || _lifeContextVersion != _world.WorkplaceVersion)
+            {
+                _lifeContext = _world.CreateLifeContext();
+                _lifeContextVersion = _world.WorkplaceVersion;
+            }
             _lifeContext.Notable = OnNotableLife;
             var ordered = _world.Population.Ordered;
             var npcDays = 0;
@@ -129,6 +140,7 @@ namespace HeroGame.Core.Simulation
             {
                 var b = _world.Businesses[id];
                 if (b.LastSimulatedDay >= day) continue;
+                _world.BusinessOps.BeforeDay(b, day);
                 var place = _world.Geography.GetPlace(b.Place);
                 var district = place != null ? _world.Geography.GetDistrict(place.District) : null;
                 var report = _world.BusinessSim.SimulateDay(b, new BusinessDayContext
@@ -147,6 +159,7 @@ namespace HeroGame.Core.Simulation
                     TreasuryAccount = _world.Accounts.Treasury,
                     Timestamp = date.AddHours(23),
                 });
+                _world.BusinessOps.AfterDay(b, report, day);
                 if (b.ConsecutiveLossDays == 30)
                     _world.History.Record(day, HistoryCategory.Business, 2, b.Name + " struggling after a month of losses", report.Note, district != null ? district.Id : EntityId.None, b.Id);
             }
@@ -166,8 +179,19 @@ namespace HeroGame.Core.Simulation
                         Ownership = { new OwnershipChange { Asset = loan.Collateral, From = loan.Borrower, To = _world.Accounts.BankOrganization } },
                     });
                     _world.History.Record(day, HistoryCategory.Economy, 2, "Bank repossesses property after loan default", "", EntityId.None, loan.Borrower, loan.Collateral);
+                    // The bank sells repossessed homes at a discount.
+                    var repo = _world.Properties.Get(loan.Collateral);
+                    if (repo != null)
+                    {
+                        repo.ForSale = true;
+                        repo.ListingPriceCents = (long)(repo.MarketValueCents * 0.85);
+                    }
+                    if (_world.Characters.TryGetValue(loan.Borrower, out var debtor))
+                        _world.Phone.Send(debtor, _world.Accounts.BankOrganization, FinanceService.BankName, Phone.MessageCategory.Bank,
+                            "After three missed payments your loan " + loan.Id + " is in default. The collateral has been repossessed.");
                 }
             }
+            _world.Finance.ProcessDay(day, date.AddHours(23));
             _world.Rentals.ProcessDay(date.AddHours(12), _world.CheckingAccountOf, _world.Accounts.Treasury, taxDay: day % 30 == 0);
             _world.Properties.ApplyDailyWear();
             if (day % 7 == 0) _world.Properties.Reassess(_world.Geography, _world.Macro, _world.Config.Economy.PropertyPriceMultiplier);
@@ -190,6 +214,12 @@ namespace HeroGame.Core.Simulation
             c.DayBadWeatherSum = 0;
             c.DayHours = 0;
             c.DayOutageHours = 0;
+            if (c.DayPropertiesDamaged > 0)
+            {
+                _world.History.Record(day, HistoryCategory.Weather, 4, c.DayPropertiesDamaged + " properties damaged as the storm batters " + _world.Config.Identity.CityName,
+                    "Insurers expect a wave of claims.");
+                c.DayPropertiesDamaged = 0;
+            }
             Stats.DaysSimulated++;
             Stats.LastDayMilliseconds = sw.Elapsed.TotalMilliseconds;
             DayCompleted?.Invoke(day);

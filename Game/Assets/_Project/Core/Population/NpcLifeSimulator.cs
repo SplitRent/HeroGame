@@ -26,7 +26,7 @@ namespace HeroGame.Core.Population
             var map = new Dictionary<PlaceKind, List<Place>>();
             foreach (var p in geography.Places)
             {
-                if (p.Kind == PlaceKind.Residence || p.Kind == PlaceKind.ApartmentBuilding || p.Kind == PlaceKind.Vacant) continue;
+                if (p.Kind == PlaceKind.Residence || p.Kind == PlaceKind.ApartmentBuilding || p.Kind == PlaceKind.Vacant || p.PlayerStaffed) continue;
                 if (!map.TryGetValue(p.Kind, out var list))
                 {
                     list = new List<Place>();

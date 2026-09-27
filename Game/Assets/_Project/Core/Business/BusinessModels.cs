@@ -49,6 +49,8 @@ namespace HeroGame.Core.Business
         public long TaxesCents;
         public long ProfitCents;
         public bool WasClosed;
+        /// <summary>Closed by an emergency order (insurable business interruption), not by the owner.</summary>
+        public bool ForcedClosure;
         public string Note = "";
     }
 
@@ -85,5 +87,13 @@ namespace HeroGame.Core.Business
         public long LastSimulatedDay = long.MinValue;
         public List<BusinessDayReport> Reports = new List<BusinessDayReport>();
         public List<EntityId> Employees = new List<EntityId>();
+        /// <summary>Pay relative to the template wage (0.8 .. 2.0). Better pay: fewer quits, better service.</summary>
+        public float WageLevel = 1f;
+        public bool ForSale;
+        public long AskingPriceCents;
+        /// <summary>Characters the owner has allowed to manage day-to-day operations.</summary>
+        public List<EntityId> Managers = new List<EntityId>();
+        /// <summary>Day the current owner took over (for reports and valuation).</summary>
+        public long AcquiredDay;
     }
 }

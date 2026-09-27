@@ -28,6 +28,7 @@ namespace HeroGame.Core.Foundation
         Power = 16,
         Server = 17,
         HistoryRecord = 18,
+        InsurancePolicy = 19,
     }
 
     /// <summary>

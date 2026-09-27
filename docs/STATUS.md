@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phase 5 (building, construction, rentals)._
+_Last updated: Phase 6 (player businesses, banking, insurance)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -55,6 +55,12 @@ _Last updated: Phase 5 (building, construction, rentals)._
 | Building layouts (walls/rooms/openings/furniture) + validator | TESTED | `EveryGeneratedLayout_IsValid`, `Validator_CatchesUnbelievableArchitecture` |
 | Construction (preview, pricing, atomic commit), change of use | TESTED | `WarehouseToNightclub_ConversionEndToEnd`, `Construction_IsAtomic_*`, `WorldBuild_*`, `BuildTools_*` |
 | Rentals (units, deposit, rent, eviction) & property tax / tax sale | TESTED | `Renting_CollectsRentAndEvictsNonPayers`, `PropertyTax_ArrearsLeadToTaxSale` |
+| Journal-safe records (accounts, loans, policies, businesses ride in the transaction) | TESTED | `Crash_AfterMortgageAndFounding_RecoversLoanBusinessAndAccount` |
+| Underwriting (credit score, LTV, DTI, asset depletion), mortgages, early repayment | TESTED | `Underwriter_*`, `Mortgage_*`, `PersonalLoan_EarlyRepayment_*` |
+| Savings accounts & interest | TESTED | `Savings_OpenOnce_TransferAndEarnMonthlyInterest` |
+| Insurance (property, vehicle, business interruption, health), premiums, lapse, claims | TESTED | `PropertyInsurance_*`, `Premiums_*`, `HealthInsurance_*`, `BusinessInterruption_*` |
+| Hurricane property damage + repairs | TESTED | `StormDamage_IsDeterministic_AndHitsFloodProneDistrictsHarder` |
+| Player businesses (buy, found, manage, hire/fire NPCs, turnover, draw, sell) | TESTED | `BuyingABusiness_*`, `Management_*`, `UnderpaidStaff_*`, `FoundingANightclub_*` |
 
 ## Persistence
 | System | Status | Evidence / notes |
@@ -88,6 +94,7 @@ _Last updated: Phase 5 (building, construction, rentals)._
 | NPC conversation, subtitles, interiors with real occupants | IN DEVELOPMENT | compiles |
 | Vehicle controller (WheelCollider), entry/exit, traffic presenter | IN DEVELOPMENT | compiles |
 | Build mode (overhead editor, live cost/validation, layout renderer) | IN DEVELOPMENT | compiles; greybox builder adds a build zone to every property |
+| Business office panel, bank/insurance phone apps | IN DEVELOPMENT | compiles; IMGUI placeholders |
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 

@@ -44,6 +44,7 @@ namespace HeroGame.Persistence.Saves
         public List<LedgerAccount> Accounts = new List<LedgerAccount>();
         public List<OwnershipEntry> Ownership = new List<OwnershipEntry>();
         public List<Loan> Loans = new List<Loan>();
+        public List<InsurancePolicy> Policies = new List<InsurancePolicy>();
     }
 
     /// <summary>Households plus the list of NPC shards that exist.</summary>

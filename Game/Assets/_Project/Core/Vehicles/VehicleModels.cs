@@ -123,6 +123,9 @@ namespace HeroGame.Core.Vehicles
         public long RegisteredUntilDay;
         public bool ReportedStolen;
         public long ImpoundFeeCents;
+        /// <summary>Repair cost already settled by insurance; cleared when the vehicle is repaired.</summary>
+        public long InsuranceClaimedCents;
+        public long StolenSinceDay = -1;
 
         public bool Drivable => EngineHealth > 0.05f && LocationKind != VehicleLocationKind.Destroyed && LocationKind != VehicleLocationKind.Impound;
         public float Condition => (EngineHealth + BodyHealth + TireHealth) / 3f;

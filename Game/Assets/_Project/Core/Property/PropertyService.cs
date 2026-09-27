@@ -104,6 +104,49 @@ namespace HeroGame.Core.Property
             }
         }
 
+        /// <summary>
+        /// Sudden damage (storm, fire, vandalism): lowers condition and records the repair bill, which is what
+        /// insurance settles against. Severity is the fraction of the structure's condition lost (0..1).
+        /// </summary>
+        public void ApplyDamage(PropertyRecord p, float severity)
+        {
+            severity = Math.Max(0f, Math.Min(p.Condition, severity));
+            if (severity <= 0f) return;
+            p.Condition -= severity;
+            p.DamageConditionLoss += severity;
+            // Structure is ~65 % of market value; repairs cost a premium over pro-rata value.
+            p.DamageRepairCents += (long)Math.Round(Math.Max(p.MarketValueCents, p.BaseValueCents) * 0.65 * severity * 1.2);
+            p.Damage = p.Condition <= 0.05f ? DamageState.Destroyed
+                : p.Condition < 0.35f ? DamageState.HeavilyDamaged
+                : p.Condition < 0.7f ? DamageState.Damaged
+                : p.Damage == DamageState.Pristine ? DamageState.Worn : p.Damage;
+        }
+
+        public Money RepairQuote(PropertyRecord p, double priceLevel) => new Money((long)Math.Round(p.DamageRepairCents * Math.Max(0.5, priceLevel)));
+
+        /// <summary>Owner pays contractors to repair recorded damage; condition returns to its pre-damage level.</summary>
+        public OpResult Repair(PropertyRecord p, EntityId owner, EntityId ownerAccount, EntityId contractorAccount, GameDateTime now, double priceLevel, string idempotencyKey)
+        {
+            if (!_ownership.IsOwnedBy(p.Id, owner)) return OpResult.Fail("Only the owner can order repairs.");
+            var cost = RepairQuote(p, priceLevel);
+            if (cost.Cents <= 0) return OpResult.Fail("Nothing to repair.");
+            var result = _processor.Execute(new WorldTransaction
+            {
+                IdempotencyKey = idempotencyKey ?? "",
+                Initiator = owner,
+                Timestamp = now,
+                Description = "Repairs at " + p.Address,
+                Money = LedgerTransaction.Transfer(ownerAccount, contractorAccount, cost, TransactionReason.Maintenance, "Repairs " + p.Address),
+            });
+            if (!result.Success) return result;
+            p.Condition = Math.Min(1f, p.Condition + p.DamageConditionLoss);
+            p.DamageConditionLoss = 0f;
+            p.DamageRepairCents = 0;
+            p.InsuranceClaimedCents = 0;
+            p.Damage = p.Condition >= 0.8f ? DamageState.Pristine : DamageState.Worn;
+            return result;
+        }
+
         /// <summary>Physical wear: condition decays slowly unless maintained.</summary>
         public void ApplyDailyWear(float wearPerDay = 0.00015f)
         {

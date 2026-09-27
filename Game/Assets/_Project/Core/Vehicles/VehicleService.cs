@@ -201,6 +201,7 @@ namespace HeroGame.Core.Vehicles
                 v.BodyHealth = 1f;
                 v.EngineHealth = 1f;
                 v.TireHealth = 1f;
+                v.InsuranceClaimedCents = 0;
             }
             return result;
         }

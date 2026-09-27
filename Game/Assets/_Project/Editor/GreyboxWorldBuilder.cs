@@ -76,6 +76,7 @@ namespace HeroGame.Editor
             population.Observer = player.transform;
 
             var hud = systems.AddComponent<PrototypeHud>();
+            systems.AddComponent<FinancePanel>();
             hud.Interactor = player.GetComponent<PlayerInteractor>();
             var console = systems.AddComponent<DevConsole>();
             console.Player = player.transform;

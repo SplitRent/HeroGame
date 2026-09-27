@@ -146,7 +146,10 @@ namespace HeroGame.Core.Economy
         public Money BalanceOf(EntityId id) => Get(id).Balance;
 
         /// <summary>Checks every rule without mutating anything.</summary>
-        public OpResult Validate(LedgerTransaction tx)
+        public OpResult Validate(LedgerTransaction tx) => Validate(tx, null);
+
+        /// <summary>Validates as if <paramref name="pending"/> accounts (opened by the same transaction) already existed.</summary>
+        public OpResult Validate(LedgerTransaction tx, IReadOnlyList<LedgerAccount> pending)
         {
             if (tx == null || tx.Postings == null || tx.Postings.Count < 2) return OpResult.Fail("Transaction needs at least two postings.");
             long sum = 0;
@@ -154,7 +157,7 @@ namespace HeroGame.Core.Economy
             var net = new Dictionary<EntityId, long>();
             foreach (var p in tx.Postings)
             {
-                if (!_accounts.TryGetValue(p.Account, out var acc)) return OpResult.Fail("Unknown account " + p.Account);
+                if (!TryFind(p.Account, pending, out var acc)) return OpResult.Fail("Unknown account " + p.Account);
                 if (acc.Frozen) return OpResult.Fail("Account frozen: " + p.Account);
                 try
                 {
@@ -170,7 +173,7 @@ namespace HeroGame.Core.Economy
             if (sum != 0) return OpResult.Fail("Postings do not balance (sum " + sum + ").");
             foreach (var kv in net)
             {
-                var acc = _accounts[kv.Key];
+                TryFind(kv.Key, pending, out var acc);
                 if (acc.Kind == LedgerAccountKind.External || kv.Value >= 0) continue;
                 long after;
                 try { after = checked(acc.BalanceCents + kv.Value); }
@@ -179,6 +182,17 @@ namespace HeroGame.Core.Economy
             }
             return OpResult.Ok();
         }
+
+        private bool TryFind(EntityId id, IReadOnlyList<LedgerAccount> pending, out LedgerAccount account)
+        {
+            if (_accounts.TryGetValue(id, out account)) return true;
+            if (pending != null)
+                foreach (var a in pending)
+                    if (a.Id == id) { account = a; return true; }
+            return false;
+        }
+
+        public bool Exists(EntityId id) => _accounts.ContainsKey(id);
 
         public OpResult Commit(LedgerTransaction tx)
         {

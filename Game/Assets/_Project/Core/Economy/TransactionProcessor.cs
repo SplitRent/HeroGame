@@ -43,6 +43,22 @@ namespace HeroGame.Core.Economy
         public string Description = "";
         public LedgerTransaction Money;
         public List<OwnershipChange> Ownership = new List<OwnershipChange>();
+        /// <summary>Ledger accounts opened by this transaction (zero balance) before its money moves.</summary>
+        public List<LedgerAccount> OpenAccounts = new List<LedgerAccount>();
+        /// <summary>
+        /// Records created together with the money (a loan, a policy, a new business). They ride in the journal
+        /// with the payment, so a crash can never leave money moved without the record that explains it.
+        /// </summary>
+        public TransactionRecords Records;
+    }
+
+    /// <summary>Persistent records attached to a <see cref="WorldTransaction"/>; registered by the world on apply and replay.</summary>
+    [Serializable]
+    public sealed class TransactionRecords
+    {
+        public Loan Loan;
+        public InsurancePolicy Policy;
+        public Business.BusinessRecord Business;
     }
 
     /// <summary>Durable append-only log of committed transactions (write-ahead journal).</summary>
@@ -109,10 +125,21 @@ namespace HeroGame.Core.Economy
             if (tx == null) return OpResult.Fail("Null transaction.");
             if (!string.IsNullOrEmpty(tx.IdempotencyKey) && _recentKeys.Contains(tx.IdempotencyKey))
                 return OpResult.Fail("Duplicate request " + tx.IdempotencyKey + ".");
-            if (tx.Money == null && (tx.Ownership == null || tx.Ownership.Count == 0)) return OpResult.Fail("Empty transaction.");
+            if (tx.Money == null && (tx.Ownership == null || tx.Ownership.Count == 0) && tx.Records == null
+                && (tx.OpenAccounts == null || tx.OpenAccounts.Count == 0)) return OpResult.Fail("Empty transaction.");
+            if (tx.OpenAccounts != null)
+            {
+                var ids = new HashSet<EntityId>();
+                foreach (var a in tx.OpenAccounts)
+                {
+                    if (a == null || a.Id.Kind != EntityKind.LedgerAccount) return OpResult.Fail("Invalid new account.");
+                    if (_ledger.Exists(a.Id) || !ids.Add(a.Id)) return OpResult.Fail("Account already exists: " + a.Id);
+                    if (a.BalanceCents != 0) return OpResult.Fail("New accounts open with a zero balance.");
+                }
+            }
             if (tx.Money != null)
             {
-                var m = _ledger.Validate(tx.Money);
+                var m = _ledger.Validate(tx.Money, tx.OpenAccounts);
                 if (!m.Success) return m;
             }
             if (tx.Ownership != null)
@@ -173,12 +200,20 @@ namespace HeroGame.Core.Economy
             return applied;
         }
 
+        /// <summary>Raised whenever a transaction is applied, live or during journal replay (used to register attached records).</summary>
+        public event Action<WorldTransaction> Applied;
+
         private void ApplyValidated(WorldTransaction tx)
         {
+            if (tx.OpenAccounts != null)
+                foreach (var a in tx.OpenAccounts)
+                    if (!_ledger.Exists(a.Id))
+                        _ledger.Restore(new LedgerAccount { Id = a.Id, Owner = a.Owner, Kind = a.Kind, Label = a.Label, OverdraftLimitCents = a.OverdraftLimitCents });
             if (tx.Money != null) _ledger.ApplyUnchecked(tx.Money);
             if (tx.Ownership != null)
                 foreach (var change in tx.Ownership) _ownership.SetOwnerUnchecked(change.Asset, change.To);
             RememberKey(tx.IdempotencyKey);
+            Applied?.Invoke(tx);
         }
 
         private void RememberKey(string key)
