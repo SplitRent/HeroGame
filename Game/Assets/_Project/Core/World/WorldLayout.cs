@@ -17,6 +17,50 @@ namespace HeroGame.Core.World
         public string DisplayName = "";
         public List<DistrictLayout> Districts = new List<DistrictLayout>();
         public List<RoadLayout> Roads = new List<RoadLayout>();
+        /// <summary>Sea, sounds, canals, rivers and bayous (convex polygons); only docks, beaches and bridges meet them.</summary>
+        public List<WaterLayout> Water = new List<WaterLayout>();
+
+        /// <summary>Is this point in any body of water?</summary>
+        public bool IsWater(float x, float z)
+        {
+            foreach (var w in Water) if (w.Contains(x, z)) return true;
+            return false;
+        }
+    }
+
+    [Serializable]
+    public sealed class WaterLayout
+    {
+        public string Name = "";
+        /// <summary>Gulf, Sound, ShipCanal, Channel, River, Bayou, Lake.</summary>
+        public string Kind = "";
+        /// <summary>Polygon as x0, z0, x1, z1, … (at least three corners).</summary>
+        public List<float> Points = new List<float>();
+
+        /// <summary>Point in polygon (even-odd rule), with a bounding-box shortcut.</summary>
+        public bool Contains(float x, float z)
+        {
+            var n = Points.Count / 2;
+            if (n < 3) return false;
+            float minX = float.MaxValue, maxX = float.MinValue, minZ = float.MaxValue, maxZ = float.MinValue;
+            for (var i = 0; i < n; i++)
+            {
+                var px = Points[2 * i];
+                var pz = Points[2 * i + 1];
+                if (px < minX) minX = px;
+                if (px > maxX) maxX = px;
+                if (pz < minZ) minZ = pz;
+                if (pz > maxZ) maxZ = pz;
+            }
+            if (x < minX || x > maxX || z < minZ || z > maxZ) return false;
+            var inside = false;
+            for (int i = 0, j = n - 1; i < n; j = i++)
+            {
+                float xi = Points[2 * i], zi = Points[2 * i + 1], xj = Points[2 * j], zj = Points[2 * j + 1];
+                if (zi > z != zj > z && x < (xj - xi) * (z - zi) / (zj - zi) + xi) inside = !inside;
+            }
+            return inside;
+        }
     }
 
     [Serializable]

@@ -104,6 +104,41 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void Water_ShapesTheCoast_CoquinaKeyIsAnIsland_AndNothingButDocksAndBridgesSitsInIt()
+        {
+            var layout = Metro().Layout;
+            CollectionAssert.IsSubsetOf(new[] { "The Gulf", "Coquina Sound", "Arden Ship Canal", "Arden Ship Channel", "Arden River" }, layout.Water.Select(w => w.Name).ToList());
+            var coquina = layout.Districts.Single(d => d.Key == "coquina_key");
+            Assert.IsFalse(layout.IsWater(coquina.CenterX, coquina.CenterZ), "the island is land");
+            // Every way off the island crosses water, so it is only reachable by bridge.
+            foreach (var (dx, dz) in new[] { (-1f, 0f), (1f, 0f), (0f, 1f), (0f, -1f) })
+            {
+                var wet = false;
+                for (var r = 0f; r < 3000f && !wet; r += 25f) wet = layout.IsWater(coquina.CenterX + dx * r, coquina.CenterZ + dz * r);
+                Assert.IsTrue(wet, "water on every side of Coquina Key");
+            }
+            var cityHall = layout.Districts.SelectMany(d => d.Places).Single(p => p.Name == "Port Arden City Hall");
+            Assert.IsFalse(layout.IsWater(cityHall.X, cityHall.Z));
+            Assert.IsTrue(layout.Roads.Any(r => r.Kind == "bridge" && r.Name.Contains("Coquina")));
+
+            // The validator refuses a building in the sea and a road that swims.
+            var broken = ContentLoader.Load(TestContent.DataDirectory, MetroLayout);
+            var gulf = broken.Layout.Water.Single(w => w.Name == "The Gulf");
+            var shop = broken.Layout.Districts.SelectMany(d => d.Places).First(p => p.Kind == PlaceKind.Shop);
+            shop.X = gulf.Points[0] + 100f;
+            shop.Z = gulf.Points[1] - 100f;
+            broken.Layout.Roads.Add(new RoadLayout { Name = "Swimming Street", Kind = "street", Points = { shop.X - 50f, shop.Z, shop.X + 50f, shop.Z } });
+            var report = ContentLoader.Validate(broken);
+            StringAssert.Contains("is in the water", report.ToString());
+            StringAssert.Contains("Swimming Street", report.ToString());
+
+            // And in play: water conducts (a power aimed at it behaves as if the ground were wet).
+            var world = WorldGenerator.Create("wet", TestContent.DefaultConfig(), TestContent.Load(), new MemoryTransactionJournal());
+            Assert.IsTrue(world.IsWater(new Core.Foundation.WorldPosition(0f, 0f, -830f)), "the ship canal");
+            Assert.IsFalse(world.IsWater(new Core.Foundation.WorldPosition(-200f, 0f, 40f)), "Tidewater Avenue");
+        }
+
+        [Test]
         public void Saves_RememberTheirLayout_AndRefuseToOpenOnAnotherMap()
         {
             var dir = TestContent.TempDirectory("layout");

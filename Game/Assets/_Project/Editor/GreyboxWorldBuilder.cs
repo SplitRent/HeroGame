@@ -211,12 +211,39 @@ namespace HeroGame.Editor
             ground.GetComponent<Renderer>().sharedMaterial = m.Get("ground", new Color(0.33f, 0.36f, 0.27f));
             GameObjectUtility.SetStaticEditorFlags(ground, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic);
 
-            var canal = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            canal.name = "Arden Ship Canal (water placeholder)";
-            canal.transform.SetParent(parent);
-            canal.transform.position = new Vector3(300f, -0.4f, -830f);
-            canal.transform.localScale = new Vector3(1600f, 1f, 90f);
-            canal.GetComponent<Renderer>().sharedMaterial = m.Get("water", new Color(0.12f, 0.22f, 0.26f));
+            // Water bodies from the layout (convex polygons, fan-triangulated), just above the ground plane.
+            var water = new GameObject("Water").transform;
+            water.SetParent(parent);
+            var waterMaterial = m.Get("water", new Color(0.12f, 0.22f, 0.26f));
+            foreach (var body in layout.Water)
+            {
+                var n = body.Points.Count / 2;
+                if (n < 3) continue;
+                var vertices = new Vector3[n];
+                for (var i = 0; i < n; i++) vertices[i] = new Vector3(body.Points[2 * i], 0.03f, body.Points[2 * i + 1]);
+                var triangles = new int[(n - 2) * 3];
+                for (var i = 0; i < n - 2; i++)
+                {
+                    triangles[3 * i] = 0;
+                    triangles[3 * i + 1] = i + 2;
+                    triangles[3 * i + 2] = i + 1;
+                }
+                var mesh = new Mesh { name = body.Name, vertices = vertices, triangles = triangles };
+                mesh.RecalculateNormals();
+                if (mesh.normals.Length > 0 && mesh.normals[0].y < 0f)
+                {
+                    for (var i = 0; i < triangles.Length; i += 3) (triangles[i + 1], triangles[i + 2]) = (triangles[i + 2], triangles[i + 1]);
+                    mesh.triangles = triangles;
+                    mesh.RecalculateNormals();
+                }
+                mesh.RecalculateBounds();
+                AssetDatabase.CreateAsset(mesh, GeneratedFolder + "/Water_" + System.Text.RegularExpressions.Regex.Replace(body.Name, "[^A-Za-z0-9]", "") + ".asset");
+                var go = new GameObject(body.Name + " (" + body.Kind + ")");
+                go.transform.SetParent(water);
+                go.AddComponent<MeshFilter>().sharedMesh = mesh;
+                go.AddComponent<MeshRenderer>().sharedMaterial = waterMaterial;
+                GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic);
+            }
         }
 
         private static void BuildRoads(Transform parent, WorldLayout layout, MaterialLibrary m)

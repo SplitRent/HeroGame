@@ -526,6 +526,41 @@ namespace HeroGame.Persistence.Content
             foreach (var required in new[] { "homicide", "unlawful_discharge", "unlicensed_firearm" })
                 if (c.FindCrime(required) == null) r.Error("crime_types", "Missing required crime " + required + ".");
 
+            // Water: well-formed polygons; nothing but docks, beaches and bridges in it.
+            foreach (var water in c.Layout.Water)
+            {
+                var path = "layout.water." + water.Name;
+                if (water.Points.Count < 6 || water.Points.Count % 2 != 0) r.Error(path, "A water body needs at least three corners.");
+                foreach (var v in water.Points) if (float.IsNaN(v) || float.IsInfinity(v)) r.Error(path, "Non-finite coordinate.");
+            }
+            if (c.Layout.Water.Count > 0)
+            {
+                foreach (var d in c.Layout.Districts)
+                    foreach (var p in d.Places)
+                        if (p.Kind != PlaceKind.Dock && p.Kind != PlaceKind.Beach && c.Layout.IsWater(p.X, p.Z))
+                            r.Error("layout." + d.Key + "." + p.Key, p.Name + " is in the water.");
+                foreach (var d in c.Layout.Districts)
+                    foreach (var b in d.Blocks)
+                        for (var row = 0; row < b.Rows; row += System.Math.Max(1, b.Rows - 1))
+                            for (var col = 0; col < b.Columns; col += System.Math.Max(1, b.Columns - 1))
+                                if (c.Layout.IsWater(b.OriginX + col * b.SpacingX, b.OriginZ + row * b.SpacingZ))
+                                    r.Error("layout." + d.Key + "." + b.KeyPrefix, "Parcel block reaches into the water.");
+                foreach (var road in c.Layout.Roads)
+                {
+                    if (road.Kind == "bridge") continue;
+                    for (var i = 0; i + 3 < road.Points.Count; i += 2)
+                        for (var t = 0f; t <= 1f; t += 0.125f)
+                        {
+                            var x = road.Points[i] + (road.Points[i + 2] - road.Points[i]) * t;
+                            var z = road.Points[i + 1] + (road.Points[i + 3] - road.Points[i + 1]) * t;
+                            if (!c.Layout.IsWater(x, z)) continue;
+                            r.Error("layout.roads." + road.Name, "Crosses water without being a bridge (" + x.ToString("0", System.Globalization.CultureInfo.InvariantCulture) + ", " + z.ToString("0", System.Globalization.CultureInfo.InvariantCulture) + ").");
+                            t = 2f;
+                            i = road.Points.Count;
+                        }
+                }
+            }
+
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)
             {

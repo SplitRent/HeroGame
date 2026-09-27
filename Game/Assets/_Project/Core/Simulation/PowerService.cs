@@ -312,7 +312,7 @@ namespace HeroGame.Core.Simulation
         private WorldPosition _aim;
 
         /// <summary>Rain, or water from a sheared hydrant where the power lands: wet surfaces conduct.</summary>
-        private bool IsRaining() => _w.Weather.State.Current.Precipitation > 0.5f || _w.Destructibles.WetAt(_aim);
+        private bool IsRaining() => _w.Weather.State.Current.Precipitation > 0.5f || _w.Destructibles.WetAt(_aim) || _w.IsWater(_aim);
 
         private void HurtNpc(NpcRecord npc, float damage)
         {

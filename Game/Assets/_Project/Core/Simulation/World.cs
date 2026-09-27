@@ -268,6 +268,9 @@ namespace HeroGame.Core.Simulation
 
         public long Today => Clock.Now.DayIndex;
 
+        /// <summary>Is this point in the sea, a sound, the canal, the channel, a river or a bayou?</summary>
+        public bool IsWater(WorldPosition p) => Content.Layout.IsWater(p.X, p.Z);
+
         /// <summary>Registers records that arrived with a transaction (live or during journal replay).</summary>
         private void RegisterRecords(WorldTransaction tx)
         {

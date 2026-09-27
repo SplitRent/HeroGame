@@ -398,8 +398,8 @@ DISTRICTS = [
 # Inter-district connectors: (name, kind, width, [district keys or (x, z) points]).
 CONNECTORS = [
     ("Gulf Coast Freeway", "highway", 24, [(-5600, -900), "westmarch_commons", "fairhaven", (-360, 300),
-                                           (1100, 300), "arden_central", "the_ledger", "lantana_park", (4200, -1200),
-                                           "coquina_key"]),
+                                           (1100, 300), "arden_central", "the_ledger", "lantana_park", (4200, -1200)]),
+    ("Coquina North Bridge", "bridge", 20, [(4200, -1200), "coquina_key"]),
     ("Arden Loop", "highway", 22, ["kessler_field", "pinecrest_hollow", "fairhaven", "southgate_flats",
                                    "bitterwater_marsh", "port_of_arden", "lantana_park", "mercer_heights",
                                    "riverbend_estates", "oak_terrace", "pinecrest_hollow"]),
@@ -415,6 +415,33 @@ CONNECTORS = [
     ("Coquina Causeway", "bridge", 18, ["port_of_arden", (3200, -2200), "coquina_key"]),
     ("Bayou Vista Road", "avenue", 14, [(-330, 240), "fairhaven"]),
 ]
+
+# District grid extents (lo_x, hi_x, lo_z, hi_z), filled in as districts are laid out; water is fitted around them.
+EXTENTS = {}
+
+
+def water_bodies():
+    """
+    Convex polygons (x/z corners). The coast runs below the southernmost district; Coquina Key is an island, cut
+    off by a sound and two passes fitted to its street grid; the ship canal (vertical slice), the ship channel
+    east of the port and a river north of the suburbs. Only docks, beaches and bridges may touch water.
+    """
+    margin = 60
+    coast = min(e[2] for e in EXTENTS.values()) - margin
+    ck = EXTENTS["coquina_key"]
+    west, east, north = ck[0] - margin, ck[1] + margin, ck[3] + margin
+    port = EXTENTS["port_of_arden"]
+    river = max(e[3] for k, e in EXTENTS.items() if k != "kessler_field") + margin
+    return [
+        ("The Gulf", "Gulf", [(-9000, coast), (9000, coast), (9000, coast - 6000), (-9000, coast - 6000)]),
+        ("Coquina Sound", "Sound", [(west - 250, north), (east + 250, north), (east + 250, north + 250), (west - 250, north + 250)]),
+        ("Coquina West Pass", "Sound", [(west - 250, coast), (west, coast), (west, north), (west - 250, north)]),
+        ("Coquina East Pass", "Sound", [(east, coast), (east + 250, coast), (east + 250, north), (east, north)]),
+        ("Arden Ship Canal", "ShipCanal", [(-460, -875), (700, -875), (700, -785), (-460, -785)]),
+        # The channel runs up from the Gulf to the middle of the port, where ships berth.
+        ("Arden Ship Channel", "Channel", [(port[1] + margin, coast), (port[1] + margin + 220, coast), (port[1] + margin + 220, (port[2] + port[3]) / 2), (port[1] + margin, (port[2] + port[3]) / 2)]),
+        ("Arden River", "River", [(-3400, river), (4500, river), (4500, river + 130), (-3400, river + 130)]),
+    ]
 
 CENTERS = {}
 
@@ -545,6 +572,7 @@ def build_district(d, names, rng, roads):
     xs = [cx + i * g for i in range(-half, half + 1)]
     zs = [cz + i * g for i in range(-half, half + 1)]
     lo_x, hi_x, lo_z, hi_z = xs[0], xs[-1], zs[0], zs[-1]
+    EXTENTS[d["key"]] = (lo_x, hi_x, lo_z, hi_z)
     arterial_names = street_names(rng, names, len(xs) + len(zs))
     # Main avenue (east-west) and cross street (north-south) through the centre; the rest are streets.
     for i, z in enumerate(zs):
@@ -636,8 +664,51 @@ def generate():
             flat += [x, z]
         roads.append({"Name": name, "Width": width, "Kind": kind, "Points": flat})
 
-    return {"Id": "port_arden", "DisplayName": "Port Arden - Full Metro (19 districts)", "Districts": districts,
-            "Roads": roads}
+    for dl in slice_layout["Districts"]:
+        EXTENTS.setdefault(dl["Key"], (dl["CenterX"] - dl["Radius"], dl["CenterX"] + dl["Radius"], dl["CenterZ"] - dl["Radius"], dl["CenterZ"] + dl["Radius"]))
+    water = [{"Name": n, "Kind": k, "Points": [v for xz in pts for v in xz]} for n, k, pts in water_bodies()]
+    layout = {"Id": "port_arden", "DisplayName": "Port Arden - Full Metro (19 districts)", "Districts": districts,
+              "Roads": roads, "Water": water}
+    check_water(layout)
+    return layout
+
+
+def in_poly(pts, x, z):
+    n = len(pts) // 2
+    inside = False
+    j = n - 1
+    for i in range(n):
+        xi, zi, xj, zj = pts[2 * i], pts[2 * i + 1], pts[2 * j], pts[2 * j + 1]
+        if (zi > z) != (zj > z) and x < (xj - xi) * (z - zi) / (zj - zi) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+
+def check_water(layout):
+    """Same rules as ContentLoader.Validate, so a bad plan fails here with a readable message."""
+    water = [w["Points"] for w in layout["Water"]]
+    wet = lambda x, z: any(in_poly(p, x, z) for p in water)
+    problems = []
+    for d in layout["Districts"]:
+        for p in d["Places"]:
+            if p["Kind"] not in ("Dock", "Beach") and wet(p["X"], p["Z"]):
+                problems.append("%s: %s is in the water" % (d["Key"], p["Name"]))
+        for b in d.get("Blocks", []):
+            for r in {0, b["Rows"] - 1}:
+                for c in {0, b["Columns"] - 1}:
+                    if wet(b["OriginX"] + c * b["SpacingX"], b["OriginZ"] + r * b["SpacingZ"]):
+                        problems.append("%s: block %s reaches into the water" % (d["Key"], b["KeyPrefix"]))
+    for road in layout["Roads"]:
+        if road["Kind"] == "bridge":
+            continue
+        pts = road["Points"]
+        for i in range(0, len(pts) - 3, 2):
+            if any(wet(pts[i] + (pts[i + 2] - pts[i]) * t / 8, pts[i + 1] + (pts[i + 3] - pts[i + 1]) * t / 8) for t in range(9)):
+                problems.append("road %s crosses water" % road["Name"])
+                break
+    if problems:
+        raise RuntimeError("water check failed:\n  " + "\n  ".join(sorted(set(problems))))
 
 
 def render(layout):
