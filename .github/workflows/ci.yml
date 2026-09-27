@@ -34,6 +34,18 @@ jobs:
           $HOST run --save "$RUNNER_TEMP/world" --days 30
           $HOST inspect --save "$RUNNER_TEMP/world" economy
           $HOST inspect --save "$RUNNER_TEMP/world" news
+      - name: Dedicated server + master server smoke test
+        run: |
+          export HEROGAME_MASTER_SECRET=$(head -c 48 /dev/urandom | base64 -w0)
+          export HEROGAME_DATA="$RUNNER_TEMP/master" HEROGAME_URLS=http://127.0.0.1:5080
+          Headless/HeroGame.MasterServer/bin/Release/net8.0/herogame-master & MASTER=$!
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:5080/health && break; sleep 1; done
+          curl -sf http://127.0.0.1:5080/api/servers
+          kill $MASTER
+          (sleep 5; echo status; sleep 1; echo stop) | timeout 120 Headless/HeroGame.Server/bin/Release/net8.0/herogame-server \
+            --save "$RUNNER_TEMP/server" --dev-secret "$HEROGAME_MASTER_SECRET" --bind 127.0.0.1 --port 0 | tee server.txt
+          grep -q "ledger balanced" server.txt
+          grep -q "Saved and stopped" server.txt
       - name: Performance benchmark (10k NPC stress layout)
         run: Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world bench --days 7 | tee bench.txt
       - uses: actions/upload-artifact@v4
@@ -70,6 +82,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Every Unity asset has exactly one .meta (no orphans, no duplicate GUIDs)
         run: python3 Tools/Unity/unity_meta.py check
+      - name: Every MonoBehaviour lives in a file of the same name (else scenes lose the component)
+        run: python3 Tools/Unity/check_scripts.py
       - name: Data files are valid JSON
         run: |
           for f in Game/Assets/StreamingAssets/Data/*.json; do python3 -m json.tool "$f" > /dev/null || { echo "invalid: $f"; exit 1; }; done

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- herogame-server: dedicated authoritative game server (world simulation + TCP game protocol + master registration). -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>herogame-server</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HeroGame.Core/HeroGame.Core.csproj" />
+    <ProjectReference Include="../HeroGame.Persistence/HeroGame.Persistence.csproj" />
+    <ProjectReference Include="../HeroGame.Networking/HeroGame.Networking.csproj" />
+  </ItemGroup>
+</Project>

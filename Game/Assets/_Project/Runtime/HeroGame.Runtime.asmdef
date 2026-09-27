@@ -3,7 +3,8 @@
   "rootNamespace": "HeroGame.Runtime",
   "references": [
     "HeroGame.Core",
-    "HeroGame.Persistence"
+    "HeroGame.Persistence",
+    "HeroGame.Networking"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

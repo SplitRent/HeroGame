@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phase 8 (emergency services)._
+_Last updated: Phases 9–10 (networking, servers, accounts)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -80,7 +80,23 @@ _Last updated: Phase 8 (emergency services)._
 | Story save slots | TESTED | `StorySlots_RotateAutosaves` |
 | Account profiles (local) | FUNCTIONAL | used by front end |
 | Binary save format | PLANNED | tech debt #1 |
-| PostgreSQL backend | PLANNED | Phase 9–10 |
+| PostgreSQL backend | PLANNED | file-backed JSON stores in use; see NETWORKING.md |
+
+## Networking & services (see NETWORKING.md)
+| System | Status | Evidence / notes |
+|---|---|---|
+| Wire protocol (framing, bounds, hostile input) | TESTED | `Wire_RoundTripsMessages_AndRejectsHostileFrames` |
+| Join tickets (per-server keys, expiry, forgery) | TESTED | `Tickets_AreValidOnlyForTheirServer_UntilExpiry_AndCannotBeForged` |
+| Authoritative TCP server (auth, sessions, snapshots, chat) | TESTED | `TwoPlayers_*`, `BadTickets_*`, `SilentConnections_*` |
+| Anti-cheat: movement validation, proximity, rate limits, malformed frames | TESTED | `Movement_*`, `CrimeRequests_RequireBeingThere_*`, `Floods_AndMalformedFrames_*` |
+| Request router onto core services, idempotent retries | TESTED | `Requests_RunAsTheConnectionsCharacter_*`, `BuildOps_SurviveTheWireEncoding` |
+| Moderation over the network (kick/ban/mute/grant, audit log, persistence) | TESTED | `Moderation_OnlyPermittedAccountsCanKick_*` |
+| Accounts (PBKDF2, lockout, sessions) | TESTED | `Accounts_ValidateInput_HashPasswords_AndLockAfterRepeatedFailures` |
+| Server directory (registration, heartbeat, listing, tickets) | TESTED | `Servers_RegisterUnderAnAccount_*`, `Stores_PersistAtomically` |
+| Master HTTP API + full-stack join | TESTED | `FullStack_LoginOverHttp_TicketFromMaster_JoinTheGameServer`; CI smoke test |
+| Dedicated server host (`herogame-server`) | FUNCTIONAL | CI smoke test (create, status, save, stop) |
+| Unity online session (login, join, movement, remote players) | IN DEVELOPMENT | compiles; not run in Unity |
+| Replication of player-made world changes to other clients | PLANNED | see NETWORKING.md limitations |
 
 ## Headless tools
 | System | Status | Evidence / notes |

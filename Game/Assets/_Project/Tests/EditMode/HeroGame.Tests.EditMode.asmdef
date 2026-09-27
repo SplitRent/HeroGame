@@ -4,6 +4,7 @@
   "references": [
     "HeroGame.Core",
     "HeroGame.Persistence",
+    "HeroGame.Networking",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],

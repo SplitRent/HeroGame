@@ -1,0 +1,308 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using HeroGame.Core.Building;
+using HeroGame.Core.Crime;
+using HeroGame.Core.Economy;
+using HeroGame.Core.Foundation;
+using HeroGame.Core.Servers;
+using HeroGame.Core.Simulation;
+using HeroGame.Networking.Protocol;
+
+namespace HeroGame.Networking.Server
+{
+    /// <summary>
+    /// The request catalogue a client can call. Handlers are thin: they parse and bound arguments, check that the
+    /// player is physically near what they act on (the server's authoritative position), then call the same core
+    /// services single-player uses — so rules live in one place and a modified client gains nothing.
+    /// </summary>
+    public static class StandardRequests
+    {
+        /// <summary>How close (metres) the player must be to act on something.</summary>
+        public const float CounterReach = 30f;
+        public const float BuildingReach = 60f;
+        public const float VehicleReach = 8f;
+        public const float PersonReach = 4f;
+
+        public static void Register(RequestRouter r)
+        {
+            r.Register("me.status", Status);
+
+            r.Register("property.buy", ctx =>
+            {
+                var p = ctx.World.Properties.Get(ctx.Id("property"));
+                if (p == null) return RequestContext.Fail("Unknown property.");
+                var seller = ctx.World.AccountFor(ctx.World.Ownership.OwnerOf(p.Id));
+                return RequestContext.From(ctx.World.Properties.Purchase(p.Id, ctx.Me.CharacterId, ctx.Me.CheckingAccount, seller, ctx.World.Accounts.Treasury, ctx.World.Clock.Now, ctx.Key));
+            });
+            r.Register("property.mortgage", ctx =>
+            {
+                var p = ctx.World.Properties.Get(ctx.Id("property"));
+                if (p == null) return RequestContext.Fail("Unknown property.");
+                return RequestContext.From(ctx.World.Finance.BuyWithMortgage(ctx.Me, p, new Money(ctx.Long("down", 0)), (int)ctx.Long("term", 6, 360), ctx.Key));
+            });
+            r.Register("property.repair", ctx =>
+            {
+                var p = ctx.World.Properties.Get(ctx.Id("property"));
+                if (p == null) return RequestContext.Fail("Unknown property.");
+                return RequestContext.From(ctx.World.Properties.Repair(p, ctx.Me.CharacterId, ctx.Me.CheckingAccount, ctx.World.Accounts.Contractors, ctx.World.Clock.Now, ctx.World.Macro.PriceLevel, ctx.Key));
+            });
+            r.Register("build.commit", BuildCommit);
+
+            r.Register("business.buy", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.Buy(b, ctx.Me, ctx.Key)));
+            r.Register("business.start", ctx =>
+            {
+                var p = ctx.World.Properties.Get(ctx.Id("property"));
+                return RequestContext.From(ctx.World.BusinessOps.Start(p, ctx.Str("template", 64), ctx.Str("name", 64), ctx.Me, new Money(ctx.Long("capital", 0)), ctx.Key));
+            });
+            r.Register("business.price", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.SetPrice(b, ctx.Me.CharacterId, ctx.Float("level", 0f, 10f))));
+            r.Register("business.wage", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.SetWageLevel(b, ctx.Me.CharacterId, ctx.Float("level", 0f, 10f))));
+            r.Register("business.ads", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.SetAdvertising(b, ctx.Me.CharacterId, new Money(ctx.Long("perDay", 0)))));
+            r.Register("business.hire", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.Hire(b, ctx.Me.CharacterId, ctx.Id("npc"))));
+            r.Register("business.fire", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.Fire(b, ctx.Me.CharacterId, ctx.Id("npc"))));
+            r.Register("business.withdraw", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.Withdraw(b, ctx.Me, new Money(ctx.Long("amount", 1)), ctx.Key)));
+            r.Register("business.invest", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.Invest(b, ctx.Me, new Money(ctx.Long("amount", 1)), ctx.Key)));
+            r.Register("business.restock", ctx => WithBusiness(ctx, b => ctx.World.BusinessOps.Restock(b, ctx.Me.CharacterId, ctx.Float("days", 0.1f, 30f), ctx.Key)));
+
+            r.Register("finance.transfer", ctx => RequestContext.From(ctx.World.Finance.TransferOwn(ctx.Me, ctx.Id("from"), ctx.Id("to"), new Money(ctx.Long("amount", 1)), ctx.Key)));
+            r.Register("finance.savings", ctx => RequestContext.From(ctx.World.Finance.OpenSavings(ctx.Me, ctx.Key)));
+            r.Register("finance.loan", ctx =>
+            {
+                if (!Enum.TryParse(ctx.Str("kind", 16), out LoanKind kind)) return RequestContext.Fail("Unknown loan kind.");
+                var collateral = ctx.Request.Args.ContainsKey("collateral") ? ctx.Id("collateral") : EntityId.None;
+                return RequestContext.From(ctx.World.Finance.TakeLoan(ctx.Me, kind, new Money(ctx.Long("amount", 1)), (int)ctx.Long("term", 6, 360), collateral, ctx.Key));
+            });
+            r.Register("finance.repay", ctx =>
+            {
+                ctx.World.Loans.TryGet(ctx.Id("loan"), out var loan);
+                return RequestContext.From(ctx.World.Finance.Repay(ctx.Me, loan, new Money(ctx.Long("amount", 1)), ctx.Key));
+            });
+            r.Register("insurance.buy", ctx =>
+            {
+                if (!Enum.TryParse(ctx.Str("kind", 32), out InsuranceKind kind)) return RequestContext.Fail("Unknown insurance kind.");
+                var asset = ctx.Request.Args.ContainsKey("asset") ? ctx.Id("asset") : EntityId.None;
+                return RequestContext.From(ctx.World.Finance.BuyInsurance(ctx.Me, kind, asset, new Money(ctx.Long("deductible", 0)), ctx.Key));
+            });
+            r.Register("insurance.claim", ctx => RequestContext.From(ctx.World.Finance.Claim(ctx.Me, ctx.World.Insurance.Get(ctx.Id("policy")), ctx.Key)));
+
+            r.Register("character.mask", ctx =>
+            {
+                var on = ctx.Str("on", 5) == "true";
+                if (on && !ctx.Me.Inventory.Exists(s => s.ItemId == "ski_mask")) return RequestContext.Fail("You don't have a mask.");
+                ctx.Connection.MaskOn = on;
+                return RequestContext.Ok();
+            });
+            r.Register("crime.shoplift", ctx => Crime(ctx, "business"));
+            r.Register("crime.rob", ctx => Crime(ctx, "business"));
+            r.Register("crime.burgle", ctx => Crime(ctx, "property"));
+            r.Register("crime.steal_vehicle", ctx => Crime(ctx, "vehicle"));
+            r.Register("crime.pickpocket", ctx => Crime(ctx, "npc"));
+            r.Register("crime.fence", ctx => RequestContext.From(ctx.World.Crimes.SellToFence(ctx.Me, ctx.Key)));
+
+            r.Register("justice.bail", ctx => RequestContext.From(ctx.World.Courts.PostBail(ctx.Me, ctx.Key)));
+            r.Register("justice.fines", ctx => RequestContext.From(ctx.World.Courts.PayFines(ctx.Me, new Money(ctx.Long("amount", 1)), ctx.Key)));
+            r.Register("justice.attorney", ctx => RequestContext.From(ctx.World.Courts.HireAttorney(ctx.Me, ctx.Key)));
+            r.Register("justice.plea", ctx => RequestContext.From(ctx.World.Courts.AcceptPlea(ctx.Me)));
+            r.Register("justice.surrender", ctx => RequestContext.From(ctx.World.Courts.TurnSelfIn(ctx.Me)));
+
+            r.Register("admin.kick", ctx => Moderate(ctx, ModerationActionKind.Kick));
+            r.Register("admin.ban", ctx => Moderate(ctx, ModerationActionKind.Ban));
+            r.Register("admin.unban", ctx => Moderate(ctx, ModerationActionKind.Unban));
+            r.Register("admin.mute", ctx => Moderate(ctx, ModerationActionKind.Mute));
+            r.Register("admin.unmute", ctx => Moderate(ctx, ModerationActionKind.Unmute));
+            r.Register("admin.grant", AdminGrant);
+            r.Register("admin.role", ctx =>
+            {
+                var ok = ctx.Server.Moderation.AssignRole(ctx.AccountId, ctx.Str("account", 64), ctx.Str("role", 32));
+                return ok ? RequestContext.Ok() : RequestContext.Fail("Not permitted.");
+            });
+        }
+
+        private static Response Status(RequestContext ctx)
+        {
+            var me = ctx.Me;
+            var data = new Dictionary<string, string>
+            {
+                ["cash"] = ctx.World.Ledger.BalanceOf(me.CheckingAccount).Cents.ToString(CultureInfo.InvariantCulture),
+                ["character"] = me.CharacterId.ToString(),
+                ["custody"] = me.Record.InCustody ? "true" : "false",
+                ["injury"] = me.Injury.ToString(),
+                ["owned"] = ctx.World.Ownership.AssetsOf(me.CharacterId).Count.ToString(CultureInfo.InvariantCulture),
+            };
+            var wanted = ctx.World.Wanted.Get(me.CharacterId);
+            data["wanted"] = (wanted != null ? wanted.Level : 0).ToString(CultureInfo.InvariantCulture);
+            return RequestContext.Ok(data);
+        }
+
+        private static Response WithBusiness(RequestContext ctx, Func<Core.Business.BusinessRecord, OpResult> action)
+        {
+            if (!ctx.World.Businesses.TryGetValue(ctx.Id("business"), out var b)) return RequestContext.Fail("Unknown business.");
+            return RequestContext.From(action(b));
+        }
+
+        private static Response Crime(RequestContext ctx, string target)
+        {
+            var w = ctx.World;
+            var concealment = new ConcealmentState { FaceConcealment = ctx.Connection.MaskOn ? 0.95f : 0f };
+            CrimeResult result;
+            switch (target)
+            {
+                case "business":
+                {
+                    if (!w.Businesses.TryGetValue(ctx.Id("business"), out var b)) return RequestContext.Fail("Unknown business.");
+                    var place = w.Geography.GetPlace(b.Place);
+                    if (place == null || !ctx.Near(place.Position, CounterReach)) return RequestContext.Fail("You are not there.");
+                    result = ctx.Request.Op == "crime.rob" ? w.Crimes.RobStore(ctx.Me, b, concealment) : w.Crimes.Shoplift(ctx.Me, b, concealment);
+                    break;
+                }
+                case "property":
+                {
+                    var p = w.Properties.Get(ctx.Id("property"));
+                    var place = p != null ? w.Geography.GetPlace(p.Place) : null;
+                    if (place == null || !ctx.Near(place.Position, BuildingReach)) return RequestContext.Fail("You are not there.");
+                    result = w.Crimes.Burglary(ctx.Me, p, concealment);
+                    break;
+                }
+                case "vehicle":
+                {
+                    var v = w.Vehicles.Get(ctx.Id("vehicle"));
+                    if (v == null || !ctx.Near(v.Position, VehicleReach)) return RequestContext.Fail("You are not at that vehicle.");
+                    result = w.Crimes.StealVehicle(ctx.Me, v, concealment);
+                    break;
+                }
+                default:
+                {
+                    var npc = w.Population.Get(ctx.Id("npc"));
+                    if (npc == null) return RequestContext.Fail("Nobody there.");
+                    result = w.Crimes.Pickpocket(ctx.Me, npc, ctx.Connection.Position, concealment);
+                    break;
+                }
+            }
+            if (!result.Attempted) return RequestContext.Fail(result.Message);
+            return RequestContext.Ok(new Dictionary<string, string>
+            {
+                ["succeeded"] = result.Succeeded ? "true" : "false",
+                ["reported"] = result.Reported ? "true" : "false",
+                ["cash"] = result.Cash.Cents.ToString(CultureInfo.InvariantCulture),
+                ["loot"] = result.Loot.Count.ToString(CultureInfo.InvariantCulture),
+                ["message"] = result.Message.Length > 400 ? result.Message.Substring(0, 400) : result.Message,
+            });
+        }
+
+        /// <summary>
+        /// Build ops arrive as compact CSV (one arg per op: "op0".."op19"): kind,target,floor,x0,z0,x1,z1,wallKind|openingKind|roomType,
+        /// width|rotation,catalogId, then room polygon points. Everything is re-validated by the construction service.
+        /// </summary>
+        private static Response BuildCommit(RequestContext ctx)
+        {
+            var p = ctx.World.Properties.Get(ctx.Id("property"));
+            if (p == null) return RequestContext.Fail("Unknown property.");
+            var place = ctx.World.Geography.GetPlace(p.Place);
+            if (place == null || !ctx.Near(place.Position, BuildingReach * 2)) return RequestContext.Fail("You must be at the property to build.");
+            var ops = new List<BuildOp>();
+            for (var i = 0; i < 20; i++)
+            {
+                if (!ctx.Request.Args.TryGetValue("op" + i, out var csv)) break;
+                ops.Add(ParseOp(csv));
+            }
+            if (ops.Count == 0) return RequestContext.Fail("No changes.");
+            return RequestContext.From(ctx.World.Build(p, ops, ctx.Me, ctx.Key));
+        }
+
+        public static string EncodeOp(BuildOp op)
+        {
+            var parts = new List<string>
+            {
+                op.Kind.ToString(), op.TargetId.ToString(CultureInfo.InvariantCulture), op.Floor.ToString(CultureInfo.InvariantCulture),
+                F(op.X0), F(op.Z0), F(op.X1), F(op.Z1),
+                op.Kind == BuildOpKind.AddWall ? op.WallKind.ToString() : op.Kind == BuildOpKind.AddOpening ? op.OpeningKind.ToString() : op.RoomType.ToString(),
+                F(op.Kind == BuildOpKind.AddOpening ? op.Width : op.Rotation), op.CatalogId ?? "", F(op.Offset),
+            };
+            foreach (var v in op.Polygon) parts.Add(F(v));
+            return string.Join(",", parts);
+        }
+
+        public static BuildOp ParseOp(string csv)
+        {
+            var p = csv.Split(',');
+            if (p.Length < 11 || p.Length > 11 + 32) throw new ArgumentException("Malformed build op.");
+            if (!Enum.TryParse(p[0], out BuildOpKind kind)) throw new ArgumentException("Unknown build op.");
+            var op = new BuildOp
+            {
+                Kind = kind,
+                TargetId = int.Parse(p[1], CultureInfo.InvariantCulture),
+                Floor = Math.Max(0, Math.Min(9, int.Parse(p[2], CultureInfo.InvariantCulture))),
+                X0 = P(p[3]), Z0 = P(p[4]), X1 = P(p[5]), Z1 = P(p[6]),
+                CatalogId = p[9],
+                Offset = P(p[10]),
+            };
+            switch (kind)
+            {
+                case BuildOpKind.AddWall:
+                    if (!Enum.TryParse(p[7], out WallKind wk)) throw new ArgumentException("Bad wall kind.");
+                    op.WallKind = wk;
+                    break;
+                case BuildOpKind.AddOpening:
+                    if (!Enum.TryParse(p[7], out OpeningKind ok)) throw new ArgumentException("Bad opening kind.");
+                    op.OpeningKind = ok;
+                    op.Width = P(p[8]);
+                    break;
+                case BuildOpKind.AddRoom:
+                    if (!Enum.TryParse(p[7], out RoomType rt)) throw new ArgumentException("Bad room type.");
+                    op.RoomType = rt;
+                    break;
+                default:
+                    op.Rotation = P(p[8]);
+                    break;
+            }
+            for (var i = 11; i < p.Length; i++) op.Polygon.Add(P(p[i]));
+            return op;
+        }
+
+        private static string F(float v) => v.ToString("R", CultureInfo.InvariantCulture);
+
+        private static float P(string s)
+        {
+            if (!float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out var v) || float.IsNaN(v) || float.IsInfinity(v) || Math.Abs(v) > 1000f)
+                throw new ArgumentException("Bad number in build op.");
+            return v;
+        }
+
+        private static Response Moderate(RequestContext ctx, ModerationActionKind kind)
+        {
+            var target = ctx.Str("account", 64);
+            var minutes = ctx.Request.Args.ContainsKey("minutes") ? ctx.Long("minutes", 0, 60L * 24 * 365) : 0;
+            var action = new ModerationAction
+            {
+                Kind = kind,
+                ActorAccountId = ctx.AccountId,
+                TargetAccountId = target,
+                Reason = ctx.OptStr("reason"),
+                RealTimeUnixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                GameTime = ctx.World.Clock.Now,
+                DurationSeconds = minutes * 60,
+            };
+            if (!ctx.Server.Moderation.Perform(action)) return RequestContext.Fail("Not permitted.");
+            var online = ctx.Server.FindByAccount(target);
+            if (online != null && (kind == ModerationActionKind.Kick || kind == ModerationActionKind.Ban))
+                ctx.Server.Kick(online, (kind == ModerationActionKind.Ban ? "Banned" : "Kicked") + (string.IsNullOrEmpty(action.Reason) ? "." : ": " + action.Reason));
+            return RequestContext.Ok();
+        }
+
+        /// <summary>Audited admin money grant (WorldAdmin permission): recorded in the moderation log and the ledger.</summary>
+        private static Response AdminGrant(RequestContext ctx)
+        {
+            var amount = new Money(ctx.Long("amount", 1, 100_000_000_00L));
+            var reason = ctx.Str("reason", 200);
+            var action = new ModerationAction
+            {
+                Kind = ModerationActionKind.MoneyGrant, ActorAccountId = ctx.AccountId, TargetAccountId = ctx.OptStr("account", ctx.AccountId),
+                Reason = amount + " — " + reason, RealTimeUnixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds(), GameTime = ctx.World.Clock.Now,
+            };
+            if (!ctx.Server.Moderation.Perform(action)) return RequestContext.Fail("Not permitted.");
+            var target = ctx.Server.FindByAccount(action.TargetAccountId);
+            var character = target != null ? target.Character : ctx.Me;
+            return RequestContext.From(ctx.World.AdminGrant(character.CheckingAccount, amount, ctx.AccountId, reason));
+        }
+    }
+}

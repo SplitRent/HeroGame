@@ -74,6 +74,20 @@ namespace HeroGame.Core.Servers
         public long DurationSeconds;
     }
 
+    [Serializable]
+    public sealed class RoleAssignment
+    {
+        public string AccountId = "";
+        public string RoleId = "";
+    }
+
+    [Serializable]
+    public sealed class ModerationSnapshot
+    {
+        public List<RoleAssignment> Assignments = new List<RoleAssignment>();
+        public List<ModerationAction> History = new List<ModerationAction>();
+    }
+
     /// <summary>Role-based permission checks plus an append-only moderation history (GDD §89).</summary>
     public sealed class ModerationService
     {
@@ -87,6 +101,25 @@ namespace HeroGame.Core.Servers
         }
 
         public void DefineRole(ServerRole role) => _roles[role.Id] = role;
+
+        /// <summary>Everything that must persist across restarts (role assignments and the audit history).</summary>
+        public ModerationSnapshot Export()
+        {
+            var s = new ModerationSnapshot();
+            foreach (var kv in _roleByAccount) s.Assignments.Add(new RoleAssignment { AccountId = kv.Key, RoleId = kv.Value });
+            s.Assignments.Sort((a, b) => string.CompareOrdinal(a.AccountId, b.AccountId));
+            s.History.AddRange(History);
+            return s;
+        }
+
+        public void Import(ModerationSnapshot s)
+        {
+            if (s == null) return;
+            _roleByAccount.Clear();
+            foreach (var a in s.Assignments) if (_roles.ContainsKey(a.RoleId)) _roleByAccount[a.AccountId] = a.RoleId;
+            History.Clear();
+            History.AddRange(s.History);
+        }
 
         public ServerRole RoleOf(string accountId)
         {

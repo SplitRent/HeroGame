@@ -19,5 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="../HeroGame.Core/HeroGame.Core.csproj" />
     <ProjectReference Include="../HeroGame.Persistence/HeroGame.Persistence.csproj" />
+    <ProjectReference Include="../HeroGame.Networking/HeroGame.Networking.csproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Master-server domain logic (accounts, server directory, join tickets). Server-side only: never shipped in the client. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>HeroGame.Services</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HeroGame.Core/HeroGame.Core.csproj" />
+    <ProjectReference Include="../HeroGame.Networking/HeroGame.Networking.csproj" />
+  </ItemGroup>
+</Project>

@@ -52,6 +52,9 @@ namespace HeroGame.Core.Servers
         public bool Whitelisted;
         public bool PasswordProtected;
         public string Version = "";
+        /// <summary>Where clients connect (from the master's registration; not shown in the browser).</summary>
+        public string Host = "";
+        public int Port;
         public List<string> Rules = new List<string>();
         public List<string> FriendsOnline = new List<string>();
         public List<string> Tags = new List<string>();
