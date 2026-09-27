@@ -39,6 +39,12 @@ namespace HeroGame.Editor
         private static ContentSet _content;
 
         public const string MetroScene = SceneFolder + "/PortArden_Metro_Greybox.unity";
+        /// <summary>
+        /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
+        /// stamped with it so the Health Check can say "rebuild the greybox".
+        /// </summary>
+        public const int BuilderVersion = 4;
+        public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
         [MenuItem("HeroGame/Build Greybox Vertical Slice", priority = 1)]
@@ -153,6 +159,7 @@ namespace HeroGame.Editor
             var streamer = systems.AddComponent<WorldStreamer>();
             streamer.Focus = player.transform;
 
+            new GameObject(VersionMarker + " " + BuilderVersion);
             EditorSceneManager.SaveScene(scene, scenePath);
             AddToBuildSettings(scenePath);
             Debug.Log("[Greybox] Built " + places + " places from layout '" + content.Layout.Id + "' → " + scenePath);
