@@ -8,13 +8,13 @@ using UnityEngine;
 namespace HeroGame.Runtime.UI
 {
     /// <summary>
-    /// The phone's bank and insurance apps (GDD §26–27, §61) in prototype form: balances and transfers,
-    /// credit score, loans with early repayment, and policies with quotes and claims for everything the
-    /// character owns. Opened with the phone key. Placeholder IMGUI until the Phase 23 phone UI.
+    /// The phone (GDD §61): messages, map search, news, radio, Ripple, bank, loans, insurance and businesses.
+    /// Every app renders core state and calls core services; the phone holds no rules. Opened with the phone key.
+    /// Placeholder IMGUI (docs/ASSET_TRACKER.md) until the UI Toolkit phone skin.
     /// </summary>
-    public sealed class FinancePanel : MonoBehaviour
+    public sealed class PhonePanel : MonoBehaviour
     {
-        private enum Tab { Bank, Loans, Insurance, Businesses, Ripple }
+        private enum Tab { Messages, Map, News, Radio, Ripple, Bank, Loans, Insurance, Businesses }
 
         private IPlayerInputSource _input;
         private bool _open;
@@ -25,6 +25,7 @@ namespace HeroGame.Runtime.UI
         private string _status = "";
         private Vector2 _scroll;
         private readonly RippleApp _ripple = new RippleApp();
+        private string _mapQuery = "";
 
         private void Update()
         {
@@ -45,13 +46,59 @@ namespace HeroGame.Runtime.UI
 
             GUILayout.BeginArea(new Rect(Screen.width - 460, 40, 440, Screen.height - 80), GUI.skin.box);
             GUILayout.BeginHorizontal();
+            var unread = w.Phone.UnreadCount(me);
             foreach (Tab t in System.Enum.GetValues(typeof(Tab)))
-                if (GUILayout.Toggle(_tab == t, t.ToString(), GUI.skin.button)) _tab = t;
+            {
+                var label = t == Tab.Messages && unread > 0 ? "Messages (" + unread + ")" : t.ToString();
+                if (GUILayout.Toggle(_tab == t, label, GUI.skin.button)) _tab = t;
+            }
             GUILayout.EndHorizontal();
             _scroll = GUILayout.BeginScrollView(_scroll);
 
             switch (_tab)
             {
+                case Tab.Messages:
+                    for (var i = me.Inbox.Count - 1; i >= 0 && i >= me.Inbox.Count - 40; i--)
+                    {
+                        var m = me.Inbox[i];
+                        GUILayout.BeginVertical(GUI.skin.box);
+                        GUILayout.Label((m.Read ? "" : "● ") + m.FromName + " · " + m.Category + " · day " + m.At.DayIndex + " " + m.At.Hour.ToString("00") + ":" + m.At.Minute.ToString("00"));
+                        GUILayout.Label(m.Body);
+                        GUILayout.EndVertical();
+                    }
+                    if (unread > 0 && GUILayout.Button("Mark all read"))
+                        foreach (var m in me.Inbox) w.Phone.MarkRead(me, m.Id);
+                    break;
+                case Tab.Map:
+                    _mapQuery = GUILayout.TextField(_mapQuery, 40);
+                    foreach (var p in w.Phone.SearchMap(_mapQuery))
+                    {
+                        var d = w.Geography.GetDistrict(p.District);
+                        var dist = Core.Foundation.WorldPosition.DistanceXZ(p.Position, me.LastPosition);
+                        GUILayout.Label(p.Name + " · " + p.Kind + (d != null ? " · " + d.Name : "") + " · " + (dist / 1000f).ToString("0.0") + " km"
+                                        + (p.OpenMinute == p.CloseMinute ? "" : p.IsOpenAt(w.Clock.Now.MinuteOfDay) ? " · open" : " · closed"));
+                    }
+                    break;
+                case Tab.News:
+                    foreach (var a in w.Phone.News())
+                    {
+                        GUILayout.BeginVertical(GUI.skin.box);
+                        GUILayout.Label(a.Outlet + " · day " + a.Day);
+                        GUILayout.Label(a.Headline);
+                        if (a.Body != a.Headline) GUILayout.Label(a.Body);
+                        GUILayout.EndVertical();
+                    }
+                    foreach (var e in w.Calendar.ActiveOn(w.Clock.Now)) GUILayout.Label("Today: " + e.Name + " — " + e.Announcement);
+                    break;
+                case Tab.Radio:
+                    GUILayout.Label(RadioPresenter.Tuned == "" ? "Radio off" : "Tuned to " + (w.Radio.Station(RadioPresenter.Tuned)?.Name ?? RadioPresenter.Tuned));
+                    if (GUILayout.Button("Off")) RadioPresenter.Tune("");
+                    foreach (var st in w.Radio.Stations)
+                    {
+                        var seg = w.Radio.OnAir(st.Id, w.Clock.Now);
+                        if (GUILayout.Button(st.Frequency + "  " + st.Name + " — " + st.Genre + (seg != null ? "\n  now: " + seg.Title : ""))) RadioPresenter.Tune(st.Id);
+                    }
+                    break;
                 case Tab.Ripple:
                     _ripple.Draw(session);
                     break;

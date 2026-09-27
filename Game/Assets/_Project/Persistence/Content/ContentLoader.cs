@@ -36,6 +36,7 @@ namespace HeroGame.Persistence.Content
         public const string Ordinances = "ordinances.json";
         public const string CalendarEvents = "calendar_events.json";
         public const string RippleTemplates = "ripple_templates.json";
+        public const string RadioStations = "radio_stations.json";
 
         /// <summary>Story Mode content (not needed by player servers).</summary>
         public static Core.Story.StoryDefinition LoadStory(string dataDirectory, string file = Story) => Read<Core.Story.StoryDefinition>(dataDirectory, file);
@@ -211,6 +212,7 @@ namespace HeroGame.Persistence.Content
                 Ordinances = Read<List<Core.Civic.OrdinanceDefinition>>(dataDirectory, Ordinances),
                 CalendarEvents = Read<List<Core.Civic.CalendarEvent>>(dataDirectory, CalendarEvents),
                 RippleTemplates = Read<List<Core.Social.RippleTemplate>>(dataDirectory, RippleTemplates),
+                RadioStations = Read<List<Core.Audio.RadioStation>>(dataDirectory, RadioStations),
             };
             return set;
         }
@@ -398,6 +400,30 @@ namespace HeroGame.Persistence.Content
                 if (cat == Core.World.HistoryCategory.Server) continue;
                 var topic = Core.Simulation.RippleService.TopicOf(cat);
                 if (!rippleTopics.Contains(topic)) r.Error("ripple_templates", "No templates for topic '" + topic + "'.");
+            }
+
+            // Radio: unique stations and tracks, sane lengths, known tokens only.
+            var stationIds = new HashSet<string>();
+            var trackIds = new HashSet<string>();
+            var tokens = new[] { "{time}", "{weather}", "{temp}", "{city}", "{district}", "{headline}" };
+            foreach (var s in c.RadioStations)
+            {
+                var path = "radio_stations." + s.Id;
+                if (string.IsNullOrEmpty(s.Id) || !stationIds.Add(s.Id)) r.Error(path, "Missing or duplicate id.");
+                if (s.Format == Core.Audio.StationFormat.Music && s.Tracks.Count < 3) r.Error(path, "A music station needs at least three tracks.");
+                if (s.AdsPerHour < 0 || s.AdsPerHour > 12 || s.TalkPerHour < 0 || s.TalkPerHour > 12) r.Error(path, "Breaks per hour out of range.");
+                if (s.TalkPerHour > 0 && s.Talk.Count == 0) r.Error(path, "Talk breaks but no host lines.");
+                foreach (var t in s.Tracks)
+                {
+                    if (!trackIds.Add(t.Id)) r.Error(path, "Duplicate track id " + t.Id);
+                    if (t.Seconds < 30 || t.Seconds > 1200) r.Error(path, "Track " + t.Id + " length out of range.");
+                }
+                foreach (var line in s.Talk)
+                {
+                    var rest = line;
+                    foreach (var token in tokens) rest = rest.Replace(token, "");
+                    if (rest.IndexOf('{') >= 0) r.Error(path, "Unknown token in host line: " + line);
+                }
             }
 
             var placeKeys = new HashSet<string>();

@@ -18,6 +18,7 @@ namespace HeroGame.Core.Simulation
     {
         public const int MaxPostLength = 280;
         public const int MaxPlayerPostsPerDay = 20;
+        public const int MaxFollows = 500;
 
         private readonly World _w;
         private readonly Dictionary<string, List<RippleTemplate>> _templates = new Dictionary<string, List<RippleTemplate>>();
@@ -161,6 +162,7 @@ namespace HeroGame.Core.Simulation
             if (!_w.Characters.ContainsKey(target) && _w.Population.Get(target) == null) return OpResult.Fail("No such account.");
             var key = c.CharacterId.ToString();
             if (!S.Following.TryGetValue(key, out var list)) S.Following[key] = list = new List<EntityId>();
+            if (follow && !list.Contains(target) && list.Count >= MaxFollows) return OpResult.Fail("You follow " + MaxFollows + " accounts already.");
             if (follow && !list.Contains(target)) list.Add(target);
             if (!follow) list.Remove(target);
             _w.Dirty.Mark(SaveChunks.Social);

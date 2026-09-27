@@ -268,6 +268,17 @@ namespace HeroGame.Tests
             Assert.IsFalse(far.Success);
             StringAssert.Contains("not there", far.Error);
             Assert.IsFalse(Call(a, "character.mask", new Dictionary<string, string> { ["on"] = "true" }).Success, "no mask in inventory");
+
+            // A client cannot pickpocket someone across town by naming them.
+            var conn = _server.Players.Single();
+            Core.Population.NpcRecord distant = null;
+            foreach (var npc in _world.Population.Ordered)
+                if (_world.Director.TryGetPosition(_world.Schedules.Resolve(npc, _world.Clock.Now), out var pos) && Core.Foundation.WorldPosition.DistanceXZ(pos, conn.Position) > 200f) { distant = npc; break; }
+            Assert.IsNotNull(distant);
+            var pick = Call(a, "crime.pickpocket", new Dictionary<string, string> { ["npc"] = distant.Id.ToString() });
+            Assert.IsFalse(pick.Success);
+            StringAssert.Contains("not within reach", pick.Error);
+            Assert.AreEqual(0, _world.Characters[a.Welcome.CharacterId].Record.Charges.Count, "nothing happened");
         }
 
         [Test]
@@ -336,6 +347,11 @@ namespace HeroGame.Tests
             Assert.IsFalse(Call(a, "civic.register_powers").Success, "nothing to register");
             Assert.IsFalse(Call(a, "civic.budget", new Dictionary<string, string> { ["Police"] = "1", ["rate"] = "0.9" }).Success, "not the mayor");
             Assert.IsFalse(Call(a, "civic.file", new Dictionary<string, string> { ["office"] = "Mayor" }).Success, "player elections are off by default");
+
+            var radio = Call(a, "radio.now", new Dictionary<string, string> { ["station"] = "bayou_gold" });
+            Assert.IsTrue(radio.Success, radio.Error);
+            Assert.IsFalse(string.IsNullOrEmpty(radio.Data["title"]));
+            Assert.IsFalse(Call(a, "radio.now", new Dictionary<string, string> { ["station"] = "nope" }).Success);
 
             Assert.IsTrue(Call(admin, "admin.mute", new Dictionary<string, string> { ["account"] = "acc-r", ["reason"] = "spam", ["minutes"] = "10" }).Success);
             var muted = Call(a, "ripple.post", new Dictionary<string, string> { ["text"] = "still here" });

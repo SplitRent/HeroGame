@@ -12,7 +12,7 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Rain | stretched particles | greybox | VFX Graph rain, splashes, wet shader | PLACEHOLDER |
 | HUD | IMGUI `PrototypeHud` | Runtime/UI | UI Toolkit HUD (Phase 24) | PLACEHOLDER |
 | Build mode UI | IMGUI side panel in `BuildModeController`; greybox cube walls/furniture from `LayoutRenderer` | Runtime/Building | UI Toolkit build palette + catalog prefabs | PLACEHOLDER |
-| Business office / bank & insurance apps | IMGUI `BusinessPanel`, `FinancePanel` | Runtime/UI | phone apps + office screen (Phases 23–24) | PLACEHOLDER |
+| Business office / phone apps | IMGUI `BusinessPanel`, `PhonePanel` (messages, map, news, radio, Ripple, bank, loans, insurance, businesses) | Runtime/UI | UI Toolkit phone skin + office screen | PLACEHOLDER |
 | Police desk / court UI | IMGUI `JusticePanel` | Runtime/UI | UI Toolkit screens (Phase 24) | PLACEHOLDER |
 | City Hall UI (budget, council, elections, registration) | IMGUI `CivicPanel`; invisible counter trigger (`CityHallDesk`) | Runtime/UI, Runtime/Civic | UI Toolkit civic screens, City Hall interior with clerk NPC | PLACEHOLDER |
 | Ripple social app | IMGUI `RippleApp` tab inside the phone panel; no avatars or images | Runtime/UI | phone UI app with profile pictures and media (Phase 23) | PLACEHOLDER |
@@ -31,5 +31,6 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Procedural kit: street light, bench, hydrant, bollard, bus shelter, dumpster | generated meshes, 3 LODs + UCX | `Tools/Blender` | artist pass | FIRST PASS |
 | Names of people | generic common first/last names | `names.json` | expand pools; no real public figures | OK |
 | Business/brand names | original | layout JSON | — | OK |
-| Music, radio, VO | none | — | original commissions (Phase 23) | MISSING |
+| Radio music | original track metadata only (`radio_stations.json`, 25 fictional songs/artists); `RadioPresenter` plays `Resources/Radio/<trackId>` when present — none exist | Data, Runtime/UI | commission original tracks at the listed lengths | MISSING |
+| Radio host/news voice, SFX, VO | subtitles only | `RadioPresenter` ticker | original VO recordings / TTS pass, SFX library | MISSING |
 | Working title "SECOND LIFE" | trademark conflict | `GameInfo.WorkingTitle` | final title before any public build | MUST REPLACE |

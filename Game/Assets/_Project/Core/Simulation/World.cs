@@ -171,6 +171,7 @@ namespace HeroGame.Core.Simulation
         public readonly CivicService Government;
         public readonly RippleService Feed;
         public readonly CalendarService Calendar;
+        public readonly RadioService Radio;
         /// <summary>Bumped when the set of NPC-hireable workplaces changes (player takes over staffing, etc.).</summary>
         public int WorkplaceVersion;
 
@@ -230,6 +231,7 @@ namespace HeroGame.Core.Simulation
             Government = new CivicService(this);
             Feed = new RippleService(this);
             Calendar = new CalendarService(this);
+            Radio = new RadioService(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);

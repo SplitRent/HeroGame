@@ -23,6 +23,8 @@ namespace HeroGame.Networking.Server
         public const float BuildingReach = 60f;
         public const float VehicleReach = 8f;
         public const float PersonReach = 4f;
+        /// <summary>Schedule positions are approximate within a place, so reach for NPCs is looser than for players.</summary>
+        public const float PickpocketReach = 12f;
 
         public static void Register(RequestRouter r)
         {
@@ -127,6 +129,17 @@ namespace HeroGame.Networking.Server
                                        "|" + p.At.TotalSeconds.ToString(CultureInfo.InvariantCulture) + "|" + Clean(p.Text);
                 }
                 return RequestContext.Ok(data);
+            });
+
+            r.Register("radio.now", ctx =>
+            {
+                var seg = ctx.World.Radio.OnAir(ctx.Str("station", 64), ctx.World.Clock.Now);
+                if (seg == null) return RequestContext.Fail("No such station.");
+                return RequestContext.Ok(new Dictionary<string, string>
+                {
+                    ["kind"] = seg.Kind.ToString(), ["title"] = seg.Title, ["text"] = seg.Text.Length > 600 ? seg.Text.Substring(0, 600) : seg.Text,
+                    ["track"] = seg.TrackId, ["start"] = seg.StartSecond.ToString(CultureInfo.InvariantCulture), ["end"] = seg.EndSecond.ToString(CultureInfo.InvariantCulture),
+                });
             });
 
             r.Register("civic.register_powers", ctx => RequestContext.From(ctx.World.Government.RegisterPowers(ctx.Me)));
@@ -269,6 +282,9 @@ namespace HeroGame.Networking.Server
                 {
                     var npc = w.Population.Get(ctx.Id("npc"));
                     if (npc == null) return RequestContext.Fail("Nobody there.");
+                    // Where the NPC really is comes from their schedule on the server, never from the client.
+                    if (!w.Director.TryGetPosition(w.Schedules.Resolve(npc, w.Clock.Now), out var npcPos) || !ctx.Near(npcPos, PickpocketReach))
+                        return RequestContext.Fail("They are not within reach.");
                     result = w.Crimes.Pickpocket(ctx.Me, npc, ctx.Connection.Position, concealment);
                     break;
                 }

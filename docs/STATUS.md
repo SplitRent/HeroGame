@@ -85,6 +85,7 @@ _Last updated: Phases 19–20 (government, elections, Ripple social feed, city c
 | Ripple social platform (NPC posts from real history, player posts, likes, follows, feed ranking, trending, NPC engagement) | TESTED | `Ripple_NpcsPostAboutRealEvents`, `Ripple_PlayersPostLikeFollowAndReadAFeed` |
 | City calendar (dated events shifting demand by place kind, announcements) | TESTED | `Calendar_EventsSpanTheirDates_AndShiftDemand` |
 | Local disasters: chemical incident (district closure), flash flood (damage), blackout (outage hours), heat wave (EMS calls, demand) | TESTED | `ChemicalIncident_ClosesTheDistrictsBusinesses_AndIsCalledIn`, `FlashFlood_DamagesPropertyOnlyInItsDistrict`, `Blackout_AccruesOutageHoursForItsDistrict` |
+| Radio (4 original stations; real-time running order; news from real history, weather, ads for real businesses weighted by ad spend, host breaks, emergency cut-ins) | TESTED | `EveryStation_FillsTheHourWithContiguousSegments`, `OnAir_IsDeterministic_AcrossWorlds`, `Songs_LastTheirRealLength_*`, `News_ComesFromRealHistory`, `Advertisers_GetAirtime`, `Emergencies_CutIntoEveryStation` |
 | Youth curfew enforcement on individual minors | PLANNED | the ordinance exists and costs police trust in poorer districts; no per-NPC enforcement yet |
 
 ## Story Mode
@@ -119,7 +120,8 @@ _Last updated: Phases 19–20 (government, elections, Ripple social feed, city c
 | Anti-cheat: movement validation, proximity, rate limits, malformed frames | TESTED | `Movement_*`, `CrimeRequests_RequireBeingThere_*`, `Floods_AndMalformedFrames_*` |
 | Request router onto core services, idempotent retries | TESTED | `Requests_RunAsTheConnectionsCharacter_*`, `BuildOps_SurviveTheWireEncoding` |
 | Moderation over the network (kick/ban/mute/grant, audit log, persistence) | TESTED | `Moderation_OnlyPermittedAccountsCanKick_*` |
-| Ripple & civic requests (post/feed/like/follow, ballot/file/donate/campaign/propose/vote/budget/register) | TESTED | `RippleAndCivicRequests_PostReadAndRegister_AndMutedPlayersCannotPost` |
+| Server-side reach for pickpocketing (NPC position from the server's schedule) | TESTED | `CrimeRequests_RequireBeingThere_AndUseServerSideDisguise` |
+| Ripple, radio & civic requests (post/feed/like/follow, ballot/file/donate/campaign/propose/vote/budget/register) | TESTED | `RippleAndCivicRequests_PostReadAndRegister_AndMutedPlayersCannotPost` |
 | Accounts (PBKDF2, lockout, sessions) | TESTED | `Accounts_ValidateInput_HashPasswords_AndLockAfterRepeatedFailures` |
 | Server directory (registration, heartbeat, listing, tickets) | TESTED | `Servers_RegisterUnderAnAccount_*`, `Stores_PersistAtomically` |
 | Master HTTP API + full-stack join | TESTED | `FullStack_LoginOverHttp_TicketFromMaster_JoinTheGameServer`; CI smoke test |
@@ -148,7 +150,8 @@ _Last updated: Phases 19–20 (government, elections, Ripple social feed, city c
 | NPC conversation, subtitles, interiors with real occupants | IN DEVELOPMENT | compiles |
 | Vehicle controller (WheelCollider), entry/exit, traffic presenter | IN DEVELOPMENT | compiles |
 | Build mode (overhead editor, live cost/validation, layout renderer) | IN DEVELOPMENT | compiles; greybox builder adds a build zone to every property |
-| Business office panel, bank/insurance phone apps | IN DEVELOPMENT | compiles; IMGUI placeholders |
+| Business office panel; phone (messages, map, news, radio, Ripple, bank, loans, insurance, businesses) | IN DEVELOPMENT | compiles; IMGUI placeholders |
+| Radio presenter (ticker/subtitles, clip playback joined at the station's offset) | IN DEVELOPMENT | compiles; no music assets yet |
 | Crime interactables (shelves, register, break-in, fence, chop shop), police desk, custody | IN DEVELOPMENT | compiles; greybox builder places them |
 | Emergency unit & fire presentation, player vitals (fall damage, downed → hospital) | IN DEVELOPMENT | compiles |
 | Power controller (select/charge/aim, motion effects, knockback, VFX placeholder) | IN DEVELOPMENT | compiles |
@@ -167,5 +170,5 @@ _Last updated: Phases 19–20 (government, elections, Ripple social feed, city c
 | MCP command surface | FUNCTIONAL | `mcp_commands.run`; exercised via CLI |
 
 ## Not started (PLANNED)
-Combat & weapons · radio & audio · phone UI (beyond prototype apps) · animation set · character creator 3D preview ·
+Combat & weapons · music, SFX and VO assets · UI Toolkit phone skin · animation set · character creator 3D preview ·
 destruction · Addressables cell content · HLOD · full city · Story Mode Part Two acts II–IV.

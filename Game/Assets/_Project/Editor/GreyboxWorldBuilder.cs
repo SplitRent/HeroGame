@@ -95,7 +95,8 @@ namespace HeroGame.Editor
             story.Player = player.transform;
 
             var hud = systems.AddComponent<PrototypeHud>();
-            systems.AddComponent<FinancePanel>();
+            systems.AddComponent<PhonePanel>();
+            systems.AddComponent<RadioPresenter>();
             hud.Interactor = player.GetComponent<PlayerInteractor>();
             var console = systems.AddComponent<DevConsole>();
             console.Player = player.transform;
