@@ -33,6 +33,7 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Procedural kit: street light, bench, hydrant, bollard, bus shelter, dumpster | generated meshes, 3 LODs + UCX | `Tools/Blender` | artist pass | FIRST PASS |
 | Names of people | generic common first/last names | `names.json` | expand pools; no real public figures | OK |
 | Business/brand names | original | layout JSON | — | OK |
-| Radio music | original track metadata only (`radio_stations.json`, 25 fictional songs/artists); `RadioPresenter` plays `Resources/Radio/<trackId>` when present — none exist | Data, Runtime/UI | commission original tracks at the listed lengths | MISSING |
-| Radio host/news voice, SFX, VO | subtitles only | `RadioPresenter` ticker | original VO recordings / TTS pass, SFX library | MISSING |
+| Radio music | procedural 8-bar arrangement per track (`Synth.MusicLoop`, seeded by track id and station genre), looped for the track's length; `Resources/Radio/<trackId>` overrides it | Core/Audio, `RadioPresenter` | commission original tracks at the listed lengths | PLACEHOLDER |
+| Voices (dialogue, radio hosts) | procedural syllable babble in each speaker's own pitch under the subtitles | `Synth.Babble` | VO recordings | PLACEHOLDER |
+| Sirens, engines, rain, wind, thunder, ambience beds, UI, power sounds | procedural synthesis; any clip at `Resources/Audio/<name>` replaces its placeholder | `Synth`, `AudioDirector`, `VehicleAudio` | recorded/licensed-original SFX library | PLACEHOLDER |
 | Working title "SECOND LIFE" | trademark conflict | `GameInfo.WorkingTitle` | final title before any public build | MUST REPLACE |

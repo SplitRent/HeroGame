@@ -35,6 +35,7 @@ namespace HeroGame.Runtime.Vehicles
 
         private void Awake()
         {
+            if (GetComponent<Audio.VehicleAudio>() == null) gameObject.AddComponent<Audio.VehicleAudio>();
             _body = GetComponent<Rigidbody>();
             _body.centerOfMass = CenterOfMass;
         }

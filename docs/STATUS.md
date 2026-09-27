@@ -92,6 +92,9 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Structural collapse: EMS call, leases end with deposits returned, businesses forced shut, debris; city rebuilds non-player buildings after 60 days | TESTED | `BuildingCollapse_*` |
 | Recovery: public-works crews sized by budget repair by priority, paid from the treasury | TESTED | `PublicWorks_RepairsByPriority_*` |
 | Destructible presenter (kit prefab or greybox, tilt when damaged, physics debris, hydrant spray) | IN DEVELOPMENT | compiles; not run in Unity |
+| Procedural placeholder audio (music loops per track, sirens, engines, rain, wind, thunder, 5 ambience beds, UI, power charge/impact, voice babble) | TESTED | `EverySound_IsFinite_Audible_AndUnclipped`, `Music_IsDeterministicPerTrack_*`, `Sirens_SoundLikeTheirService`, `Babble_*` |
+| Soundscape mixing from world state (district bed, day/night, weather, indoor muffling, crowds, sirens of units on real calls) | TESTED | `Soundscape_FollowsTheWorld` |
+| Audio director, vehicle engines, radio playback (procedural music/host voice), dialogue/UI/phone/power sounds | IN DEVELOPMENT | compiles; not run in Unity |
 | Youth curfew enforcement on individual minors | PLANNED | the ordinance exists and costs police trust in poorer districts; no per-NPC enforcement yet |
 
 ## Story Mode
@@ -186,5 +189,5 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | MCP command surface | FUNCTIONAL | `mcp_commands.run`; exercised via CLI |
 
 ## Not started (PLANNED)
-Combat & weapons · music, SFX and VO assets · UI Toolkit phone skin · animation set · character creator 3D preview ·
+Combat & weapons · recorded music, SFX and VO (procedural placeholders exist) · UI Toolkit phone skin · animation set · character creator 3D preview ·
 Addressables cell content · HLOD · full city · Story Mode Part Two acts II–IV.

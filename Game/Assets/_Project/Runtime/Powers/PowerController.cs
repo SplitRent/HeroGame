@@ -55,6 +55,11 @@ namespace HeroGame.Runtime.Powers
             if (count == 0) return;
             if (input.PowerHeld)
             {
+                if (!_charging)
+                {
+                    var element = session.LocalCharacter.Powers.Powers[_selected].Definition.PrimaryElement.ToString();
+                    Audio.AudioDirector.PowerCharge(element, transform.position);
+                }
                 _charging = true;
                 _charge += Time.deltaTime;
             }
@@ -221,6 +226,7 @@ namespace HeroGame.Runtime.Powers
 
         private void Burst(Vector3 at, PowerElement element, float scale)
         {
+            Audio.AudioDirector.PowerImpact(element.ToString(), at);
             if (ImpactVfx == null) return;
             var fx = Instantiate(ImpactVfx, at, Quaternion.identity);
             var main = fx.main;

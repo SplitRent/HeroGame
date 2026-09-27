@@ -98,6 +98,7 @@ namespace HeroGame.Editor
             systems.AddComponent<PhonePanel>();
             systems.AddComponent<RadioPresenter>();
             systems.AddComponent<Runtime.WorldProps.DestructiblePresenter>();
+            systems.AddComponent<Runtime.Audio.AudioDirector>();
             hud.Interactor = player.GetComponent<PlayerInteractor>();
             var console = systems.AddComponent<DevConsole>();
             console.Player = player.transform;

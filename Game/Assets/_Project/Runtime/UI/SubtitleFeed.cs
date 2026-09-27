@@ -20,6 +20,7 @@ namespace HeroGame.Runtime.UI
         {
             if (string.IsNullOrEmpty(text)) return;
             Lines.Add(new Entry { Speaker = speaker, Text = text, ExpiresAt = Time.unscaledTime + seconds + text.Length * 0.03f });
+            if (!string.IsNullOrEmpty(speaker)) Audio.AudioDirector.Voice(speaker, text);
             while (Lines.Count > MaxLines) Lines.RemoveAt(0);
         }
 

@@ -17,6 +17,7 @@ namespace HeroGame.Runtime.UI
         public static void Acquire()
         {
             if (_holders++ > 0) return;
+            Audio.AudioDirector.Ui(Core.Audio.Synth.UiSound.Click);
             if (_input == null) _input = PlayerInputRegistry.Create();
             _input.GameplayEnabled = false;
             Cursor.lockState = CursorLockMode.None;

@@ -64,13 +64,26 @@ namespace HeroGame.Runtime.UI
             if (_current != null && _current.Station == seg.Station && _current.StartSecond == seg.StartSecond) return;
             _current = seg;
             _source.Stop();
-            if (seg.Kind != SegmentKind.Track) return;
+            var station = session.World.Radio.Station(seg.Station);
+            _source.volume = Audio.AudioVolumes.Effective(seg.Kind == SegmentKind.Track ? Audio.AudioChannel.Music : Audio.AudioChannel.Voice);
+            if (seg.Kind != SegmentKind.Track)
+            {
+                // Talk, news, ads, alerts: the host's placeholder voice under the subtitle.
+                var speaker = station != null ? station.Host : seg.Title;
+                _source.clip = Audio.ProceduralClips.Get("radio:" + seg.Station + ":" + seg.StartSecond,
+                    () => Core.Audio.Synth.Babble(Core.Foundation.StableHash.Of(speaker), seg.Text));
+                _source.loop = false;
+                _source.Play();
+                return;
+            }
+            // A commissioned recording if one exists, otherwise a procedural arrangement unique to the track, looped.
             var clip = Resources.Load<AudioClip>("Radio/" + seg.TrackId);
-            if (clip == null) return;
+            _source.loop = clip == null;
+            if (clip == null) clip = Audio.ProceduralClips.Get("music:" + seg.TrackId, () => Core.Audio.Synth.MusicLoop(seg.TrackId, station != null ? station.Genre : ""));
             _source.clip = clip;
             // Join the song where the station is, so everyone tuned in hears the same moment.
             var offset = session.World.Radio.RadioSecond(session.World.Clock.Now) - seg.StartSecond;
-            _source.time = Mathf.Clamp(offset, 0f, Mathf.Max(0f, clip.length - 0.1f));
+            _source.time = Mathf.Clamp(_source.loop ? offset % clip.length : offset, 0f, Mathf.Max(0f, clip.length - 0.1f));
             _source.Play();
         }
 
