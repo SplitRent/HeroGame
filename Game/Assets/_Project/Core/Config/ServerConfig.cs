@@ -80,6 +80,8 @@ namespace HeroGame.Core.Config
         public bool VehiclePersistence = true;
         public bool PropertyPersistence = true;
         public bool PlayerElections = false;
+        /// <summary>Served game days per guideline sentence day (0.1 → a 30-day sentence is served in 3 game days).</summary>
+        public float SentenceScale = 0.1f;
     }
 
     [Serializable]

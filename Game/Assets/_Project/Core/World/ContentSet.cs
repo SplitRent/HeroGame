@@ -28,6 +28,13 @@ namespace HeroGame.Core.World
         public List<VehicleMod> VehicleMods = new List<VehicleMod>();
         public List<FurnitureDefinition> Furniture = new List<FurnitureDefinition>();
         public List<BusinessRequirement> BusinessRequirements = new List<BusinessRequirement>();
+        public List<ItemDefinition> Items = new List<ItemDefinition>();
+
+        public ItemDefinition FindItem(string id)
+        {
+            foreach (var i in Items) if (i.Id == id) return i;
+            return null;
+        }
 
         public CrimeType FindCrime(string id)
         {

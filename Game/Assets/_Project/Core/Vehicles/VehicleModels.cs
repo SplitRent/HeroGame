@@ -65,6 +65,8 @@ namespace HeroGame.Core.Vehicles
         Lights,
         Plate,
         Livery,
+        /// <summary>Alarm, immobiliser or GPS tracker (vehicle theft and recovery).</summary>
+        Security,
     }
 
     /// <summary>Customisation part (vehicle_mods.json). Stat effects are multipliers applied by the vehicle controller.</summary>
@@ -126,6 +128,8 @@ namespace HeroGame.Core.Vehicles
         /// <summary>Repair cost already settled by insurance; cleared when the vehicle is repaired.</summary>
         public long InsuranceClaimedCents;
         public long StolenSinceDay = -1;
+        /// <summary>Who is currently holding the stolen vehicle (thief); cleared on recovery.</summary>
+        public EntityId StolenBy;
 
         public bool Drivable => EngineHealth > 0.05f && LocationKind != VehicleLocationKind.Destroyed && LocationKind != VehicleLocationKind.Impound;
         public float Condition => (EngineHealth + BodyHealth + TireHealth) / 3f;

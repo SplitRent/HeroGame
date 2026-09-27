@@ -72,6 +72,7 @@ namespace HeroGame.Core.Simulation
         public const string Population = "population";
         public const string Properties = "properties";
         public const string Businesses = "businesses";
+        public const string Justice = "justice";
         public const string Environment = "environment";
         public const string History = "history";
         public const string Vehicles = "vehicles";
@@ -82,7 +83,7 @@ namespace HeroGame.Core.Simulation
 
         public static string PopulationShard(int index) => PopulationShardPrefix + index;
         public static int ShardOf(EntityId npc) => (int)((npc.Sequence - 1) / NpcsPerShard);
-        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles };
+        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice };
     }
 
     /// <summary>
@@ -139,6 +140,10 @@ namespace HeroGame.Core.Simulation
         public readonly InsuranceBook Insurance = new InsuranceBook();
         public readonly FinanceService Finance;
         public readonly BusinessOperations BusinessOps;
+        /// <summary>Incidents, evidence and court cases (persisted in the justice chunk).</summary>
+        public JusticeState Justice = new JusticeState();
+        public readonly CrimeService Crimes;
+        public readonly JusticeService Courts;
         /// <summary>Bumped when the set of NPC-hireable workplaces changes (player takes over staffing, etc.).</summary>
         public int WorkplaceVersion;
 
@@ -191,6 +196,8 @@ namespace HeroGame.Core.Simulation
             Phone = new PhoneService(this);
             Finance = new FinanceService(this);
             BusinessOps = new BusinessOperations(this);
+            Crimes = new CrimeService(this);
+            Courts = new JusticeService(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
@@ -219,6 +226,13 @@ namespace HeroGame.Core.Simulation
         /// Opens institutions added after a world was first generated (older saves) and tops up their capital.
         /// Idempotent; called after generation and after every load.
         /// </summary>
+        /// <summary>Loads the justice chunk and re-files its evidence with the police.</summary>
+        public void RestoreJustice(JusticeState state)
+        {
+            Justice = state ?? new JusticeState();
+            foreach (var e in Justice.Evidence) Wanted.AddEvidence(e);
+        }
+
         public void EnsureInstitutions()
         {
             BusinessOps.Reconcile();

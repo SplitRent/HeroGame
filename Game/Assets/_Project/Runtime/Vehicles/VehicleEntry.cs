@@ -37,7 +37,7 @@ namespace HeroGame.Runtime.Vehicles
         public override string GetPrompt(InteractionContext context)
         {
             var name = _vehicle.Model != null ? _vehicle.Model.DisplayName : "vehicle";
-            return IsOwner() ? "Get in your " + name : "Steal the " + name;
+            return IsOwner() || IsHeldByMe() ? "Get in the " + name : "Steal the " + name;
         }
 
         public override bool CanInteract(InteractionContext context) => !Occupied && base.CanInteract(context);
@@ -45,7 +45,17 @@ namespace HeroGame.Runtime.Vehicles
         public override void Interact(InteractionContext context)
         {
             if (Occupied) return;
-            if (!IsOwner()) TheftAttempted?.Invoke(_vehicle, context.Actor);
+            if (!IsOwner() && !IsHeldByMe())
+            {
+                TheftAttempted?.Invoke(_vehicle, context.Actor);
+                // The core decides whether the theft works (alarms, immobilisers, witnesses) and files the crime.
+                if (_vehicle.Record != null && ServiceRegistry.TryGet<GameSession>(out var session) && session.LocalCharacter != null)
+                {
+                    var result = session.World.Crimes.StealVehicle(session.LocalCharacter, _vehicle.Record, Crime.PlayerConcealment.For(session.LocalCharacter));
+                    Crime.PlayerConcealment.Say(result);
+                    if (!result.Succeeded) return;
+                }
+            }
             Enter(context.Actor);
         }
 
@@ -91,6 +101,10 @@ namespace HeroGame.Runtime.Vehicles
             if (motor != null) motor.enabled = active;
             foreach (var r in player.GetComponentsInChildren<Renderer>()) r.enabled = active;
         }
+
+        private bool IsHeldByMe() =>
+            _vehicle.Record != null && ServiceRegistry.TryGet<GameSession>(out var session) && session.LocalCharacter != null
+            && _vehicle.Record.StolenBy == session.LocalCharacter.CharacterId;
 
         private bool IsOwner()
         {

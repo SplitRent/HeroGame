@@ -168,6 +168,9 @@ namespace HeroGame.Persistence.Saves
             foreach (var p in ReadChunk<PropertiesChunk>(manifest, SaveChunks.Properties).Properties) world.Properties.Add(p);
             foreach (var b in ReadChunk<BusinessesChunk>(manifest, SaveChunks.Businesses).Businesses) world.Businesses[b.Id] = b;
 
+            if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Justice))
+                world.RestoreJustice(ReadChunk<Core.Crime.JusticeState>(manifest, SaveChunks.Justice));
+
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Vehicles))
                 foreach (var v in ReadChunk<VehiclesChunk>(manifest, SaveChunks.Vehicles).Vehicles) world.Vehicles.Restore(v);
 
@@ -247,6 +250,8 @@ namespace HeroGame.Persistence.Saves
                     env.Places.Sort((a, b) => a.Id.CompareTo(b.Id));
                     env.AnomalyLog.AddRange(world.AnomalyLog);
                     return env;
+                case SaveChunks.Justice:
+                    return world.Justice;
                 case SaveChunks.Vehicles:
                     var vehicles = new VehiclesChunk();
                     vehicles.Vehicles.AddRange(world.Vehicles.All);

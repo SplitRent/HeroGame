@@ -21,7 +21,8 @@
       "essentials"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.12
+    "OperatingExpenseRatio": 0.12,
+    "LootTag": "retail_general"
   },
   {
     "Id": "supermarket",
@@ -45,7 +46,8 @@
       "groceries"
     ],
     "FootTrafficSensitivity": 0.7,
-    "OperatingExpenseRatio": 0.1
+    "OperatingExpenseRatio": 0.1,
+    "LootTag": "retail_general"
   },
   {
     "Id": "pharmacy",
@@ -69,7 +71,8 @@
       "health"
     ],
     "FootTrafficSensitivity": 0.7,
-    "OperatingExpenseRatio": 0.12
+    "OperatingExpenseRatio": 0.12,
+    "LootTag": "pharmacy"
   },
   {
     "Id": "clothing_boutique",
@@ -93,7 +96,8 @@
       "fashion"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_fashion"
   },
   {
     "Id": "hardware_store",
@@ -117,7 +121,8 @@
       "tools"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.14
+    "OperatingExpenseRatio": 0.14,
+    "LootTag": "hardware"
   },
   {
     "Id": "barbershop",
@@ -141,7 +146,8 @@
       "grooming"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_general"
   },
   {
     "Id": "laundromat",
@@ -164,7 +170,8 @@
       "service"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_general"
   },
   {
     "Id": "diner",
@@ -188,7 +195,8 @@
       "breakfast"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_general"
   },
   {
     "Id": "taqueria",
@@ -211,7 +219,8 @@
       "food"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_general"
   },
   {
     "Id": "coffee_shop",
@@ -235,7 +244,8 @@
       "coffee"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_general"
   },
   {
     "Id": "seafood_restaurant",
@@ -259,7 +269,8 @@
       "dining"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_general"
   },
   {
     "Id": "neighborhood_bar",
@@ -283,7 +294,8 @@
       "nightlife"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "bar"
   },
   {
     "Id": "nightclub",
@@ -308,7 +320,8 @@
       "music"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "bar"
   },
   {
     "Id": "auto_garage",
@@ -332,7 +345,8 @@
       "service"
     ],
     "FootTrafficSensitivity": 0.35,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "vehicle"
   },
   {
     "Id": "gas_station",
@@ -357,7 +371,8 @@
       "retail"
     ],
     "FootTrafficSensitivity": 0.5,
-    "OperatingExpenseRatio": 0.05
+    "OperatingExpenseRatio": 0.05,
+    "LootTag": "gas_station"
   },
   {
     "Id": "gym",
@@ -381,7 +396,8 @@
       "service"
     ],
     "FootTrafficSensitivity": 1.0,
-    "OperatingExpenseRatio": 0.18
+    "OperatingExpenseRatio": 0.18,
+    "LootTag": "retail_general"
   },
   {
     "Id": "logistics_depot",
@@ -405,7 +421,8 @@
       "logistics"
     ],
     "FootTrafficSensitivity": 0.1,
-    "OperatingExpenseRatio": 0.12
+    "OperatingExpenseRatio": 0.12,
+    "LootTag": "warehouse"
   },
   {
     "Id": "bank_branch",
@@ -428,7 +445,8 @@
       "finance"
     ],
     "FootTrafficSensitivity": 0.5,
-    "OperatingExpenseRatio": 0.25
+    "OperatingExpenseRatio": 0.25,
+    "LootTag": "office"
   },
   {
     "Id": "car_dealership",
@@ -452,6 +470,7 @@
     "Tags": [
       "automotive",
       "retail"
-    ]
+    ],
+    "LootTag": "vehicle"
   }
 ]

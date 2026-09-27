@@ -39,9 +39,37 @@ namespace HeroGame.Runtime.DevTools
             Add("save", "Save now", (s, a) => { var r = s.Save(); return "Saved generation " + r.Generation + " (" + r.ChunksWritten + " chunks)"; });
             Add("buyable", "List properties for sale", Buyable);
             Add("car", "car MODEL — buy a new car at list price (needs cash) and park it next to you; 'car' lists models", Car);
+            Add("give", "give ITEM [N] — add an item (tools such as crowbar, lockpick_set, ski_mask); 'give' lists items", Give);
+            Add("mask", "mask — pull the ski mask on or off (needs one in your inventory)", (s, a) =>
+            {
+                Crime.PlayerConcealment.MaskOn = !Crime.PlayerConcealment.MaskOn;
+                return Crime.PlayerConcealment.MaskOn ? "Mask on." : "Mask off.";
+            });
+            Add("arrest", "arrest — police take you in (as if caught in a pursuit)", (s, a) =>
+            {
+                var r = s.World.Courts.Arrest(s.LocalCharacter, caughtInPursuit: s.World.Wanted.Get(s.LocalCharacter.CharacterId) != null, resisted: false);
+                return r.Success ? s.World.Justice.OpenCaseFor(s.LocalCharacter.CharacterId)?.Summary ?? "Booked." : r.Error;
+            });
         }
 
         public IEnumerable<string> Names => _commands.Keys;
+
+        private static string Give(GameSession s, string[] a)
+        {
+            if (s.LocalCharacter == null) return "No character.";
+            if (a.Length == 0)
+            {
+                var sb = new StringBuilder();
+                foreach (var i in s.World.Content.Items) sb.Append(i.Id).Append(' ');
+                return sb.ToString();
+            }
+            var item = s.World.Content.FindItem(a[0]);
+            if (item == null) return "Unknown item " + a[0];
+            var n = Int(a, 1, 1);
+            s.LocalCharacter.Inventory.Add(new Core.Characters.InventoryStack { ItemId = item.Id, Quantity = Math.Max(1, n) });
+            s.World.Dirty.Mark(SaveChunks.CharacterPrefix + s.LocalCharacter.CharacterId);
+            return "Added " + n + " × " + item.DisplayName;
+        }
 
         public string Execute(string line)
         {

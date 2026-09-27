@@ -106,6 +106,16 @@ namespace HeroGame.Core.Crime
         public int Convictions;
         public long FinesOwedCents;
         public GameDateTime ProbationUntil;
+        /// <summary>Day unpaid fines fall due; missing it turns into a warrant.</summary>
+        public long FinesDueDay = -1;
+        /// <summary>Held by police/court (arrested, awaiting hearing, or serving a sentence).</summary>
+        public bool InCustody;
+        /// <summary>Release day while serving a jail sentence (-1 while held pending a hearing).</summary>
+        public long CustodyUntilDay = -1;
+        public bool ServingSentence;
+        public bool WarrantForFines;
+
+        public bool OnProbation(GameDateTime now) => ProbationUntil > now;
     }
 
     /// <summary>A detected interaction between identities: disguise quality at the time of a crime.</summary>

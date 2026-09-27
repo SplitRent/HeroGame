@@ -13,6 +13,8 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | HUD | IMGUI `PrototypeHud` | Runtime/UI | UI Toolkit HUD (Phase 24) | PLACEHOLDER |
 | Build mode UI | IMGUI side panel in `BuildModeController`; greybox cube walls/furniture from `LayoutRenderer` | Runtime/Building | UI Toolkit build palette + catalog prefabs | PLACEHOLDER |
 | Business office / bank & insurance apps | IMGUI `BusinessPanel`, `FinancePanel` | Runtime/UI | phone apps + office screen (Phases 23–24) | PLACEHOLDER |
+| Police desk / court UI | IMGUI `JusticePanel` | Runtime/UI | UI Toolkit screens (Phase 24) | PLACEHOLDER |
+| Crime interaction points, fence & chop-shop contacts, holding cell | invisible trigger boxes placed by `GreyboxWorldBuilder` | Runtime/Crime | authored interiors, NPC fence characters, animations | PLACEHOLDER |
 | Dev console / inspector | IMGUI | dev builds only | stays IMGUI (developer-only) | OK (not shipped) |
 | Main menu backdrop | flat colour | MainMenu.uss | live city flythrough / key art | PLACEHOLDER |
 | Server list | mock JSON | `server_list_mock.json` | master server query (Phase 9) | PLACEHOLDER |

@@ -35,6 +35,8 @@ namespace HeroGame.Core.Business
         /// <summary>Inventory units held per day of expected sales (0 for service businesses).</summary>
         public float InventoryDays = 5f;
         public List<string> Tags = new List<string>();
+        /// <summary>Loot table (items.json LootTags) for shoplifting and burglary here.</summary>
+        public string LootTag = "retail_general";
     }
 
     [Serializable]

@@ -4,6 +4,7 @@ using HeroGame.Core.Foundation;
 using HeroGame.Core.World;
 using HeroGame.Persistence.Content;
 using HeroGame.Runtime.Bootstrap;
+using HeroGame.Runtime.Crime;
 using HeroGame.Runtime.Building;
 using HeroGame.Runtime.DevTools;
 using HeroGame.Runtime.Interaction;
@@ -32,6 +33,7 @@ namespace HeroGame.Editor
         public const string MenuScene = SceneFolder + "/MainMenu.unity";
         public const string GeneratedFolder = "Assets/_Project/Generated";
         private static NpcAvatar _npcPrefab;
+        private static Transform _policeStation;
 
         [MenuItem("HeroGame/Build Greybox Vertical Slice", priority = 1)]
         public static void BuildGreybox()
@@ -74,6 +76,18 @@ namespace HeroGame.Editor
             var population = populationGo.AddComponent<NpcPopulationPresenter>();
             population.AvatarPrefab = _npcPrefab;
             population.Observer = player.transform;
+
+            if (_policeStation != null)
+            {
+                // Holding cell inside the station greybox and the steps outside for release.
+                var custody = player.AddComponent<CustodyPresenter>();
+                custody.Cell = new GameObject("Holding Cell").transform;
+                custody.Cell.SetParent(_policeStation, false);
+                custody.Cell.localPosition = new Vector3(0f, 0.1f, 0f);
+                custody.ReleasePoint = new GameObject("Station Steps").transform;
+                custody.ReleasePoint.SetParent(_policeStation, false);
+                custody.ReleasePoint.localPosition = new Vector3(0f, 0.1f, -14f);
+            }
 
             var hud = systems.AddComponent<PrototypeHud>();
             systems.AddComponent<FinancePanel>();
@@ -268,6 +282,47 @@ namespace HeroGame.Editor
                     var presenter = interior.AddComponent<InteriorPresenter>();
                     presenter.Place = marker;
                     presenter.AvatarPrefab = _npcPrefab;
+                }
+                if (e.Property != null && p.Kind != PlaceKind.PoliceStation)
+                {
+                    var door = new GameObject("Entry Point");
+                    door.transform.SetParent(go.transform);
+                    door.transform.position = front + go.transform.rotation * new Vector3(-e.Width * 0.3f, 1f, 0.6f);
+                    door.AddComponent<BoxCollider>().isTrigger = true;
+                    door.AddComponent<BreakInPoint>().Place = marker;
+                }
+                if (p.Kind == PlaceKind.PoliceStation)
+                {
+                    _policeStation = go.transform;
+                    var desk = new GameObject("Front Desk");
+                    desk.transform.SetParent(go.transform);
+                    desk.transform.position = front + Vector3.up;
+                    desk.AddComponent<BoxCollider>().isTrigger = true;
+                    desk.AddComponent<PoliceDesk>().Place = marker;
+                }
+                if (p.Kind == PlaceKind.Dock || p.Kind == PlaceKind.Garage)
+                {
+                    // Placeholder underworld contacts (ASSET_TRACKER): a fence at the docks, a chop shop behind garages.
+                    var contact = new GameObject(p.Kind == PlaceKind.Dock ? "Fence" : "Chop Shop");
+                    contact.transform.SetParent(go.transform);
+                    contact.transform.position = go.transform.position + go.transform.rotation * new Vector3(e.Width * 0.5f + 1.5f, 1f, e.Depth * 0.3f);
+                    contact.AddComponent<BoxCollider>().isTrigger = true;
+                    var f = contact.AddComponent<FenceContact>();
+                    f.Place = marker;
+                    f.ChopShop = p.Kind == PlaceKind.Garage;
+                }
+                if (e.Business != null)
+                {
+                    var shelf = new GameObject("Shelves");
+                    shelf.transform.SetParent(go.transform);
+                    shelf.transform.position = front + go.transform.rotation * new Vector3(2.5f, 1f, 0f);
+                    shelf.AddComponent<BoxCollider>().isTrigger = true;
+                    shelf.AddComponent<ShopShelf>().Place = marker;
+                    var register = new GameObject("Register");
+                    register.transform.SetParent(go.transform);
+                    register.transform.position = front + go.transform.rotation * new Vector3(-1.5f, 1f, 0f);
+                    register.AddComponent<BoxCollider>().isTrigger = true;
+                    register.AddComponent<RegisterRobbery>().Place = marker;
                 }
                 if (e.Business != null)
                 {

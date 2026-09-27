@@ -1,0 +1,332 @@
+[
+  {
+    "Id": "phone_used",
+    "DisplayName": "Used smartphone",
+    "Category": "electronics",
+    "ValueCents": 18000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "residence_high",
+      "pickpocket",
+      "retail_electronics"
+    ]
+  },
+  {
+    "Id": "laptop",
+    "DisplayName": "Laptop computer",
+    "Category": "electronics",
+    "ValueCents": 65000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "residence_high",
+      "office",
+      "retail_electronics"
+    ]
+  },
+  {
+    "Id": "tablet",
+    "DisplayName": "Tablet",
+    "Category": "electronics",
+    "ValueCents": 32000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high",
+      "retail_electronics"
+    ]
+  },
+  {
+    "Id": "game_console",
+    "DisplayName": "Game console",
+    "Category": "electronics",
+    "ValueCents": 38000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "residence_high",
+      "retail_electronics"
+    ]
+  },
+  {
+    "Id": "headphones",
+    "DisplayName": "Wireless headphones",
+    "Category": "electronics",
+    "ValueCents": 16000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "retail_electronics",
+      "retail_general"
+    ]
+  },
+  {
+    "Id": "camera_dslr",
+    "DisplayName": "Camera body",
+    "Category": "electronics",
+    "ValueCents": 90000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high"
+    ]
+  },
+  {
+    "Id": "tv_flat",
+    "DisplayName": "Flat-screen television",
+    "Category": "electronics",
+    "ValueCents": 55000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "residence_high"
+    ]
+  },
+  {
+    "Id": "jewelry_costume",
+    "DisplayName": "Costume jewellery",
+    "Category": "jewelry",
+    "ValueCents": 4000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "pickpocket"
+    ]
+  },
+  {
+    "Id": "jewelry_gold",
+    "DisplayName": "Gold jewellery",
+    "Category": "jewelry",
+    "ValueCents": 140000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high"
+    ]
+  },
+  {
+    "Id": "watch_luxury",
+    "DisplayName": "Luxury wristwatch",
+    "Category": "jewelry",
+    "ValueCents": 420000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high"
+    ]
+  },
+  {
+    "Id": "wallet_cash",
+    "DisplayName": "Wallet",
+    "Category": "personal",
+    "ValueCents": 0,
+    "Legal": true,
+    "LootTags": [
+      "pickpocket"
+    ]
+  },
+  {
+    "Id": "credit_cards",
+    "DisplayName": "Stolen payment cards",
+    "Category": "personal",
+    "ValueCents": 6000,
+    "Legal": false,
+    "LootTags": [
+      "pickpocket",
+      "residence_low"
+    ]
+  },
+  {
+    "Id": "handbag_designer",
+    "DisplayName": "Designer handbag",
+    "Category": "fashion",
+    "ValueCents": 110000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high",
+      "retail_fashion"
+    ]
+  },
+  {
+    "Id": "sneakers_limited",
+    "DisplayName": "Limited-run sneakers",
+    "Category": "fashion",
+    "ValueCents": 26000,
+    "Legal": true,
+    "LootTags": [
+      "retail_fashion",
+      "residence_low"
+    ]
+  },
+  {
+    "Id": "clothing_bundle",
+    "DisplayName": "Bundle of new clothing",
+    "Category": "fashion",
+    "ValueCents": 12000,
+    "Legal": true,
+    "LootTags": [
+      "retail_fashion",
+      "retail_general"
+    ]
+  },
+  {
+    "Id": "liquor_case",
+    "DisplayName": "Case of liquor",
+    "Category": "consumables",
+    "ValueCents": 19000,
+    "Legal": true,
+    "LootTags": [
+      "retail_general",
+      "bar"
+    ]
+  },
+  {
+    "Id": "cigarette_carton",
+    "DisplayName": "Carton of cigarettes",
+    "Category": "consumables",
+    "ValueCents": 9000,
+    "Legal": true,
+    "LootTags": [
+      "retail_general",
+      "gas_station"
+    ]
+  },
+  {
+    "Id": "snacks_armful",
+    "DisplayName": "Armful of snacks",
+    "Category": "consumables",
+    "ValueCents": 2500,
+    "Legal": true,
+    "LootTags": [
+      "retail_general",
+      "gas_station"
+    ]
+  },
+  {
+    "Id": "prescription_meds",
+    "DisplayName": "Prescription medication",
+    "Category": "pharmacy",
+    "ValueCents": 30000,
+    "Legal": true,
+    "LootTags": [
+      "pharmacy"
+    ]
+  },
+  {
+    "Id": "baby_formula",
+    "DisplayName": "Baby formula (case)",
+    "Category": "consumables",
+    "ValueCents": 14000,
+    "Legal": true,
+    "LootTags": [
+      "retail_general",
+      "pharmacy"
+    ]
+  },
+  {
+    "Id": "power_tools",
+    "DisplayName": "Cordless power tools",
+    "Category": "tools",
+    "ValueCents": 42000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "hardware",
+      "construction"
+    ]
+  },
+  {
+    "Id": "copper_wire",
+    "DisplayName": "Copper wire spool",
+    "Category": "materials",
+    "ValueCents": 26000,
+    "Legal": true,
+    "LootTags": [
+      "construction",
+      "warehouse"
+    ]
+  },
+  {
+    "Id": "catalytic_converter",
+    "DisplayName": "Catalytic converter",
+    "Category": "vehicle_parts",
+    "ValueCents": 35000,
+    "Legal": true,
+    "LootTags": [
+      "vehicle"
+    ]
+  },
+  {
+    "Id": "car_stereo",
+    "DisplayName": "Car stereo",
+    "Category": "vehicle_parts",
+    "ValueCents": 15000,
+    "Legal": true,
+    "LootTags": [
+      "vehicle"
+    ]
+  },
+  {
+    "Id": "wheel_set",
+    "DisplayName": "Set of alloy wheels",
+    "Category": "vehicle_parts",
+    "ValueCents": 70000,
+    "Legal": true,
+    "LootTags": [
+      "vehicle"
+    ]
+  },
+  {
+    "Id": "bicycle",
+    "DisplayName": "Road bicycle",
+    "Category": "sporting",
+    "ValueCents": 60000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high",
+      "residence_low"
+    ]
+  },
+  {
+    "Id": "art_print",
+    "DisplayName": "Signed art print",
+    "Category": "art",
+    "ValueCents": 85000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high",
+      "office"
+    ]
+  },
+  {
+    "Id": "lockpick_set",
+    "DisplayName": "Lock-pick set",
+    "Category": "tools",
+    "ValueCents": 6000,
+    "Legal": false,
+    "LootTags": []
+  },
+  {
+    "Id": "crowbar",
+    "DisplayName": "Crowbar",
+    "Category": "tools",
+    "ValueCents": 2500,
+    "Legal": true,
+    "LootTags": []
+  },
+  {
+    "Id": "ski_mask",
+    "DisplayName": "Ski mask",
+    "Category": "fashion",
+    "ValueCents": 1500,
+    "Legal": true,
+    "LootTags": []
+  },
+  {
+    "Id": "pallet_electronics",
+    "DisplayName": "Pallet of boxed electronics",
+    "Category": "electronics",
+    "ValueCents": 600000,
+    "Legal": true,
+    "LootTags": [
+      "warehouse"
+    ]
+  }
+]

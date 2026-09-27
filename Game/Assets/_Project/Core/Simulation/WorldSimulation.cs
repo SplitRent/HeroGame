@@ -192,6 +192,7 @@ namespace HeroGame.Core.Simulation
                 }
             }
             _world.Finance.ProcessDay(day, date.AddHours(23));
+            _world.Courts.ProcessDay(day);
             _world.Rentals.ProcessDay(date.AddHours(12), _world.CheckingAccountOf, _world.Accounts.Treasury, taxDay: day % 30 == 0);
             _world.Properties.ApplyDailyWear();
             if (day % 7 == 0) _world.Properties.Reassess(_world.Geography, _world.Macro, _world.Config.Economy.PropertyPriceMultiplier);

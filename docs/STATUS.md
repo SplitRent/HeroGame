@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phase 6 (player businesses, banking, insurance)._
+_Last updated: Phase 7 (crime actions, legal system)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -61,6 +61,10 @@ _Last updated: Phase 6 (player businesses, banking, insurance)._
 | Insurance (property, vehicle, business interruption, health), premiums, lapse, claims | TESTED | `PropertyInsurance_*`, `Premiums_*`, `HealthInsurance_*`, `BusinessInterruption_*` |
 | Hurricane property damage + repairs | TESTED | `StormDamage_IsDeterministic_AndHitsFloodProneDistrictsHarder` |
 | Player businesses (buy, found, manage, hire/fire NPCs, turnover, draw, sell) | TESTED | `BuyingABusiness_*`, `Management_*`, `UnderpaidStaff_*`, `FoundingANightclub_*` |
+| Crime actions (shoplifting, pickpocketing, burglary, robbery, vehicle theft, assault, vandalism) | TESTED | `Shoplifting_*`, `Burglary_*`, `StoreRobbery_*`, `VehicleTheft_*`, `Masks_ReduceIdentification_*` |
+| Loot, fences, chop shops (items.json) | TESTED | `StoreRobbery_TakesFromTheTill_AndTheFenceBuysLoot`, `VehicleTheft_*` |
+| Legal system (charging threshold, bail, counsel, plea, verdicts, sentencing, custody, probation, fines, warrants) | TESTED | `Sentencing_*`, `Robbery_Arrest_Bail_Hearing_Sentence_EndToEnd`, `GuiltyPlea_*`, `UnpaidFines_*`, `Arrest_WithoutEvidence_*` |
+| Justice persistence (incidents, evidence, cases) | TESTED | `EvidenceAndCases_SurviveSaveAndLoad` |
 
 ## Persistence
 | System | Status | Evidence / notes |
@@ -95,6 +99,7 @@ _Last updated: Phase 6 (player businesses, banking, insurance)._
 | Vehicle controller (WheelCollider), entry/exit, traffic presenter | IN DEVELOPMENT | compiles |
 | Build mode (overhead editor, live cost/validation, layout renderer) | IN DEVELOPMENT | compiles; greybox builder adds a build zone to every property |
 | Business office panel, bank/insurance phone apps | IN DEVELOPMENT | compiles; IMGUI placeholders |
+| Crime interactables (shelves, register, break-in, fence, chop shop), police desk, custody | IN DEVELOPMENT | compiles; greybox builder places them |
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 

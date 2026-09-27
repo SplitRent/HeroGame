@@ -31,6 +31,7 @@ namespace HeroGame.Persistence.Content
         public const string VehicleMods = "vehicle_mods.json";
         public const string Furniture = "furniture_catalog.json";
         public const string BusinessRequirements = "business_requirements.json";
+        public const string Items = "items.json";
         public const string DefaultServerConfig = "server_default.json";
 
         public static ContentSet Load(string dataDirectory, string layoutFile = DefaultLayout)
@@ -50,6 +51,7 @@ namespace HeroGame.Persistence.Content
                 VehicleMods = Read<List<Core.Vehicles.VehicleMod>>(dataDirectory, VehicleMods),
                 Furniture = Read<List<Core.Building.FurnitureDefinition>>(dataDirectory, Furniture),
                 BusinessRequirements = Read<List<Core.Building.BusinessRequirement>>(dataDirectory, BusinessRequirements),
+                Items = Read<List<ItemDefinition>>(dataDirectory, Items),
             };
             return set;
         }
@@ -72,6 +74,15 @@ namespace HeroGame.Persistence.Content
                 throw new InvalidDataException("Content file " + file + " is invalid: " + ex.Message, ex);
             }
         }
+
+        /// <summary>Loot tables, items and crime ids the crime and justice code refers to by name.</summary>
+        public static readonly string[] RequiredLootTags = { "residence_low", "residence_high", "pickpocket", "vehicle", "office", "warehouse" };
+        public static readonly string[] RequiredItems = { "crowbar", "lockpick_set", "ski_mask" };
+        public static readonly string[] RequiredCrimes =
+        {
+            "shoplifting", "pickpocketing", "burglary_residential", "burglary_commercial", "store_robbery", "vehicle_theft",
+            "assault", "powered_assault", "vandalism", "evading_police", "assaulting_officer",
+        };
 
         /// <summary>Cross-reference validation: catches broken ids before they reach a live server.</summary>
         public static ValidationReport Validate(ContentSet c)
@@ -158,6 +169,24 @@ namespace HeroGame.Persistence.Content
             }
             foreach (var t in c.BusinessTemplates)
                 if (!c.BusinessRequirements.Exists(x => x.TemplateId == t.Id)) r.Warn("business_requirements", "No permit rules for " + t.Id + " (it cannot be opened by players).");
+
+            // Items: unique ids, and every loot table a business or the crime system uses has something in it.
+            var itemIds = new HashSet<string>();
+            var lootTags = new HashSet<string>();
+            foreach (var i in c.Items)
+            {
+                if (!itemIds.Add(i.Id)) r.Error("items." + i.Id, "Duplicate item id.");
+                if (i.ValueCents < 0) r.Error("items." + i.Id, "Negative value.");
+                foreach (var t in i.LootTags) lootTags.Add(t);
+            }
+            foreach (var t in c.BusinessTemplates)
+                if (!lootTags.Contains(t.LootTag)) r.Error("business_templates." + t.Id, "No items carry loot tag " + t.LootTag + ".");
+            foreach (var required in RequiredLootTags)
+                if (!lootTags.Contains(required)) r.Error("items", "No items carry required loot tag " + required + ".");
+            foreach (var required in RequiredItems)
+                if (!itemIds.Contains(required)) r.Error("items", "Missing required item " + required + ".");
+            foreach (var crime in RequiredCrimes)
+                if (c.FindCrime(crime) == null) r.Error("crime_types", "Missing required crime type " + crime + ".");
 
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)
