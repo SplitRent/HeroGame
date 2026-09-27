@@ -154,13 +154,17 @@ namespace HeroGame.WorldHost
                 Console.WriteLine("Simulated " + days + " days in " + simMs.ToString("0") + " ms → " + (simMs / days).ToString("0.0") + " ms/day, " +
                                   (simMs * 1000.0 / npcDays).ToString("0.00") + " µs per NPC-day");
 
-                watch.Restart();
                 var observers = new List<WorldPosition>();
                 foreach (var p in world.Geography.Places.Take(8)) observers.Add(p.Position);
+                watch.Restart();
+                world.Director.Evaluate(observers, world.Clock.Now);
+                Console.WriteLine("Population director: initial location index build " + watch.Elapsed.TotalMilliseconds.ToString("0.0") + " ms (" + world.Director.LastSchedulesResolved + " schedules)");
+                watch.Restart();
                 var requests = 0;
                 const int evals = 50;
-                for (var i = 0; i < evals; i++) requests = world.Director.Evaluate(observers, world.Clock.Now.AddMinutes(i * 7)).Count;
-                Console.WriteLine("Population director: " + (watch.Elapsed.TotalMilliseconds / evals).ToString("0.00") + " ms per evaluation (8 observers, " + requests + " materialised)");
+                // Realistic cadence: one evaluation per 1.5 real seconds = 45 game seconds at the default time scale.
+                for (var i = 0; i < evals; i++) requests = world.Director.Evaluate(observers, world.Clock.Now.AddSeconds(i * 45)).Count;
+                Console.WriteLine("Population director: steady state " + (watch.Elapsed.TotalMilliseconds / evals).ToString("0.00") + " ms per evaluation (8 observers, " + requests + " materialised, " + world.Director.LastCandidates + " candidates, " + world.Director.LastSchedulesResolved + " schedules re-resolved on the last call)");
 
                 watch.Restart();
                 var full = saves.Save(world, full: true);

@@ -98,6 +98,11 @@ namespace HeroGame.Core.World
         private readonly Dictionary<EntityId, District> _districts = new Dictionary<EntityId, District>();
         private readonly Dictionary<EntityId, Place> _places = new Dictionary<EntityId, Place>();
         private readonly Dictionary<EntityId, List<Place>> _placesByDistrict = new Dictionary<EntityId, List<Place>>();
+        private readonly Dictionary<long, List<Place>> _grid = new Dictionary<long, List<Place>>();
+        private readonly Dictionary<string, Place> _placesByName = new Dictionary<string, Place>();
+
+        /// <summary>Spatial hash cell size in metres for <see cref="QueryRadius"/>.</summary>
+        public const float CellSize = 64f;
 
         public IEnumerable<District> Districts => _districts.Values;
         public IEnumerable<Place> Places => _places.Values;
@@ -114,7 +119,39 @@ namespace HeroGame.Core.World
                 _placesByDistrict.Add(p.District, list);
             }
             list.Add(p);
+            var key = CellKey(CellCoord(p.Position.X), CellCoord(p.Position.Z));
+            if (!_grid.TryGetValue(key, out var cell))
+            {
+                cell = new List<Place>();
+                _grid.Add(key, cell);
+            }
+            cell.Add(p);
+            if (!string.IsNullOrEmpty(p.Name) && !_placesByName.ContainsKey(p.Name)) _placesByName.Add(p.Name, p);
         }
+
+        /// <summary>First place with this exact name (layout names/addresses are unique within a layout).</summary>
+        public Place FindPlaceByName(string name) => name != null && _placesByName.TryGetValue(name, out var p) ? p : null;
+
+        /// <summary>
+        /// Appends every place whose position lies within <paramref name="radius"/> of <paramref name="center"/>.
+        /// Cost is proportional to the cells overlapped, not to the size of the city.
+        /// </summary>
+        public void QueryRadius(WorldPosition center, float radius, List<Place> results)
+        {
+            var r2 = radius * radius;
+            int x0 = CellCoord(center.X - radius), x1 = CellCoord(center.X + radius);
+            int z0 = CellCoord(center.Z - radius), z1 = CellCoord(center.Z + radius);
+            for (var x = x0; x <= x1; x++)
+            for (var z = z0; z <= z1; z++)
+            {
+                if (!_grid.TryGetValue(CellKey(x, z), out var cell)) continue;
+                foreach (var p in cell)
+                    if (WorldPosition.DistanceSquaredXZ(p.Position, center) <= r2) results.Add(p);
+            }
+        }
+
+        private static int CellCoord(float v) => (int)Math.Floor(v / CellSize);
+        private static long CellKey(int x, int z) => ((long)x << 32) ^ (uint)z;
 
         public District GetDistrict(EntityId id) => _districts.TryGetValue(id, out var d) ? d : null;
         public Place GetPlace(EntityId id) => _places.TryGetValue(id, out var p) ? p : null;

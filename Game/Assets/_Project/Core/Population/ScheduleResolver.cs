@@ -36,14 +36,31 @@ namespace HeroGame.Core.Population
             _geography = geography;
         }
 
-        public ScheduledActivity Resolve(NpcRecord npc, GameDateTime time)
+        public ScheduledActivity Resolve(NpcRecord npc, GameDateTime time) => Resolve(npc, time, out _);
+
+        /// <summary>
+        /// Resolves the activity and reports until when it stays the same (<paramref name="validUntil"/>, exclusive).
+        /// Everything except the minute of day is constant within a day, so the answer can only change at one of
+        /// the minute thresholds the decision compared against, or at midnight. Callers can cache the result
+        /// until then (commute progress changes continuously and is interpolated by the caller).
+        /// </summary>
+        public ScheduledActivity Resolve(NpcRecord npc, GameDateTime time, out GameDateTime validUntil)
+        {
+            var dayStart = time.StartOfDay;
+            var minute = time.MinuteOfDay;
+            var next = 1440;
+            var result = ResolveCore(npc, time, minute, ref next);
+            validUntil = dayStart.AddMinutes(next);
+            return result;
+        }
+
+        private ScheduledActivity ResolveCore(NpcRecord npc, GameDateTime time, int minute, ref int next)
         {
             if (!npc.Alive) return new ScheduledActivity { Activity = ActivityKind.Deceased };
             var day = time.DayIndex;
             if (npc.OverrideUntilDay > day)
                 return new ScheduledActivity { Activity = npc.OverrideActivity, Place = npc.OverridePlace };
 
-            var minute = time.MinuteOfDay;
             var age = npc.AgeYears(day);
             var rng = DeterministicRandom.For(_worldSeed, npc.Id.Value, (ulong)day, 0x5C4ED);
 
@@ -52,7 +69,12 @@ namespace HeroGame.Core.Population
             var wake = 6 * 60 + 30 + chronotype;
             var sleep = 22 * 60 + 45 + chronotype;
 
-            if (age < 5) return AtHome(npc, minute < wake || minute >= sleep - 90);
+            if (age < 5)
+            {
+                Boundary(wake, minute, ref next);
+                Boundary(sleep - 90, minute, ref next);
+                return AtHome(npc, minute < wake || minute >= sleep - 90);
+            }
 
             // Work/school commitment for today.
             int commitStart = -1, commitEnd = -1;
@@ -75,8 +97,11 @@ namespace HeroGame.Core.Population
                     // Overnight shift that started yesterday still covers the early hours.
                     var yesterday = time.AddDays(-1);
                     var shiftEnd = occ.ShiftStartMinute + occ.ShiftLengthMinutes;
-                    if (shiftEnd > 1440 && occ.WorksOn(yesterday.DayOfWeek) && minute < shiftEnd - 1440)
-                        return new ScheduledActivity { Activity = ActivityKind.Working, Place = npc.Workplace };
+                    if (shiftEnd > 1440 && occ.WorksOn(yesterday.DayOfWeek))
+                    {
+                        Boundary(shiftEnd - 1440, minute, ref next);
+                        if (minute < shiftEnd - 1440) return new ScheduledActivity { Activity = ActivityKind.Working, Place = npc.Workplace };
+                    }
                     if (worksToday)
                     {
                         commitStart = occ.ShiftStartMinute;
@@ -87,6 +112,8 @@ namespace HeroGame.Core.Population
                         {
                             wake = 14 * 60;
                             sleep = Math.Max(0, occ.ShiftStartMinute - 60 - CommuteMinutes);
+                            Boundary(7 * 60, minute, ref next);
+                            Boundary(wake, minute, ref next);
                             if (minute >= 7 * 60 && minute < wake) return AtHome(npc, true);
                         }
                     }
@@ -95,6 +122,10 @@ namespace HeroGame.Core.Population
 
             if (commitStart >= 0)
             {
+                Boundary(commitStart - CommuteMinutes, minute, ref next);
+                Boundary(commitStart, minute, ref next);
+                Boundary(commitEnd, minute, ref next);
+                Boundary(commitEnd + CommuteMinutes, minute, ref next);
                 if (minute >= commitStart && minute < commitEnd)
                     return new ScheduledActivity { Activity = commitActivity, Place = commitPlace };
                 if (minute >= commitStart - CommuteMinutes && minute < commitStart)
@@ -104,6 +135,8 @@ namespace HeroGame.Core.Population
                 if (commitStart < wake) wake = Math.Max(0, commitStart - CommuteMinutes - 45);
             }
 
+            Boundary(wake, minute, ref next);
+            Boundary(sleep, minute, ref next);
             if (minute < wake || minute >= sleep) return AtHome(npc, true);
 
             // Free time: one outing per day at most, chosen deterministically.
@@ -117,6 +150,10 @@ namespace HeroGame.Core.Population
                 var fits = commitStart < 0 || start >= commitEnd + CommuteMinutes || start + duration <= commitStart - CommuteMinutes;
                 if (fits && placeData != null && placeData.IsOpenAt(start))
                 {
+                    Boundary(start - 20, minute, ref next);
+                    Boundary(start, minute, ref next);
+                    Boundary(start + duration, minute, ref next);
+                    Boundary(start + duration + 20, minute, ref next);
                     if (minute >= start && minute < start + duration)
                         return new ScheduledActivity { Activity = ActivityFor(placeData.Kind), Place = place };
                     if (minute >= start - 20 && minute < start)
@@ -127,6 +164,11 @@ namespace HeroGame.Core.Population
             }
 
             return AtHome(npc, false);
+        }
+
+        private static void Boundary(int threshold, int minute, ref int next)
+        {
+            if (threshold > minute && threshold < next) next = threshold;
         }
 
         public static bool IsSchoolDay(GameDateTime time)

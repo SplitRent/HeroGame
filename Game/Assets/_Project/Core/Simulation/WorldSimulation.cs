@@ -214,11 +214,13 @@ namespace HeroGame.Core.Simulation
         public void TriggerAnomaly(AnomalyEvent evt)
         {
             var day = evt.OccurredAt.DayIndex;
-            var radiusSq = (evt.Radius + 150f) * (evt.Radius + 150f);
             var considered = new HashSet<EntityId>();
-            foreach (var place in _world.Geography.Places)
+            var nearby = new List<Place>();
+            // Commuters can be up to a commute away from their associated places; 150 m covers the look-around.
+            _world.Geography.QueryRadius(evt.Position, evt.Radius + 150f, nearby);
+            nearby.Sort((a, b) => a.Id.CompareTo(b.Id));
+            foreach (var place in nearby)
             {
-                if (WorldPosition.DistanceSquaredXZ(place.Position, evt.Position) > radiusSq) continue;
                 foreach (var npcId in _world.Population.AssociatedWith(place.Id))
                 {
                     if (!considered.Add(npcId)) continue;

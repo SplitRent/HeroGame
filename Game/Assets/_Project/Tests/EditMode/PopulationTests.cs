@@ -150,6 +150,57 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void Schedule_ValidityWindowIsExact()
+        {
+            var world = NewWorld("validity");
+            var start = GameDateTime.FromCalendar(2030, 5, 6, 0, 0);
+            var checkedWindows = 0;
+            foreach (var npc in world.Population.Ordered)
+            {
+                if (npc.Id.Sequence % 7 != 0) continue;
+                for (var t = start; t < start.AddDays(3); t = t.AddMinutes(53))
+                {
+                    var a = world.Schedules.Resolve(npc, t, out var until);
+                    Assert.Greater(until.TotalSeconds, t.TotalSeconds);
+                    Assert.LessOrEqual(until.TotalSeconds, t.StartOfDay.AddDays(1).TotalSeconds);
+                    // Same answer anywhere inside the window…
+                    for (var probe = t; probe < until; probe = probe.AddMinutes(11))
+                    {
+                        var b = world.Schedules.Resolve(npc, probe);
+                        Assert.AreEqual(a.Activity, b.Activity, npc.FullName + " at " + probe);
+                        Assert.AreEqual(a.Place, b.Place);
+                    }
+                    checkedWindows++;
+                }
+            }
+            Assert.Greater(checkedWindows, 1000);
+        }
+
+        [Test]
+        public void LocationIndex_AgreesWithDirectResolution()
+        {
+            var world = NewWorld("index");
+            var index = new NpcLocationIndex(world.Population, world.Geography, world.Schedules);
+            var t = GameDateTime.FromCalendar(2030, 5, 7, 5, 0);
+            var mismatches = 0;
+            for (var step = 0; step < 60; step++)
+            {
+                t = t.AddMinutes(17);
+                index.Update(t);
+                foreach (var npc in world.Population.Ordered)
+                {
+                    var direct = world.Schedules.Resolve(npc, t);
+                    var has = index.TryGet(npc.Id, t, out var indexed, out var pos);
+                    var directHas = world.Director.TryGetPosition(direct, out var directPos);
+                    if (direct.Activity != indexed.Activity || direct.Place != indexed.Place || has != directHas) mismatches++;
+                    else if (has && WorldPosition.DistanceXZ(pos, directPos) > 60f) mismatches++; // commute interpolation tolerance
+                }
+            }
+            Assert.AreEqual(0, mismatches);
+            Assert.Less(index.ResolvesLastUpdate, world.Population.Count / 2, "only changed schedules are re-resolved");
+        }
+
+        [Test]
         public void Memory_IsBoundedAndKeepsSignificantPeople()
         {
             var npc = new NpcRecord { Id = EntityId.Create(EntityKind.Npc, 1) };

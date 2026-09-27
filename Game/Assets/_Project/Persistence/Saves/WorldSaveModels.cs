@@ -46,9 +46,18 @@ namespace HeroGame.Persistence.Saves
         public List<Loan> Loans = new List<Loan>();
     }
 
+    /// <summary>Households plus the list of NPC shards that exist.</summary>
     public sealed class PopulationChunk
     {
         public List<Household> Households = new List<Household>();
+        public List<int> Shards = new List<int>();
+        /// <summary>Only used by schema 1 saves (all NPCs in one chunk).</summary>
+        public List<NpcRecord> Npcs = new List<NpcRecord>();
+    }
+
+    public sealed class PopulationShardChunk
+    {
+        public int Shard;
         public List<NpcRecord> Npcs = new List<NpcRecord>();
     }
 

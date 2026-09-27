@@ -23,12 +23,7 @@ namespace HeroGame.Runtime.Presentation
             if (_cachedFor == world && _cached != null) return _cached;
             _cachedFor = world;
             _cached = null;
-            foreach (var p in world.Geography.Places)
-            {
-                if (p.Name != PlaceName) continue;
-                _cached = p;
-                break;
-            }
+            _cached = world.Geography.FindPlaceByName(PlaceName);
             return _cached;
         }
     }

@@ -63,6 +63,12 @@ namespace HeroGame.Core.Simulation
         public const string Environment = "environment";
         public const string History = "history";
         public const string CharacterPrefix = "character/";
+        /// <summary>NPCs are saved in fixed-size shards by id so large populations serialize in parallel.</summary>
+        public const string PopulationShardPrefix = "population/";
+        public const int NpcsPerShard = 2048;
+
+        public static string PopulationShard(int index) => PopulationShardPrefix + index;
+        public static int ShardOf(EntityId npc) => (int)((npc.Sequence - 1) / NpcsPerShard);
         public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History };
     }
 

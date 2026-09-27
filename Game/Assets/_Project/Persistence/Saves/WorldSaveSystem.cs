@@ -43,7 +43,8 @@ namespace HeroGame.Persistence.Saves
     /// </summary>
     public sealed class WorldSaveSystem
     {
-        public const int CurrentSchema = 1;
+        /// <summary>2: NPCs split into population shards.</summary>
+        public const int CurrentSchema = 2;
         public const string ManifestFile = "manifest.json";
         public const string JournalFile = "journal.log";
         public string GameVersion = "0.1.0";
@@ -87,16 +88,38 @@ namespace HeroGame.Persistence.Saves
                 if (full || previous == null || !manifest.ChunkGenerations.ContainsKey(key)) dirty.Add(key);
             }
 
+            if (dirty.Contains(SaveChunks.Population))
+                foreach (var shard in ShardsOf(world)) dirty.Add(SaveChunks.PopulationShard(shard));
+
+            // Build payloads on the calling thread (they reference live objects, which nothing mutates during a
+            // save), then serialize and write chunks in parallel: chunk files are independent until the manifest.
+            var jobs = new List<KeyValuePair<string, object>>();
             foreach (var chunk in dirty)
             {
                 var payload = BuildChunk(world, chunk);
-                if (payload == null) continue;
-                var json = JsonSetup.Serialize(payload);
-                AtomicFile.WriteAllText(ChunkPath(chunk, manifest.Generation), json);
-                manifest.ChunkGenerations[chunk] = manifest.Generation;
-                result.ChunksWritten++;
-                result.Bytes += json.Length;
+                if (payload != null) jobs.Add(new KeyValuePair<string, object>(chunk, payload));
             }
+            var sizes = new long[jobs.Count];
+            var generation = manifest.Generation;
+            System.Threading.Tasks.Parallel.For(0, jobs.Count, i =>
+            {
+                var json = JsonSetup.Serialize(jobs[i].Value);
+                AtomicFile.WriteAllText(ChunkPath(jobs[i].Key, generation), json);
+                sizes[i] = json.Length;
+            });
+            for (var i = 0; i < jobs.Count; i++)
+            {
+                manifest.ChunkGenerations[jobs[i].Key] = generation;
+                result.ChunksWritten++;
+                result.Bytes += sizes[i];
+            }
+            // Shards that no longer exist must not linger in the manifest.
+            var liveShards = new HashSet<string>();
+            foreach (var shard in ShardsOf(world)) liveShards.Add(SaveChunks.PopulationShard(shard));
+            var stale = new List<string>();
+            foreach (var key in manifest.ChunkGenerations.Keys)
+                if (key.StartsWith(SaveChunks.PopulationShardPrefix, StringComparison.Ordinal) && !liveShards.Contains(key)) stale.Add(key);
+            foreach (var key in stale) manifest.ChunkGenerations.Remove(key);
             result.ChunksSkipped = manifest.ChunkGenerations.Count - result.ChunksWritten;
 
             AtomicFile.WriteAllText(Path.Combine(_directory, ManifestFile), JsonSetup.Serialize(manifest, true));
@@ -135,7 +158,11 @@ namespace HeroGame.Persistence.Saves
 
             var pop = ReadChunk<PopulationChunk>(manifest, SaveChunks.Population);
             foreach (var h in pop.Households) world.Population.Add(h);
-            foreach (var n in pop.Npcs) world.Population.Add(n);
+            foreach (var n in pop.Npcs) world.Population.Add(n); // schema 1
+            var shards = new PopulationShardChunk[pop.Shards.Count];
+            System.Threading.Tasks.Parallel.For(0, shards.Length, i => shards[i] = ReadChunk<PopulationShardChunk>(manifest, SaveChunks.PopulationShard(pop.Shards[i])));
+            foreach (var shard in shards)
+                foreach (var n in shard.Npcs) world.Population.Add(n);
 
             foreach (var p in ReadChunk<PropertiesChunk>(manifest, SaveChunks.Properties).Properties) world.Properties.Add(p);
             foreach (var b in ReadChunk<BusinessesChunk>(manifest, SaveChunks.Businesses).Businesses) world.Businesses[b.Id] = b;
@@ -195,7 +222,7 @@ namespace HeroGame.Persistence.Saves
                     var pop = new PopulationChunk();
                     pop.Households.AddRange(world.Population.Households);
                     pop.Households.Sort((a, b) => a.Id.CompareTo(b.Id));
-                    pop.Npcs.AddRange(world.Population.Ordered);
+                    pop.Shards.AddRange(ShardsOf(world));
                     return pop;
                 case SaveChunks.Properties:
                     var props = new PropertiesChunk();
@@ -220,12 +247,26 @@ namespace HeroGame.Persistence.Saves
                     h.Recent.AddRange(world.History.Recent);
                     return h;
                 default:
+                    if (chunk.StartsWith(SaveChunks.PopulationShardPrefix, StringComparison.Ordinal))
+                    {
+                        var index = int.Parse(chunk.Substring(SaveChunks.PopulationShardPrefix.Length), System.Globalization.CultureInfo.InvariantCulture);
+                        var shard = new PopulationShardChunk { Shard = index };
+                        foreach (var n in world.Population.Ordered) if (SaveChunks.ShardOf(n.Id) == index) shard.Npcs.Add(n);
+                        return shard;
+                    }
                     if (chunk.StartsWith(SaveChunks.CharacterPrefix, StringComparison.Ordinal)
                         && EntityId.TryParse(chunk.Substring(SaveChunks.CharacterPrefix.Length), out var cid)
                         && world.Characters.TryGetValue(cid, out var character))
                         return character;
                     return null;
             }
+        }
+
+        private static List<int> ShardsOf(World world)
+        {
+            var set = new SortedSet<int>();
+            foreach (var n in world.Population.Ordered) set.Add(SaveChunks.ShardOf(n.Id));
+            return new List<int>(set);
         }
 
         private SaveManifest ReadManifest()

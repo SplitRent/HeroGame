@@ -20,67 +20,68 @@ namespace HeroGame.Core.Population
     {
         public float FullRadius = 60f;
         public float NearbyRadius = 220f;
-        /// <summary>Only places within this radius are considered at all.</summary>
-        public float ConsiderRadius = 260f;
         public int MaxFull = 40;
         public int MaxNearby = 160;
     }
 
     /// <summary>
-    /// Decides which persistent NPCs are physically present near players and at what tier
-    /// (TDD §7.2). Candidates come from the place→NPC index, so cost scales with the number of
-    /// nearby places rather than the size of the city. Output is deterministic for a given time.
-    /// Interiors are resolved separately by the runtime (NPCs inside buildings are not spawned on
-    /// the street; they are spawned when the player enters the interior cell).
+    /// Decides which persistent NPCs are physically present near players and at what tier (TDD §7.2).
+    /// Positions come from <see cref="NpcLocationIndex"/>, which re-resolves an NPC only when its schedule
+    /// changes, so an evaluation costs O(NPCs near observers + current commuters). Output is deterministic.
+    /// Interiors are resolved separately by the runtime (NPCs inside buildings are spawned when the player
+    /// enters the interior, not on the street).
     /// </summary>
     public sealed class PopulationDirector
     {
-        private readonly PopulationRegistry _population;
         private readonly Geography _geography;
-        private readonly ScheduleResolver _schedules;
+        private readonly NpcLocationIndex _index;
         public readonly PopulationDirectorSettings Settings;
 
         private readonly List<MaterializationRequest> _scratch = new List<MaterializationRequest>();
-        private readonly HashSet<EntityId> _seen = new HashSet<EntityId>();
+        private readonly HashSet<EntityId> _candidates = new HashSet<EntityId>();
 
         public PopulationDirector(PopulationRegistry population, Geography geography, ScheduleResolver schedules, PopulationDirectorSettings settings = null)
         {
-            _population = population;
             _geography = geography;
-            _schedules = schedules;
+            _index = new NpcLocationIndex(population, geography, schedules);
             Settings = settings ?? new PopulationDirectorSettings();
         }
+
+        public NpcLocationIndex Index => _index;
+
+        /// <summary>Candidates examined and schedules re-resolved by the last evaluation (profiling).</summary>
+        public int LastCandidates { get; private set; }
+        public int LastSchedulesResolved { get; private set; }
+
+        /// <summary>Call when something outside the daily simulation changes an NPC's schedule (hire, override, move).</summary>
+        public void Invalidate(EntityId npc) => _index.Invalidate(npc);
 
         /// <summary>Returns NPCs that should be materialised, nearest first, respecting budgets.</summary>
         public List<MaterializationRequest> Evaluate(IReadOnlyList<WorldPosition> observers, GameDateTime now)
         {
+            _index.Update(now);
+            LastSchedulesResolved = _index.ResolvesLastUpdate;
             _scratch.Clear();
-            _seen.Clear();
-            var considerSq = Settings.ConsiderRadius * Settings.ConsiderRadius;
+            _candidates.Clear();
+            for (var i = 0; i < observers.Count; i++) _index.Candidates(observers[i], Settings.NearbyRadius, _candidates);
+            LastCandidates = _candidates.Count;
 
-            foreach (var place in _geography.Places)
+            foreach (var id in _candidates)
             {
-                if (!NearAny(place.Position, observers, considerSq)) continue;
-                foreach (var npcId in _population.AssociatedWith(place.Id))
+                if (!_index.TryGet(id, now, out var activity, out var position)) continue;
+                var distance = NearestDistance(position, observers);
+                if (distance > Settings.NearbyRadius) continue;
+                _scratch.Add(new MaterializationRequest
                 {
-                    if (!_seen.Add(npcId)) continue;
-                    var npc = _population.Get(npcId);
-                    if (npc == null || !npc.Alive) continue;
-                    var activity = _schedules.Resolve(npc, now);
-                    if (!TryGetPosition(activity, out var position)) continue;
-                    var distance = NearestDistance(position, observers);
-                    if (distance > Settings.NearbyRadius) continue;
-                    _scratch.Add(new MaterializationRequest
-                    {
-                        Npc = npcId,
-                        Activity = activity,
-                        Position = position,
-                        DistanceToObserver = distance,
-                        Tier = distance <= Settings.FullRadius ? SimulationTier.Full : SimulationTier.Nearby,
-                    });
-                }
+                    Npc = id,
+                    Activity = activity,
+                    Position = position,
+                    DistanceToObserver = distance,
+                    Tier = distance <= Settings.FullRadius ? SimulationTier.Full : SimulationTier.Nearby,
+                });
             }
 
+            // HashSet order is not meaningful; sort for deterministic output.
             _scratch.Sort((a, b) =>
             {
                 var c = a.DistanceToObserver.CompareTo(b.DistanceToObserver);
@@ -124,13 +125,6 @@ namespace HeroGame.Core.Population
             }
             position = to.Position;
             return true;
-        }
-
-        private static bool NearAny(WorldPosition p, IReadOnlyList<WorldPosition> observers, float radiusSq)
-        {
-            for (var i = 0; i < observers.Count; i++)
-                if (WorldPosition.DistanceSquaredXZ(p, observers[i]) <= radiusSq) return true;
-            return false;
         }
 
         private static float NearestDistance(WorldPosition p, IReadOnlyList<WorldPosition> observers)
