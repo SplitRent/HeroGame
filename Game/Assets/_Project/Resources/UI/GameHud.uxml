@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="root" class="g-root" picking-mode="Ignore">
+        <ui:VisualElement name="corner" class="g-hud-corner" picking-mode="Ignore">
+            <ui:Label name="clock" text="MON 08:00" class="g-clock" picking-mode="Ignore" />
+            <ui:Label name="weather" text="" class="g-weather" picking-mode="Ignore" />
+            <ui:Label name="cash" text="" class="g-cash" picking-mode="Ignore" />
+            <ui:VisualElement name="health" class="g-bar" picking-mode="Ignore">
+                <ui:VisualElement name="health-fill" class="g-bar-fill" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:Label name="wanted" text="" class="g-wanted" picking-mode="Ignore" />
+            <ui:Label name="phone-badge" text="" class="g-badge" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:VisualElement name="subtitles" class="g-subtitles" picking-mode="Ignore" />
+        <ui:Label name="prompt" text="" class="g-prompt" picking-mode="Ignore" />
+        <ui:Label name="feedback" text="" class="g-feedback" picking-mode="Ignore" />
+        <ui:Label name="weapon" text="" class="g-weapon" picking-mode="Ignore" />
+        <ui:Label name="fps" text="" class="g-fps" picking-mode="Ignore" />
+        <ui:VisualElement name="toasts" class="g-toasts" />
+        <ui:VisualElement name="layer" class="g-root" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>

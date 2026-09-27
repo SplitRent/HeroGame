@@ -27,9 +27,26 @@ namespace HeroGame.Runtime.UI
         private readonly RippleApp _ripple = new RippleApp();
         private string _mapQuery = "";
 
+        private static PhonePanel _instance;
+
+        private void OnEnable() => _instance = this;
+
+        /// <summary>Opens the classic phone on the given app (loans, insurance, businesses, Ripple, radio).</summary>
+        public static void OpenClassic(string app)
+        {
+            if (_instance == null || !System.Enum.TryParse(app, out Tab tab)) return;
+            _instance._tab = tab;
+            if (_instance._open) return;
+            _instance._open = true;
+            UiFocus.Acquire();
+        }
+
+        public static bool ClassicOpen => _instance != null && _instance._open;
+
         private void Update()
         {
             if (_input == null) _input = PlayerInputRegistry.Create();
+            if (GameUi.Active && !_open) return; // the UI Toolkit phone owns the phone key
             // Read regardless of GameplayEnabled so the phone can also be closed with its own key.
             if (!_input.Read().PhonePressed) return;
             _open = !_open;

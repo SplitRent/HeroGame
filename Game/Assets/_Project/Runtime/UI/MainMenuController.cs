@@ -214,21 +214,45 @@ namespace HeroGame.Runtime.UI
 
         private void ShowSettings()
         {
+            // The same settings file the in-game pause screen edits (GameSettings via SettingsService).
             var p = BeginPanel("SETTINGS");
-            var volume = new Slider("Master volume", 0f, 1f) { value = AudioListener.volume };
-            volume.AddToClassList("hg-field");
-            volume.RegisterValueChangedCallback(e => { AudioListener.volume = e.newValue; PlayerPrefs.SetFloat("hg.volume", e.newValue); });
-            var quality = new DropdownField("Quality", new List<string>(QualitySettings.names), QualitySettings.GetQualityLevel());
+            var s = SettingsService.Current;
+            void Slider01(string label, Func<float> get, Action<float> set)
+            {
+                var slider = new Slider(label, 0f, 1f) { value = get() };
+                slider.AddToClassList("hg-field");
+                slider.RegisterValueChangedCallback(e => { set(e.newValue); SettingsService.Apply(); });
+                p.Add(slider);
+            }
+            void Check(string label, Func<bool> get, Action<bool> set)
+            {
+                var toggle = new Toggle(label) { value = get() };
+                toggle.AddToClassList("hg-field");
+                toggle.RegisterValueChangedCallback(e => { set(e.newValue); SettingsService.Apply(); });
+                p.Add(toggle);
+            }
+            Slider01("Master volume", () => s.MasterVolume, v => s.MasterVolume = v);
+            Slider01("Music & radio", () => s.MusicVolume, v => s.MusicVolume = v);
+            Slider01("Effects", () => s.EffectsVolume, v => s.EffectsVolume = v);
+            var quality = new DropdownField("Quality", new List<string>(Enum.GetNames(typeof(Core.Presentation.QualityPreset))), (int)s.Quality);
             quality.AddToClassList("hg-field");
-            quality.RegisterValueChangedCallback(e => QualitySettings.SetQualityLevel(quality.index, true));
-            var fullscreen = new Toggle("Fullscreen") { value = Screen.fullScreen };
-            fullscreen.RegisterValueChangedCallback(e => Screen.fullScreen = e.newValue);
-            var vsync = new Toggle("V-Sync") { value = QualitySettings.vSyncCount > 0 };
-            vsync.RegisterValueChangedCallback(e => QualitySettings.vSyncCount = e.newValue ? 1 : 0);
-            p.Add(volume);
+            quality.RegisterValueChangedCallback(e => { s.Quality = (Core.Presentation.QualityPreset)quality.index; SettingsService.Apply(); });
             p.Add(quality);
+            var fullscreen = new Toggle("Fullscreen") { value = Screen.fullScreen };
+            fullscreen.AddToClassList("hg-field");
+            fullscreen.RegisterValueChangedCallback(e => Screen.fullScreen = e.newValue);
             p.Add(fullscreen);
-            p.Add(vsync);
+            Check("V-Sync", () => s.VSync, v => s.VSync = v);
+            Check("Subtitles", () => s.Subtitles, v => s.Subtitles = v);
+            Check("24-hour clock", () => s.Clock24h, v => s.Clock24h = v);
+            Check("Metric units", () => s.Units == Core.Presentation.UnitSystem.Metric, v => s.Units = v ? Core.Presentation.UnitSystem.Metric : Core.Presentation.UnitSystem.Imperial);
+            var save = new Button(() => SettingsService.Commit()) { text = "SAVE" };
+            save.AddToClassList("hg-menu-button");
+            save.AddToClassList("hg-menu-button--accent");
+            p.Add(save);
+            var more = new Label("More options (controls, accessibility, interface scale) are in the pause menu in game.");
+            more.AddToClassList("hg-muted");
+            p.Add(more);
         }
 
         private void Launch(SessionMode mode, string serverId, string slot)

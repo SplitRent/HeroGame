@@ -23,6 +23,7 @@ namespace HeroGame.Runtime.UI
         private void Update()
         {
             if (_input == null) _input = PlayerInputRegistry.Create();
+            if (GameUi.Active) return; // the UI Toolkit pause screen handles Esc
             if (!_input.Read().PausePressed) return;
             // Another panel (phone, build mode, console) owns Esc while it is open.
             if (!_open && (UiFocus.Active || UiFocus.EscapeConsumedThisFrame)) return;

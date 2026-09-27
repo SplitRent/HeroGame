@@ -30,6 +30,17 @@ namespace HeroGame.Runtime.Combat
         private readonly Collider[] _hits = new Collider[32];
 
         public string EquippedWeapon => _weapon;
+        public static CombatController Current { get; private set; }
+
+        /// <summary>The last attack's result for the HUD, while it is fresh (else "").</summary>
+        public string Feedback => Time.unscaledTime - _lastShown < 3f ? _last : "";
+
+        private void OnEnable() => Current = this;
+
+        private void OnDisable()
+        {
+            if (Current == this) Current = null;
+        }
 
         private void Update()
         {
@@ -143,7 +154,7 @@ namespace HeroGame.Runtime.Combat
 
         private void OnGUI()
         {
-            if (!ServiceRegistry.TryGet<GameSession>(out var session) || session.LocalCharacter == null) return;
+            if (GameUi.Active || !ServiceRegistry.TryGet<GameSession>(out var session) || session.LocalCharacter == null) return;
             var weapon = session.World.Combat.Weapon(_weapon);
             if (weapon == null) return;
             var ammo = weapon.UsesAmmo ? "  " + Core.Simulation.CombatService.Count(session.LocalCharacter, weapon.AmmoItemId) + " rounds" : "";

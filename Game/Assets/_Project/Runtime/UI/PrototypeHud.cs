@@ -18,7 +18,7 @@ namespace HeroGame.Runtime.UI
 
         private void OnGUI()
         {
-            if (!ServiceRegistry.TryGet<GameSession>(out var session)) return;
+            if (GameUi.Active || !ServiceRegistry.TryGet<GameSession>(out var session)) return;
             if (_style == null)
             {
                 _style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold };

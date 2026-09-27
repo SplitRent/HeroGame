@@ -14,6 +14,9 @@ namespace HeroGame.Runtime.UI
     {
         private static ToastPresenter _instance;
         private readonly ToastQueue _queue = new ToastQueue();
+
+        /// <summary>The live queue (the UI Toolkit layer draws it; this component then only collects).</summary>
+        public static ToastQueue Queue => _instance != null ? _instance._queue : null;
         private PhoneService _phone;
 
         /// <summary>Shows a notification from anywhere (network notices, UI results).</summary>
@@ -51,6 +54,7 @@ namespace HeroGame.Runtime.UI
 
         private void OnGUI()
         {
+            if (GameUi.Active) return;
             var scale = SettingsService.Current.UiScale;
             var width = 340f * scale;
             var y = 12f;
@@ -69,7 +73,7 @@ namespace HeroGame.Runtime.UI
             }
         }
 
-        private static Color Tint(ToastKind k)
+        public static Color Tint(ToastKind k)
         {
             switch (k)
             {
@@ -82,7 +86,7 @@ namespace HeroGame.Runtime.UI
         }
 
         /// <summary>A shape per kind, so the colour is never the only cue (accessibility).</summary>
-        private static string Symbol(ToastKind k)
+        public static string Symbol(ToastKind k)
         {
             switch (k)
             {

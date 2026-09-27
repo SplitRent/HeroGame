@@ -115,6 +115,12 @@ namespace HeroGame.Editor
             systems.AddComponent<Runtime.WorldProps.DestructiblePresenter>();
             systems.AddComponent<Runtime.Audio.AudioDirector>();
             hud.Interactor = player.GetComponent<PlayerInteractor>();
+            // UI Toolkit interface (HUD, toasts, pause/settings, phone); the IMGUI placeholders step aside when it runs.
+            var gameUi = new GameObject("Game UI");
+            gameUi.AddComponent<UIDocument>().panelSettings = PanelAsset();
+            var gameUiComponent = gameUi.AddComponent<GameUi>();
+            gameUiComponent.PanelSettings = PanelAsset();
+            gameUiComponent.Interactor = player.GetComponent<PlayerInteractor>();
             var console = systems.AddComponent<DevConsole>();
             console.Player = player.transform;
             var inspector = systems.AddComponent<WorldInspectorOverlay>();
@@ -159,15 +165,7 @@ namespace HeroGame.Editor
             cam.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
             cam.GetComponent<Camera>().backgroundColor = new Color(0.03f, 0.05f, 0.08f);
 
-            var panelPath = GeneratedFolder + "/FrontEndPanelSettings.asset";
-            var panel = AssetDatabase.LoadAssetAtPath<PanelSettings>(panelPath);
-            if (panel == null)
-            {
-                panel = ScriptableObject.CreateInstance<PanelSettings>();
-                panel.scaleMode = PanelScaleMode.ScaleWithScreenSize;
-                panel.referenceResolution = new Vector2Int(1920, 1080);
-                AssetDatabase.CreateAsset(panel, panelPath);
-            }
+            var panel = PanelAsset();
             var ui = new GameObject("FrontEnd");
             var doc = ui.AddComponent<UIDocument>();
             doc.panelSettings = panel;
@@ -178,6 +176,20 @@ namespace HeroGame.Editor
             EditorSceneManager.SaveScene(scene, MenuScene);
             AddToBuildSettings(MenuScene, first: true);
             Debug.Log("[Greybox] Built " + MenuScene);
+        }
+
+        /// <summary>Shared UI Toolkit panel settings (1080p reference, scales with the screen).</summary>
+        private static PanelSettings PanelAsset()
+        {
+            Directory.CreateDirectory(GeneratedFolder);
+            var panelPath = GeneratedFolder + "/FrontEndPanelSettings.asset";
+            var panel = AssetDatabase.LoadAssetAtPath<PanelSettings>(panelPath);
+            if (panel != null) return panel;
+            panel = ScriptableObject.CreateInstance<PanelSettings>();
+            panel.scaleMode = PanelScaleMode.ScaleWithScreenSize;
+            panel.referenceResolution = new Vector2Int(1920, 1080);
+            AssetDatabase.CreateAsset(panel, panelPath);
+            return panel;
         }
 
         private static void BuildGround(Transform parent, WorldLayout layout, MaterialLibrary m)

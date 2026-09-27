@@ -41,6 +41,14 @@ namespace HeroGame.Runtime.UI
             Changed?.Invoke(s);
         }
 
+        /// <summary>Applies the current settings without writing the file (live slider changes); call Commit when done.</summary>
+        public static void Apply()
+        {
+            var s = Current.Clamp();
+            ApplyToEngine(s);
+            Changed?.Invoke(s);
+        }
+
         public static void ResetToDefaults()
         {
             _current = new GameSettings();
