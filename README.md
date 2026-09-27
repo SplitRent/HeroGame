@@ -11,11 +11,66 @@ something extraordinary happens: resonance events that leave a few people with a
 **Art pipeline:** Blender 4.2 + Python automation + MCP command surface
 
 ## Status
-Phase 0 (foundation) is done: architecture, design documents, a tested simulation core, persistence with crash
-recovery, a headless world host, Unity runtime/editor code (compile-verified, not yet run in the editor) and a working
-Blender pipeline. See **[docs/STATUS.md](docs/STATUS.md)** for the honest per-system status and
-**[docs/reports/DEV_REPORT_001_FOUNDATION.md](docs/reports/DEV_REPORT_001_FOUNDATION.md)** for measurements, known
-issues and the next phase.
+Every simulation system is built and tested headlessly. That covers:
+
+- **Economy and property:** economy, NPC lives, property and building, businesses, banking.
+- **Crime and emergencies:** crime and courts, emergencies, combat, street crime, destruction.
+- **Powers and civic life:** superpowers, elections and city government, social feed, radio, weather and disasters.
+- **Story Mode.**
+- **Multiplayer:** crash-safe saves, a TLS multiplayer server with accounts and moderation, world replication.
+- **The city:** the full 19-district metro, about 50,000 residents.
+
+**Tests:** 253 + 6 tests, green CI, a 128-player load test.
+
+**Unity:** the Unity side (movement, driving, UI Toolkit HUD, phone and menus, combat, build mode, audio, online
+client) compiles cleanly but **has not yet been confirmed running in a real editor**. See
+**[docs/STATUS.md](docs/STATUS.md)** for the honest per-system status.
+
+**What's missing for a finished game:** art, animation, voice acting, recorded music and play-testing.
+
+Reports: [001 foundation](docs/reports/DEV_REPORT_001_FOUNDATION.md) · [002 systems](docs/reports/DEV_REPORT_002_SYSTEMS.md) ·
+[003 world](docs/reports/DEV_REPORT_003_WORLD_AND_POLISH.md) · [004 combat/UI/performance](docs/reports/DEV_REPORT_004_COMBAT_UI_PERFORMANCE.md).
+
+## Play it in Unity (first time)
+1. Install **Unity 6 (6000.0.x)** with Unity Hub.
+2. Open the **`Game/`** folder, not the repository root, and let packages import.
+3. Check the scripts compiled: a **HeroGame** menu appears in the top menu bar.
+   - If it doesn't, open *Window ▸ General ▸ Console* and look for red errors.
+4. Run **HeroGame ▸ Setup ▸ Configure Project Settings**. Restart Unity if it asks.
+5. Run *Window ▸ Rendering ▸ HDRP Wizard ▸ **Fix All***.
+6. Run **HeroGame ▸ Health Check (run me first)**.
+   - It checks the version, HDRP, input, data, a simulation smoke test and the scenes.
+   - It writes `Logs/HeroGame_HealthCheck.txt` and copies the report to your clipboard.
+7. If the Health Check says scenes are missing, run **HeroGame ▸ Build Main Menu Scene** and **HeroGame ▸ Build
+   Greybox Vertical Slice**.
+8. Open `Assets/_Project/Scenes/MainMenu.unity` and press **Play**.
+   - Create a character, then **Continue** (or open `VerticalSlice_Greybox` directly).
+   - The Console should print a line starting with `[Bootstrap] Port Arden`.
+9. For the whole city, run **HeroGame ▸ Build Greybox Full Metro (heavy)**. It creates about 7,500 buildings.
+
+### Controls
+| Action | Keyboard / mouse | Gamepad |
+|---|---|---|
+| Move · look · sprint · jump · crouch | WASD · mouse · Shift · Space · Ctrl | left stick · right stick · L3 · A · B |
+| Interact | E | X |
+| Phone | ↑ | D-pad up |
+| Pause & settings | Esc | Start |
+| Enter / exit vehicle · horn | F · H | Y · L3 |
+| Attack · next weapon | left mouse · X | RB · D-pad down |
+| Powers: select, then hold to charge | 1–4, then hold Q | D-pad left/right, then RT |
+| Build mode (inside a property you own) | B | Select |
+| Dev console · world inspector | ` · F3 | — |
+
+Dev console (`` ` ``) highlights: `help`, `money 5000`, `give compact_pistol`, `permit`, `mugging`, `storm Nadia 3 2`,
+`fire`, `days 3`, `spawncar`, `own nearest`.
+
+### Host a server
+```bash
+cd Headless && dotnet build HeroGame.Server -c Release
+S=HeroGame.Server/bin/Release/net8.0/herogame-server
+$S --save ./saves/server --dev-secret $(openssl rand -base64 32) --layout layout_port_arden.json
+```
+The server prints its TLS fingerprint.
 
 ## Documents
 | | |

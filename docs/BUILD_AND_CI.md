@@ -36,8 +36,10 @@ $H bench   --days 7                          # 10k-NPC stress layout benchmark
 
 Saves: `Application.persistentDataPath/Saves/{servers|story}/<slot>` (same format as the headless host).
 
-> Phase 0 note: the Unity scripts have been compile-verified against Unity reference assemblies, not yet run inside
-> the editor. Expect first-open fixes (tracked in `STATUS.md`).
+> The Unity scripts are compile-verified against Unity reference assemblies (editor and player) on every push but have
+> not been confirmed in a real editor yet. Run **HeroGame ▸ Health Check (run me first)** after opening and send its
+> report plus any red Console errors; expect first-open fixes (tracked in `STATUS.md`). The README has the full
+> first-run checklist and controls.
 
 ## CI
 * **`ci.yml`** (every push/PR): .NET build + tests, Unity compile check (editor & player), world smoke test (create →
