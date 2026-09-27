@@ -663,6 +663,27 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void FinanceOverTheWire_QuotesCoverAndCancellation_ShowUpInThePlayerView()
+        {
+            var a = Join("acc-fin", "Wes");
+            var me = _server.Players.Single(p => p.AccountId == "acc-fin").Character;
+            Assert.IsTrue(_world.AdminGrant(me.CheckingAccount, Money.FromDollars(20000), "admin", "test").Success);
+            var loanQuote = Call(a, "finance.quote", new Dictionary<string, string> { ["kind"] = "Personal", ["amount"] = "500000", ["term"] = "36" });
+            Assert.IsTrue(loanQuote.Success, loanQuote.Error);
+            Assert.IsTrue(loanQuote.Data.ContainsKey("approved") && loanQuote.Data.ContainsKey("monthly"));
+            var cover = Call(a, "insurance.quote", new Dictionary<string, string> { ["kind"] = "Health", ["deductible"] = "100000" });
+            Assert.IsTrue(cover.Success, cover.Error);
+            Assert.AreEqual("true", cover.Data["available"], cover.Data["reason"]);
+            Assert.IsTrue(Call(a, "insurance.buy", new Dictionary<string, string> { ["kind"] = "Health", ["deductible"] = "100000" }).Success);
+            Until(() => a.Me != null && a.Me.Policies.Any(p => p.Kind == "Health" && p.Active), 4000);
+            Assert.IsTrue(a.Me.Insurables.Any(i => i.Kind == "Health"));
+            Assert.Greater(a.Me.CreditScore, 0);
+            var policy = a.Me.Policies.First(p => p.Kind == "Health");
+            Assert.IsTrue(Call(a, "insurance.cancel", new Dictionary<string, string> { ["policy"] = policy.Id }).Success);
+            Until(() => a.Me.Policies.Any(p => p.Id == policy.Id && !p.Active), 4000);
+        }
+
+        [Test]
         public void AdminCommands_RequireWorldAdmin_AndAreAudited()
         {
             _server.Admin = new AdminCommands(_world, new WorldSimulation(_world));

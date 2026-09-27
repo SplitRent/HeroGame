@@ -419,7 +419,27 @@ namespace HeroGame.Runtime.UI
 
             var body = new ScrollView();
             body.style.flexGrow = 1;
+            if (!string.IsNullOrEmpty(_status))
+            {
+                var status2 = Text(_status, "g-note");
+                status2.style.color = new Color(0.94f, 0.7f, 0.16f);
+                phone.Add(status2);
+            }
             var online = Online.NetworkSession.Me;
+            if (_app == "Radio" || _app == "Ripple" || _app == "Loans" || _app == "Insurance" || _app == "Businesses")
+            {
+                switch (_app)
+                {
+                    case "Radio": BuildRadio(body, w); break;
+                    case "Ripple": BuildRipple(body, session); break;
+                    case "Loans": BuildLoans(body, session, online); break;
+                    case "Insurance": BuildInsurance(body, session, online); break;
+                    case "Businesses": BuildBusinesses(body, session, online); break;
+                }
+                phone.Add(body);
+                _layer.Add(phone);
+                return;
+            }
             if (online != null && _app != "" && _app != "News" && _app != "Map")
             {
                 BuildOnline(body, online);
@@ -446,24 +466,265 @@ namespace HeroGame.Runtime.UI
             var grid = new VisualElement();
             grid.AddToClassList("g-apps");
             var unread = w.Phone.UnreadCount(me);
-            foreach (var app in new[] { "Messages", "News", "Bank", "Properties", "Inventory", "Map" })
+            var online = Online.NetworkSession.Me;
+            if (online != null) unread = online.Unread;
+            foreach (var app in new[] { "Messages", "News", "Bank", "Properties", "Inventory", "Map", "Radio", "Ripple", "Loans", "Insurance", "Businesses" })
             {
                 var captured = app;
-                var b = new Button(() => { _app = captured; BuildPhone(); }) { text = app };
+                var b = new Button(() => { _app = captured; _status = ""; BuildPhone(); }) { text = app };
                 b.AddToClassList("g-app");
                 if (app == "Messages" && unread > 0) b.Add(Text(unread.ToString(), "g-app-badge"));
                 grid.Add(b);
             }
-            // Less frequent apps still live in the classic phone for now.
-            foreach (var classic in new[] { "Radio", "Ripple", "Loans", "Insurance", "Businesses" })
-            {
-                var captured = classic;
-                var b = new Button(() => { Close(); PhonePanel.OpenClassic(captured); }) { text = classic };
-                b.AddToClassList("g-app");
-                b.style.backgroundColor = new Color(1f, 1f, 1f, 0.08f);
-                grid.Add(b);
-            }
             body.Add(grid);
+        }
+
+        // ------------------------------------------------------------------ actions (offline: local service; online: server)
+
+        private string _status = "";
+        private string _draft = "";
+        private string _loanAmount = "5000";
+        private string _deductible = "1000";
+        private List<string[]> _feed;
+
+        private void Act(string op, Dictionary<string, string> args, Func<OpResult> offline, string success)
+        {
+            var net = Online.NetworkSession.Current;
+            if (Online.NetworkSession.Replica != null && net != null)
+            {
+                _status = "…";
+                BuildPhone();
+                _ = net.Request(op, args).ContinueWith(t =>
+                {
+                    _status = t.Result.Success ? success : t.Result.Error;
+                    if (_screen == Screen.Phone) BuildPhone();
+                }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+                return;
+            }
+            var r = offline();
+            _status = r.Success ? success : r.Error;
+            BuildPhone();
+        }
+
+        private static long Dollars(string text) => long.TryParse(text, out var d) && d > 0 ? d * 100 : 0;
+
+        private void BuildRadio(VisualElement body, Core.Simulation.World w)
+        {
+            body.Add(Text(RadioPresenter.Tuned == "" ? "Radio off" : "Tuned to " + (w.Radio.Station(RadioPresenter.Tuned)?.Name ?? RadioPresenter.Tuned), "g-note"));
+            body.Add(ActionButton("Off", () => { RadioPresenter.Tune(""); BuildPhone(); }, quiet: true));
+            foreach (var st in w.Radio.Stations)
+            {
+                var id = st.Id;
+                var seg = w.Radio.OnAir(st.Id, w.Clock.Now);
+                var item = Item(st.Frequency + "  " + st.Name, st.Genre + (seg != null ? "\nNow: " + seg.Title : ""), RadioPresenter.Tuned == st.Id);
+                item.RegisterCallback<ClickEvent>(_ => { RadioPresenter.Tune(id); BuildPhone(); });
+                body.Add(item);
+            }
+        }
+
+        private void BuildRipple(VisualElement body, GameSession session)
+        {
+            var w = session.World;
+            var me = session.LocalCharacter;
+            var draft = new TextField { value = _draft, maxLength = Core.Simulation.RippleService.MaxPostLength, multiline = true };
+            draft.AddToClassList("g-field");
+            draft.RegisterValueChangedCallback(e => _draft = e.newValue);
+            body.Add(draft);
+            body.Add(ActionButton("Post", () =>
+            {
+                var text = _draft;
+                _draft = "";
+                _feed = null;
+                Act("ripple.post", new Dictionary<string, string> { ["text"] = text }, () => w.Feed.Post(me, ServiceRegistry.TryGet<Core.Characters.AccountProfile>(out var profile) && profile != null ? profile.Character.FullName : "You", text, out _), "Posted.");
+            }));
+            var net = Online.NetworkSession.Current;
+            if (Online.NetworkSession.Replica != null && net != null)
+            {
+                if (_feed == null)
+                {
+                    _feed = new List<string[]>();
+                    _ = net.Request("ripple.feed", new Dictionary<string, string> { ["count"] = "20" }).ContinueWith(t =>
+                    {
+                        if (!t.Result.Success) return;
+                        var n = int.TryParse(t.Result.Data.TryGetValue("count", out var c) ? c : "0", out var k) ? k : 0;
+                        for (var i = 0; i < n; i++)
+                            if (t.Result.Data.TryGetValue("post" + i, out var line)) _feed.Add(line.Split(new[] { '|' }, 6));
+                        if (_screen == Screen.Phone && _app == "Ripple") BuildPhone();
+                    }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+                }
+                foreach (var p in _feed)
+                {
+                    if (p.Length < 6) continue;
+                    var postId = p[0];
+                    var item = Item(p[2], p[5]);
+                    item.Add(ActionButton("♥ " + p[3], () => { _feed = null; Act("ripple.like", new Dictionary<string, string> { ["post"] = postId }, () => OpResult.Ok(), "Liked."); }, quiet: true));
+                    body.Add(item);
+                }
+                return;
+            }
+            body.Add(Text("Trending: " + string.Join("  ", w.Feed.Trending().ConvertAll(t => "#" + t.Item1)), "g-note"));
+            foreach (var p in w.Feed.Feed(me.CharacterId, 25, ""))
+            {
+                var post = p;
+                var item = Item(p.AuthorName, p.Text);
+                item.Add(ActionButton("♥ " + p.Likes, () => Act("ripple.like", null, () => w.Feed.Like(me, post.Id), "Liked."), quiet: true));
+                body.Add(item);
+            }
+        }
+
+        private void BuildLoans(VisualElement body, GameSession session, Networking.Protocol.PlayerViewData online)
+        {
+            var w = session.World;
+            var me = session.LocalCharacter;
+            if (online != null)
+            {
+                body.Add(Text("Credit score " + online.CreditScore + " · income " + new Money(online.VerifiedIncomeCents) + "/month · debt " + new Money(online.MonthlyDebtCents) + "/month", "g-note"));
+                foreach (var l in online.Loans)
+                {
+                    var id = l.Id;
+                    var outstanding = l.OutstandingCents;
+                    var item = Item(l.Kind + " · " + l.Status, new Money(l.OutstandingCents) + " left · " + new Money(l.MonthlyCents) + "/month @ " + (l.Rate * 100).ToString("0.00") + "%");
+                    item.Add(ActionButton("Pay $500", () => Act("finance.repay", new Dictionary<string, string> { ["loan"] = id, ["amount"] = "50000" }, () => OpResult.Ok(), "Payment made."), quiet: true));
+                    item.Add(ActionButton("Pay off", () => Act("finance.repay", new Dictionary<string, string> { ["loan"] = id, ["amount"] = outstanding.ToString(System.Globalization.CultureInfo.InvariantCulture) }, () => OpResult.Ok(), "Loan paid off.")));
+                    body.Add(item);
+                }
+            }
+            else
+            {
+                var credit = w.Finance.Credit(me);
+                body.Add(Text("Credit score " + credit.Score + " · income " + w.Finance.VerifiedMonthlyIncome(me) + "/month · debt " + new Money(credit.MonthlyDebtPaymentsCents) + "/month", "g-note"));
+                foreach (var loan in w.Loans.Loans)
+                {
+                    if (loan.Borrower != me.CharacterId || loan.Status == Core.Economy.LoanStatus.PaidOff) continue;
+                    var l = loan;
+                    var item = Item(loan.Kind + " · " + loan.Status, new Money(loan.OutstandingCents) + " left · " + new Money(loan.MonthlyPaymentCents) + "/month @ " + (loan.AnnualRate * 100).ToString("0.00") + "%");
+                    item.Add(ActionButton("Pay $500", () => Act("finance.repay", null, () => w.Finance.Repay(me, l, Money.FromDollars(500), session.NextRequestKey("repay")), "Payment made."), quiet: true));
+                    item.Add(ActionButton("Pay off", () => Act("finance.repay", null, () => w.Finance.Repay(me, l, new Money(l.OutstandingCents), session.NextRequestKey("payoff")), "Loan paid off.")));
+                    body.Add(item);
+                }
+            }
+            body.Add(Text("Personal loan (36 months)", "g-section"));
+            var amount = new TextField("Amount $") { value = _loanAmount };
+            amount.AddToClassList("g-field");
+            amount.RegisterValueChangedCallback(e => _loanAmount = e.newValue);
+            body.Add(amount);
+            if (online == null)
+            {
+                var offer = w.Finance.QuoteLoan(me, Core.Economy.LoanKind.Personal, new Money(Dollars(_loanAmount)), 36, EntityId.None);
+                body.Add(Text(offer.Approved ? (offer.AnnualRate * 100).ToString("0.00") + "% · " + new Money(offer.MonthlyPaymentCents) + "/month" : offer.Reason, "g-note"));
+            }
+            body.Add(ActionButton("Apply", () =>
+            {
+                var allowed = session.CheckAllowed("finance.loan");
+                if (!allowed.Success) { _status = allowed.Error; BuildPhone(); return; }
+                Act("finance.loan", new Dictionary<string, string> { ["kind"] = "Personal", ["amount"] = Dollars(_loanAmount).ToString(System.Globalization.CultureInfo.InvariantCulture), ["term"] = "36" },
+                    () => w.Finance.TakeLoan(me, Core.Economy.LoanKind.Personal, new Money(Dollars(_loanAmount)), 36, EntityId.None, session.NextRequestKey("loan")), "Funds deposited.");
+            }));
+        }
+
+        private void BuildInsurance(VisualElement body, GameSession session, Networking.Protocol.PlayerViewData online)
+        {
+            var w = session.World;
+            var me = session.LocalCharacter;
+            if (online != null)
+            {
+                foreach (var p in online.Policies)
+                {
+                    var id = p.Id;
+                    var item = Item(p.Kind + " · " + p.Status, new Money(p.PremiumCents) + "/month · cover " + new Money(p.CoverCents) + " · claims " + p.Claims);
+                    if (p.Active && p.AssessedLossCents > 0) item.Add(ActionButton("Claim " + new Money(p.AssessedLossCents), () => Act("insurance.claim", new Dictionary<string, string> { ["policy"] = id }, () => OpResult.Ok(), "Claim paid.")));
+                    if (p.Active) item.Add(ActionButton("Cancel", () => Act("insurance.cancel", new Dictionary<string, string> { ["policy"] = id }, () => OpResult.Ok(), "Policy cancelled."), quiet: true));
+                    body.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var p in w.Insurance.ForHolder(me.CharacterId))
+                {
+                    var policy = p;
+                    var item = Item(p.Kind + " · " + p.Status, new Money(p.MonthlyPremiumCents) + "/month · cover " + new Money(p.RemainingCoverageCents) + " · claims " + p.Claims);
+                    var loss = p.Active ? w.Finance.AssessedLoss(p) : Money.Zero;
+                    if (loss.Cents > 0) item.Add(ActionButton("Claim " + loss, () => Act("insurance.claim", null, () => w.Finance.Claim(me, policy, session.NextRequestKey("claim")), "Claim paid.")));
+                    if (p.Active) item.Add(ActionButton("Cancel", () => Act("insurance.cancel", null, () => w.Finance.CancelInsurance(me, policy), "Policy cancelled."), quiet: true));
+                    body.Add(item);
+                }
+            }
+            body.Add(Text("Get covered", "g-section"));
+            var deductible = new TextField("Deductible $") { value = _deductible };
+            deductible.AddToClassList("g-field");
+            deductible.RegisterValueChangedCallback(e => _deductible = e.newValue);
+            body.Add(deductible);
+            var targets = new List<(string kind, string asset, string label)>();
+            if (online != null) foreach (var i in online.Insurables) targets.Add((i.Kind, i.Asset, i.Label));
+            else
+            {
+                targets.Add(("Health", "", "Health"));
+                var assets = new List<EntityId>(w.Ownership.AssetsOf(me.CharacterId));
+                assets.Sort();
+                foreach (var a in assets)
+                {
+                    if (a.Kind == EntityKind.Property) targets.Add(("Property", a.ToString(), w.Properties.Get(a)?.Address ?? a.ToString()));
+                    else if (a.Kind == EntityKind.Vehicle) targets.Add(("Vehicle", a.ToString(), w.Vehicles.Get(a)?.Plate ?? a.ToString()));
+                    else if (a.Kind == EntityKind.Business && w.Businesses.TryGetValue(a, out var biz)) targets.Add(("BusinessInterruption", a.ToString(), biz.Name));
+                }
+            }
+            foreach (var (kind, asset, label) in targets)
+            {
+                var k = kind;
+                var a = asset;
+                var line = kind + " · " + label;
+                if (online == null && Enum.TryParse(k, out Core.Economy.InsuranceKind ik))
+                {
+                    EntityId.TryParse(a, out var assetId);
+                    var q = w.Finance.QuoteInsurance(me, ik, assetId, new Money(Dollars(_deductible)));
+                    if (!q.Available) continue;
+                    line += " — " + new Money(q.MonthlyPremiumCents) + "/month";
+                }
+                var item = Item(line, "");
+                item.Add(ActionButton("Insure", () =>
+                {
+                    var args = new Dictionary<string, string> { ["kind"] = k, ["deductible"] = Dollars(_deductible).ToString(System.Globalization.CultureInfo.InvariantCulture) };
+                    if (a.Length > 0) args["asset"] = a;
+                    Act("insurance.buy", args, () =>
+                    {
+                        if (!Enum.TryParse(k, out Core.Economy.InsuranceKind kindValue)) return OpResult.Fail("Unknown cover.");
+                        EntityId.TryParse(a, out var id);
+                        return w.Finance.BuyInsurance(me, kindValue, id, new Money(Dollars(_deductible)), session.NextRequestKey("insure"));
+                    }, "Covered.");
+                }));
+                body.Add(item);
+            }
+        }
+
+        private void BuildBusinesses(VisualElement body, GameSession session, Networking.Protocol.PlayerViewData online)
+        {
+            var w = session.World;
+            if (online != null)
+            {
+                if (online.Businesses.Count == 0) body.Add(Text("You don't own a business yet.", "g-note"));
+                foreach (var b in online.Businesses)
+                    body.Add(Item(b.Name, "Account " + new Money(b.BalanceCents) + " · yesterday " + (b.LastDayClosed ? "closed" : b.LastDayCustomers + " customers, " + new Money(b.LastDayProfitCents))));
+                body.Add(Text("Manage staff, prices and stock at the business's office counter.", "g-note"));
+                return;
+            }
+            var owned = w.BusinessOps.OwnedBy(session.LocalCharacter.CharacterId);
+            if (owned.Count == 0) body.Add(Text("You don't own a business yet.", "g-note"));
+            foreach (var b in owned)
+            {
+                var biz = b;
+                var last = b.Reports.Count > 0 ? b.Reports[b.Reports.Count - 1] : null;
+                var item = Item(b.Name, "Account " + w.Ledger.BalanceOf(b.Account) + (last != null ? " · yesterday " + (last.WasClosed ? "closed" : last.Customers + " customers, " + new Money(last.ProfitCents)) : ""));
+                item.Add(ActionButton("Manage", () => { Close(); BusinessPanel.Open(biz); }));
+                body.Add(item);
+            }
+            body.Add(Text("For sale", "g-section"));
+            foreach (var b in w.BusinessOps.ForSale())
+            {
+                var biz = b;
+                var item = Item(b.Name, w.BusinessOps.PriceOf(b).Total.ToString());
+                item.Add(ActionButton("View", () => { Close(); BusinessPanel.Open(biz); }, quiet: true));
+                body.Add(item);
+            }
         }
 
         /// <summary>Messages, bank, property and inventory from the server's view of this player (online).</summary>
@@ -554,7 +815,7 @@ namespace HeroGame.Runtime.UI
                 var s = me.Statement[i];
                 body.Add(Item(new Money(s.AmountCents).ToString(), s.Reason + (string.IsNullOrEmpty(s.Memo) ? "" : " · " + s.Memo)));
             }
-            body.Add(ActionButton("Transfers, savings and loans…", () => { _instance?.Close(); PhonePanel.OpenClassic("Bank"); }, quiet: true));
+            body.Add(ActionButton("Transfers and savings…", () => { _instance?.Close(); PhonePanel.OpenClassic("Bank"); }, quiet: true));
         }
 
         private static void BuildProperties(VisualElement body, Core.Simulation.World w, Core.Characters.ServerCharacter me)

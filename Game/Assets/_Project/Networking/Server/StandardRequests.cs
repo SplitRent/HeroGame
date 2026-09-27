@@ -79,6 +79,28 @@ namespace HeroGame.Networking.Server
                 ctx.World.Loans.TryGet(ctx.Id("loan"), out var loan);
                 return RequestContext.From(ctx.World.Finance.Repay(ctx.Me, loan, new Money(ctx.Long("amount", 1)), ctx.Key));
             });
+            r.Register("finance.quote", ctx =>
+            {
+                if (!Enum.TryParse(ctx.Str("kind", 16), out LoanKind kind)) return RequestContext.Fail("Unknown loan kind.");
+                var offer = ctx.World.Finance.QuoteLoan(ctx.Me, kind, new Money(ctx.Long("amount", 1)), (int)ctx.Long("term", 6, 360), EntityId.None);
+                return RequestContext.Ok(new Dictionary<string, string>
+                {
+                    ["approved"] = offer.Approved ? "true" : "false", ["reason"] = offer.Reason ?? "",
+                    ["rate"] = offer.AnnualRate.ToString("R", CultureInfo.InvariantCulture), ["monthly"] = offer.MonthlyPaymentCents.ToString(CultureInfo.InvariantCulture),
+                });
+            });
+            r.Register("insurance.quote", ctx =>
+            {
+                if (!Enum.TryParse(ctx.Str("kind", 32), out InsuranceKind kind)) return RequestContext.Fail("Unknown insurance kind.");
+                var asset = ctx.Request.Args.ContainsKey("asset") ? ctx.Id("asset") : EntityId.None;
+                var q = ctx.World.Finance.QuoteInsurance(ctx.Me, kind, asset, new Money(ctx.Long("deductible", 0)));
+                return RequestContext.Ok(new Dictionary<string, string>
+                {
+                    ["available"] = q.Available ? "true" : "false", ["reason"] = q.Reason ?? "",
+                    ["premium"] = q.MonthlyPremiumCents.ToString(CultureInfo.InvariantCulture), ["cover"] = q.CoverageCents.ToString(CultureInfo.InvariantCulture),
+                });
+            });
+            r.Register("insurance.cancel", ctx => RequestContext.From(ctx.World.Finance.CancelInsurance(ctx.Me, ctx.World.Insurance.Get(ctx.Id("policy")))));
             r.Register("insurance.buy", ctx =>
             {
                 if (!Enum.TryParse(ctx.Str("kind", 32), out InsuranceKind kind)) return RequestContext.Fail("Unknown insurance kind.");

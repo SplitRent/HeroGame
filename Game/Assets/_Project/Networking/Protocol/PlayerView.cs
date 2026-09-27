@@ -33,6 +33,42 @@ namespace HeroGame.Networking.Protocol
         public long PropertyOwedCents;
         public long PropertyMonthlyNetCents;
         public List<Business> Businesses = new List<Business>();
+        public int CreditScore;
+        public long MonthlyDebtCents;
+        public long VerifiedIncomeCents;
+        public List<LoanLine> Loans = new List<LoanLine>();
+        public List<PolicyLine> Policies = new List<PolicyLine>();
+        /// <summary>Things this player could insure: health plus owned properties, vehicles and businesses.</summary>
+        public List<Insurable> Insurables = new List<Insurable>();
+
+        public sealed class LoanLine
+        {
+            public string Id = "";
+            public string Kind = "";
+            public string Status = "";
+            public long OutstandingCents;
+            public long MonthlyCents;
+            public double Rate;
+        }
+
+        public sealed class PolicyLine
+        {
+            public string Id = "";
+            public string Kind = "";
+            public string Status = "";
+            public long PremiumCents;
+            public long CoverCents;
+            public int Claims;
+            public long AssessedLossCents;
+            public bool Active;
+        }
+
+        public sealed class Insurable
+        {
+            public string Kind = "";
+            public string Asset = "";
+            public string Label = "";
+        }
 
         public sealed class Message
         {
@@ -131,6 +167,28 @@ namespace HeroGame.Networking.Protocol
                     RentCents = e.MonthlyRentIncome.Cents, NetCents = e.MonthlyNet.Cents, Units = e.Units, Occupied = e.OccupiedUnits, Insured = e.Insured, ForSale = e.ForSale,
                     Alerts = new List<string>(e.Alerts),
                 });
+            var credit = w.Finance.Credit(c);
+            v.CreditScore = credit.Score;
+            v.MonthlyDebtCents = credit.MonthlyDebtPaymentsCents;
+            v.VerifiedIncomeCents = w.Finance.VerifiedMonthlyIncome(c).Cents;
+            foreach (var loan in w.Loans.Loans)
+                if (loan.Borrower == c.CharacterId && loan.Status != Core.Economy.LoanStatus.PaidOff)
+                    v.Loans.Add(new LoanLine { Id = loan.Id.ToString(), Kind = loan.Kind.ToString(), Status = loan.Status.ToString(), OutstandingCents = loan.OutstandingCents, MonthlyCents = loan.MonthlyPaymentCents, Rate = loan.AnnualRate });
+            foreach (var policy in w.Insurance.ForHolder(c.CharacterId))
+                v.Policies.Add(new PolicyLine
+                {
+                    Id = policy.Id.ToString(), Kind = policy.Kind.ToString(), Status = policy.Status.ToString(), PremiumCents = policy.MonthlyPremiumCents,
+                    CoverCents = policy.RemainingCoverageCents, Claims = policy.Claims, AssessedLossCents = policy.Active ? w.Finance.AssessedLoss(policy).Cents : 0, Active = policy.Active,
+                });
+            v.Insurables.Add(new Insurable { Kind = "Health", Label = "Health" });
+            var assets = new List<EntityId>(w.Ownership.AssetsOf(c.CharacterId));
+            assets.Sort();
+            foreach (var asset in assets)
+            {
+                if (asset.Kind == EntityKind.Property) v.Insurables.Add(new Insurable { Kind = "Property", Asset = asset.ToString(), Label = w.Properties.Get(asset)?.Address ?? asset.ToString() });
+                else if (asset.Kind == EntityKind.Vehicle) v.Insurables.Add(new Insurable { Kind = "Vehicle", Asset = asset.ToString(), Label = w.Vehicles.Get(asset)?.Plate ?? asset.ToString() });
+                else if (asset.Kind == EntityKind.Business && w.Businesses.TryGetValue(asset, out var biz)) v.Insurables.Add(new Insurable { Kind = "BusinessInterruption", Asset = asset.ToString(), Label = biz.Name });
+            }
             foreach (var b in w.BusinessOps.OwnedBy(c.CharacterId))
             {
                 var last = b.Reports.Count > 0 ? b.Reports[b.Reports.Count - 1] : null;

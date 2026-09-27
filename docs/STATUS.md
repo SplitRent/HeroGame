@@ -163,6 +163,7 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | Load test (30 Hz, 128 players) | TESTED | `herogame-server loadtest` (CI: 64 clients over TLS); 128 clients: p99 21 ms/tick, 12 KiB/s per client; async per-connection writers, 32-nearest snapshot interest |
 | Background autosave (snapshot on the simulation thread, writes off it; failed writes retried) | TESTED | `BackgroundSave_Commits_*`; bench: routine autosave 12.9 ms blocked |
 | Online player view (cash, health, wanted, messages, statement, inventory, property, businesses) pushed when changed; phone.read | TESTED | `PlayerView_ArrivesOnJoin_FollowsTheServer_AndOnlyTheirOwn`; 64-client TLS load test p99 8.8 ms |
+| Online finance: credit, loans, policies and insurable assets in the player view; finance.quote, insurance.quote, insurance.cancel | TESTED | `FinanceOverTheWire_QuotesCoverAndCancellation_ShowUpInThePlayerView` |
 | Combat and weapon requests over the network (server positions only, PvP switch, shop proximity) | TESTED | `Combat_OverTheWire_UsesTheServersPositions_AndRespectsPvp` |
 | Replication of shared world changes (broken props, fires, player ownership, sale listings, damage, rebuilt buildings on demand); full state on join | TESTED | `WorldChanges_ReachEveryone_LateJoinersGetTheFullState_AndRebuiltBuildingsCanBeFetched`, `WorldDeltas_RoundTrip_AndHostileCountsAreRejected`; load test unchanged |
 | `--layout` for the dedicated server and world host | FUNCTIONAL | CI metro bench; manual `new --layout` → `run` reopens on the metro |
@@ -197,7 +198,7 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 | Health check (HeroGame ▸ Health Check): Unity version, HDRP, input, colour space, data, story, simulation smoke, scenes | IN DEVELOPMENT | compiles; waiting on the first report from a real editor |
-| UI Toolkit in-game interface: HUD (clock, weather, cash, health, wanted, phone badge, weapon, prompt, subtitles, FPS), toasts, pause/settings (Audio, Controls, Display, Accessibility), phone (Messages, News, Bank, Properties, Inventory, Map; online data from the server) | IN DEVELOPMENT | compiles; uses tested view-models; IMGUI placeholders remain as fallback |
+| UI Toolkit in-game interface: HUD (clock, weather, cash, health, wanted, phone badge, weapon, prompt, subtitles, FPS), toasts, pause/settings (Audio, Controls, Display, Accessibility), phone (all eleven apps: Messages, News, Bank, Properties, Inventory, Map, Radio, Ripple, Loans, Insurance, Businesses; online data and actions go through the server) | IN DEVELOPMENT | compiles; uses tested view-models; IMGUI placeholders remain as fallback |
 | Combat controller (X cycles weapons, attack the person in front; offline and online), weapons counters in shops, permit desk, NPC flinch, procedural combat sounds | IN DEVELOPMENT | compiles |
 | Online presentation from the replica (fires, props, for-sale signs, rebuilt interiors in build mode) | IN DEVELOPMENT | compiles |
 | Metro greybox scene (HeroGame ▸ Build Greybox Full Metro) and `GameBootstrap.LayoutFile` | IN DEVELOPMENT | compiles; heavy scene, not yet built in Unity |
