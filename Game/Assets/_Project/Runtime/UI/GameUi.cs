@@ -157,8 +157,8 @@ namespace HeroGame.Runtime.UI
                 _badge.style.display = unread > 0 ? DisplayStyle.Flex : DisplayStyle.None;
             }
 
-            var prompt = Interactor != null ? Interactor.PromptText : "";
-            _prompt.text = string.IsNullOrEmpty(prompt) ? "" : "[E]  " + prompt;
+            var prompt = Crime.StreetEncounterPresenter.Active ? Crime.StreetEncounterPresenter.Card : Interactor != null ? Interactor.PromptText : "";
+            _prompt.text = string.IsNullOrEmpty(prompt) ? "" : Crime.StreetEncounterPresenter.Active ? "▲  " + prompt : "[E]  " + prompt;
             _prompt.style.display = string.IsNullOrEmpty(prompt) || _screen != Screen.None ? DisplayStyle.None : DisplayStyle.Flex;
 
             var combat = Combat.CombatController.Current;

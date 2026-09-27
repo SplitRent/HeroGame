@@ -66,6 +66,12 @@ namespace HeroGame.Core.Simulation
             Add("ordinance", "ordinance ID enact|repeal ('ordinance' lists them)", Ordinance);
             Add("business", "business nearest|NAME [days N] — inspect or fast-forward a business", Business);
             Add("props", "props [RADIUS] | props break — street furniture near you", Props);
+            Add("mugging", "mugging — someone tries to rob you right here (street encounter test)", c =>
+            {
+                if (c.Actor == null) return "No character.";
+                var e = _w.StreetCrime.Start(c.Actor, c.At);
+                return e == null ? "Nobody around to try it." : e.MuggerName + " demands " + new Money(e.DemandCents) + (e.WeaponId == "fists" ? "." : " with a knife.");
+            });
             Add("give", "give ITEM [N] — put items in your inventory ('give' lists items; weapons come with ammunition)", Give);
             Add("permit", "permit — issue yourself a firearm permit (skips the fee and background check)", c =>
             {

@@ -40,6 +40,19 @@ namespace HeroGame.Networking.Protocol
         public List<PolicyLine> Policies = new List<PolicyLine>();
         /// <summary>Things this player could insure: health plus owned properties, vehicles and businesses.</summary>
         public List<Insurable> Insurables = new List<Insurable>();
+        /// <summary>A mugging in progress, or null.</summary>
+        public EncounterView Encounter;
+
+        public sealed class EncounterView
+        {
+            public string Mugger = "";
+            public string Name = "";
+            public long DemandCents;
+            public string Weapon = "";
+            public long SecondsLeft;
+            public float X;
+            public float Z;
+        }
 
         public sealed class LoanLine
         {
@@ -167,6 +180,13 @@ namespace HeroGame.Networking.Protocol
                     RentCents = e.MonthlyRentIncome.Cents, NetCents = e.MonthlyNet.Cents, Units = e.Units, Occupied = e.OccupiedUnits, Insured = e.Insured, ForSale = e.ForSale,
                     Alerts = new List<string>(e.Alerts),
                 });
+            var encounter = w.StreetCrime.ActiveFor(c.CharacterId);
+            if (encounter != null)
+                v.Encounter = new EncounterView
+                {
+                    Mugger = encounter.Mugger.ToString(), Name = encounter.MuggerName, DemandCents = encounter.DemandCents, Weapon = encounter.WeaponId,
+                    SecondsLeft = System.Math.Max(0, encounter.DeadlineSecond - w.Clock.Now.TotalSeconds), X = encounter.Position.X, Z = encounter.Position.Z,
+                };
             var credit = w.Finance.Credit(c);
             v.CreditScore = credit.Score;
             v.MonthlyDebtCents = credit.MonthlyDebtPaymentsCents;

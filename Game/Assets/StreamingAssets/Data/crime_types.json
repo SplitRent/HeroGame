@@ -250,5 +250,14 @@
     "BaseFineCents": 200000,
     "BaseJailDays": 5,
     "ReportLikelihood": 0.5
+  },
+  {
+    "Id": "street_robbery",
+    "DisplayName": "Street Robbery",
+    "Category": "Violent",
+    "Severity": 5,
+    "BaseFineCents": 800000,
+    "BaseJailDays": 180,
+    "ReportLikelihood": 0.8
   }
 ]

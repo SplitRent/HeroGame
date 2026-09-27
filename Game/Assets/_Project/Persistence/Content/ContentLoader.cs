@@ -523,7 +523,7 @@ namespace HeroGame.Persistence.Content
                 if (wpn.SoldBy.Count > 0 && wpn.PriceCents <= 0) r.Error(path, "Sold weapons need a price.");
             }
             if (c.FindWeapon("fists") == null) r.Error("weapons", "Missing required weapon fists.");
-            foreach (var required in new[] { "homicide", "unlawful_discharge", "unlicensed_firearm" })
+            foreach (var required in new[] { "homicide", "unlawful_discharge", "unlicensed_firearm", "street_robbery" })
                 if (c.FindCrime(required) == null) r.Error("crime_types", "Missing required crime " + required + ".");
 
             // Water: well-formed polygons; nothing but docks, beaches and bridges in it.

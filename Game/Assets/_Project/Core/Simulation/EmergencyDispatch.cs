@@ -417,7 +417,24 @@ namespace HeroGame.Core.Simulation
             {
                 // Background (NPC) crimes: sometimes the suspect is found nearby.
                 var rng = DeterministicRandom.For(_w.Seed, i.Id.Value, 0xA2E57);
-                i.Outcome = !_w.Characters.ContainsKey(i.Subject) && rng.Chance(0.3) ? "Suspect located and arrested." : "Report taken; investigation continues.";
+                var located = !_w.Characters.ContainsKey(i.Subject) && rng.Chance(0.3);
+                i.Outcome = located ? "Suspect located and arrested." : "Report taken; investigation continues.";
+                // A named resident (e.g. a mugger) really is arrested: a record and a few days in custody.
+                var npc = located ? _w.Population.Get(i.Subject) : null;
+                if (npc != null && npc.Alive)
+                {
+                    npc.Arrests++;
+                    npc.HasCriminalRecord = true;
+                    npc.OverrideActivity = Population.ActivityKind.InCustody;
+                    npc.OverridePlace = NearestPlace(i.Position, new[] { PlaceKind.PoliceStation })?.Id ?? EntityId.None;
+                    npc.OverrideUntilDay = _w.Today + 2 + rng.NextInt(0, 5);
+                    npc.AddHistory(_w.Today, "arrested", npc.FullName + " was arrested.");
+                    _w.Director.Invalidate(npc.Id);
+                    if (i.CrimeIncident.IsValid)
+                        foreach (var ci in _w.Justice.Incidents)
+                            if (ci.Id == i.CrimeIncident) ci.Solved = true;
+                    _w.Dirty.Mark(SaveChunks.Population);
+                }
             }
             Close(i, now);
         }

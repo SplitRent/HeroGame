@@ -141,6 +141,9 @@ namespace HeroGame.Editor
             player.AddComponent<PlayerVitals>();
             var powers = player.AddComponent<PowerController>();
             player.AddComponent<Runtime.Combat.CombatController>();
+            var encounters = new GameObject("Street Encounters").AddComponent<StreetEncounterPresenter>();
+            encounters.Player = player.transform;
+            encounters.AvatarPrefab = _npcPrefab;
             powers.ImpactVfx = BuildImpactPrefab();
 
             var traffic = new GameObject("Traffic").AddComponent<TrafficPresenter>();

@@ -246,6 +246,16 @@ namespace HeroGame.Networking.Server
             StandardRequests.Register(Router);
             Replicator = new WorldReplicator(world);
             Router.Register("property.layout", SendLayout);
+            // Only connected players can be mugged; their moves and the clock resolve encounters.
+            _world.StreetCrime.IsPresent = ch =>
+            {
+                lock (_connectionsLock)
+                    foreach (var conn in _connections)
+                        if (conn.Authenticated && !conn.Closed && conn.Character == ch) return true;
+                return false;
+            };
+            Router.Register("encounter.comply", ctx => RequestContext.From(ctx.World.StreetCrime.Comply(ctx.Me, ctx.Key)));
+            Router.Register("encounter.refuse", ctx => RequestContext.From(ctx.World.StreetCrime.Refuse(ctx.Me)));
             Router.Register("phone.read", ctx =>
             {
                 foreach (var m in ctx.Me.Inbox) if (!m.Read) ctx.World.Phone.MarkRead(ctx.Me, m.Id);
@@ -512,6 +522,7 @@ namespace HeroGame.Networking.Server
             c.Speed = Math.Min(Math.Abs(s.Speed), maxSpeed);
             c.Vehicle = InVehicle(c, s.Vehicle) ? s.Vehicle : EntityId.None;
             c.Character.LastPosition = s.Position;
+            _world.StreetCrime.Update(c.Character, s.Position);
             if (c.Vehicle.IsValid)
             {
                 var v = _world.Vehicles.Get(c.Vehicle);
@@ -580,6 +591,7 @@ namespace HeroGame.Networking.Server
         public void BroadcastWorldChanges()
         {
             _lastWorldDeltaMs = NowMs;
+            foreach (var p in Players) _world.StreetCrime.Update(p.Character, p.Position); // deadlines run on the clock too
             var delta = Replicator.Publish();
             if (delta.IsEmpty) return;
             var parts = WorldReplicator.Split(delta);

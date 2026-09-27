@@ -86,6 +86,8 @@ namespace HeroGame.Core.Config
         public int ElectionIntervalDays = 180;
         /// <summary>Scales how often city disasters (flash floods, chemical incidents, heat waves, blackouts) strike. 0 disables.</summary>
         public float DisasterFrequencyMultiplier = 1f;
+        /// <summary>Muggings of players out at night in rougher districts (street encounters).</summary>
+        public bool StreetCrimeAgainstPlayers = true;
     }
 
     [Serializable]

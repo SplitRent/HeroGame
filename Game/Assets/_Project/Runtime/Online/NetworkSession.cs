@@ -41,6 +41,9 @@ namespace HeroGame.Runtime.Online
         public static HeroGame.Networking.Client.ReplicatedWorld Replica =>
             Current != null && Current._client != null && Current._client.State == ClientState.Connected && Current._client.World.Ready ? Current._client.World : null;
 
+        /// <summary>Connected to a player server (the server owns the world; local simulation is presentation only).</summary>
+        public static bool Connected => Replica != null;
+
         /// <summary>The player's own state from the server while connected (cash, messages, property…), or null offline.</summary>
         public static PlayerViewData Me => Replica != null ? Current._client.Me : null;
 

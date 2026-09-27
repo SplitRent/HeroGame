@@ -171,6 +171,8 @@ namespace HeroGame.Core.Simulation
         public readonly PowerService PowerUse;
         /// <summary>Fights and weapons (not saved: cooldowns, stuns and self-defence windows are short-lived).</summary>
         public readonly CombatService Combat;
+        /// <summary>Muggings of players who are out (not saved: encounters last seconds).</summary>
+        public readonly StreetCrimeService StreetCrime;
 
         private readonly Census _census = new Census();
 
@@ -258,6 +260,7 @@ namespace HeroGame.Core.Simulation
             Radio = new RadioService(this);
             Destructibles = new DestructionService(this);
             Combat = new CombatService(this);
+            StreetCrime = new StreetCrimeService(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);

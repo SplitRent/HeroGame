@@ -32,6 +32,8 @@ namespace HeroGame.Runtime.Interaction
             Focus = FindFocus(ref ctx);
             PromptText = Focus != null && Focus.CanInteract(ctx) ? Focus.GetPrompt(ctx) : "";
             if (Focus == null || Input == null || !Input.GameplayEnabled) return;
+            // During a mugging, E means "hand it over" (StreetEncounterPresenter), not the door behind you.
+            if (Crime.StreetEncounterPresenter.Active) return;
             if (Input.Read().InteractPressed && Focus.CanInteract(ctx)) Focus.Interact(ctx);
         }
 

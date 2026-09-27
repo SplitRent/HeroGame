@@ -113,7 +113,9 @@ namespace HeroGame.Runtime.Bootstrap
         public void Tick(float realDeltaSeconds)
         {
             World.Clock.AdvanceReal(realDeltaSeconds);
+            if (World.StreetCrime.IsPresent == null) World.StreetCrime.IsPresent = c => c == LocalCharacter && !Runtime.Online.NetworkSession.Connected;
             Simulation.Update();
+            if (LocalCharacter != null) World.StreetCrime.Update(LocalCharacter, LocalCharacter.LastPosition);
             World.Events.Flush();
             _autosaveTimer += realDeltaSeconds;
             if (_autosaveTimer >= AutosaveIntervalSeconds && _autosave == null)

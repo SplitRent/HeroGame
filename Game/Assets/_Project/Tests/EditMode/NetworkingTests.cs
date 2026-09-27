@@ -684,6 +684,22 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void StreetEncounters_ShowInThePlayerView_AndResolveOverTheWire()
+        {
+            var a = Join("acc-mug", "Zoe");
+            var conn = _server.Players.Single(p => p.AccountId == "acc-mug");
+            Assert.IsTrue(_world.AdminGrant(conn.Character.CheckingAccount, Money.FromDollars(900), "admin", "test").Success);
+            var e = _world.StreetCrime.Start(conn.Character, conn.Position);
+            Assert.IsNotNull(e);
+            Until(() => a.Me != null && a.Me.Encounter != null, 4000);
+            Assert.AreEqual(e.DemandCents, a.Me.Encounter.DemandCents);
+            var cash = a.Me.CashCents;
+            Assert.IsTrue(Call(a, "encounter.comply").Success);
+            Until(() => a.Me.Encounter == null && a.Me.CashCents == cash - e.DemandCents, 4000);
+            StringAssert.Contains("Nobody", Call(a, "encounter.refuse").Error);
+        }
+
+        [Test]
         public void AdminCommands_RequireWorldAdmin_AndAreAudited()
         {
             _server.Admin = new AdminCommands(_world, new WorldSimulation(_world));

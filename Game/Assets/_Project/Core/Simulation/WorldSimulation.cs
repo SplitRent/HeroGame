@@ -102,6 +102,7 @@ namespace HeroGame.Core.Simulation
             _world.PowerUse.Recover();
             _world.Calendar.ProcessHour(t);
             _world.Destructibles.ProcessHour(t);
+            _world.StreetCrime.ProcessHour(t);
             var storm = _world.Weather.State.ActiveSystem;
             if (storm != null && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane)
             {
