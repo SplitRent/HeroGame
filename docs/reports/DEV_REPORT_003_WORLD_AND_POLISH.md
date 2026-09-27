@@ -58,7 +58,7 @@
   * Runs a 64-client TLS load test.
   * Runs benchmarks on the stress layout and the metro layout.
   * Checks Blender pipeline tests, `.meta` integrity, data JSON validity and metro-generator freshness.
-  * Runs 1–24 were green when checked. Run 25 was queued at the time of checking.
+  * Runs 1–27 are all green, covering every commit in this report except the docs commit itself.
 
 ## 3. Measurements (4-core container, Release)
 | Measure | Result | Target |
