@@ -148,6 +148,8 @@ namespace HeroGame.Core.Story
         /// <summary>Fraction of the district's residential properties that change hands.</summary>
         public float Share;
         public string NewOwner = "";
+        /// <summary>Only properties currently owned by this organisation change hands (empty: any non-player owner).</summary>
+        public string FromOwner = "";
     }
 
     /// <summary>The four-year skip between Part One and Part Two (GDD §57): the world genuinely lives those years.</summary>
@@ -228,6 +230,8 @@ namespace HeroGame.Core.Story
         public string ActiveNode = "";
         public string Home = "";
         public List<string> Log = new List<string>();
+        /// <summary>The ending reached (empty until the finale); the world remembers it after the credits.</summary>
+        public string Ending = "";
 
         public MissionState Mission(string id) => Missions.Find(m => m.Id == id);
 
@@ -255,9 +259,10 @@ namespace HeroGame.Core.Story
         }
 
         public static readonly string[] EffectVerbs =
-            { "flag", "rel", "money", "pay", "mission", "time", "storm", "anomaly", "cutscene", "timejump", "part", "history", "item", "restrict", "cast", "say" };
+            { "flag", "rel", "money", "pay", "mission", "time", "storm", "anomaly", "cutscene", "timejump", "part", "history", "item", "restrict", "cast", "say",
+              "ordinance", "election", "disaster", "fire", "register", "opinion", "rep", "transfer", "ending" };
 
-        public static readonly string[] ConditionVerbs = { "flag", "rel", "money", "mission", "hour", "item", "part" };
+        public static readonly string[] ConditionVerbs = { "flag", "rel", "money", "mission", "hour", "item", "part", "power", "rep", "ordinance", "registered", "wanted" };
 
         /// <summary>Compares "a OP b" for the operators ≥ ≤ = &gt; &lt; (written >=, <=, =, >, <).</summary>
         public static bool Compare(double left, string expression, out bool valid)

@@ -109,7 +109,9 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Cast as real NPCs in a 2026 world; teen restrictions | TESTED | `Begin_CastsRealPeople_InARealWorld_In2026` |
 | Part One "Magnolia Street" (7 missions) + four-year time jump (simulated) + Part Two opener | TESTED | `PartOne_PlaysThrough_Isadora_AndTheFourYearJump` (scripted playthrough) |
 | Story save/resume | TESTED | `StoryState_SurvivesSaveAndLoad_MidMission` |
-| Part Two acts II–IV and finale | PLANNED | GDD §6; framework ready, content not written |
+| Part Two acts II–IV and finale (11 missions: Static, Tests, Witness, Follow the Money, Shells, Calloway's Canal, The Ordinance, Campaign Trail, Abernathy, Landfall, Who He Is) with three endings (saved / sold / split) | TESTED | `PartTwo_StandingUpToCalloway_*`, `PartTwo_TakingCallowaysDeal_*` (scripted playthroughs through real systems: fire dispatch, council vote, election, storm, chemical incident, property transfers) |
+| Story verbs for Part Two (power stage/uses, reputation, ordinances, elections, disasters, fires, registration, opinion, transfers, endings) with load-time validation | TESTED | `StoryContent_PassesValidation` |
+| Full story sandbox (Phase 18): every system open after the jump; after the finale the sandbox continues and the ending is recorded in history | TESTED | `PartTwo_StandingUpToCalloway_*` (post-credits assertions) |
 | Story presenter (objective HUD, dialogue box, letterbox cutscenes, interaction points) | IN DEVELOPMENT | compiles; IMGUI placeholder; not run in Unity |
 | Voice acting, animation, Timeline cutscenes | PLANNED | ASSET_TRACKER |
 
@@ -194,4 +196,4 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 
 ## Not started (PLANNED)
 Combat & weapons · recorded music, SFX and VO (procedural placeholders exist) · UI Toolkit phone skin · animation set · character creator 3D preview ·
-Addressables cell content · HLOD · full city · Story Mode Part Two acts II–IV.
+Addressables cell content · HLOD · full city.

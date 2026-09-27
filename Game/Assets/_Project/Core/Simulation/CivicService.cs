@@ -407,6 +407,9 @@ namespace HeroGame.Core.Simulation
             S.Proposals.RemoveAll(p => p.Decided && day - p.VoteDay > 60);
         }
 
+        /// <summary>Decides proposals whose vote day has come (story and admin tools can call a vote early).</summary>
+        public void DecideNow(long day) => DecideProposals(day);
+
         private float AverageOpinion(string issue)
         {
             var sum = 0f;

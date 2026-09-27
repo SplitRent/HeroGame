@@ -124,6 +124,17 @@
       "Workplace": "Calloway Chemical Works",
       "Home": "",
       "Role": "Heir to Calloway Chemical."
+    },
+    {
+      "Id": "rao",
+      "FirstName": "Anjali",
+      "LastName": "Rao",
+      "Age": 47,
+      "Sex": "Female",
+      "Occupation": "chemical_engineer",
+      "Workplace": "Wharf Exchange Offices",
+      "Home": "",
+      "Role": "CARD field director. Knows more than she says."
     }
   ],
   "Missions": [
@@ -595,6 +606,590 @@
         }
       ],
       "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "static",
+      "Title": "Static",
+      "Summary": "The lights flicker when you walk into a room. It's not the wiring.",
+      "Part": 2,
+      "Requires": [
+        "back_on_magnolia"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "say:pilar:Eli. The fridge light died when you slammed the door. Then it came back on. Brighter."
+      ],
+      "Objectives": [
+        {
+          "Id": "symptoms",
+          "Kind": "Condition",
+          "Text": "Something is waking up",
+          "Target": "",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "power:stage>=1",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "pilar_static",
+          "Kind": "TalkTo",
+          "Text": "Pilar has been watching you",
+          "Target": "pilar",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_pilar_static",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "tests",
+      "Title": "Tests",
+      "Summary": "Dee measures things nobody can explain. You might be one of them.",
+      "Part": 2,
+      "Requires": [
+        "static"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "say:dee:Pilar says you're 'a data set'. I'm at Steamline Coffee. Bring your weird."
+      ],
+      "Objectives": [
+        {
+          "Id": "dee_meet",
+          "Kind": "TalkTo",
+          "Text": "Find Dee",
+          "Target": "dee",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_dee_tests",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "practice",
+          "Kind": "Condition",
+          "Text": "Practice where no one can see (use your ability three times)",
+          "Target": "",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "power:uses>=3",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "results",
+          "Kind": "TalkTo",
+          "Text": "Show Dee what you can do",
+          "Target": "dee",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_dee_results",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "witness",
+      "Title": "Witness",
+      "Summary": "Smoke on Magnolia Street. Lupe's.",
+      "Part": 2,
+      "Requires": [
+        "tests"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "fire:Lupe's Corner Market",
+        "say:pilar:ELI. Lupe's is on fire. She's still inside."
+      ],
+      "Objectives": [
+        {
+          "Id": "run",
+          "Kind": "GoTo",
+          "Text": "Get to Lupe's Corner Market",
+          "Target": "Lupe's Corner Market",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "lupe_fire",
+          "Kind": "TalkTo",
+          "Text": "Get Lupe out",
+          "Target": "lupe",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_lupe_fire",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "detective",
+          "Kind": "TalkTo",
+          "Text": "Someone was watching",
+          "Target": "abernathy",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_abernathy_notices",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "follow_the_money",
+      "Title": "Follow the Money",
+      "Summary": "Mai has a spreadsheet too. Hers has Meridian Holdings in it.",
+      "Part": 2,
+      "Requires": [
+        "witness"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "say:mai:Heard about the shelf. We need to talk, and not on the phone."
+      ],
+      "Objectives": [
+        {
+          "Id": "mai_ledger",
+          "Kind": "TalkTo",
+          "Text": "Meet Mai at the Ledger",
+          "Target": "mai",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_mai_ledger",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "annex",
+          "Kind": "GoTo",
+          "Text": "Go to the Harbor Row Municipal Annex",
+          "Target": "Harbor Row Municipal Annex",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "deeds",
+          "Kind": "Interact",
+          "Text": "Pull the Eastwater deed transfers",
+          "Target": "deed_records",
+          "Location": "Harbor Row Municipal Annex",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "mai_deeds",
+          "Kind": "TalkTo",
+          "Text": "Bring Mai what you found",
+          "Target": "mai",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_mai_deeds",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "shells",
+      "Title": "Shells",
+      "Summary": "Money moves through Channelside at night. So does Rafa.",
+      "Part": 2,
+      "Requires": [
+        "follow_the_money"
+      ],
+      "AutoStart": true,
+      "OnStart": [],
+      "Objectives": [
+        {
+          "Id": "night",
+          "Kind": "Wait",
+          "Text": "Wait for the night shift",
+          "Target": "22:00",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "terminal",
+          "Kind": "GoTo",
+          "Text": "Watch Channelside Terminal 3",
+          "Target": "Channelside Terminal 3",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "rafa",
+          "Kind": "TalkTo",
+          "Text": "That's Rafa carrying the envelopes",
+          "Target": "rafa",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_rafa_syndicate",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "calloways_canal",
+      "Title": "Calloway's Canal",
+      "Summary": "The canal logs are kept where the canal starts.",
+      "Part": 2,
+      "Requires": [
+        "shells"
+      ],
+      "AutoStart": true,
+      "OnStart": [],
+      "Objectives": [
+        {
+          "Id": "late",
+          "Kind": "Wait",
+          "Text": "Wait until the Works goes quiet",
+          "Target": "23:00",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "works",
+          "Kind": "GoTo",
+          "Text": "Get inside Calloway Chemical Works",
+          "Target": "Calloway Chemical Works",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "logs",
+          "Kind": "Interact",
+          "Text": "Find the canal gate logs",
+          "Target": "canal_logs",
+          "Location": "Calloway Chemical Works",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "grant",
+          "Kind": "TalkTo",
+          "Text": "Grant Calloway is waiting for you",
+          "Target": "calloway",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_calloway_confront",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "publish",
+          "Kind": "TalkTo",
+          "Text": "Get the logs to Mai",
+          "Target": "mai",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_mai_publish",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "the_ordinance",
+      "Title": "The Ordinance",
+      "Summary": "After the shelf and the exposé, the council wants a list of everyone like you.",
+      "Part": 2,
+      "Requires": [
+        "calloways_canal"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "ordinance:anomaly_registration:propose",
+        "say:hollins:I need a word, Mr. Navarro. Tonight, if you can."
+      ],
+      "Objectives": [
+        {
+          "Id": "hollins",
+          "Kind": "TalkTo",
+          "Text": "Councilwoman Hollins wants to see you",
+          "Target": "hollins",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_hollins_ordinance",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "council",
+          "Kind": "GoTo",
+          "Text": "The council votes at the Municipal Annex",
+          "Target": "Harbor Row Municipal Annex",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "vote",
+          "Kind": "TalkTo",
+          "Text": "Hear the result from Hollins",
+          "Target": "hollins",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_hollins_vote",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "campaign_trail",
+      "Title": "Campaign Trail",
+      "Summary": "Hollins is running on Keep Arden Working. Eastwater has to show up.",
+      "Part": 2,
+      "Requires": [
+        "the_ordinance"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "election:schedule",
+        "election:candidate:hollins:Keep Arden Working"
+      ],
+      "Objectives": [
+        {
+          "Id": "canvass",
+          "Kind": "Stay",
+          "Text": "Canvass Eastwater from the Community Center",
+          "Target": "Eastwater Community Center",
+          "Location": "",
+          "Amount": 2,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "hollins_trail",
+          "Kind": "TalkTo",
+          "Text": "Report to Hollins",
+          "Target": "hollins",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_hollins_campaign",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "abernathy",
+      "Title": "Abernathy",
+      "Summary": "The detective has run out of patience, and out of other explanations.",
+      "Part": 2,
+      "Requires": [
+        "campaign_trail"
+      ],
+      "AutoStart": true,
+      "OnStart": [],
+      "Objectives": [
+        {
+          "Id": "precinct",
+          "Kind": "GoTo",
+          "Text": "Abernathy asked you to come in",
+          "Target": "PAPD Harbor Row Precinct",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "interview",
+          "Kind": "TalkTo",
+          "Text": "Sit down with Abernathy",
+          "Target": "abernathy",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_abernathy_confront",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "landfall",
+      "Title": "Landfall",
+      "Summary": "A new storm, and something at Calloway Works calling to it.",
+      "Part": 2,
+      "Requires": [
+        "abernathy"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "storm:Nadia:4:6",
+        "disaster:ChemicalIncident:Calloway Chemical Works",
+        "say:dee:Eli, the readings at Calloway Works are off the charts. Someone's provoking an event. With a category 4 on the way."
+      ],
+      "Objectives": [
+        {
+          "Id": "to_works",
+          "Kind": "GoTo",
+          "Text": "Something is happening at Calloway Works",
+          "Target": "Calloway Chemical Works",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "valve",
+          "Kind": "Interact",
+          "Text": "Shut down the resonance rig",
+          "Target": "resonance_rig",
+          "Location": "Calloway Chemical Works",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "ride",
+          "Kind": "Survive",
+          "Text": "Hold on until Nadia passes",
+          "Target": "",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "dee_after",
+          "Kind": "TalkTo",
+          "Text": "Find Dee",
+          "Target": "dee",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_landfall",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "who_he_is",
+      "Title": "Who He Is",
+      "Summary": "The storm is over. The city voted. Now it's your turn.",
+      "Part": 2,
+      "Requires": [
+        "landfall"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "election:hold"
+      ],
+      "Objectives": [
+        {
+          "Id": "home",
+          "Kind": "GoTo",
+          "Text": "Go home to Magnolia Street",
+          "Target": "home",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "rosa_end",
+          "Kind": "TalkTo",
+          "Text": "Mom is waiting on the porch",
+          "Target": "rosa",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_ending",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [
+        "cutscene:after_credits"
+      ],
       "Checkpoint": true
     }
   ],
@@ -1484,6 +2079,1057 @@
           "Choices": []
         }
       ]
+    },
+    {
+      "Id": "d_pilar_static",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "pilar",
+          "Text": "I've logged forty-one flickers since you came home. They cluster around you. Every one.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "pilar",
+          "Text": "I was nine in the eye of that storm, Eli. I know what I saw. Don't lie to me now.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "You're right. Something's happening to me. I don't know what.",
+              "Next": "c",
+              "Effects": [
+                "flag:told_pilar=1",
+                "rel:pilar+0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "It's the old wiring. This house is falling apart.",
+              "Next": "d",
+              "Effects": [
+                "flag:lied_pilar=1",
+                "rel:pilar-0.15"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "You already knew. You've always known.",
+              "Next": "c",
+              "Effects": [
+                "flag:told_pilar=1",
+                "rel:pilar+0.25"
+              ],
+              "Conditions": [
+                "flag:pilar_knows>=1"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "pilar",
+          "Text": "Okay. Okay. Then we do this like scientists. Dee still owes me a favor.",
+          "Next": "",
+          "Effects": [
+            "flag:dee_referral=1"
+          ],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "pilar",
+          "Text": "Sure. The wiring. I'll put that in the spreadsheet next to 'debris floats in hurricanes, sometimes'.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_dee_tests",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "dee",
+          "Text": "So. Four years at Tarrow State, three at the Halvorsen Institute, and the best anomaly I've ever seen walks into my coffee shop.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "dee",
+          "Text": "Here's the deal: I can measure it. Field strength, range, what it costs you. But measurements go in a log, and logs get subpoenaed.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Measure everything. I need to know what I am.",
+              "Next": "c",
+              "Effects": [
+                "flag:dee_data=1",
+                "rel:dee+0.15"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "No logs. You watch, you tell me, you forget.",
+              "Next": "d",
+              "Effects": [
+                "flag:dee_offbook=1",
+                "rel:dee+0.05"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "dee",
+          "Text": "Science. Beautiful. Find somewhere empty after dark — Cypress Bend Park at two a.m. is basically a vacuum — and push it. Three times.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "dee",
+          "Text": "Off the books. My advisor would kill me. Go practice somewhere empty. Three times. Then we talk.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_dee_results",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "dee",
+          "Text": "Your peaks line up with the canal-strike frequency from the night we were at Terminal 3. Same shape. Mai's photos, remember?",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "dee",
+          "Text": "That's not a coincidence, man. Something at that canal did this to you, and it's been doing it on a schedule.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Then we find out who owns the schedule.",
+              "Next": "c",
+              "Effects": [
+                "flag:canal_link=1",
+                "rel:dee+0.1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I don't want to be a pattern. I want to be left alone.",
+              "Next": "d",
+              "Effects": [
+                "flag:wants_quiet=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "dee",
+          "Text": "Mai's been circling Calloway for a year. You should talk to her. Carefully.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "dee",
+          "Text": "Nobody gets left alone in this town, Eli. The canal made sure of that.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_lupe_fire",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "narrator",
+          "Text": "The shelving has come down across the back door. Lupe is on the floor behind it, coughing. Six neighbours are filming from the sidewalk.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Lift it. All of it. Right now, in front of everyone.",
+              "Next": "b",
+              "Effects": [
+                "flag:public_power=1",
+                "rep:Heroic:0.3",
+                "rep:Notoriety:0.4",
+                "rel:lupe+0.3",
+                "history:4:Witnesses say a man lifted a burning wall of shelves off Lupe Salazar with his bare hands"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Go in through the storeroom window and drag her out the hard way.",
+              "Next": "c",
+              "Effects": [
+                "flag:hid_power=1",
+                "rel:lupe+0.25",
+                "rep:Heroic:0.1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "b",
+          "Speaker": "lupe",
+          "Text": "I saw it, mijo. I saw what you did. ...Everybody saw what you did.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "lupe",
+          "Text": "You came through the window. Of course you did. Tomás used to come through that window when the door stuck.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_abernathy_notices",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "abernathy",
+          "Text": "Detective Abernathy. We met once, years ago. You were a kid with a bag that wasn't yours.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "abernathy",
+          "Text": "Neighbours are telling me a story about a shelf. I'm the kind of person who likes to hear stories more than once.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "People see what they want to see in a fire.",
+              "Next": "c",
+              "Effects": [
+                "flag:abernathy_curious=1"
+              ],
+              "Conditions": [
+                "flag:public_power>=1"
+              ]
+            },
+            {
+              "Text": "I went through the window. Ask Lupe.",
+              "Next": "d",
+              "Effects": [
+                "flag:abernathy_curious=0"
+              ],
+              "Conditions": [
+                "flag:hid_power>=1"
+              ]
+            },
+            {
+              "Text": "Then you should hear it from me. Not here.",
+              "Next": "e",
+              "Effects": [
+                "flag:abernathy_open=1",
+                "rel:abernathy+0.1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "abernathy",
+          "Text": "They do. They also film it. Stay in town, Mr. Navarro.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "abernathy",
+          "Text": "I will. And she'll tell me you're a good boy, and I'll believe her. Mostly.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "abernathy",
+          "Text": "That's the first interesting thing anyone's said to me this year. My card.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_mai_ledger",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "mai",
+          "Text": "Sixty-one lots on Magnolia, Pecan and Lafitte. Bought within ninety days of Isadora by three companies that didn't exist before the storm.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "mai",
+          "Text": "All three have the same registered agent: a law office that does all of Meridian Holdings' paperwork. I need the deed transfers. The annex won't give them to a reporter.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "They'll give them to a resident asking about his own street.",
+              "Next": "c",
+              "Effects": [
+                "flag:helping_mai=1",
+                "rel:mai+0.15"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Why do you need me? Because of the shelf?",
+              "Next": "d",
+              "Effects": [
+                "flag:helping_mai=1",
+                "rel:mai+0.05"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "mai",
+          "Text": "That's exactly what I was hoping you'd say. The records room is on the second floor.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "mai",
+          "Text": "Because you're from Magnolia Street, and because I trust you. The shelf is a separate conversation. A long one.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_mai_deeds",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "mai",
+          "Text": "Look at the dates. Every one of these lots flooded because the canal gates on Calloway's side were opened during the storm. Opened. Not failed.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "mai",
+          "Text": "Somebody flooded Eastwater on purpose and then bought it cheap. I can print that. Or I can wait until I can prove who.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Print what you can prove. People deserve to know now.",
+              "Next": "c",
+              "Effects": [
+                "flag:first_story=1",
+                "history:4:The Arden Ledger: Meridian bought 61 flooded Eastwater lots through three shell companies",
+                "opinion:development:-0.3",
+                "rel:mai+0.1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Wait. If you go early, they bury it.",
+              "Next": "d",
+              "Effects": [
+                "flag:mai_waits=1",
+                "rel:mai+0.05"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "mai",
+          "Text": "Tomorrow's front page. They'll come after me for it. They'll come after you too, if they know you helped.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "mai",
+          "Text": "Then we get the rest. The money has to move somehow, and money in this city moves through Channelside.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_rafa_syndicate",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "rafa",
+          "Text": "Primo. Of all the docks. ...You're not here for the view.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "rafa",
+          "Text": "It's cash from Meridian contractors to a Tidewater guy, then to a church that doesn't have a building. I just carry it. I don't count it.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Then help me count it. Talk to Mai. On the record.",
+              "Next": "c",
+              "Effects": [
+                "flag:rafa_testifies=1",
+                "rel:rafa+0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I didn't see you. Give me a cut and I never will.",
+              "Next": "d",
+              "Effects": [
+                "flag:took_rafa_money=1",
+                "money:100000",
+                "rel:rafa+0.1",
+                "rep:Criminal:0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I'm calling Abernathy. I'm sorry, Rafa.",
+              "Next": "e",
+              "Effects": [
+                "flag:reported_rafa=1",
+                "rel:rafa-0.5",
+                "rel:abernathy+0.15",
+                "cast:rafa:arrest"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "rafa",
+          "Text": "You know what they do to people who talk? ...Yeah. Okay. For Tomás. Not for you. For Tomás.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "rafa",
+          "Text": "That's my cousin. Thought the platforms made you boring.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "rafa",
+          "Text": "You did this to me once already, you know that? Go on. Call her.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_calloway_confront",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "calloway",
+          "Text": "The canal logs. Of course. You know what they don't show? The ten thousand jobs this city loses if the port stays a swamp.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "calloway",
+          "Text": "Your father's settlement was never going to be paid. I can fix that tonight. The Navarros get what they were owed, with interest, and those logs go back in the drawer.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Pay my family. Keep your drawer.",
+              "Next": "c",
+              "Effects": [
+                "flag:deal_with_calloway=1",
+                "money:500000",
+                "rel:rosa-0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "You flooded my street. The logs are leaving with me.",
+              "Next": "d",
+              "Effects": [
+                "flag:defied_calloway=1",
+                "rep:Public:0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Let me show you what your canal did to me.",
+              "Next": "e",
+              "Effects": [
+                "flag:defied_calloway=1",
+                "flag:exposed_to_calloway=1",
+                "rep:Notoriety:0.3"
+              ],
+              "Conditions": [
+                "power:stage>=1"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "calloway",
+          "Text": "A practical man. Your father would have made the same choice. Most people do.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "calloway",
+          "Text": "Then we'll do this the expensive way. For both of us.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "calloway",
+          "Text": "...So it worked. Rao said it might. Get out of my building before I decide what you're worth.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_mai_publish",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "mai",
+          "Text": "Did you get them?",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Here. Every gate opening, signed.",
+              "Next": "b",
+              "Effects": [
+                "flag:expose_published=1",
+                "history:5:Ledger exposé: Calloway Chemical opened the canal gates during Isadora; CARD tests preceded the storm's anomaly",
+                "opinion:flood_control:0.3",
+                "opinion:registration:0.2",
+                "rel:mai+0.2"
+              ],
+              "Conditions": [
+                "flag:defied_calloway>=1"
+              ]
+            },
+            {
+              "Text": "I... couldn't. It's complicated.",
+              "Next": "c",
+              "Effects": [
+                "rel:mai-0.3"
+              ],
+              "Conditions": [
+                "flag:deal_with_calloway>=1"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "b",
+          "Speaker": "mai",
+          "Text": "This is it. This is the whole thing. Eli — thank you. Get somewhere safe tonight.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "mai",
+          "Text": "Complicated. Okay. I'll find another way. I always do.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_hollins_ordinance",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "hollins",
+          "Text": "The Arden Renewal people want a registry. Name, address, ability. They say it's safety. I say it's a list, and lists end up in the wrong hands.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "hollins",
+          "Text": "I don't know what you are and I'm not asking. I'm asking what you'll do when it passes.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "I'll register. Publicly. Let them see a face that isn't a monster.",
+              "Next": "c",
+              "Effects": [
+                "register",
+                "flag:registered_publicly=1",
+                "rep:Public:0.2",
+                "opinion:registration:0.15"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I'll speak against it at council. On the record.",
+              "Next": "d",
+              "Effects": [
+                "flag:spoke_against=1",
+                "opinion:registration:-0.2",
+                "rel:hollins+0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I'll stay out of sight and out of the registry.",
+              "Next": "e",
+              "Effects": [
+                "flag:unregistered=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "hollins",
+          "Text": "Brave. Maybe foolish. Probably both. Come to the vote anyway.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "hollins",
+          "Text": "Then come to the Annex. Sit in the front row. Let them look at you.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "hollins",
+          "Text": "I understand. I also understand what happens to people the list doesn't find.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_hollins_vote",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "hollins",
+          "Text": "They voted.",
+          "Next": "b",
+          "Effects": [
+            "ordinance:anomaly_registration:vote"
+          ],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "hollins",
+          "Text": "She lets the silence sit for a moment.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "And?",
+              "Next": "c",
+              "Effects": [],
+              "Conditions": [
+                "ordinance:anomaly_registration=1"
+              ]
+            },
+            {
+              "Text": "And?",
+              "Next": "d",
+              "Effects": [],
+              "Conditions": [
+                "ordinance:anomaly_registration<1"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "hollins",
+          "Text": "It passed. Unregistered use in public is a crime starting tonight. I'm running for mayor, Eli. I'd like to repeal it.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "hollins",
+          "Text": "It failed. Narrowly. They'll try again after the election, which is why I'm running for mayor.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_hollins_campaign",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "hollins",
+          "Text": "Doors knocked, people registered, and a story about a shelf that won't die. How do you want to help from here?",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Put me on a stage. The shelf guy, for Hollins.",
+              "Next": "b",
+              "Effects": [
+                "election:boost:hollins:0.25",
+                "rep:Political:0.3",
+                "rep:Notoriety:0.2"
+              ],
+              "Conditions": [
+                "flag:public_power>=1"
+              ]
+            },
+            {
+              "Text": "I'll organise Magnolia Street. Quietly. Door by door.",
+              "Next": "c",
+              "Effects": [
+                "election:boost:hollins:0.15",
+                "rep:Political:0.1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I'll give what I can.",
+              "Next": "c",
+              "Effects": [
+                "election:boost:hollins:0.1",
+                "money:-50000"
+              ],
+              "Conditions": [
+                "money:>=50000"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "b",
+          "Speaker": "hollins",
+          "Text": "Then we lean into it. Visibility has a price. So does silence.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "hollins",
+          "Text": "That's how this city actually gets won. Thank you.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_abernathy_confront",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "abernathy",
+          "Text": "I've got a shelf, a canal log that walked out of Calloway Works, and a cousin who knows more than he says. All of it has your shape.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "abernathy",
+          "Text": "I'm about to be put in charge of a special unit for people like you. I'd rather have you on the right side of my desk.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Here's the truth: Calloway caused Isadora's event. I can prove it. I'll help you, not him.",
+              "Next": "c",
+              "Effects": [
+                "flag:abernathy_ally=1",
+                "rel:abernathy+0.3"
+              ],
+              "Conditions": [
+                "flag:defied_calloway>=1"
+              ]
+            },
+            {
+              "Text": "I don't know what you're talking about, Detective.",
+              "Next": "d",
+              "Effects": [
+                "flag:abernathy_suspects=1",
+                "rel:abernathy-0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Arrest me or let me go.",
+              "Next": "e",
+              "Effects": [
+                "flag:abernathy_suspects=1",
+                "rel:abernathy-0.1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "abernathy",
+          "Text": "Then when it comes — and it's coming, the storm models look bad — you call me before you do anything spectacular.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "abernathy",
+          "Text": "Nobody ever does. Go home, Mr. Navarro. Watch the weather.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "abernathy",
+          "Text": "Not today. But I keep very good notes.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_landfall",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "dee",
+          "Text": "You shut it down. The rig's slag, the gates held, and Calloway's people scattered when the tanks started venting.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "dee",
+          "Text": "There's news helicopters, man. And twenty phones on the levee. What happened in there?",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Let them see. I'm done hiding what I am.",
+              "Next": "c",
+              "Effects": [
+                "flag:public_hero=1",
+                "rep:Heroic:0.5",
+                "rep:Notoriety:0.5",
+                "history:5:Across Port Arden, video shows a man holding back the Calloway canal gates as Hurricane Nadia made landfall"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "It was dark. Nobody saw anything. Let's keep it that way.",
+              "Next": "d",
+              "Effects": [
+                "flag:unseen=1",
+                "rep:Heroic:0.1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "dee",
+          "Text": "Then we'd better go home before they find out which home.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "dee",
+          "Text": "It was dark. Sure. I'll back that up in any report you want.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_ending",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "rosa",
+          "Text": "The polls closed while you were out there. I watched the returns in the break room with a patient who kept saying he knew you.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "rosa",
+          "Text": "So. Tell me what we won.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Hollins won. The exposé stuck. Eastwater gets its lots back.",
+              "Next": "saved",
+              "Effects": [
+                "ending:saved:Eastwater Community Land Trust buys back the Meridian lots after Mayor Hollins' first vote",
+                "transfer:eastwater:1.0:Eastwater Community Land Trust:Meridian Holdings",
+                "ordinance:anomaly_registration:repeal",
+                "opinion:development:-0.2"
+              ],
+              "Conditions": [
+                "flag:mayor_hollins>=1",
+                "flag:expose_published>=1"
+              ]
+            },
+            {
+              "Text": "Calloway's money is in our account. Meridian keeps building.",
+              "Next": "sold",
+              "Effects": [
+                "ending:sold:Meridian breaks ground on the Eastwater waterfront towers",
+                "transfer:eastwater:0.3:Meridian Holdings"
+              ],
+              "Conditions": [
+                "flag:deal_with_calloway>=1"
+              ]
+            },
+            {
+              "Text": "Some of it we saved. Some of it we didn't.",
+              "Next": "split",
+              "Effects": [
+                "ending:split:Eastwater, divided: the land trust keeps Magnolia Street while Meridian keeps building south of Pecan",
+                "transfer:eastwater:0.5:Eastwater Community Land Trust:Meridian Holdings"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "saved",
+          "Speaker": "rosa",
+          "Text": "Your father would have loved this porch tonight. Eat something. Then go be whoever you're going to be.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "sold",
+          "Speaker": "rosa",
+          "Text": "The bills are paid, mijo. I just don't know what it cost. I don't think you do either.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "split",
+          "Speaker": "rosa",
+          "Text": "That's most victories, Eli. Half a street. Come inside, it's going to rain again.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
     }
   ],
   "Cutscenes": [
@@ -1537,6 +3183,24 @@
           "Camera": "player",
           "Speaker": "player",
           "Text": "Same street. Different city.",
+          "Seconds": 3
+        }
+      ]
+    },
+    {
+      "Id": "after_credits",
+      "Title": "After",
+      "Shots": [
+        {
+          "Camera": "place:Eastwater Community Center",
+          "Speaker": "narrator",
+          "Text": "The storms will come back. So will the elections, the cranes and the canal lights. Port Arden keeps going.",
+          "Seconds": 5
+        },
+        {
+          "Camera": "player",
+          "Speaker": "player",
+          "Text": "Same street. My city.",
           "Seconds": 3
         }
       ]

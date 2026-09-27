@@ -4,6 +4,7 @@ using System.Linq;
 using HeroGame.Core.Characters;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
+using HeroGame.Core.Identity;
 using HeroGame.Core.Population;
 using HeroGame.Core.Powers;
 using HeroGame.Core.Property;
@@ -97,12 +98,37 @@ namespace HeroGame.Tests
                 case ObjectiveKind.Interact:
                     _s.Interact(o.Target);
                     break;
+                case ObjectiveKind.Condition:
+                    for (var i = 0; i < 400 && _s.CurrentObjective == o; i++)
+                    {
+                        if (o.Condition.StartsWith("power:uses", StringComparison.Ordinal)) UsePowerOnce();
+                        else _s.Simulation.AdvanceDays(2);
+                        _s.Update(PlayerAt());
+                    }
+                    break;
                 case ObjectiveKind.Earn:
                     _world.AdminGrant(_s.Player.CheckingAccount, new Money((long)o.Amount), "test", "savings");
                     _s.Update(PlayerAt());
                     break;
             }
             Assert.AreNotSame(o, _s.CurrentObjective, "objective '" + o.Id + "' completed");
+        }
+
+        /// <summary>One deliberate use of the protagonist's ability, somewhere quiet (practice).</summary>
+        private void UsePowerOnce()
+        {
+            var power = _s.Player.Powers.Powers[0];
+            power.CooldownUntilSecond = 0;
+            _s.Player.Powers.Stamina = 1f;
+            _s.Player.Powers.Strain = 0f;
+            Hours(0.25);
+            var here = _s.Player.LastPosition;
+            _world.PowerUse.Use(_s.Player, new PowerUseRequest { PowerIndex = 0, Intensity = 0.6f, Target = TargetKind.Point, Origin = here, Point = new WorldPosition(here.X + 5f, 0f, here.Z) });
+        }
+
+        private void PlayPartOne(Func<string, int> choose = null)
+        {
+            foreach (var m in new[] { "mornings", "eastwater_high", "friday_lights", "first_paycheck", "rafas_favor", "canal_lights", "isadora", "back_on_magnolia" }) FinishMission(m, choose);
         }
 
         private void FinishMission(string id, Func<string, int> choose = null)
@@ -223,6 +249,96 @@ namespace HeroGame.Tests
 
             FinishMission("back_on_magnolia");
             Assert.Greater(_world.Ledger.BalanceOf(_s.Player.CheckingAccount).Cents, playerCash.Cents);
+        }
+
+        [Test]
+        public void PartTwo_StandingUpToCalloway_EndsWithEastwaterSavedOrSplit_AndTheSandboxContinues()
+        {
+            var picks = new Dictionary<string, int>
+            {
+                ["d_lupe_fire"] = 0, ["d_rafa_syndicate"] = 0, ["d_calloway_confront"] = 1, ["d_hollins_ordinance"] = 1, ["d_hollins_campaign"] = 0,
+                ["d_abernathy_confront"] = 0, ["d_landfall"] = 0,
+            };
+            Func<string, int> choose = dlg => picks.TryGetValue(dlg, out var i) ? i : 0;
+            PlayPartOne(choose);
+            var eastwater = _world.Geography.Districts.First(d => d.Key == "eastwater");
+            int OwnedBy(string label) => _world.Properties.All.Count(p => p.District == eastwater.Id && _world.Ledger.Accounts.Any(a => a.Label == label && a.Owner == _world.Ownership.OwnerOf(p.Id)));
+            var meridianBefore = OwnedBy("Meridian Holdings");
+            Assert.Greater(meridianBefore, 0);
+
+            // Act II: the ability wakes, Pilar notices, Dee measures, Lupe's burns.
+            FinishMission("static", choose);
+            Assert.GreaterOrEqual((int)_s.Player.Powers.Powers[0].Stage, (int)PowerStage.Manifesting);
+            var calls = _world.Emergency.Stats.Calls;
+            FinishMission("tests", choose); // finishing it sets Lupe's on fire as the next mission starts
+            Assert.GreaterOrEqual(_s.Player.Powers.Powers.Sum(p => p.Progress.SuccessfulUses), 3);
+            var lupes = _world.Geography.FindPlaceByName("Lupe's Corner Market");
+            Assert.IsTrue(_world.Emergency.Incidents.Any(i => i.Kind == Core.Emergency.EmergencyKind.Fire && i.Property == lupes.Property), "the fire at Lupe's is real: it was called in");
+            Assert.Greater(_world.Emergency.Stats.Calls, calls);
+            FinishMission("witness", choose);
+            Assert.AreEqual(1, _s.State.Flag("public_power"));
+            Assert.Greater(_s.Player.Reputation.Get(ReputationDimension.Notoriety), 0f);
+
+            // Act III: the money, the shells, the canal logs.
+            FinishMission("follow_the_money", choose);
+            FinishMission("shells", choose);
+            Assert.AreEqual(1, _s.State.Flag("rafa_testifies"));
+            FinishMission("calloways_canal", choose);
+            Assert.AreEqual(1, _s.State.Flag("expose_published"));
+            Assert.IsTrue(_world.History.Recent.Concat(_world.History.Major).Any(h => h.Headline.StartsWith("Ledger exposé")));
+
+            // Act IV: the registry vote, the campaign, the detective.
+            FinishMission("the_ordinance", choose);
+            Assert.IsTrue(_world.Civic.Proposals.Any(p => p.OrdinanceId == "anomaly_registration" && p.Decided), "the council really voted");
+            FinishMission("campaign_trail", choose);
+            var race = _world.Civic.Elections.Single(e => e.Office == Core.Civic.Office.Mayor);
+            Assert.IsTrue(race.Candidates.Any(c => c.Person == _s.Npc("hollins").Id), "Hollins is on the ballot");
+            FinishMission("abernathy", choose);
+            Assert.AreEqual(1, _s.State.Flag("abernathy_ally"));
+
+            // Finale.
+            FinishMission("landfall", choose);
+            Assert.AreEqual("Nadia", _world.Weather.State.ActiveSystem?.Name ?? "Nadia");
+            FinishMission("who_he_is", choose);
+            Assert.IsTrue(race.Held, "the city voted");
+            Assert.That(_s.State.Ending, Is.EqualTo("saved").Or.EqualTo("split"));
+            if (_s.State.Ending == "saved")
+            {
+                Assert.AreEqual(1, _s.State.Flag("mayor_hollins"));
+                Assert.AreEqual(0, OwnedBy("Meridian Holdings"), "the land trust bought every Meridian lot back");
+                Assert.IsFalse(_world.Civic.IsActive("anomaly_registration"));
+            }
+            else Assert.Less(OwnedBy("Meridian Holdings"), meridianBefore, "half the street came back");
+            Assert.Greater(OwnedBy("Eastwater Community Land Trust"), 0);
+
+            // After the credits the sandbox goes on, and the world remembers.
+            Assert.IsNull(_s.ActiveMission);
+            foreach (var action in new[] { "property.buy", "business.start", "finance.loan" }) Assert.IsTrue(_s.Allows(action));
+            _s.Simulation.AdvanceDays(3);
+            Assert.IsTrue(_world.History.Major.Any(h => h.Importance == 5 && (h.Headline.Contains("land trust") || h.Headline.Contains("divided") || h.Headline.Contains("Land Trust"))));
+            Assert.IsTrue(_world.Ledger.VerifyInvariant(out _));
+        }
+
+        [Test]
+        public void PartTwo_TakingCallowaysDeal_PaysTheFamily_AndMeridianKeepsBuilding()
+        {
+            var picks = new Dictionary<string, int> { ["d_lupe_fire"] = 1, ["d_rafa_syndicate"] = 1, ["d_calloway_confront"] = 0, ["d_hollins_ordinance"] = 2 };
+            Func<string, int> choose = dlg => picks.TryGetValue(dlg, out var i) ? i : 0;
+            PlayPartOne(choose);
+            var eastwater = _world.Geography.Districts.First(d => d.Key == "eastwater");
+            int Meridian() => _world.Properties.All.Count(p => p.District == eastwater.Id && _world.Ledger.Accounts.Any(a => a.Label == "Meridian Holdings" && a.Owner == _world.Ownership.OwnerOf(p.Id)));
+            foreach (var m in new[] { "static", "tests", "witness", "follow_the_money", "shells" }) FinishMission(m, choose);
+            Assert.AreEqual(1, _s.State.Flag("hid_power"), "Lupe was pulled out the hard way");
+            var cash = _world.Ledger.BalanceOf(_s.Player.CheckingAccount);
+            FinishMission("calloways_canal", choose);
+            Assert.AreEqual(1, _s.State.Flag("deal_with_calloway"));
+            Assert.GreaterOrEqual((_world.Ledger.BalanceOf(_s.Player.CheckingAccount) - cash).Cents, 500000, "the settlement, paid");
+            Assert.AreEqual(0, _s.State.Flag("expose_published"));
+            var before = Meridian();
+            foreach (var m in new[] { "the_ordinance", "campaign_trail", "abernathy", "landfall", "who_he_is" }) FinishMission(m, choose);
+            Assert.AreEqual("sold", _s.State.Ending);
+            Assert.Greater(Meridian(), before, "Meridian keeps building");
+            Assert.IsTrue(_world.Ledger.VerifyInvariant(out _));
         }
 
         [Test]

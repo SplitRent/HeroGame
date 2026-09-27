@@ -4,6 +4,7 @@ using System.Globalization;
 using HeroGame.Core.Characters;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
+using HeroGame.Core.Identity;
 using HeroGame.Core.Population;
 using HeroGame.Core.Powers;
 using HeroGame.Core.Property;
@@ -504,6 +505,31 @@ namespace HeroGame.Core.Simulation
                     var m = State.Mission(name);
                     return m != null && cmp.Length > 1 && m.Status.ToString() == cmp.Substring(1);
                 }
+                case "power":
+                {
+                    // power:stage>=1 (0 Latent, 1 Manifesting, 2 Aware…) or power:uses>=3 (successful deliberate uses).
+                    var (what, cmp) = StoryOp.SplitComparison(op.Arg(0));
+                    double value = 0;
+                    foreach (var p in _player.Powers.Powers)
+                        value = what == "uses" ? value + p.Progress.SuccessfulUses : Math.Max(value, (int)p.Stage);
+                    return StoryOp.Compare(value, cmp, out _);
+                }
+                case "rep":
+                {
+                    var (dim, cmp) = StoryOp.SplitComparison(op.Arg(0));
+                    return Enum.TryParse(dim, out ReputationDimension d) && StoryOp.Compare(_player.Reputation.Get(d), cmp, out _);
+                }
+                case "ordinance":
+                {
+                    var (id, cmp) = StoryOp.SplitComparison(op.Arg(0));
+                    return StoryOp.Compare(_w.Civic.IsActive(id) ? 1 : 0, cmp, out _);
+                }
+                case "registered": return StoryOp.Compare(_w.Government.IsRegistered(_player.CharacterId) ? 1 : 0, op.Arg(0), out _);
+                case "wanted":
+                {
+                    var status = _w.Wanted.Get(_player.CharacterId);
+                    return StoryOp.Compare(status != null ? status.Level : 0, op.Arg(0), out _);
+                }
                 default: return false;
             }
         }
@@ -586,7 +612,102 @@ namespace HeroGame.Core.Simulation
                 case "say":
                     _w.Phone.Send(_player, EntityId.None, NameOf(op.Arg(0)), PhoneCategory.Personal, Rest(op, 1));
                     break;
+                case "ordinance": Ordinance(op); break;
+                case "election": Election(op); break;
+                case "disaster":
+                {
+                    var place = _w.Geography.FindPlaceByName(Rest(op, 1));
+                    var district = place != null ? _w.Geography.GetDistrict(place.District) : null;
+                    if (Enum.TryParse(op.Arg(0), out Civic.DisasterKind kind)) _w.Calendar.Trigger(kind, district, _w.Clock.Now);
+                    break;
+                }
+                case "fire":
+                {
+                    var place = _w.Geography.FindPlaceByName(Rest(op, 0));
+                    var property = place != null ? _w.Properties.Get(place.Property) : null;
+                    if (property != null) _w.Dispatch.ReportFire(property, 0.35f, "story");
+                    break;
+                }
+                case "register": _w.Government.RegisterPowers(_player); break;
+                case "opinion":
+                {
+                    var delta = float.Parse(op.Arg(1), CultureInfo.InvariantCulture);
+                    foreach (var o in _w.Civic.Opinion) o.Support[op.Arg(0)] = Math.Max(-1f, Math.Min(1f, o.Of(op.Arg(0)) + delta));
+                    _w.Dirty.Mark(SaveChunks.Civic);
+                    break;
+                }
+                case "rep":
+                    if (Enum.TryParse(op.Arg(0), out ReputationDimension dim)) _player.Reputation.Add(dim, float.Parse(op.Arg(1), CultureInfo.InvariantCulture));
+                    break;
+                case "transfer":
+                    Transfer(new PropertyTransfer { District = op.Arg(0), Share = float.Parse(op.Arg(1), CultureInfo.InvariantCulture), NewOwner = op.Arg(2), FromOwner = op.Arg(3) });
+                    break;
+                case "ending":
+                    State.Ending = op.Arg(0);
+                    State.Flags["ending_" + op.Arg(0)] = 1;
+                    _w.History.Record(_w.Today, HistoryCategory.People, 5, Rest(op, 1).Length > 0 ? Rest(op, 1) : "A chapter of " + _w.Config.Identity.CityName + "'s story closes");
+                    break;
             }
+        }
+
+        /// <summary>ordinance:ID:propose|vote|enact|repeal — "vote" makes the council decide a pending proposal today.</summary>
+        private void Ordinance(StoryOp op)
+        {
+            var gov = _w.Government;
+            var def = gov.Ordinance(op.Arg(0));
+            if (def == null) return;
+            switch (op.Arg(1))
+            {
+                case "propose": gov.Propose(EntityId.None, def.Id, _w.Civic.IsActive(def.Id)); break;
+                case "vote":
+                    foreach (var p in _w.Civic.Proposals) if (!p.Decided && p.OrdinanceId == def.Id) p.VoteDay = _w.Today;
+                    gov.DecideNow(_w.Today);
+                    break;
+                case "enact": gov.Enact(def); break;
+                case "repeal": gov.Repeal(def); break;
+            }
+        }
+
+        /// <summary>
+        /// election:schedule · election:candidate:CAST:SLATE (a cast member runs for mayor) · election:boost:CAST:AMOUNT
+        /// (campaign recognition) · election:hold (the city votes now; sets flag mayor_CAST for the winner if cast).
+        /// </summary>
+        private void Election(StoryOp op)
+        {
+            var gov = _w.Government;
+            Civic.Election Mayor() => _w.Civic.Elections.Find(e => e.Office == Civic.Office.Mayor && !e.Held);
+            switch (op.Arg(0))
+            {
+                case "schedule":
+                    if (Mayor() == null) gov.ScheduleElections(_w.Today);
+                    break;
+                case "candidate":
+                {
+                    var e = Mayor();
+                    var npc = Npc(op.Arg(1));
+                    if (e == null || npc == null || e.Candidates.Exists(c => c.Person == npc.Id)) break;
+                    e.Candidates.Add(new Civic.Candidate { Person = npc.Id, Name = npc.FullName, Slate = op.Arg(2), Recognition = 0.35f });
+                    break;
+                }
+                case "boost":
+                {
+                    var e = Mayor();
+                    var npc = Npc(op.Arg(1));
+                    var c = e != null && npc != null ? e.Candidates.Find(x => x.Person == npc.Id) : null;
+                    if (c != null) c.Recognition = Math.Min(0.95f, c.Recognition + float.Parse(op.Arg(2), CultureInfo.InvariantCulture));
+                    break;
+                }
+                case "hold":
+                {
+                    var e = Mayor();
+                    if (e == null) break;
+                    for (var d = _w.Today; !e.Held && d <= e.ElectionDay + 1; d++) gov.ProcessDay(Math.Max(d, e.ElectionDay));
+                    var cast = CastIdOf(e.Winner);
+                    if (cast != null) State.Flags["mayor_" + cast] = 1;
+                    break;
+                }
+            }
+            _w.Dirty.Mark(SaveChunks.Civic);
         }
 
         private static string Rest(StoryOp op, int from) => string.Join(":", op.Args, from, Math.Max(0, op.Args.Length - from));
@@ -745,12 +866,19 @@ namespace HeroGame.Core.Simulation
             District district = null;
             foreach (var d in _w.Geography.Districts) if (d.Key == t.District) district = d;
             if (district == null) return;
-            var buyer = _w.Ids.Next(EntityKind.Organization);
-            var account = _w.Ids.Next(EntityKind.LedgerAccount);
-            _w.Ledger.Open(account, buyer, LedgerAccountKind.Business, t.NewOwner);
+            // The same organisation keeps its identity across events (Meridian in the jump and in the ending).
+            var buyer = OrganizationNamed(t.NewOwner);
+            if (!buyer.IsValid)
+            {
+                buyer = _w.Ids.Next(EntityKind.Organization);
+                _w.Ledger.Open(_w.Ids.Next(EntityKind.LedgerAccount), buyer, LedgerAccountKind.Business, t.NewOwner);
+            }
+            var from = string.IsNullOrEmpty(t.FromOwner) ? EntityId.None : OrganizationNamed(t.FromOwner);
+            if (!string.IsNullOrEmpty(t.FromOwner) && !from.IsValid) return;
             var homes = new List<PropertyRecord>();
             foreach (var p in _w.Properties.All)
-                if (p.District == district.Id && (p.Kind == PropertyKind.House || p.Kind == PropertyKind.Land) && _w.Ownership.OwnerOf(p.Id) is EntityId o && !_w.Characters.ContainsKey(o))
+                if (p.District == district.Id && (p.Kind == PropertyKind.House || p.Kind == PropertyKind.Land) && _w.Ownership.OwnerOf(p.Id) is EntityId o && !_w.Characters.ContainsKey(o)
+                    && o != buyer && (!from.IsValid || o == from))
                     homes.Add(p);
             homes.Sort((a, b) => a.Id.CompareTo(b.Id));
             var take = (int)Math.Round(homes.Count * t.Share);
@@ -766,6 +894,13 @@ namespace HeroGame.Core.Simulation
                 tx.Ownership.Add(new OwnershipChange { Asset = p.Id, From = seller, To = buyer });
                 if (_w.Transactions.Execute(tx).Success) p.ForSale = false;
             }
+        }
+
+        private EntityId OrganizationNamed(string name)
+        {
+            foreach (var a in _w.Ledger.Accounts)
+                if (a.Kind == LedgerAccountKind.Business && a.Label == name) return a.Owner;
+            return EntityId.None;
         }
 
         private static bool TryParseClock(string text, out int minute)

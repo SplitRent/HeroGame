@@ -49,6 +49,7 @@ namespace HeroGame.Persistence.Content
         public static ValidationReport ValidateStory(Core.Story.StoryDefinition s, ContentSet content)
         {
             var r = new ValidationReport();
+            _storyContent = content;
             var places = new HashSet<string>();
             foreach (var d in content.Layout.Districts) foreach (var p in d.Places) places.Add(p.Name);
             var cast = new HashSet<string>();
@@ -140,6 +141,15 @@ namespace HeroGame.Persistence.Content
             return r;
         }
 
+        [System.ThreadStatic] private static ContentSet _storyContent;
+
+        private static bool PlaceExists(string name)
+        {
+            if (_storyContent == null) return true;
+            foreach (var d in _storyContent.Layout.Districts) foreach (var p in d.Places) if (p.Name == name) return true;
+            return false;
+        }
+
         private static void CheckOp(ValidationReport r, string path, string text, bool effect, Core.Story.StoryDefinition s, HashSet<string> missions, HashSet<string> cast)
         {
             var op = Core.Story.StoryOp.Parse(text);
@@ -188,6 +198,59 @@ namespace HeroGame.Persistence.Content
                 case "time":
                     if (op.Arg(0) != "advance" && op.Arg(0) != "to") r.Error(path, "time:advance:H or time:to:HH:MM expected.");
                     break;
+                case "ordinance":
+                {
+                    var ordinanceId = effect ? op.Arg(0) : Core.Story.StoryOp.SplitComparison(op.Arg(0)).name;
+                    if (_storyContent != null && !_storyContent.Ordinances.Exists(o => o.Id == ordinanceId)) r.Error(path, "Unknown ordinance in '" + text + "'.");
+                    if (effect && System.Array.IndexOf(new[] { "propose", "vote", "enact", "repeal" }, op.Arg(1)) < 0) r.Error(path, "ordinance:ID:propose|vote|enact|repeal expected, got '" + text + "'.");
+                    break;
+                }
+                case "election":
+                    switch (op.Arg(0))
+                    {
+                        case "schedule":
+                        case "hold":
+                            break;
+                        case "candidate":
+                            if (!cast.Contains(op.Arg(1)) || string.IsNullOrEmpty(op.Arg(2))) r.Error(path, "election:candidate:CAST:SLATE expected, got '" + text + "'.");
+                            break;
+                        case "boost":
+                            if (!cast.Contains(op.Arg(1)) || !Num(op.Arg(2))) r.Error(path, "election:boost:CAST:AMOUNT expected, got '" + text + "'.");
+                            break;
+                        default:
+                            r.Error(path, "Unknown election step in '" + text + "'.");
+                            break;
+                    }
+                    break;
+                case "disaster":
+                    if (!System.Enum.TryParse(op.Arg(0), out Core.Civic.DisasterKind _)) r.Error(path, "Unknown disaster in '" + text + "'.");
+                    if (!PlaceExists(string.Join(":", op.Args, 1, System.Math.Max(0, op.Args.Length - 1)))) r.Error(path, "Unknown place in '" + text + "'.");
+                    break;
+                case "fire":
+                    if (!PlaceExists(string.Join(":", op.Args))) r.Error(path, "Unknown place in '" + text + "'.");
+                    break;
+                case "opinion":
+                    if (System.Array.IndexOf(Core.Civic.Issues.All, op.Arg(0)) < 0 || !Num(op.Arg(1))) r.Error(path, "opinion:ISSUE:DELTA expected, got '" + text + "'.");
+                    break;
+                case "rep":
+                {
+                    var dim = effect ? op.Arg(0) : Core.Story.StoryOp.SplitComparison(op.Arg(0)).name;
+                    if (!System.Enum.TryParse(dim, out Core.Identity.ReputationDimension _) || effect && !Num(op.Arg(1))) r.Error(path, "rep:DIMENSION:DELTA expected, got '" + text + "'.");
+                    break;
+                }
+                case "transfer":
+                    if (_storyContent != null && !_storyContent.Layout.Districts.Exists(d => d.Key == op.Arg(0)) || !Num(op.Arg(1)) || string.IsNullOrEmpty(op.Arg(2)))
+                        r.Error(path, "transfer:DISTRICT:SHARE:NEW_OWNER[:FROM_OWNER] expected, got '" + text + "'.");
+                    break;
+                case "ending":
+                    if (string.IsNullOrEmpty(op.Arg(0))) r.Error(path, "ending:NAME expected.");
+                    break;
+                case "power":
+                {
+                    var what = Core.Story.StoryOp.SplitComparison(op.Arg(0)).name;
+                    if (what != "stage" && what != "uses") r.Error(path, "power:stage… or power:uses… expected, got '" + text + "'.");
+                    break;
+                }
             }
         }
         public const string DefaultServerConfig = "server_default.json";
