@@ -162,6 +162,10 @@ namespace HeroGame.Core.Characters
         public WorldPosition LastPosition;
         public InjuryState Injury;
         public float Health = 1f;
+        /// <summary>Hospital discharge time (game seconds); 0 when not admitted.</summary>
+        public long HospitalUntilSecond;
+        /// <summary>Unpaid share of hospital bills (hurts credit until paid).</summary>
+        public long MedicalDebtCents;
 
         public List<InventoryStack> Inventory = new List<InventoryStack>();
         public List<string> OwnedOutfits = new List<string>();

@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phase 7 (crime actions, legal system)._
+_Last updated: Phase 8 (emergency services)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -65,6 +65,11 @@ _Last updated: Phase 7 (crime actions, legal system)._
 | Loot, fences, chop shops (items.json) | TESTED | `StoreRobbery_TakesFromTheTill_AndTheFenceBuysLoot`, `VehicleTheft_*` |
 | Legal system (charging threshold, bail, counsel, plea, verdicts, sentencing, custody, probation, fines, warrants) | TESTED | `Sentencing_*`, `Robbery_Arrest_Bail_Hearing_Sentence_EndToEnd`, `GuiltyPlea_*`, `UnpaidFines_*`, `Arrest_WithoutEvidence_*` |
 | Justice persistence (incidents, evidence, cases) | TESTED | `EvidenceAndCases_SurviveSaveAndLoad` |
+| Emergency dispatch (road-ETA unit selection, priority queue, trips, scenes, returns) | TESTED | `MedicalCall_*`, `SurgeOfCalls_*`, `Units_AreCrewedFromServiceFleets` |
+| Police response & arrest on scene | TESTED | `Police_ArrestASuspectStillAtTheScene_ButNotOneWhoLeft` |
+| Fire growth, suppression, spread, building loss | TESTED | `Fire_IsFoughtAndPutOut_Deterministically`, `Fire_WithNoEnginesAvailable_BurnsTheBuildingDown` |
+| EMS transport, hospital stay, billing via health cover, medical debt, permadeath rule | TESTED | `DownedPlayer_*`, `UninsuredBrokePatient_*`, `Permadeath_*` |
+| Background city calls at realistic rates | TESTED | `BackgroundCalls_ComeInAtRealisticRates_AndAreAnswered` |
 
 ## Persistence
 | System | Status | Evidence / notes |
@@ -100,6 +105,7 @@ _Last updated: Phase 7 (crime actions, legal system)._
 | Build mode (overhead editor, live cost/validation, layout renderer) | IN DEVELOPMENT | compiles; greybox builder adds a build zone to every property |
 | Business office panel, bank/insurance phone apps | IN DEVELOPMENT | compiles; IMGUI placeholders |
 | Crime interactables (shelves, register, break-in, fence, chop shop), police desk, custody | IN DEVELOPMENT | compiles; greybox builder places them |
+| Emergency unit & fire presentation, player vitals (fall damage, downed → hospital) | IN DEVELOPMENT | compiles |
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 

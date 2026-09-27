@@ -168,6 +168,8 @@ namespace HeroGame.Persistence.Saves
             foreach (var p in ReadChunk<PropertiesChunk>(manifest, SaveChunks.Properties).Properties) world.Properties.Add(p);
             foreach (var b in ReadChunk<BusinessesChunk>(manifest, SaveChunks.Businesses).Businesses) world.Businesses[b.Id] = b;
 
+            if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Emergency))
+                world.Emergency = ReadChunk<Core.Emergency.EmergencyState>(manifest, SaveChunks.Emergency);
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Justice))
                 world.RestoreJustice(ReadChunk<Core.Crime.JusticeState>(manifest, SaveChunks.Justice));
 
@@ -252,6 +254,8 @@ namespace HeroGame.Persistence.Saves
                     return env;
                 case SaveChunks.Justice:
                     return world.Justice;
+                case SaveChunks.Emergency:
+                    return world.Emergency;
                 case SaveChunks.Vehicles:
                     var vehicles = new VehiclesChunk();
                     vehicles.Vehicles.AddRange(world.Vehicles.All);

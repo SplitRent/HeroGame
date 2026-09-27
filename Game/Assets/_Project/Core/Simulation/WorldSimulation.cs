@@ -61,6 +61,7 @@ namespace HeroGame.Core.Simulation
                 if (nextHour > target)
                 {
                     CheckPendingAnomaly(target);
+                    _world.Dispatch.AdvanceTo(target);
                     cursor.SimulatedUpTo = target;
                     break;
                 }
@@ -89,6 +90,7 @@ namespace HeroGame.Core.Simulation
             if (rng.Chance(effects.PowerOutageRiskPerHour)) c.DayOutageHours += 1f + rng.NextFloat() * 3f;
             CheckPendingAnomaly(t);
             _world.Wanted.Tick(t, null);
+            _world.Dispatch.AdvanceTo(t);
             var storm = _world.Weather.State.ActiveSystem;
             if (storm != null && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane)
             {
@@ -193,6 +195,7 @@ namespace HeroGame.Core.Simulation
             }
             _world.Finance.ProcessDay(day, date.AddHours(23));
             _world.Courts.ProcessDay(day);
+            _world.Dispatch.ProcessDay(day);
             _world.Rentals.ProcessDay(date.AddHours(12), _world.CheckingAccountOf, _world.Accounts.Treasury, taxDay: day % 30 == 0);
             _world.Properties.ApplyDailyWear();
             if (day % 7 == 0) _world.Properties.Reassess(_world.Geography, _world.Macro, _world.Config.Economy.PropertyPriceMultiplier);

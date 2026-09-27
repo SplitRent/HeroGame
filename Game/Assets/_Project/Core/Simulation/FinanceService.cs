@@ -102,7 +102,34 @@ namespace HeroGame.Core.Simulation
             return new Money(monthly);
         }
 
-        public CreditProfile Credit(ServerCharacter c) => Underwriter.Profile(c.CharacterId, _w.Loans, _w.Today - c.CreatedDay);
+        public CreditProfile Credit(ServerCharacter c)
+        {
+            var profile = Underwriter.Profile(c.CharacterId, _w.Loans, _w.Today - c.CreatedDay);
+            // Medical debt in collections is reported to the bureau.
+            if (c.MedicalDebtCents > 0) profile.Score = Math.Max(300, profile.Score - 60);
+            return profile;
+        }
+
+        /// <summary>Pays down outstanding medical debt to the hospital.</summary>
+        public OpResult PayMedicalDebt(ServerCharacter c, Money amount, string idempotencyKey)
+        {
+            var pay = Math.Min(amount.Cents, c.MedicalDebtCents);
+            if (pay <= 0) return OpResult.Fail("You have no medical debt.");
+            var result = _w.Transactions.Execute(new WorldTransaction
+            {
+                IdempotencyKey = idempotencyKey ?? "",
+                Initiator = c.CharacterId,
+                Timestamp = _w.Clock.Now,
+                Description = "Medical debt payment",
+                Money = LedgerTransaction.Transfer(c.CheckingAccount, _w.Accounts.HospitalAccount, new Money(pay), TransactionReason.Purchase, "Medical debt"),
+            });
+            if (result.Success)
+            {
+                c.MedicalDebtCents -= pay;
+                _w.Dirty.Mark(SaveChunks.CharacterPrefix + c.CharacterId);
+            }
+            return result;
+        }
 
         // ------------------------------------------------------------------ loans
 

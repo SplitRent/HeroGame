@@ -466,6 +466,7 @@ namespace HeroGame.Core.Simulation
             {
                 var poweredSuspect = type.Category == CrimeCategory.Anomalous;
                 _w.Wanted.ReportCrime(incident, type, _w.Clock.Now, policeWitnessed: false, poweredSuspect: poweredSuspect);
+                _w.Dispatch.ReportCrime(incident, type);
             }
 
             var witnesses = 0;

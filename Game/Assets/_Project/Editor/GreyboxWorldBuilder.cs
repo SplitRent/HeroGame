@@ -5,6 +5,7 @@ using HeroGame.Core.World;
 using HeroGame.Persistence.Content;
 using HeroGame.Runtime.Bootstrap;
 using HeroGame.Runtime.Crime;
+using HeroGame.Runtime.Emergency;
 using HeroGame.Runtime.Building;
 using HeroGame.Runtime.DevTools;
 using HeroGame.Runtime.Interaction;
@@ -101,6 +102,16 @@ namespace HeroGame.Editor
             var vehicles = new GameObject("Vehicles").AddComponent<VehiclePresenter>();
             vehicles.Observer = player.transform;
             vehicles.CarPrefab = BuildCarPrefab(materials);
+            var emergency = new GameObject("Emergency Services").AddComponent<EmergencyPresenter>();
+            emergency.Observer = player.transform;
+            emergency.PoliceCar = BuildServicePrefab(materials, "Police", new Color(0.1f, 0.12f, 0.2f), new Vector3(2f, 1.5f, 4.8f), new Color(0.2f, 0.4f, 1f));
+            emergency.FireEngine = BuildServicePrefab(materials, "Engine", new Color(0.7f, 0.08f, 0.06f), new Vector3(2.5f, 3f, 9f), new Color(1f, 0.2f, 0.1f));
+            emergency.Ambulance = BuildServicePrefab(materials, "Ambulance", new Color(0.92f, 0.92f, 0.9f), new Vector3(2.3f, 2.6f, 6f), new Color(1f, 0.15f, 0.15f));
+            var fires = emergency.gameObject.AddComponent<FirePresenter>();
+            fires.Observer = player.transform;
+            fires.FirePrefab = BuildFirePrefab();
+            player.AddComponent<PlayerVitals>();
+
             var traffic = new GameObject("Traffic").AddComponent<TrafficPresenter>();
             traffic.Observer = player.transform;
             traffic.CarPrefab = BuildTrafficCarPrefab(materials);
@@ -495,6 +506,49 @@ namespace HeroGame.Editor
         }
 
         /// <summary>Ambient traffic body: kinematic, collidable, no wheel physics (moved by TrafficPresenter).</summary>
+        /// <summary>Greybox emergency vehicle: a tinted box with a light bar (ASSET_TRACKER placeholder).</summary>
+        private static GameObject BuildServicePrefab(MaterialLibrary m, string name, Color body, Vector3 size, Color light)
+        {
+            var root = new GameObject(name + " (greybox)");
+            var box = root.transform;
+            var shell = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            shell.name = "Body";
+            shell.transform.SetParent(box, false);
+            shell.transform.localPosition = new Vector3(0f, size.y * 0.5f, 0f);
+            shell.transform.localScale = size;
+            shell.GetComponent<Renderer>().sharedMaterial = m.Get("service_" + name, body);
+            var bar = new GameObject("Light Bar").AddComponent<Light>();
+            bar.transform.SetParent(box, false);
+            bar.transform.localPosition = new Vector3(0f, size.y + 0.3f, 0f);
+            bar.type = LightType.Point;
+            bar.color = light;
+            bar.range = 18f;
+            bar.intensity = IsHdrp() ? 4000f : 4f;
+            var path = GeneratedFolder + "/" + name + "_Greybox.prefab";
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, path);
+            Object.DestroyImmediate(root);
+            return prefab;
+        }
+
+        private static ParticleSystem BuildFirePrefab()
+        {
+            var go = new GameObject("Fire (placeholder)");
+            var ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.startLifetime = 1.6f;
+            main.startSpeed = 3.5f;
+            main.startSize = 1.8f;
+            main.startColor = new Color(1f, 0.45f, 0.1f, 0.8f);
+            main.maxParticles = 600;
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3(6f, 1f, 6f);
+            var path = GeneratedFolder + "/Fire_Placeholder.prefab";
+            var prefab = PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+            return prefab.GetComponent<ParticleSystem>();
+        }
+
         private static GameObject BuildTrafficCarPrefab(MaterialLibrary m)
         {
             var root = GameObject.CreatePrimitive(PrimitiveType.Cube);

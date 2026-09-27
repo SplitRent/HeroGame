@@ -30,6 +30,7 @@ namespace HeroGame.Core.Foundation
         HistoryRecord = 18,
         InsurancePolicy = 19,
         CourtCase = 20,
+        EmergencyIncident = 21,
     }
 
     /// <summary>

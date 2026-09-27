@@ -6,6 +6,7 @@ using HeroGame.Core.Characters;
 using HeroGame.Core.Config;
 using HeroGame.Core.Crime;
 using HeroGame.Core.Economy;
+using HeroGame.Core.Emergency;
 using HeroGame.Core.Foundation;
 using HeroGame.Core.Phone;
 using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
@@ -35,6 +36,8 @@ namespace HeroGame.Core.Simulation
         public EntityId Contractors;
         public EntityId Insurer;
         public EntityId InsurerAccount;
+        public EntityId Hospital;
+        public EntityId HospitalAccount;
     }
 
     /// <summary>Simulation bookkeeping that must survive restarts.</summary>
@@ -73,6 +76,7 @@ namespace HeroGame.Core.Simulation
         public const string Properties = "properties";
         public const string Businesses = "businesses";
         public const string Justice = "justice";
+        public const string Emergency = "emergency";
         public const string Environment = "environment";
         public const string History = "history";
         public const string Vehicles = "vehicles";
@@ -83,7 +87,7 @@ namespace HeroGame.Core.Simulation
 
         public static string PopulationShard(int index) => PopulationShardPrefix + index;
         public static int ShardOf(EntityId npc) => (int)((npc.Sequence - 1) / NpcsPerShard);
-        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice };
+        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice, Emergency };
     }
 
     /// <summary>
@@ -144,6 +148,9 @@ namespace HeroGame.Core.Simulation
         public JusticeState Justice = new JusticeState();
         public readonly CrimeService Crimes;
         public readonly JusticeService Courts;
+        /// <summary>Emergency incidents and unit assignments (persisted in the emergency chunk).</summary>
+        public EmergencyState Emergency = new EmergencyState();
+        public readonly EmergencyDispatch Dispatch;
         /// <summary>Bumped when the set of NPC-hireable workplaces changes (player takes over staffing, etc.).</summary>
         public int WorkplaceVersion;
 
@@ -198,6 +205,7 @@ namespace HeroGame.Core.Simulation
             BusinessOps = new BusinessOperations(this);
             Crimes = new CrimeService(this);
             Courts = new JusticeService(this);
+            Dispatch = new EmergencyDispatch(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
@@ -236,6 +244,13 @@ namespace HeroGame.Core.Simulation
         public void EnsureInstitutions()
         {
             BusinessOps.Reconcile();
+            if (!Accounts.Hospital.IsValid) Accounts.Hospital = Ids.Next(EntityKind.Organization);
+            if (!Accounts.HospitalAccount.IsValid || !Ledger.Exists(Accounts.HospitalAccount))
+            {
+                if (!Accounts.HospitalAccount.IsValid) Accounts.HospitalAccount = Ids.Next(EntityKind.LedgerAccount);
+                Ledger.Open(Accounts.HospitalAccount, Accounts.Hospital, LedgerAccountKind.Organization, EmergencyDispatch.HospitalName);
+            }
+            Dispatch.EnsureUnits();
             var a = Accounts;
             if (!a.Insurer.IsValid) a.Insurer = Ids.Next(EntityKind.Organization);
             if (!a.InsurerAccount.IsValid || !Ledger.Exists(a.InsurerAccount))
