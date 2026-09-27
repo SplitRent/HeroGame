@@ -135,7 +135,7 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | Corrupt journal entries skipped and reported | TESTED | `GarbageInTheMiddleOfTheJournal_IsSkipped_AndTheRestReplays`, `TornJournalTail_IsDiscarded` |
 | Story save slots | TESTED | `StorySlots_RotateAutosaves` |
 | City layout recorded in saves; wrong layout refused; hosts reopen on the recorded layout | TESTED | `Saves_RememberTheirLayout_AndRefuseToOpenOnAnotherMap` |
-| All save serialization off the simulation thread (generic snapshot cloner, parallel NPC copies, copy-on-write layout shards) | TESTED | `TheGenericCloner_CopiesEverySavedKindOfData_*`, `NpcAndHouseholdSnapshots_*`, `EditingOneBuilding_*`, `SavesFromBeforeLayoutShards_*`; bench at 50k: routine autosave 5–7 ms blocked ✓, save right after a daily step 138–180 ms blocked (was ~860) ⚠ target 16 ms |
+| All save serialization off the simulation thread (generic snapshot cloner, parallel NPC copies, copy-on-write layout shards) | TESTED | `TheGenericCloner_CopiesEverySavedKindOfData_*`, `NpcAndHouseholdSnapshots_*`, `EditingOneBuilding_*`, `SavesFromBeforeLayoutShards_*`; bench at 50k: routine autosave 5–7 ms blocked ✓, save right after a daily step 91–111 ms blocked (was ~860) ⚠ target 16 ms |
 | Account profiles (local) | FUNCTIONAL | used by front end |
 | Binary save format | PLANNED | tech debt #1 |
 | PostgreSQL backend | PLANNED | file-backed JSON stores in use; see NETWORKING.md |

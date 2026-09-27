@@ -227,17 +227,32 @@ namespace HeroGame.Core.Population
         /// </summary>
         public NpcRecord SnapshotCopy()
         {
+            // Snapshots are read-only (they are only serialized), so every empty collection can be one shared instance.
             var c = (NpcRecord)MemberwiseClone();
-            c.Interests = new List<string>(Interests);
-            c.FavoritePlaces = new List<EntityId>(FavoritePlaces);
-            c.Relationships = new List<Relationship>(Relationships.Count);
-            foreach (var r in Relationships) c.Relationships.Add(r.Copy());
-            c.Memories = new List<CharacterMemory>(Memories.Count);
-            foreach (var m in Memories) c.Memories.Add(m.Copy());
-            c.History = new List<LifeEvent>(History);
+            c.Interests = Interests.Count == 0 ? NoStrings : new List<string>(Interests);
+            c.FavoritePlaces = FavoritePlaces.Count == 0 ? NoPlaces : new List<EntityId>(FavoritePlaces);
+            if (Relationships.Count == 0) c.Relationships = NoRelationships;
+            else
+            {
+                c.Relationships = new List<Relationship>(Relationships.Count);
+                foreach (var r in Relationships) c.Relationships.Add(r.Copy());
+            }
+            if (Memories.Count == 0) c.Memories = NoMemories;
+            else
+            {
+                c.Memories = new List<CharacterMemory>(Memories.Count);
+                foreach (var m in Memories) c.Memories.Add(m.Copy());
+            }
+            c.History = History.Count == 0 ? NoHistory : new List<LifeEvent>(History);
             c.Powers = Powers?.SnapshotCopy();
             return c;
         }
+
+        private static readonly List<string> NoStrings = new List<string>();
+        private static readonly List<EntityId> NoPlaces = new List<EntityId>();
+        private static readonly List<Relationship> NoRelationships = new List<Relationship>();
+        private static readonly List<CharacterMemory> NoMemories = new List<CharacterMemory>();
+        private static readonly List<LifeEvent> NoHistory = new List<LifeEvent>();
 
         public int AgeYears(long currentDay) => (int)((currentDay - BirthDay) / 365.25);
 
