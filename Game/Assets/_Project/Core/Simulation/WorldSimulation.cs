@@ -17,6 +17,14 @@ namespace HeroGame.Core.Simulation
         public double LastDayMilliseconds;
         public double LastPopulationMilliseconds;
         public double LastBusinessMilliseconds;
+        /// <summary>Time spent in each part of the last daily step, accumulated over the run (diagnostics only).</summary>
+        public readonly System.Collections.Generic.Dictionary<string, double> SectionMilliseconds = new System.Collections.Generic.Dictionary<string, double>();
+
+        internal void AddSection(string name, double ms)
+        {
+            SectionMilliseconds.TryGetValue(name, out var t);
+            SectionMilliseconds[name] = t + ms;
+        }
         public long DaysSimulated;
         public long HoursSimulated;
         public int NpcDaysLastDay;
@@ -130,7 +138,10 @@ namespace HeroGame.Core.Simulation
                 npcDays += NpcLifeSimulator.CatchUp(npc, day, _lifeContext);
                 if (npc.Workplace != workplace || npc.School != school) _world.Population.Reindex(npc);
             }
+            Stats.AddSection("npc life", popWatch.Elapsed.TotalMilliseconds);
+            var socialWatch = Stopwatch.StartNew();
             _world.Social.DailyPass(_world.Population, day);
+            Stats.AddSection("social", socialWatch.Elapsed.TotalMilliseconds);
             foreach (var npc in _world.Population.Ordered) if (npc.LastSimulatedDay < day) npc.LastSimulatedDay = day; // newborns
             Stats.LastPopulationMilliseconds = popWatch.Elapsed.TotalMilliseconds;
             Stats.NpcDaysLastDay = npcDays;
@@ -171,6 +182,13 @@ namespace HeroGame.Core.Simulation
                     _world.History.Record(day, HistoryCategory.Business, 2, b.Name + " struggling after a month of losses", report.Note, district != null ? district.Id : EntityId.None, b.Id);
             }
             Stats.LastBusinessMilliseconds = bizWatch.Elapsed.TotalMilliseconds;
+            Stats.AddSection("businesses", bizWatch.Elapsed.TotalMilliseconds);
+            var section = Stopwatch.StartNew();
+            void Mark(string name)
+            {
+                Stats.AddSection(name, section.Elapsed.TotalMilliseconds);
+                section.Restart();
+            }
 
             // --- Loans & property.
             var defaulted = _world.Loans.ProcessDuePayments(date.AddHours(23), _world.Transactions, _world.Ledger);
@@ -198,12 +216,18 @@ namespace HeroGame.Core.Simulation
                             "After three missed payments your loan " + loan.Id + " is in default. The collateral has been repossessed.");
                 }
             }
+            Mark("loans");
             _world.Finance.ProcessDay(day, date.AddHours(23));
+            Mark("finance");
             _world.Courts.ProcessDay(day);
+            Mark("courts");
             _world.Dispatch.ProcessDay(day);
+            Mark("dispatch");
             _world.Rentals.ProcessDay(date.AddHours(12), _world.CheckingAccountOf, _world.Accounts.Treasury, taxDay: day % 30 == 0);
+            Mark("rentals");
             _world.Properties.ApplyDailyWear();
             if (day % 7 == 0) _world.Properties.Reassess(_world.Geography, _world.Macro, _world.Config.Economy.PropertyPriceMultiplier);
+            Mark("properties");
 
             // --- Anomalies: roll tomorrow's event now so it can fire live at its exact time.
             RollAnomaly(day + 1);
@@ -214,12 +238,17 @@ namespace HeroGame.Core.Simulation
             }
             foreach (var npc in _world.Population.Ordered)
                 if (npc.Powers != null) PowerProgression.AdvanceDay(npc.Powers, day + 1);
+            Mark("powers");
 
             _world.Phone.DailyMessages(day);
+            Mark("phone");
             _world.Government.ProcessDay(day);
+            Mark("government");
             _world.Feed.ProcessDay(day);
+            Mark("ripple");
             _world.Calendar.ProcessDay(day);
             _world.Destructibles.ProcessDay(day);
+            Mark("calendar+destruction");
             _world.Calendar.AnnounceDay(day + 1);
 
             if (_world.Macro.InRecession && _world.Macro.DaysInCurrentPhase == 1)

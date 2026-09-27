@@ -23,7 +23,7 @@ namespace HeroGame.Tests
     public class SaveSnapshotTests
     {
         /// <summary>Types that are immutable once created and may be shared between a record and its snapshot.</summary>
-        private static readonly HashSet<Type> Shared = new HashSet<Type> { typeof(string), typeof(LifeEvent), typeof(PowerDefinition) };
+        private static readonly HashSet<Type> Shared = new HashSet<Type> { typeof(string), typeof(LifeEvent), typeof(PowerDefinition), typeof(BuildingLayout) };
 
         /// <summary>Walks both object graphs in step and fails if any mutable reference object is shared.</summary>
         private static void AssertDetached(object original, object copy, string path)
@@ -37,6 +37,22 @@ namespace HeroGame.Tests
                 var other = (IList)copy;
                 Assert.AreEqual(list.Count, other.Count, path + ".Count");
                 for (var i = 0; i < list.Count; i++) AssertDetached(list[i], other[i], path + "[" + i + "]");
+                return;
+            }
+            if (original is IDictionary map)
+            {
+                // Compare entries, not the collection's internals (comparers are meant to be shared).
+                var other = (IDictionary)copy;
+                Assert.AreEqual(map.Count, other.Count, path + ".Count");
+                foreach (DictionaryEntry e in map) AssertDetached(e.Value, other[e.Key], path + "[" + e.Key + "]");
+                return;
+            }
+            if (original is IEnumerable sequence && type.Namespace != null && type.Namespace.StartsWith("System", StringComparison.Ordinal))
+            {
+                var a = sequence.Cast<object>().ToList();
+                var b = ((IEnumerable)copy).Cast<object>().ToList();
+                Assert.AreEqual(a.Count, b.Count, path + ".Count");
+                for (var i = 0; i < a.Count; i++) AssertDetached(a[i], b[i], path + "[" + i + "]");
                 return;
             }
             foreach (var f in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
@@ -81,6 +97,52 @@ namespace HeroGame.Tests
             AssertDetached(household, h, "Household");
             household.Members.Add(npc.Id);
             Assert.AreNotEqual(household.Members.Count, h.Members.Count);
+        }
+
+        [Test]
+        public void TheGenericCloner_CopiesEverySavedKindOfData_Faithfully_AndSharesNothingMutable()
+        {
+            var world = WorldGenerator.Create("cloner", TestContent.DefaultConfig(), TestContent.Load(), new MemoryTransactionJournal());
+            var me = world.CreateCharacter(new Core.Characters.AccountProfile { AccountId = EntityId.Create(EntityKind.UserAccount, 3), Character = new Core.Characters.CharacterIdentity { FirstName = "Ines" } }, new WorldPosition());
+            me.Inventory.Add(new Core.Characters.InventoryStack { ItemId = "laptop", Quantity = 2 });
+            new WorldSimulation(world).AdvanceDays(5); // businesses report, emergencies happen, history is written
+            world.Justice.Wanted = world.Wanted.Snapshot();
+
+            var payloads = new List<(string name, object value)>
+            {
+                ("properties", world.Properties.All.ToList()),
+                ("businesses", world.Businesses.Values.ToList()),
+                ("places", world.Geography.Places.ToList()),
+                ("districts", world.Geography.Districts.ToList()),
+                ("accounts", world.Ledger.Accounts.ToList()),
+                ("ownership", world.Ownership.Entries.ToList()),
+                ("loans", world.Loans.Loans.ToList()),
+                ("policies", world.Insurance.All.ToList()),
+                ("civic", world.Civic),
+                ("emergency", world.Emergency),
+                ("justice", world.Justice),
+                ("ripple", world.Ripple),
+                ("destruction", world.Destruction),
+                ("vehicles", world.Vehicles.All.ToList()),
+                ("history", world.History.Recent.ToList()),
+                ("character", me),
+                ("macro", world.Macro),
+                ("weather", world.Weather.State),
+            };
+            foreach (var (name, value) in payloads)
+            {
+                var copy = SnapshotCloner.Clone(value);
+                Assert.AreEqual(JsonSetup.Serialize(value), JsonSetup.Serialize(copy), name + " serializes identically");
+                AssertDetached(value, copy, name);
+            }
+
+            // And a mutation after the copy does not reach it.
+            var business = world.Businesses.Values.First();
+            var snapshot = SnapshotCloner.Clone(business);
+            var json = JsonSetup.Serialize(snapshot);
+            business.Name += " (renamed)";
+            business.Reports.Clear();
+            Assert.AreEqual(json, JsonSetup.Serialize(snapshot));
         }
 
         private static Dictionary<string, long> Generations(string dir)

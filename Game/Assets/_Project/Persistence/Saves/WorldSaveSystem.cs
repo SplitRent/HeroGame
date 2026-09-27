@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HeroGame.Core.Characters;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
+using HeroGame.Core.Population;
 using HeroGame.Core.Simulation;
 using HeroGame.Core.Time;
 using HeroGame.Core.World;
@@ -210,8 +211,9 @@ namespace HeroGame.Persistence.Saves
                 if (full || previous == null || !manifest.ChunkGenerations.ContainsKey(key)) dirty.Add(key);
             }
 
+            _shards = ShardsOf(world); // once per save: it walks the whole population
             if (dirty.Contains(SaveChunks.Population))
-                foreach (var shard in ShardsOf(world)) dirty.Add(SaveChunks.PopulationShard(shard));
+                foreach (var shard in _shards) dirty.Add(SaveChunks.PopulationShard(shard));
 
             // Building layouts are copy-on-write, so a shard needs rewriting only when one of its layouts was replaced
             // since the last save (or it has never been written).
@@ -250,12 +252,44 @@ namespace HeroGame.Persistence.Saves
                     continue;
                 }
                 var payload = BuildChunk(world, chunk);
-                // The population index is built from detached household copies, so it can be serialized later too.
-                if (payload != null) (chunk == SaveChunks.Population ? deferred : jobs).Add(new KeyValuePair<string, object>(chunk, payload));
+                if (payload == null) continue;
+                // Detach the payload from the live world (households are already copies) so Commit can serialize it
+                // on the save thread while the simulation carries on.
+                deferred.Add(new KeyValuePair<string, object>(chunk, payload));
             }
+            // Nothing mutates the world while this runs, so the copies can be taken on every core: payloads are
+            // detached from the live world (households and NPCs are copied by hand, everything else by the cloner)
+            // so Commit can serialize them on the save thread while the simulation carries on.
+            var copies = new object[deferred.Count];
+            System.Threading.Tasks.Parallel.For(0, deferred.Count, i =>
+            {
+                var d = deferred[i];
+                copies[i] = d.Key == SaveChunks.Population || d.Key.StartsWith(SaveChunks.PopulationShardPrefix, StringComparison.Ordinal)
+                            || d.Key.StartsWith(SaveChunks.LayoutShardPrefix, StringComparison.Ordinal)
+                    ? d.Value
+                    : SnapshotCloner.Clone(d.Value);
+            });
+            for (var i = 0; i < deferred.Count; i++) deferred[i] = new KeyValuePair<string, object>(deferred[i].Key, copies[i]);
             if (shards.Count > 0)
-                foreach (var n in world.Population.Ordered)
-                    if (shards.TryGetValue(SaveChunks.ShardOf(n.Id), out var target)) target.Npcs.Add(n.SnapshotCopy());
+            {
+                var ordered = world.Population.Ordered;
+                var shardList = new List<PopulationShardChunk>(shards.Values);
+                var byShard = new Dictionary<int, List<NpcRecord>>();
+                foreach (var n in ordered)
+                    if (shards.ContainsKey(SaveChunks.ShardOf(n.Id)))
+                    {
+                        var key = SaveChunks.ShardOf(n.Id);
+                        if (!byShard.TryGetValue(key, out var list)) byShard[key] = list = new List<NpcRecord>();
+                        list.Add(n);
+                    }
+                System.Threading.Tasks.Parallel.For(0, shardList.Count, i =>
+                {
+                    var target = shardList[i];
+                    if (!byShard.TryGetValue(target.Shard, out var members)) return;
+                    target.Npcs.Capacity = members.Count;
+                    foreach (var n in members) target.Npcs.Add(n.SnapshotCopy());
+                });
+            }
             if (layoutShards.Count > 0)
             {
                 var ordered = new List<Core.Property.PropertyRecord>(world.Properties.All);
@@ -285,7 +319,7 @@ namespace HeroGame.Persistence.Saves
             }
             // Shards that no longer exist must not linger in the manifest.
             var liveShards = new HashSet<string>();
-            foreach (var shard in ShardsOf(world)) liveShards.Add(SaveChunks.PopulationShard(shard));
+            foreach (var shard in _shards) liveShards.Add(SaveChunks.PopulationShard(shard));
             var stale = new List<string>();
             foreach (var key in manifest.ChunkGenerations.Keys)
                 if (key.StartsWith(SaveChunks.PopulationShardPrefix, StringComparison.Ordinal) && !liveShards.Contains(key)) stale.Add(key);
@@ -302,6 +336,12 @@ namespace HeroGame.Persistence.Saves
             var generation = p.Manifest.Generation;
             if (p.Deferred.Count > 0)
             {
+                foreach (var d in p.Deferred)
+                    if (d.Value is TransactionalChunk tx)
+                    {
+                        tx.Accounts.Sort((a, b) => a.Id.CompareTo(b.Id));
+                        tx.Ownership.Sort((a, b) => a.Asset.CompareTo(b.Asset));
+                    }
                 var json = new string[p.Deferred.Count];
                 System.Threading.Tasks.Parallel.For(0, json.Length, i => json[i] = JsonSetup.Serialize(p.Deferred[i].Value));
                 for (var i = 0; i < json.Length; i++)
@@ -495,14 +535,12 @@ namespace HeroGame.Persistence.Saves
                     t.Ownership.AddRange(world.Ownership.Entries);
                     t.Loans.AddRange(world.Loans.Loans);
                     t.Policies.AddRange(world.Insurance.All);
-                    t.Accounts.Sort((a, b) => a.Id.CompareTo(b.Id));
-                    t.Ownership.Sort((a, b) => a.Asset.CompareTo(b.Asset));
-                    return t;
+                    return t; // sorted on the save thread (Commit)
                 case SaveChunks.Population:
                     var pop = new PopulationChunk();
                     foreach (var household in world.Population.Households) pop.Households.Add(household.SnapshotCopy());
                     pop.Households.Sort((a, b) => a.Id.CompareTo(b.Id));
-                    pop.Shards.AddRange(ShardsOf(world));
+                    pop.Shards.AddRange(_shards ?? ShardsOf(world));
                     return pop;
                 case SaveChunks.Properties:
                     var props = new PropertiesChunk();
@@ -557,6 +595,9 @@ namespace HeroGame.Persistence.Saves
                     return null;
             }
         }
+
+        /// <summary>Population shards of the save being prepared (owning thread only).</summary>
+        private List<int> _shards;
 
         private static List<int> ShardsOf(World world)
         {

@@ -171,6 +171,18 @@ namespace HeroGame.Core.Simulation
         public readonly PowerService PowerUse;
         /// <summary>Fights and weapons (not saved: cooldowns, stuns and self-defence windows are short-lived).</summary>
         public readonly CombatService Combat;
+
+        private readonly Census _census = new Census();
+
+        /// <summary>Residents and adults per district, recounted at most once per game day (or when people are added).</summary>
+        public Census Census
+        {
+            get
+            {
+                if (_census.Day != Today || _census.PopulationCount != Population.Count) _census.Take(this, Today);
+                return _census;
+            }
+        }
         /// <summary>Budget, ordinances, opinion, officeholders and elections (persisted in the civic chunk).</summary>
         public CivicState Civic = new CivicState();
         /// <summary>Active and recent local disasters (persisted in the civic chunk).</summary>

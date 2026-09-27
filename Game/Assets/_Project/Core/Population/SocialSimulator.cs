@@ -71,7 +71,7 @@ namespace HeroGame.Core.Population
             {
                 var a = ordered[i];
                 if (!a.Alive) continue;
-                var partnerRel = a.FindRelationship(RelationshipType.Partner) ?? a.FindRelationship(RelationshipType.Spouse);
+                var partnerRel = PartnerOf(a);
                 if (partnerRel == null || partnerRel.Other.Value < a.Id.Value) continue; // handle each couple once
                 var b = population.Get(partnerRel.Other);
                 if (b == null) continue;
@@ -163,6 +163,18 @@ namespace HeroGame.Core.Population
             household?.Members.Add(child.Id);
             population.Add(child);
             Emit(mother, day, "birth", a.FullName + " and " + b.FullName + " welcomed " + child.FullName + ".");
+        }
+
+        /// <summary>The partner relationship if any, else the spouse relationship (one pass over the list).</summary>
+        private static Relationship PartnerOf(NpcRecord n)
+        {
+            Relationship spouse = null;
+            foreach (var r in n.Relationships)
+            {
+                if (r.Type == RelationshipType.Partner) return r;
+                if (r.Type == RelationshipType.Spouse && spouse == null) spouse = r;
+            }
+            return spouse;
         }
 
         private static bool HasPartner(NpcRecord n)

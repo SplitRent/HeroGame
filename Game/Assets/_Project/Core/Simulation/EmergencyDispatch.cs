@@ -46,13 +46,21 @@ namespace HeroGame.Core.Simulation
         public void EnsureUnits()
         {
             S.Units.RemoveAll(u => _w.Vehicles.Get(u.Vehicle) == null || _w.Vehicles.Get(u.Vehicle).LocationKind == VehicleLocationKind.Destroyed);
-            var vehicles = new List<VehicleRecord>(_w.Vehicles.All);
+            // Only the city's own vehicles can be crewed: look at those, not every car in town.
+            var crewed = new HashSet<EntityId>();
+            foreach (var u in S.Units) crewed.Add(u.Vehicle);
+            var vehicles = new List<VehicleRecord>();
+            foreach (var asset in _w.Ownership.AssetsOf(_w.Accounts.Government))
+            {
+                if (asset.Kind != EntityKind.Vehicle || crewed.Contains(asset)) continue;
+                var record = _w.Vehicles.Get(asset);
+                if (record != null) vehicles.Add(record);
+            }
             vehicles.Sort((a, b) => a.Id.CompareTo(b.Id));
             var counters = new Dictionary<Service, int>();
             foreach (var u in S.Units) counters[u.Service] = counters.TryGetValue(u.Service, out var n) ? n + 1 : 1;
             foreach (var v in vehicles)
             {
-                if (S.Unit(v.Id) != null || _w.Ownership.OwnerOf(v.Id) != _w.Accounts.Government) continue;
                 var model = _w.Vehicles.Model(v.ModelId);
                 if (model == null) continue;
                 Service service;
@@ -572,19 +580,12 @@ namespace HeroGame.Core.Simulation
             if (S.LastBackgroundDay >= day + 1) return;
             S.LastBackgroundDay = day + 1;
 
-            var residents = new Dictionary<EntityId, int>();
-            foreach (var npc in _w.Population.Ordered)
-            {
-                if (!npc.Alive) continue;
-                var home = _w.Geography.GetPlace(npc.Home);
-                if (home == null) continue;
-                residents[home.District] = residents.TryGetValue(home.District, out var n) ? n + 1 : 1;
-            }
+            var census = _w.Census;
             var districts = new List<District>(_w.Geography.Districts);
             districts.Sort((a, b) => a.Id.CompareTo(b.Id));
             foreach (var d in districts)
             {
-                residents.TryGetValue(d.Id, out var pop);
+                var pop = census.ResidentsOf(d.Id);
                 var places = new List<Place>();
                 foreach (var p in _w.Geography.Places) if (p.District == d.Id) places.Add(p);
                 if (places.Count == 0) continue;

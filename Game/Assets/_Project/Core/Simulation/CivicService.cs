@@ -181,9 +181,7 @@ namespace HeroGame.Core.Simulation
 
         public int Residents()
         {
-            var n = 0;
-            foreach (var npc in _w.Population.Ordered) if (npc.Alive) n++;
-            return n + _w.Characters.Count;
+            return _w.Census.Alive + _w.Characters.Count;
         }
 
         private void MonthlyBudget(long day)
@@ -643,14 +641,16 @@ namespace HeroGame.Core.Simulation
         {
             foreach (var c in e.Candidates)
                 if (!c.IsPlayer) c.Recognition = Math.Min(0.8f, c.Recognition + (c.Incumbent ? 0.003f : c.Slate == Slates.Independent ? 0.004f : 0.008f));
-            // Daily tracking poll from a deterministic sample of the electorate.
-            var voters = Electorate(e);
+            // Daily tracking poll from a deterministic sample of the electorate (the shared census; no copy per poll).
+            var district = DistrictByKey(e.District);
+            var voters = district != null ? _w.Census.AdultsOf(district.Id) : _w.Census.Adults;
             var sample = Math.Min(200, voters.Count);
             var counts = new int[e.Candidates.Count];
             var rng = DeterministicRandom.For(_w.Seed, StableHash.Of(e.Id), (ulong)day, 0x9011);
             for (var i = 0; i < sample; i++)
             {
                 var v = voters[rng.NextInt(0, voters.Count)];
+                if (!v.Alive) continue;
                 var choice = Choose(e, v, rng);
                 if (choice >= 0) counts[choice]++;
             }
@@ -660,17 +660,10 @@ namespace HeroGame.Core.Simulation
         private List<NpcRecord> Electorate(Election e)
         {
             var district = DistrictByKey(e.District);
-            var list = new List<NpcRecord>();
-            foreach (var npc in _w.Population.Ordered)
-            {
-                if (!npc.Alive || npc.AgeYears(_w.Today) < 18) continue;
-                if (district != null)
-                {
-                    var home = _w.Geography.GetPlace(npc.Home);
-                    if (home == null || home.District != district.Id) continue;
-                }
-                list.Add(npc);
-            }
+            var census = _w.Census;
+            var source = district != null ? census.AdultsOf(district.Id) : census.Adults;
+            var list = new List<NpcRecord>(source.Count);
+            foreach (var npc in source) if (npc.Alive) list.Add(npc);
             return list;
         }
 

@@ -153,6 +153,10 @@ namespace HeroGame.WorldHost
                 var npcDays = (double)world.Population.Count * days;
                 Console.WriteLine("Simulated " + days + " days in " + simMs.ToString("0") + " ms → " + (simMs / days).ToString("0.0") + " ms/day, " +
                                   (simMs * 1000.0 / npcDays).ToString("0.00") + " µs per NPC-day");
+                var hourly = simMs;
+                foreach (var kv in sim.Stats.SectionMilliseconds) hourly -= kv.Value;
+                Console.WriteLine("  per day: " + string.Join(", ", sim.Stats.SectionMilliseconds.OrderByDescending(kv => kv.Value).Select(kv => kv.Key + " " + (kv.Value / days).ToString("0.0"))) +
+                                  ", hourly/other " + (hourly / days).ToString("0.0") + " ms");
 
                 var observers = new List<WorldPosition>();
                 foreach (var p in world.Geography.Places.Take(8)) observers.Add(p.Position);
