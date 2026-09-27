@@ -130,7 +130,19 @@ namespace HeroGame.Runtime.UI
             _weather.text = weather.Kind + " · " + s.FormatTemperature(weather.TemperatureC) + (w.Weather.State.ActiveSystem != null ? " · storm " + w.Weather.State.ActiveSystem.Name : "");
 
             var me = session.LocalCharacter;
-            if (me != null)
+            var online = Online.NetworkSession.Me;
+            if (online != null)
+            {
+                // Online, the player's numbers come from the server; the local world is presentation only.
+                _cash.text = new Money(online.CashCents).ToString();
+                _healthFill.style.width = Length.Percent(Mathf.Clamp01(online.Health) * 100f);
+                _healthFill.EnableInClassList("g-bar-fill--hurt", online.Health < 0.6f && online.Health >= 0.3f);
+                _healthFill.EnableInClassList("g-bar-fill--critical", online.Health < 0.3f);
+                _wanted.text = online.WantedLevel > 0 ? new string('★', online.WantedLevel) + new string('☆', Math.Max(0, 5 - online.WantedLevel)) + "  WANTED " + online.WantedLevel : "";
+                _badge.text = online.Unread > 0 ? online.Unread + " new message" + (online.Unread == 1 ? "" : "s") : "";
+                _badge.style.display = online.Unread > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+            else if (me != null)
             {
                 _cash.text = w.Ledger.BalanceOf(me.CheckingAccount).ToString();
                 _healthFill.style.width = Length.Percent(Mathf.Clamp01(me.Health) * 100f);
@@ -407,6 +419,14 @@ namespace HeroGame.Runtime.UI
 
             var body = new ScrollView();
             body.style.flexGrow = 1;
+            var online = Online.NetworkSession.Me;
+            if (online != null && _app != "" && _app != "News" && _app != "Map")
+            {
+                BuildOnline(body, online);
+                phone.Add(body);
+                _layer.Add(phone);
+                return;
+            }
             switch (_app)
             {
                 case "": BuildHome(body, w, me); break;
@@ -444,6 +464,52 @@ namespace HeroGame.Runtime.UI
                 grid.Add(b);
             }
             body.Add(grid);
+        }
+
+        /// <summary>Messages, bank, property and inventory from the server's view of this player (online).</summary>
+        private static void BuildOnline(VisualElement body, Networking.Protocol.PlayerViewData v)
+        {
+            var settings = SettingsService.Current;
+            switch (_instance != null ? _instance._app : "")
+            {
+                case "Messages":
+                    if (v.Messages.Count == 0) body.Add(Text("No messages yet.", "g-note"));
+                    foreach (var m in v.Messages) body.Add(Item(m.From + " · " + m.Category + " · day " + m.Day + " " + settings.FormatTime(m.Hour, m.Minute), m.Body, !m.Read));
+                    if (v.Unread > 0) _ = Online.NetworkSession.Current?.Request("phone.read");
+                    break;
+                case "Bank":
+                    body.Add(Text("Checking", "g-note"));
+                    body.Add(Text(new Money(v.CashCents).ToString(), "g-big-number"));
+                    if (v.SavingsCents >= 0) body.Add(Text("Savings  " + new Money(v.SavingsCents), "g-list-title"));
+                    if (v.MedicalDebtCents > 0) body.Add(Text("Medical debt  " + new Money(v.MedicalDebtCents), "g-list-alert"));
+                    if (v.FinesOwedCents > 0) body.Add(Text("Fines owed  " + new Money(v.FinesOwedCents), "g-list-alert"));
+                    foreach (var b in v.Businesses)
+                        body.Add(Item(b.Name, "Account " + new Money(b.BalanceCents) + " · yesterday " + (b.LastDayClosed ? "closed" : b.LastDayCustomers + " customers, " + new Money(b.LastDayProfitCents))));
+                    body.Add(Text("Statement", "g-section"));
+                    foreach (var s in v.Statement) body.Add(Item(new Money(s.AmountCents).ToString(), s.Reason + (string.IsNullOrEmpty(s.Memo) ? "" : " · " + s.Memo)));
+                    break;
+                case "Properties":
+                    if (v.Properties.Count == 0) body.Add(Text("You don't own any property yet.", "g-note"));
+                    else
+                    {
+                        body.Add(Text("Equity", "g-note"));
+                        body.Add(Text(new Money(v.PropertyValueCents - v.PropertyOwedCents).ToString(), "g-big-number"));
+                        body.Add(Text("Net " + new Money(v.PropertyMonthlyNetCents) + "/month", "g-note"));
+                    }
+                    foreach (var p in v.Properties)
+                    {
+                        var item = Item(p.Address + (p.ForSale ? "  (listed)" : ""), p.Kind + (p.District.Length > 0 ? " · " + p.District : "") + "\nWorth " + new Money(p.ValueCents) +
+                            " · mortgage " + new Money(p.OwedCents) + "\nOccupied " + p.Occupied + "/" + p.Units + " · rent " + new Money(p.RentCents) + " · net " + new Money(p.NetCents) + "/month", p.Alerts.Count > 0);
+                        foreach (var alert in p.Alerts) item.Add(Text("▲ " + alert, "g-list-alert"));
+                        body.Add(item);
+                    }
+                    break;
+                case "Inventory":
+                    if (v.Inventory.Count == 0) body.Add(Text("Your pockets are empty.", "g-note"));
+                    foreach (var i in v.Inventory)
+                        body.Add(Item((i.Quantity > 1 ? i.Quantity + " × " : "") + i.Name, new Money(i.TotalValueCents) + (i.Stolen ? " · stolen" : "") + (i.Illegal ? " · illegal" : ""), i.Stolen || i.Illegal));
+                    break;
+            }
         }
 
         private static VisualElement Item(string title, string text, bool highlight = false)

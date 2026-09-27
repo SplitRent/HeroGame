@@ -635,6 +635,34 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void PlayerView_ArrivesOnJoin_FollowsTheServer_AndOnlyTheirOwn()
+        {
+            var a = Join("acc-view-a", "Uma");
+            var b = Join("acc-view-b", "Vic");
+            Until(() => a.Me != null && b.Me != null);
+            var ca = _server.Players.Single(p => p.AccountId == "acc-view-a");
+            var cash = a.Me.CashCents;
+
+            Assert.IsTrue(_world.AdminGrant(ca.Character.CheckingAccount, Money.FromDollars(1234), "admin", "test").Success);
+            _world.Phone.Send(ca.Character, EntityId.None, "Landlord", Core.Phone.MessageCategory.Personal, "Rent is due Friday.");
+            Until(() => a.Me.CashCents == cash + 123400 && a.Me.Unread > 0, 4000);
+            Assert.IsTrue(a.Me.Messages.Any(m => m.Body == "Rent is due Friday." && !m.Read));
+            Assert.IsFalse(b.Me.Messages.Any(m => m.Body == "Rent is due Friday."), "nobody else sees it");
+
+            Assert.IsTrue(Call(a, "phone.read").Success);
+            Until(() => a.Me.Unread == 0, 4000);
+
+            ca.Character.Inventory.Add(new InventoryStack { ItemId = "laptop", Quantity = 2 });
+            Until(() => a.Me.Inventory.Any(i => i.Name == "Laptop computer" && i.Quantity == 2), 4000);
+
+            // An unchanged view is not resent.
+            var sent = ca.MessagesSent;
+            _server.SendPlayerViews();
+            _server.SendPlayerViews();
+            Assert.LessOrEqual(ca.MessagesSent - sent, 0);
+        }
+
+        [Test]
         public void AdminCommands_RequireWorldAdmin_AndAreAudited()
         {
             _server.Admin = new AdminCommands(_world, new WorldSimulation(_world));

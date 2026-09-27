@@ -47,6 +47,10 @@ namespace HeroGame.Networking.Client
         /// <summary>Raised after a world delta has been applied to <see cref="World"/>.</summary>
         public event Action<WorldDelta> WorldDeltaReceived;
 
+        /// <summary>The player's own state from the server (cash, messages, property…); null until the first view arrives.</summary>
+        public PlayerViewData Me { get; private set; }
+        public event Action<PlayerViewData> PlayerViewReceived;
+
         /// <summary>Shared world state replicated from the server (props, fires, ownership, buildings).</summary>
         public ReplicatedWorld World { get; } = new ReplicatedWorld();
 
@@ -156,6 +160,14 @@ namespace HeroGame.Networking.Client
                         break;
                     case LayoutData layout:
                         World.Apply(layout);
+                        break;
+                    case PlayerViewMessage view:
+                        try
+                        {
+                            Me = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayerViewData>(view.Json) ?? Me;
+                            PlayerViewReceived?.Invoke(Me);
+                        }
+                        catch (Newtonsoft.Json.JsonException) { /* keep the last good view */ }
                         break;
                 }
             }

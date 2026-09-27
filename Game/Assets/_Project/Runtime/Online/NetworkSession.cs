@@ -41,6 +41,9 @@ namespace HeroGame.Runtime.Online
         public static HeroGame.Networking.Client.ReplicatedWorld Replica =>
             Current != null && Current._client != null && Current._client.State == ClientState.Connected && Current._client.World.Ready ? Current._client.World : null;
 
+        /// <summary>The player's own state from the server while connected (cash, messages, property…), or null offline.</summary>
+        public static PlayerViewData Me => Replica != null ? Current._client.Me : null;
+
         /// <summary>Asks the server for a rebuilt building's layout once; it arrives through <see cref="Replica"/>.</summary>
         public void FetchLayout(EntityId property)
         {

@@ -39,6 +39,8 @@ namespace HeroGame.Networking.Server
         public int SnapshotMaxPlayers = 32;
         /// <summary>How often world changes (props, fires, ownership, buildings) are diffed and sent.</summary>
         public int WorldDeltaIntervalMs = 500;
+        /// <summary>How often each player's own view (cash, messages, property…) is rebuilt and sent if it changed.</summary>
+        public int PlayerViewIntervalMs = 1000;
         public float LocalChatRadius = 60f;
         public WorldPosition Spawn;
         /// <summary>When set, every connection is TLS 1.2+ with this certificate (it must carry its private key).</summary>
@@ -99,6 +101,8 @@ namespace HeroGame.Networking.Server
         public bool MaskOn;
         /// <summary>Has the full world state; from then on it receives world deltas.</summary>
         public bool HasWorld;
+        /// <summary>The last player view sent (JSON), so unchanged views are not resent.</summary>
+        public string LastView = "";
         public volatile bool Closed;
         public string CloseReason = "";
         private long _bytesSent;
@@ -242,12 +246,18 @@ namespace HeroGame.Networking.Server
             StandardRequests.Register(Router);
             Replicator = new WorldReplicator(world);
             Router.Register("property.layout", SendLayout);
+            Router.Register("phone.read", ctx =>
+            {
+                foreach (var m in ctx.Me.Inbox) if (!m.Read) ctx.World.Phone.MarkRead(ctx.Me, m.Id);
+                return RequestContext.Ok();
+            });
             _world.Phone.MessageReceived += OnPhoneMessage;
         }
 
         public World World => _world;
         public WorldReplicator Replicator { get; }
         private long _lastWorldDeltaMs = long.MinValue / 2;
+        private long _lastPlayerViewMs = long.MinValue / 2;
         public ModerationService Moderation => _moderation;
         /// <summary>World admin commands, when the host provides them (dedicated server); null disables admin.cmd.</summary>
         public AdminCommands Admin { get; set; }
@@ -455,6 +465,7 @@ namespace HeroGame.Networking.Server
             BroadcastWorldChanges();
             foreach (var part in Replicator.FullState()) c.Send(part);
             c.HasWorld = true;
+            SendPlayerView(c);
             Log?.Invoke(ticket.DisplayName + " (" + ticket.AccountId + ") joined from " + c.RemoteAddress);
             PlayerJoined?.Invoke(c);
         }
@@ -577,6 +588,22 @@ namespace HeroGame.Networking.Server
                     foreach (var part in parts) c.Send(part);
         }
 
+        /// <summary>Sends every player their own view if it changed since the last one.</summary>
+        public void SendPlayerViews()
+        {
+            _lastPlayerViewMs = NowMs;
+            foreach (var c in Players) if (c.HasWorld) SendPlayerView(c);
+        }
+
+        private void SendPlayerView(ServerConnection c)
+        {
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(PlayerViewData.Build(_world, c.Character));
+            if (json == c.LastView) return;
+            if (System.Text.Encoding.UTF8.GetByteCount(json) > Wire.MaxLongStringBytes) return; // capped lists keep it far below this
+            c.LastView = json;
+            c.Send(new PlayerViewMessage { Json = json });
+        }
+
         /// <summary>property.layout: sends the building's current layout as a LayoutData message.</summary>
         private Response SendLayout(RequestContext ctx)
         {
@@ -596,6 +623,7 @@ namespace HeroGame.Networking.Server
         public void BroadcastSnapshots()
         {
             if (NowMs - _lastWorldDeltaMs >= _o.WorldDeltaIntervalMs) BroadcastWorldChanges();
+            if (NowMs - _lastPlayerViewMs >= _o.PlayerViewIntervalMs) SendPlayerViews();
             var players = Players;
             var n = players.Count;
             var weather = _world.Weather.State.Current;

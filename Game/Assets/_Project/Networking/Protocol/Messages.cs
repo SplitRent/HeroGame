@@ -14,6 +14,7 @@ namespace HeroGame.Networking.Protocol
         Snapshot = 11,
         WorldDelta = 12,
         LayoutData = 13,
+        PlayerView = 14,
         Request = 20,
         Response = 21,
         ChatSend = 30,
@@ -41,6 +42,7 @@ namespace HeroGame.Networking.Protocol
                 case MessageType.Snapshot: return new Snapshot();
                 case MessageType.WorldDelta: return new WorldDelta();
                 case MessageType.LayoutData: return new LayoutData();
+                case MessageType.PlayerView: return new PlayerViewMessage();
                 case MessageType.Request: return new Request();
                 case MessageType.Response: return new Response();
                 case MessageType.ChatSend: return new ChatSend();
