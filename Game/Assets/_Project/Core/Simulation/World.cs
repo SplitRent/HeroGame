@@ -151,6 +151,8 @@ namespace HeroGame.Core.Simulation
         /// <summary>Emergency incidents and unit assignments (persisted in the emergency chunk).</summary>
         public EmergencyState Emergency = new EmergencyState();
         public readonly EmergencyDispatch Dispatch;
+        /// <summary>Executes power uses against the world (effects, collateral, witnesses, crimes).</summary>
+        public readonly PowerService PowerUse;
         /// <summary>Bumped when the set of NPC-hireable workplaces changes (player takes over staffing, etc.).</summary>
         public int WorkplaceVersion;
 
@@ -206,6 +208,7 @@ namespace HeroGame.Core.Simulation
             Crimes = new CrimeService(this);
             Courts = new JusticeService(this);
             Dispatch = new EmergencyDispatch(this);
+            PowerUse = new PowerService(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);

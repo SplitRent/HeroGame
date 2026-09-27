@@ -115,6 +115,10 @@ namespace HeroGame.Core.Config
         /// <summary>Multiplier on second/third power chance. Hard capped by the validator.</summary>
         public float MultiplePowerMultiplier = 1f;
         public int MaxPowersPerCharacter = 3;
+        /// <summary>Ceiling on effective power output (1.5 = uncapped; lower for grounded servers).</summary>
+        public float OutputCap = 1.5f;
+        /// <summary>Whether powers can damage buildings and vehicles.</summary>
+        public bool CollateralDamage = true;
     }
 
     [Serializable]

@@ -11,6 +11,7 @@ using HeroGame.Runtime.DevTools;
 using HeroGame.Runtime.Interaction;
 using HeroGame.Runtime.Player;
 using HeroGame.Runtime.Population;
+using HeroGame.Runtime.Powers;
 using HeroGame.Runtime.Presentation;
 using HeroGame.Runtime.UI;
 using HeroGame.Runtime.Vehicles;
@@ -111,6 +112,8 @@ namespace HeroGame.Editor
             fires.Observer = player.transform;
             fires.FirePrefab = BuildFirePrefab();
             player.AddComponent<PlayerVitals>();
+            var powers = player.AddComponent<PowerController>();
+            powers.ImpactVfx = BuildImpactPrefab();
 
             var traffic = new GameObject("Traffic").AddComponent<TrafficPresenter>();
             traffic.Observer = player.transform;
@@ -528,6 +531,29 @@ namespace HeroGame.Editor
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, path);
             Object.DestroyImmediate(root);
             return prefab;
+        }
+
+        private static ParticleSystem BuildImpactPrefab()
+        {
+            var go = new GameObject("Power Impact (placeholder)");
+            var ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.duration = 0.4f;
+            main.loop = false;
+            main.startLifetime = 0.6f;
+            main.startSpeed = 8f;
+            main.startSize = 0.35f;
+            main.maxParticles = 200;
+            var emission = ps.emission;
+            emission.rateOverTime = 0f;
+            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 120) });
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Sphere;
+            shape.radius = 0.3f;
+            var path = GeneratedFolder + "/PowerImpact_Placeholder.prefab";
+            var prefab = PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+            return prefab.GetComponent<ParticleSystem>();
         }
 
         private static ParticleSystem BuildFirePrefab()

@@ -45,6 +45,13 @@ namespace HeroGame.Runtime.Player
 
         public IPlayerInputSource Input { get; set; }
 
+        /// <summary>Temporary multipliers from abilities (speed boost, low gravity/flight). 1 = normal.</summary>
+        public float SpeedMultiplier { get; set; } = 1f;
+        public float GravityMultiplier { get; set; } = 1f;
+        /// <summary>While flying, jump rises and crouch descends instead of falling.</summary>
+        public bool Flying { get; set; }
+        public float FlightClimbSpeed = 8f;
+
         private CharacterController _controller;
         private float _verticalVelocity;
         private float _lastGroundedTime = -10f;
@@ -89,7 +96,7 @@ namespace HeroGame.Runtime.Player
 
             IsCrouching = input.CrouchHeld && IsGrounded;
             IsSprinting = input.Sprint && !IsCrouching && move.sqrMagnitude > 0.25f && Stamina > 0.05f;
-            var targetSpeed = IsCrouching ? CrouchSpeed : input.Walk ? WalkSpeed : IsSprinting ? SprintSpeed : JogSpeed;
+            var targetSpeed = (IsCrouching ? CrouchSpeed : input.Walk ? WalkSpeed : IsSprinting ? SprintSpeed : JogSpeed) * Mathf.Max(0.1f, SpeedMultiplier);
 
             Stamina = IsSprinting ? Mathf.Max(0f, Stamina - dt) : Mathf.Min(MaxStamina, Stamina + StaminaRecovery * dt);
 
@@ -111,7 +118,10 @@ namespace HeroGame.Runtime.Player
             {
                 _verticalVelocity = -2f; // keep snapped to slopes and steps
             }
-            _verticalVelocity = Mathf.Max(TerminalVelocity, _verticalVelocity + Gravity * dt);
+            if (Flying)
+                _verticalVelocity = input.JumpHeld ? FlightClimbSpeed : input.CrouchHeld ? -FlightClimbSpeed : Mathf.MoveTowards(_verticalVelocity, 0f, 20f * dt);
+            else
+                _verticalVelocity = Mathf.Max(TerminalVelocity, _verticalVelocity + Gravity * GravityMultiplier * dt);
 
             Velocity = new Vector3(horizontal.x, _verticalVelocity, horizontal.z);
             _controller.Move(Velocity * dt);
@@ -128,6 +138,14 @@ namespace HeroGame.Runtime.Player
         }
 
         public bool JumpedThisFrame => _jumpedThisFrame;
+
+        /// <summary>Adds an instantaneous velocity change (super-jump, knockback).</summary>
+        public void Launch(Vector3 velocityChange)
+        {
+            _verticalVelocity += velocityChange.y;
+            Velocity += new Vector3(velocityChange.x, 0f, velocityChange.z);
+            _lastGroundedTime = -10f;
+        }
 
         /// <summary>Teleport safely (respawn, debug, cutscenes).</summary>
         public void Warp(Vector3 position, Quaternion rotation)

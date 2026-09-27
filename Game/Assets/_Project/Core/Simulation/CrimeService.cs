@@ -401,6 +401,14 @@ namespace HeroGame.Core.Simulation
             return result;
         }
 
+        /// <summary>
+        /// Files a crime committed by other means (powers, vehicles) with the given witnesses: evidence, report,
+        /// police call and witness memories follow exactly as for the actions above.
+        /// </summary>
+        public CrimeResult CommitWitnessed(ServerCharacter c, string crimeId, WorldPosition where, EntityId victim, List<Observer> observers,
+            ConcealmentState concealment, NpcRecord victimNpc = null) =>
+            Resolve(c, crimeId, DistrictAt(where), where, victim, observers, concealment, Rng(c, crimeId), detect: 0.0, victimNpc: victimNpc);
+
         // ------------------------------------------------------------------ internals
 
         private bool Blocked(ServerCharacter c, out string why)
@@ -420,7 +428,7 @@ namespace HeroGame.Core.Simulation
         private DeterministicRandom Rng(ServerCharacter c, string crime) =>
             DeterministicRandom.For(_w.Seed, c.CharacterId.Value, (ulong)_w.Clock.Now.TotalSeconds, StableHash.Of(crime) ^ (ulong)_w.Justice.Incidents.Count);
 
-        private EntityId DistrictAt(WorldPosition p)
+        public EntityId DistrictAt(WorldPosition p)
         {
             District best = null;
             var bestD = float.MaxValue;

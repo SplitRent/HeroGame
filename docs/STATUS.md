@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phases 9–10 (networking, servers, accounts)._
+_Last updated: Phases 11–14 (power execution)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -45,6 +45,12 @@ _Last updated: Phases 9–10 (networking, servers, accounts)._
 | Multiple powers rarity | TESTED | `MultiplePowers_AreExtraordinarilyRare` |
 | Power discovery & progression | TESTED | `Discovery_ProgressesFromLatentThroughPractice` |
 | Power interaction rules | TESTED | `Interactions_AreDataDriven` |
+| Power effects from composition (strike, blast, movement, teleport, shield, heal, telekinesis, sense, disguise, time) | TESTED | `EffectPlanner_DerivesEffectsFromComposition` |
+| Power execution: stage, cooldown, custody, range, server switches/caps, environment needs | TESTED | `Use_RespectsStage_*`, `EnvironmentRequirements_Apply` |
+| Power consequences: damage, collateral, fire, EMS, crimes, energy signatures | TESTED | `Firebolt_*`, `Strike_OnAPerson_*` |
+| Shields, healing, teleport, stamina/strain recovery | TESTED | `Shield_*`, `Teleport_*`, `StaminaAndStrain_*` |
+| Public use → identity clues, notoriety, news; costumes protect | TESTED | `PublicUse_OutOfCostume_*` |
+| Powers over the network (server-authoritative origin, teleport correction) | TESTED | `PowerUse_OverTheWire_*` |
 | Server history & news | FUNCTIONAL | `News_IsBuiltFromRealHistory` |
 | Server browser filtering | TESTED | `Browser_FiltersAndSorts` |
 | Moderation roles/permissions | TESTED | `Moderation_EnforcesRanksAndLogsActions` |
@@ -122,6 +128,7 @@ _Last updated: Phases 9–10 (networking, servers, accounts)._
 | Business office panel, bank/insurance phone apps | IN DEVELOPMENT | compiles; IMGUI placeholders |
 | Crime interactables (shelves, register, break-in, fence, chop shop), police desk, custody | IN DEVELOPMENT | compiles; greybox builder places them |
 | Emergency unit & fire presentation, player vitals (fall damage, downed → hospital) | IN DEVELOPMENT | compiles |
+| Power controller (select/charge/aim, motion effects, knockback, VFX placeholder) | IN DEVELOPMENT | compiles |
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 

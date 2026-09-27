@@ -72,6 +72,7 @@ namespace HeroGame.Core.Config
             // Multiple powers must stay an extraordinary anomaly (GDD §45) regardless of server settings.
             p.MultiplePowerMultiplier = Clamp(report, "Powers.MultiplePowerMultiplier", p.MultiplePowerMultiplier, 0f, MaxMultiplePowerMultiplier);
             p.MaxPowersPerCharacter = ClampInt(report, "Powers.MaxPowersPerCharacter", p.MaxPowersPerCharacter, 1, 3);
+            p.OutputCap = Clamp(report, "Powers.OutputCap", p.OutputCap, 0.2f, 1.5f);
 
             return report;
         }

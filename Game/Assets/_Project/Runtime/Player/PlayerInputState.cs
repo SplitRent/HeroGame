@@ -34,6 +34,10 @@ namespace HeroGame.Runtime.Player
         public bool NextToolPressed;
         /// <summary>Confirm (Enter / gamepad A in build mode).</summary>
         public bool ConfirmPressed;
+        /// <summary>Power slot chosen this frame, 1-based (1–4 keys / D-pad); 0 when none.</summary>
+        public int PowerSlotPressed;
+        /// <summary>Held to charge the selected power (Q / gamepad right bumper+trigger); release fires.</summary>
+        public bool PowerHeld;
     }
 
     /// <summary>Source of player intent. Implemented by the Input System adapter, AI test drivers and replay.</summary>

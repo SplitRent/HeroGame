@@ -31,6 +31,8 @@ namespace HeroGame.Runtime.Input
         private readonly InputAction _rotate;
         private readonly InputAction _nextTool;
         private readonly InputAction _confirm;
+        private readonly InputAction _power;
+        private readonly InputAction[] _powerSlots = new InputAction[4];
 
         public bool GameplayEnabled { get; set; } = true;
 
@@ -88,8 +90,18 @@ namespace HeroGame.Runtime.Input
             _nextTool.AddBinding("<Gamepad>/rightShoulder");
             _confirm = new InputAction("Confirm", InputActionType.Button, "<Keyboard>/enter");
 
+            _power = new InputAction("Power", InputActionType.Button, "<Keyboard>/q");
+            _power.AddBinding("<Gamepad>/rightTrigger");
+            for (var i = 0; i < 4; i++)
+            {
+                _powerSlots[i] = new InputAction("PowerSlot" + (i + 1), InputActionType.Button, "<Keyboard>/" + (i + 1));
+                _powerSlots[i].Enable();
+            }
+            _powerSlots[0].AddBinding("<Gamepad>/dpad/left");
+            _powerSlots[1].AddBinding("<Gamepad>/dpad/right");
+
             foreach (var a in new[] { _move, _look, _zoom, _sprint, _walk, _jump, _interact, _crouch, _console, _inspector, _pause, _enterExit, _horn, _phone,
-                         _build, _pointer, _primary, _secondary, _rotate, _nextTool, _confirm }) a.Enable();
+                         _build, _pointer, _primary, _secondary, _rotate, _nextTool, _confirm, _power }) a.Enable();
         }
 
         public PlayerInputState Read()
@@ -118,7 +130,15 @@ namespace HeroGame.Runtime.Input
                 RotatePressed = _rotate.WasPressedThisFrame(),
                 NextToolPressed = _nextTool.WasPressedThisFrame(),
                 ConfirmPressed = _confirm.WasPressedThisFrame(),
+                PowerHeld = _power.IsPressed(),
+                PowerSlotPressed = SlotPressed(),
             };
+        }
+
+        private int SlotPressed()
+        {
+            for (var i = 0; i < _powerSlots.Length; i++) if (_powerSlots[i].WasPressedThisFrame()) return i + 1;
+            return 0;
         }
     }
 }

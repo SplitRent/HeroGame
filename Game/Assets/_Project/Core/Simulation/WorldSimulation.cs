@@ -91,6 +91,7 @@ namespace HeroGame.Core.Simulation
             CheckPendingAnomaly(t);
             _world.Wanted.Tick(t, null);
             _world.Dispatch.AdvanceTo(t);
+            _world.PowerUse.Recover();
             var storm = _world.Weather.State.ActiveSystem;
             if (storm != null && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane)
             {

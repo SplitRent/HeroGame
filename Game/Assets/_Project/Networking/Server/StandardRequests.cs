@@ -99,6 +99,8 @@ namespace HeroGame.Networking.Server
             r.Register("crime.pickpocket", ctx => Crime(ctx, "npc"));
             r.Register("crime.fence", ctx => RequestContext.From(ctx.World.Crimes.SellToFence(ctx.Me, ctx.Key)));
 
+            r.Register("power.use", UsePower);
+
             r.Register("justice.bail", ctx => RequestContext.From(ctx.World.Courts.PostBail(ctx.Me, ctx.Key)));
             r.Register("justice.fines", ctx => RequestContext.From(ctx.World.Courts.PayFines(ctx.Me, new Money(ctx.Long("amount", 1)), ctx.Key)));
             r.Register("justice.attorney", ctx => RequestContext.From(ctx.World.Courts.HireAttorney(ctx.Me, ctx.Key)));
@@ -132,6 +134,46 @@ namespace HeroGame.Networking.Server
             var wanted = ctx.World.Wanted.Get(me.CharacterId);
             data["wanted"] = (wanted != null ? wanted.Level : 0).ToString(CultureInfo.InvariantCulture);
             return RequestContext.Ok(data);
+        }
+
+        /// <summary>
+        /// Power use. The origin is always the server's authoritative position (a client cannot fire from somewhere
+        /// else); a successful teleport moves that position and tells the client via the next snapshot.
+        /// </summary>
+        private static Response UsePower(RequestContext ctx)
+        {
+            if (!Enum.TryParse(ctx.OptStr("target", "None"), out Core.Powers.TargetKind target)) return RequestContext.Fail("Bad target.");
+            var request = new PowerUseRequest
+            {
+                PowerIndex = (int)ctx.Long("power", 0, 8),
+                Intensity = ctx.Float("intensity", 0f, 1f),
+                Target = target,
+                TargetId = ctx.Request.Args.ContainsKey("id") ? ctx.Id("id") : EntityId.None,
+                Origin = ctx.Connection.Position,
+                Point = ctx.Request.Args.ContainsKey("x")
+                    ? new WorldPosition(ctx.Float("x", -20000f, 20000f), ctx.Connection.Position.Y, ctx.Float("z", -20000f, 20000f))
+                    : ctx.Connection.Position,
+            };
+            var outcome = ctx.World.PowerUse.Use(ctx.Me, request);
+            if (!outcome.Attempted) return RequestContext.Fail(outcome.Message);
+            if (outcome.Teleported)
+            {
+                ctx.Connection.Position = outcome.TeleportTo;
+                ctx.Connection.PendingCorrection = true;
+            }
+            return RequestContext.Ok(new Dictionary<string, string>
+            {
+                ["success"] = outcome.Use.Success ? "true" : "false",
+                ["backfire"] = outcome.Use.Backfire ? "true" : "false",
+                ["effect"] = outcome.Plan.Kind.ToString(),
+                ["output"] = outcome.Use.Output.ToString("0.###", CultureInfo.InvariantCulture),
+                ["affected"] = outcome.Affected.ToString(CultureInfo.InvariantCulture),
+                ["witnesses"] = outcome.Witnesses.ToString(CultureInfo.InvariantCulture),
+                ["amount"] = outcome.Plan.Amount.ToString("0.###", CultureInfo.InvariantCulture),
+                ["duration"] = outcome.Plan.Duration.ToString("0.###", CultureInfo.InvariantCulture),
+                ["impulse"] = outcome.Plan.Impulse.ToString("0", CultureInfo.InvariantCulture),
+                ["message"] = outcome.Message.Length > 400 ? outcome.Message.Substring(0, 400) : outcome.Message,
+            });
         }
 
         private static Response WithBusiness(RequestContext ctx, Func<Core.Business.BusinessRecord, OpResult> action)

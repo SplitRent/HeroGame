@@ -289,6 +289,38 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void PowerUse_OverTheWire_FiresFromTheServersPosition_AndTeleportsMoveIt()
+        {
+            var a = Join("acc-pw", "Blink");
+            var me = _world.Characters[a.Welcome.CharacterId];
+            var blink = new Core.Powers.PowerInstance { Stage = Core.Powers.PowerStage.Mastered, Progress = new Core.Powers.PowerProgress { Experience = 700f, PrecisionBonus = 0.4f } };
+            blink.Definition.Components.Add(new Core.Powers.PowerComponent { Domain = Core.Powers.PowerDomain.Space, Verb = Core.Powers.EffectVerb.Traverse, Range = 60f, Magnitude = 0.8f, Precision = 0.9f, Efficiency = 0.8f });
+            me.Powers.Powers.Add(blink);
+            var conn = _server.Players.Single();
+            var start = conn.Position;
+            Response r = null;
+            for (var i = 0; i < 20; i++)
+            {
+                me.Powers.Stamina = 1f;
+                me.Powers.Strain = 0f;
+                blink.CooldownUntilSecond = 0;
+                _world.Clock.AdvanceGame(60);
+                r = Call(a, "power.use", new Dictionary<string, string>
+                {
+                    ["power"] = "0", ["intensity"] = "1", ["target"] = "Point",
+                    ["x"] = (start.X + 25f).ToString(System.Globalization.CultureInfo.InvariantCulture), ["z"] = start.Z.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                });
+                Assert.IsTrue(r.Success, r.Error);
+                if (r.Data["success"] == "true") break;
+            }
+            Assert.AreEqual("Teleport", r.Data["effect"]);
+            Assert.AreEqual(start.X + 25f, conn.Position.X, 0.01f, "server-side position moved");
+            Until(() => a.LastSnapshot != null && a.LastSnapshot.Corrected && System.Math.Abs(a.LastSnapshot.YourPosition.X - (start.X + 25f)) < 0.1f);
+            Assert.IsFalse(Call(a, "power.use", new Dictionary<string, string> { ["power"] = "5", ["intensity"] = "1" }).Success, "no such power");
+            Assert.IsFalse(Call(a, "power.use", new Dictionary<string, string> { ["power"] = "0", ["intensity"] = "7" }).Success, "intensity is bounded");
+        }
+
+        [Test]
         public void BuildOps_SurviveTheWireEncoding()
         {
             var op = new Core.Building.BuildOp { Kind = Core.Building.BuildOpKind.AddRoom, RoomType = Core.Building.RoomType.Bar, Floor = 1, Polygon = { 2, 2, 27.25f, 2, 27.25f, 47, 2, 47 } };

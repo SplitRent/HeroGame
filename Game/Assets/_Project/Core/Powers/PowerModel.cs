@@ -207,6 +207,17 @@ namespace HeroGame.Core.Powers
         /// <summary>Name the player gave it (empty until they do).</summary>
         public string PlayerLabel = "";
         public EntityId SourceEvent;
+        /// <summary>Game second before which the power cannot be used again.</summary>
+        public long CooldownUntilSecond;
+    }
+
+    /// <summary>A timed effect on the user (speed, flight, shield, disguise, time dilation).</summary>
+    [Serializable]
+    public sealed class ActivePowerEffect
+    {
+        public EffectKind Kind;
+        public float Amount;
+        public long UntilSecond;
     }
 
     /// <summary>Everything supernatural about one character on one server.</summary>
@@ -219,6 +230,15 @@ namespace HeroGame.Core.Powers
         public float Strain;
         /// <summary>0..1 stamina pool shared across abilities.</summary>
         public float Stamina = 1f;
+        public List<ActivePowerEffect> Active = new List<ActivePowerEffect>();
+        /// <summary>Last day a public display made the news (one story per day per person).</summary>
+        public long LastNewsDay = -1;
+
+        public ActivePowerEffect ActiveOf(EffectKind kind, long nowSecond)
+        {
+            foreach (var e in Active) if (e.Kind == kind && e.UntilSecond > nowSecond) return e;
+            return null;
+        }
 
         public bool IsPowered
         {

@@ -16,6 +16,7 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Police desk / court UI | IMGUI `JusticePanel` | Runtime/UI | UI Toolkit screens (Phase 24) | PLACEHOLDER |
 | Police car / fire engine / ambulance | tinted boxes with a point-light bar (`*_Greybox.prefab`) | Generated/ | modelled service vehicles with livery, sirens | PLACEHOLDER |
 | Fire | single orange particle system | `Fire_Placeholder.prefab` | layered fire/smoke VFX Graph | PLACEHOLDER |
+| Power effects | one burst particle system tinted per element | `PowerImpact_Placeholder.prefab` | per-archetype VFX Graph effects, audio, animation | PLACEHOLDER |
 | Crime interaction points, fence & chop-shop contacts, holding cell | invisible trigger boxes placed by `GreyboxWorldBuilder` | Runtime/Crime | authored interiors, NPC fence characters, animations | PLACEHOLDER |
 | Dev console / inspector | IMGUI | dev builds only | stays IMGUI (developer-only) | OK (not shipped) |
 | Main menu backdrop | flat colour | MainMenu.uss | live city flythrough / key art | PLACEHOLDER |
