@@ -199,8 +199,8 @@ namespace HeroGame.WorldHost
 
         private static void WithWorld(Options o, Action<World, WorldSaveSystem, FileTransactionJournal> action, bool save = true)
         {
-            var content = LoadContent(o);
             var saves = new WorldSaveSystem(o.Require("save"));
+            var content = LoadContent(o, saves);
             if (!saves.Exists) throw new InvalidOperationException("No world at " + o.Require("save") + ". Create one with 'new'.");
             using (var journal = saves.OpenJournal())
             {
@@ -220,9 +220,11 @@ namespace HeroGame.WorldHost
                               (result.Bytes / 1024) + " KiB, " + result.Milliseconds.ToString("0") + " ms");
         }
 
-        private static ContentSet LoadContent(Options o)
+        private static ContentSet LoadContent(Options o, WorldSaveSystem saves = null)
         {
-            var content = ContentLoader.Load(o.DataDir, o.Get("layout", ContentLoader.DefaultLayout));
+            // An existing world reopens on the layout it was generated from unless one is named explicitly.
+            var layout = o.Get("layout", saves?.RecordedLayoutFile() ?? ContentLoader.DefaultLayout);
+            var content = ContentLoader.Load(o.DataDir, layout);
             var report = ContentLoader.Validate(content);
             foreach (var m in report.Messages) Console.WriteLine("content: " + m);
             if (report.HasErrors) throw new InvalidDataException("Content validation failed.");
@@ -253,10 +255,11 @@ namespace HeroGame.WorldHost
         {
             Console.WriteLine("herogame-world — headless world host");
             Console.WriteLine("  new     --save DIR [--data DIR] [--config FILE] [--layout FILE] [--server-id ID] [--force]");
+            Console.WriteLine("          layouts: layout_vertical_slice.json (default, 3 districts), layout_port_arden.json (full metro, ~50k residents)");
             Console.WriteLine("  run     --save DIR --days N");
             Console.WriteLine("  resume  --save DIR            simulate the real time that passed while offline");
             Console.WriteLine("  inspect --save DIR [status|economy|npc NAME|business|history|news|district]");
-            Console.WriteLine("  bench   [--layout layout_stress.json] [--days N]");
+            Console.WriteLine("  bench   [--layout layout_stress.json | layout_port_arden.json] [--days N]");
         }
     }
 

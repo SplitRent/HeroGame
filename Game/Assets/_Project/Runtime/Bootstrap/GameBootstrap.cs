@@ -23,6 +23,9 @@ namespace HeroGame.Runtime.Bootstrap
         public string ServerId = "local-dev";
         public string SaveSlot = "local-dev";
         public Transform PlayerSpawn;
+        [Tooltip("City layout for NEW worlds (StreamingAssets/Data). layout_vertical_slice.json is the 3-district slice; " +
+                 "layout_port_arden.json is the full 19-district metro. Existing saves always reopen on their own layout.")]
+        public string LayoutFile = ContentLoader.DefaultLayout;
         [Tooltip("Real seconds between autosaves.")]
         public float AutosaveSeconds = 300f;
 
@@ -47,13 +50,14 @@ namespace HeroGame.Runtime.Bootstrap
                 if (!string.IsNullOrEmpty(slot)) SaveSlot = slot;
             }
 
-            Content = ContentLoader.Load(GameSession.DataDirectory);
+            var folder = Mode == SessionMode.Story ? Path.Combine(GameSession.SaveRoot, "story", SaveSlot) : Path.Combine(GameSession.SaveRoot, "servers", SaveSlot);
+            var layout = new WorldSaveSystem(folder).RecordedLayoutFile() ?? (string.IsNullOrEmpty(LayoutFile) ? ContentLoader.DefaultLayout : LayoutFile);
+            Content = ContentLoader.Load(GameSession.DataDirectory, layout);
             var report = ContentLoader.Validate(Content);
             foreach (var m in report.Messages) Debug.LogWarning("[Content] " + m);
             if (report.HasErrors) throw new InvalidDataException("Content validation failed; see warnings above.");
 
             Account = LoadOrCreateAccount();
-            var folder = Mode == SessionMode.Story ? Path.Combine(GameSession.SaveRoot, "story", SaveSlot) : Path.Combine(GameSession.SaveRoot, "servers", SaveSlot);
             StoryDefinition story = null;
             Core.Time.GameDateTime? start = null;
             if (Mode == SessionMode.Story)

@@ -23,6 +23,8 @@ namespace HeroGame.Core.World
         public List<InteractionRule> InteractionRules = new List<InteractionRule>();
         public List<CrimeType> CrimeTypes = new List<CrimeType>();
         public WorldLayout Layout = new WorldLayout();
+        /// <summary>The layout file this content was loaded from (recorded in saves so a world reloads on its own map).</summary>
+        public string LayoutFile = "";
         public List<BarkLine> Barks = new List<BarkLine>();
         public List<VehicleModel> VehicleModels = new List<VehicleModel>();
         public List<VehicleMod> VehicleMods = new List<VehicleMod>();

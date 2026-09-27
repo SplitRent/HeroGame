@@ -26,6 +26,15 @@ namespace HeroGame.Persistence.Saves
         /// <summary>Last journal sequence folded into this snapshot (the journal is compacted only up to the previous one).</summary>
         public long JournalSequence;
         public Dictionary<string, long> ChunkGenerations = new Dictionary<string, long>();
+        /// <summary>Id and file of the city layout the world was generated from ("" in saves from before layouts were recorded).</summary>
+        public string LayoutId = "";
+        public string LayoutFile = "";
+    }
+
+    /// <summary>The save was made on a different city layout than the one supplied; nothing was loaded.</summary>
+    public sealed class LayoutMismatchException : System.IO.IOException
+    {
+        public LayoutMismatchException(string message) : base(message) { }
     }
 
     public sealed class MetaChunk

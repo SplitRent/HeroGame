@@ -78,6 +78,24 @@ namespace HeroGame.Persistence.Saves
 
         public FileTransactionJournal OpenJournal() => new FileTransactionJournal(JournalPath);
 
+        /// <summary>
+        /// The layout file the saved world was generated from, or null for a new world or an older save. Hosts use it so a
+        /// world always reopens on its own map without the operator repeating --layout.
+        /// </summary>
+        public string RecordedLayoutFile()
+        {
+            foreach (var file in new[] { ManifestFile, PreviousManifestFile })
+            {
+                try
+                {
+                    var m = ReadManifest(file);
+                    if (m != null) return string.IsNullOrEmpty(m.LayoutFile) ? null : m.LayoutFile;
+                }
+                catch (InvalidDataException) { }
+            }
+            return null;
+        }
+
         /// <summary>Saves synchronously: snapshot, write, commit. The world's dirty set is cleared only on success.</summary>
         public SaveResult Save(World world, bool full = false)
         {
@@ -168,6 +186,8 @@ namespace HeroGame.Persistence.Saves
                 SavedAtUnix = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
                 Generation = (previous?.Generation ?? 0) + 1,
                 ChunkGenerations = previous != null ? new Dictionary<string, long>(previous.ChunkGenerations) : new Dictionary<string, long>(),
+                LayoutId = world.Content.Layout.Id,
+                LayoutFile = world.Content.LayoutFile,
             };
             var result = new SaveResult { Generation = manifest.Generation };
 
@@ -278,6 +298,9 @@ namespace HeroGame.Persistence.Saves
             if (manifest.SchemaVersion > CurrentSchema)
                 throw new InvalidDataException("Save schema " + manifest.SchemaVersion + " is newer than this build supports (" + CurrentSchema + ").");
 
+            if (!string.IsNullOrEmpty(manifest.LayoutId) && manifest.LayoutId != content.Layout.Id)
+                throw new LayoutMismatchException("This world was built on the '" + manifest.LayoutId + "' city layout (" + manifest.LayoutFile + ") but '" + content.Layout.Id +
+                                               "' was loaded; open it with that layout.");
             var meta = ReadChunk<MetaChunk>(manifest, SaveChunks.Meta);
             var tx = ReadChunk<TransactionalChunk>(manifest, SaveChunks.Transactional);
             var ids = new IdAllocator { LastIssued = meta.IdsLastIssued };

@@ -267,6 +267,7 @@ namespace HeroGame.Persistence.Content
                 InteractionRules = Read<List<InteractionRule>>(dataDirectory, InteractionRules),
                 CrimeTypes = Read<List<CrimeType>>(dataDirectory, CrimeTypes),
                 Layout = Read<WorldLayout>(dataDirectory, layoutFile),
+                LayoutFile = layoutFile,
                 Barks = Read<List<Core.Social.BarkLine>>(dataDirectory, Barks),
                 VehicleModels = Read<List<Core.Vehicles.VehicleModel>>(dataDirectory, VehicleCatalog),
                 VehicleMods = Read<List<Core.Vehicles.VehicleMod>>(dataDirectory, VehicleMods),

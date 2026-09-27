@@ -50,6 +50,8 @@ jobs:
         run: Headless/HeroGame.Server/bin/Release/net8.0/herogame-server loadtest --clients 64 --seconds 15 --tls | tee loadtest.txt
       - name: Performance benchmark (10k NPC stress layout)
         run: Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world bench --days 7 | tee bench.txt
+      - name: Performance benchmark (full metro, ~50k NPCs)
+        run: Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world bench --layout layout_port_arden.json --days 7 | tee bench-metro.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -58,6 +60,7 @@ jobs:
             **/TestResults/*.trx
             bench.txt
             loadtest.txt
+            bench-metro.txt
 
   blender:
     name: Blender asset pipeline — tests and kit export
@@ -87,6 +90,8 @@ jobs:
         run: python3 Tools/Unity/unity_meta.py check
       - name: Every MonoBehaviour lives in a file of the same name (else scenes lose the component)
         run: python3 Tools/Unity/check_scripts.py
+      - name: The metro layout matches its generator
+        run: python3 Tools/World/generate_metro.py --check
       - name: Data files are valid JSON
         run: |
           for f in Game/Assets/StreamingAssets/Data/*.json; do python3 -m json.tool "$f" > /dev/null || { echo "invalid: $f"; exit 1; }; done

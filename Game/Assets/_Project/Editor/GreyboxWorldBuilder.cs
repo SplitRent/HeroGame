@@ -37,11 +37,20 @@ namespace HeroGame.Editor
         private static NpcAvatar _npcPrefab;
         private static Transform _policeStation;
 
+        public const string MetroScene = SceneFolder + "/PortArden_Metro_Greybox.unity";
+        public const string MetroLayout = "layout_port_arden.json";
+
         [MenuItem("HeroGame/Build Greybox Vertical Slice", priority = 1)]
-        public static void BuildGreybox()
+        public static void BuildGreybox() => Build(ContentLoader.DefaultLayout, GreyboxScene);
+
+        /// <summary>The whole 19-district metro (~7,500 places, ~50k residents). Heavy: expect a long build and a large scene.</summary>
+        [MenuItem("HeroGame/Build Greybox Full Metro (heavy)", priority = 2)]
+        public static void BuildMetroGreybox() => Build(MetroLayout, MetroScene);
+
+        private static void Build(string layoutFile, string scenePath)
         {
             var dataDir = Path.Combine(Application.streamingAssetsPath, "Data");
-            var content = ContentLoader.Load(dataDir);
+            var content = ContentLoader.Load(dataDir, layoutFile);
             Directory.CreateDirectory(SceneFolder);
             Directory.CreateDirectory(GeneratedFolder);
 
@@ -49,13 +58,15 @@ namespace HeroGame.Editor
             var materials = new MaterialLibrary();
 
             var root = new GameObject("World");
-            BuildGround(root.transform, materials);
+            BuildGround(root.transform, content.Layout, materials);
             BuildRoads(root.transform, content.Layout, materials);
             _npcPrefab = BuildNpcPrefab(materials);
             var places = BuildPlaces(root.transform, content.Layout, materials);
 
             var systems = new GameObject("Systems");
             var bootstrap = systems.AddComponent<GameBootstrap>();
+            bootstrap.LayoutFile = layoutFile;
+            if (layoutFile != ContentLoader.DefaultLayout) bootstrap.SaveSlot = bootstrap.ServerId = "local-metro"; // never reopen a slice save on the metro
             var spawn = new GameObject("PlayerSpawn").transform;
             spawn.position = new Vector3(-200f, 0.1f, 40f); // Tidewater Avenue, outside Lupe's Corner Market
             bootstrap.PlayerSpawn = spawn;
@@ -128,9 +139,9 @@ namespace HeroGame.Editor
             var streamer = systems.AddComponent<WorldStreamer>();
             streamer.Focus = player.transform;
 
-            EditorSceneManager.SaveScene(scene, GreyboxScene);
-            AddToBuildSettings(GreyboxScene);
-            Debug.Log("[Greybox] Built " + places + " places from layout '" + content.Layout.Id + "' → " + GreyboxScene);
+            EditorSceneManager.SaveScene(scene, scenePath);
+            AddToBuildSettings(scenePath);
+            Debug.Log("[Greybox] Built " + places + " places from layout '" + content.Layout.Id + "' → " + scenePath);
         }
 
         [MenuItem("HeroGame/Build Main Menu Scene", priority = 2)]
@@ -164,13 +175,22 @@ namespace HeroGame.Editor
             Debug.Log("[Greybox] Built " + MenuScene);
         }
 
-        private static void BuildGround(Transform parent, MaterialLibrary m)
+        private static void BuildGround(Transform parent, WorldLayout layout, MaterialLibrary m)
         {
+            // Cover every district with a margin (a Unity plane is 10 m per unit of scale).
+            float minX = -600f, maxX = 1000f, minZ = -900f, maxZ = 400f;
+            foreach (var d in layout.Districts)
+            {
+                minX = Mathf.Min(minX, d.CenterX - d.Radius - 200f);
+                maxX = Mathf.Max(maxX, d.CenterX + d.Radius + 200f);
+                minZ = Mathf.Min(minZ, d.CenterZ - d.Radius - 200f);
+                maxZ = Mathf.Max(maxZ, d.CenterZ + d.Radius + 200f);
+            }
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "Ground";
             ground.transform.SetParent(parent);
-            ground.transform.position = new Vector3(270f, 0f, -250f);
-            ground.transform.localScale = new Vector3(160f, 1f, 130f);
+            ground.transform.position = new Vector3((minX + maxX) / 2f, 0f, (minZ + maxZ) / 2f);
+            ground.transform.localScale = new Vector3((maxX - minX) / 10f, 1f, (maxZ - minZ) / 10f);
             ground.GetComponent<Renderer>().sharedMaterial = m.Get("ground", new Color(0.33f, 0.36f, 0.27f));
             GameObjectUtility.SetStaticEditorFlags(ground, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic);
 

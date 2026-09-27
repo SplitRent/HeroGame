@@ -45,7 +45,7 @@ namespace HeroGame.Server
             var o = Args(args);
             if (!o.ContainsKey("save"))
             {
-                Console.Error.WriteLine("usage: herogame-server --save DIR [--port N] [--name NAME] [--dev-secret B64 | --master URL --server-id ID --server-key B64]");
+                Console.Error.WriteLine("usage: herogame-server --save DIR [--layout layout_port_arden.json] [--port N] [--name NAME] [--dev-secret B64 | --master URL --server-id ID --server-key B64]");
                 return 2;
             }
             try
@@ -64,7 +64,10 @@ namespace HeroGame.Server
             var saveDir = o["save"];
             var dataDir = o.TryGetValue("data", out var d) ? d : Path.Combine(AppContext.BaseDirectory, "Data");
             if (!Directory.Exists(dataDir)) dataDir = FindDataDirectory();
-            var content = ContentLoader.Load(dataDir);
+            var saves = new WorldSaveSystem(saveDir);
+            // A new world uses --layout (default: the vertical slice); an existing one reopens on the layout it was built on.
+            var layout = o.TryGetValue("layout", out var lf) ? lf : saves.RecordedLayoutFile() ?? ContentLoader.DefaultLayout;
+            var content = ContentLoader.Load(dataDir, layout);
             var report = ContentLoader.Validate(content);
             if (report.HasErrors) throw new InvalidDataException("Content invalid: " + report);
 
@@ -79,7 +82,6 @@ namespace HeroGame.Server
             }
             else throw new ArgumentException("Provide --server-key (from the master) or --dev-secret (LAN/offline).");
 
-            var saves = new WorldSaveSystem(saveDir);
             var journal = saves.OpenJournal();
             World world;
             if (saves.Exists)
@@ -94,7 +96,7 @@ namespace HeroGame.Server
                 var config = ContentLoader.LoadServerConfig(Path.Combine(dataDir, ContentLoader.DefaultServerConfig));
                 world = WorldGenerator.Create(serverId, config, content, journal);
                 saves.Save(world, full: true);
-                Console.WriteLine("Created world " + serverId + " with " + world.Population.Count + " residents.");
+                Console.WriteLine("Created world " + serverId + " on " + content.Layout.DisplayName + " with " + world.Population.Count + " residents.");
             }
             var sim = new WorldSimulation(world);
             sim.Update(); // offline catch-up since the last save
