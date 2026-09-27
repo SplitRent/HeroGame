@@ -37,6 +37,8 @@ namespace HeroGame.Runtime.Player
             MaxDistance = Mathf.Max(MaxDistance, distance + 4f);
         }
 
+        private Camera _camera;
+
         private void Start()
         {
             if (Input == null) Input = PlayerInputRegistry.Create();
@@ -48,8 +50,12 @@ namespace HeroGame.Runtime.Player
         {
             if (Target == null) return;
             var input = Input != null && Input.GameplayEnabled ? Input.Read() : default;
-            _yaw += input.Look.x * Sensitivity;
-            _pitch = Mathf.Clamp(_pitch - input.Look.y * Sensitivity, MinPitch, MaxPitch);
+            var settings = UI.SettingsService.Current;
+            var sensitivity = Sensitivity * settings.MouseSensitivity;
+            _yaw += input.Look.x * sensitivity;
+            _pitch = Mathf.Clamp(_pitch - input.Look.y * sensitivity * (settings.InvertY ? -1f : 1f), MinPitch, MaxPitch);
+            if (_camera == null) _camera = GetComponent<Camera>();
+            if (_camera != null) _camera.fieldOfView = settings.FieldOfView;
             Distance = Mathf.Clamp(Distance - input.Zoom * 0.01f, MinDistance, MaxDistance);
 
             var rotation = Quaternion.Euler(_pitch, _yaw, 0f);

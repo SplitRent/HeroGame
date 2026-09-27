@@ -100,6 +100,7 @@ namespace HeroGame.Runtime.Story
             _shotTimer -= Time.unscaledDeltaTime;
             if (_shotTimer <= 0f || _frame.PausePressed)
             {
+                if (_frame.PausePressed) UiFocus.ConsumeEscape();
                 if (_shots.Count > 0) NextShot(cam);
                 else
                 {

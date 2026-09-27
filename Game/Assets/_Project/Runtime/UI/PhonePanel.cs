@@ -14,7 +14,7 @@ namespace HeroGame.Runtime.UI
     /// </summary>
     public sealed class PhonePanel : MonoBehaviour
     {
-        private enum Tab { Messages, Map, News, Radio, Ripple, Bank, Loans, Insurance, Businesses }
+        private enum Tab { Messages, Map, News, Radio, Ripple, Bank, Loans, Insurance, Businesses, Properties, Inventory }
 
         private IPlayerInputSource _input;
         private bool _open;
@@ -192,6 +192,45 @@ namespace HeroGame.Runtime.UI
                     GUILayout.Label("For sale");
                     foreach (var b in w.BusinessOps.ForSale())
                         if (GUILayout.Button(b.Name + " — " + w.BusinessOps.PriceOf(b).Total)) BusinessPanel.Open(b);
+                    break;
+                }
+                case Tab.Properties:
+                {
+                    var portfolio = Core.Presentation.PlayerViews.PortfolioOf(w, me);
+                    if (portfolio.Entries.Count == 0) GUILayout.Label("You don't own any property yet. Look for For Sale signs, or search the Map.");
+                    else
+                    {
+                        GUILayout.Label("Value " + portfolio.TotalValue + " · owed " + portfolio.TotalOwed + " · equity " + portfolio.NetWorthInProperty);
+                        GUILayout.Label("Monthly net " + portfolio.MonthlyNet + (portfolio.AlertCount > 0 ? " · " + portfolio.AlertCount + " need attention" : ""));
+                    }
+                    foreach (var e in portfolio.Entries)
+                    {
+                        GUILayout.BeginVertical(GUI.skin.box);
+                        GUILayout.Label(e.Address + " · " + e.Kind + (e.District.Length > 0 ? " · " + e.District : "") + (e.ForSale ? " · listed" : ""));
+                        GUILayout.Label("Worth " + e.MarketValue + " · mortgage " + e.MortgageOwed + " · condition " + Mathf.RoundToInt(e.Condition * 100f) + "%");
+                        GUILayout.Label("Occupied " + e.OccupiedUnits + "/" + e.Units + " · rent " + e.MonthlyRentIncome + "/mo · net " + e.MonthlyNet + "/mo" + (e.Insured ? " · insured" : ""));
+                        foreach (var alert in e.Alerts) GUILayout.Label("! " + alert);
+                        GUILayout.EndVertical();
+                    }
+                    break;
+                }
+                case Tab.Inventory:
+                {
+                    var lines = Core.Presentation.PlayerViews.InventoryOf(w.Content, me);
+                    if (lines.Count == 0) GUILayout.Label("Your pockets are empty.");
+                    var total = Money.Zero;
+                    var category = "";
+                    foreach (var l in lines)
+                    {
+                        if (l.Category != category)
+                        {
+                            category = l.Category;
+                            GUILayout.Label(category.ToUpperInvariant());
+                        }
+                        GUILayout.Label((l.Quantity > 1 ? l.Quantity + " × " : "") + l.Name + " · " + l.TotalValue + (l.Stolen ? " · stolen" : "") + (l.Illegal ? " · illegal" : ""));
+                        total += l.TotalValue;
+                    }
+                    if (lines.Count > 0) GUILayout.Label("Estimated value " + total + (lines.Exists(l => l.Confiscatable) ? " · police will seize stolen or illegal items on arrest" : ""));
                     break;
                 }
             }

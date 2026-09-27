@@ -87,7 +87,7 @@ namespace HeroGame.Runtime.Online
             _client.Connected += OnWelcome;
             _client.SnapshotReceived += OnSnapshot;
             _client.ChatReceived += m => SubtitleFeed.Say(m.FromName, m.Text, 5f);
-            _client.NoticeReceived += n => SubtitleFeed.Say(n.From, n.Text, 6f);
+            _client.NoticeReceived += n => ToastPresenter.Push(Core.Presentation.ToastKind.Info, n.From, n.Text);
             _client.Disconnected += reason => Status = "Disconnected: " + reason;
             Status = "Connecting…";
             var tls = string.IsNullOrEmpty(tlsFingerprint) ? null : new HeroGame.Networking.Security.ClientTls { PinnedFingerprint = tlsFingerprint };

@@ -107,6 +107,8 @@ namespace HeroGame.Editor
 
             var hud = systems.AddComponent<PrototypeHud>();
             systems.AddComponent<PhonePanel>();
+            systems.AddComponent<SettingsPanel>();
+            systems.AddComponent<ToastPresenter>();
             systems.AddComponent<RadioPresenter>();
             systems.AddComponent<Runtime.WorldProps.DestructiblePresenter>();
             systems.AddComponent<Runtime.Audio.AudioDirector>();

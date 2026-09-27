@@ -14,6 +14,13 @@ namespace HeroGame.Runtime.UI
 
         public static bool Active => _holders > 0;
 
+        private static int _escapeFrame = -1;
+
+        /// <summary>A panel used Esc this frame (closed itself, skipped a shot), so the pause menu must not also open.</summary>
+        public static void ConsumeEscape() => _escapeFrame = Time.frameCount;
+
+        public static bool EscapeConsumedThisFrame => _escapeFrame == Time.frameCount;
+
         public static void Acquire()
         {
             if (_holders++ > 0) return;

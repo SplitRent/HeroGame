@@ -93,6 +93,7 @@ namespace HeroGame.Runtime.Building
             }
             if (input.BuildModePressed || input.PausePressed)
             {
+                if (input.PausePressed) UI.UiFocus.ConsumeEscape();
                 Exit();
                 return;
             }

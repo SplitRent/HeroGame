@@ -29,7 +29,7 @@ namespace HeroGame.Runtime.UI
             get
             {
                 Lines.RemoveAll(e => e.ExpiresAt < Time.unscaledTime);
-                return Lines;
+                return SettingsService.Current.Subtitles ? Lines : (IReadOnlyList<Entry>)System.Array.Empty<Entry>();
             }
         }
     }
