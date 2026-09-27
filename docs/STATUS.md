@@ -8,7 +8,7 @@ environment; Unity scripts are verified by compiling against Unity reference ass
 opened the project in Unity, but no Health Check report or Console log has confirmed a successful run yet, so no
 Unity row is raised.
 
-_Last updated: full metro, world replication, Phase 24 UI, save-stall work, Story Part Two, destruction, audio, debug tools. See `reports/DEV_REPORT_003_WORLD_AND_POLISH.md`._
+_Last updated: combat and weapons, performance pass, UI Toolkit interface, online player view, water. See `reports/DEV_REPORT_004_COMBAT_UI_PERFORMANCE.md`._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -102,7 +102,11 @@ _Last updated: full metro, world replication, Phase 24 UI, save-stall work, Stor
 | Weekend late nights for ages 15–29 (Fri/Sat, past midnight, extraversion-driven) | TESTED | exercised by the curfew test; offline/live equivalence tests still pass |
 | Campaign funds carry over between a player's campaigns | TESTED | `LeftoverCampaignFunds_CarryOverToTheNextRun` |
 | Full Port Arden metro layout: 19 districts (slice embedded verbatim), landmarks, services, 302 businesses, ~7,500 places, one connected road network, generated deterministically | TESTED | `FullMetro_Validates_*`, `FullMetro_HoldsAboutFiftyThousandResidents_OnOneConnectedRoadNetwork`; CI `generate_metro.py --check` |
-| 50k-NPC simulation (daily step, director, catch-up) | FUNCTIONAL | `herogame-world bench --layout layout_port_arden.json` (CI): 200–264 ms/day at 49,792 NPCs (target 250 ⚠), director 1.5–1.7 ms, 60-day catch-up 12.9 s |
+| 50k-NPC simulation (daily step, director, catch-up) | OPTIMIZED | `herogame-world bench --layout layout_port_arden.json` (CI): 116–137 ms/day at 50,400 NPCs (target 250), per-section timings printed; shared daily census; director 1.5–1.7 ms |
+| Combat: original weapons (fists, bat, crowbar, knife, pepper spray, stun pistol, compact pistol), server-authoritative attacks (reach, cooldown, ammunition, PvP switch), deterministic hits, lethal vs non-lethal, stun/blind | TESTED | `CombatTests` (11): `APunch_*`, `Reach_Cooldowns_*`, `FistsAndNonLethalWeapons_NeverKill`, `StunPistol_*`, `AShooting_CanKill_IsAHomicide_*` |
+| Combat consequences: victims remember, flee or fight back; gunfire clears streets and is always reported; self-defence not filed; assault/aggravated assault/homicide through the justice path; unlicensed guns charged at arrest | TESTED | `HittingBack_IsSelfDefence_*`, `ArrestedWithAnUnlicensedGun_*`, `PlayersCanFight_OnlyWherePvpIsAllowed_*` |
+| Weapon shops, ammunition, firearm permits (fee, background check, 5 years); items and licenses ride in the payment's journal entry; teen restriction | TESTED | `Firearms_NeedAPermit_*`, `AWeaponPurchase_SurvivesACrash_*`, `Teenagers_CannotBuyWeapons*` |
+| Water: coast, Coquina Key island, sound and passes, ship canal and channel, river; validator keeps buildings and roads out of it; water conducts for powers | TESTED | `Water_ShapesTheCoast_CoquinaKeyIsAnIsland_*` |
 | Player UI logic: settings (validated, persisted, unit/clock formatting), notification queue (folding, priority, bounds), property portfolio (equity, rent, net, alerts), inventory (stacks, stolen/contraband) | TESTED | `PlayerUiTests` (5) |
 
 ## Story Mode
@@ -130,7 +134,7 @@ _Last updated: full metro, world replication, Phase 24 UI, save-stall work, Stor
 | Corrupt journal entries skipped and reported | TESTED | `GarbageInTheMiddleOfTheJournal_IsSkipped_AndTheRestReplays`, `TornJournalTail_IsDiscarded` |
 | Story save slots | TESTED | `StorySlots_RotateAutosaves` |
 | City layout recorded in saves; wrong layout refused; hosts reopen on the recorded layout | TESTED | `Saves_RememberTheirLayout_AndRefuseToOpenOnAnotherMap` |
-| Off-thread population serialization (detached NPC/household snapshots) and copy-on-write layout shards | TESTED | `NpcAndHouseholdSnapshots_ShareNothingMutable_*`, `EditingOneBuilding_RewritesOnlyItsLayoutShard_*`, `SavesFromBeforeLayoutShards_*`; bench: post-daily-step save blocks 140–300 ms at 50k (was ~860) ⚠ target 16 ms |
+| All save serialization off the simulation thread (generic snapshot cloner, parallel NPC copies, copy-on-write layout shards) | TESTED | `TheGenericCloner_CopiesEverySavedKindOfData_*`, `NpcAndHouseholdSnapshots_*`, `EditingOneBuilding_*`, `SavesFromBeforeLayoutShards_*`; bench at 50k: routine autosave 5–7 ms blocked ✓, save right after a daily step 138–180 ms blocked (was ~860) ⚠ target 16 ms |
 | Account profiles (local) | FUNCTIONAL | used by front end |
 | Binary save format | PLANNED | tech debt #1 |
 | PostgreSQL backend | PLANNED | file-backed JSON stores in use; see NETWORKING.md |
@@ -158,6 +162,8 @@ _Last updated: full metro, world replication, Phase 24 UI, save-stall work, Stor
 | Persisted manhunts; disconnecting mid-chase is evading | TESTED | `ActiveManhunt_SurvivesARestart`, `DisconnectingDuringAChase_*` |
 | Load test (30 Hz, 128 players) | TESTED | `herogame-server loadtest` (CI: 64 clients over TLS); 128 clients: p99 21 ms/tick, 12 KiB/s per client; async per-connection writers, 32-nearest snapshot interest |
 | Background autosave (snapshot on the simulation thread, writes off it; failed writes retried) | TESTED | `BackgroundSave_Commits_*`; bench: routine autosave 12.9 ms blocked |
+| Online player view (cash, health, wanted, messages, statement, inventory, property, businesses) pushed when changed; phone.read | TESTED | `PlayerView_ArrivesOnJoin_FollowsTheServer_AndOnlyTheirOwn`; 64-client TLS load test p99 8.8 ms |
+| Combat and weapon requests over the network (server positions only, PvP switch, shop proximity) | TESTED | `Combat_OverTheWire_UsesTheServersPositions_AndRespectsPvp` |
 | Replication of shared world changes (broken props, fires, player ownership, sale listings, damage, rebuilt buildings on demand); full state on join | TESTED | `WorldChanges_ReachEveryone_LateJoinersGetTheFullState_AndRebuiltBuildingsCanBeFetched`, `WorldDeltas_RoundTrip_AndHostileCountsAreRejected`; load test unchanged |
 | `--layout` for the dedicated server and world host | FUNCTIONAL | CI metro bench; manual `new --layout` → `run` reopens on the metro |
 
@@ -191,7 +197,8 @@ _Last updated: full metro, world replication, Phase 24 UI, save-stall work, Stor
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 | Health check (HeroGame ▸ Health Check): Unity version, HDRP, input, colour space, data, story, simulation smoke, scenes | IN DEVELOPMENT | compiles; waiting on the first report from a real editor |
-| Pause/settings menu (live audio/quality/FOV/sensitivity/subtitles), toasts, phone Properties & Inventory tabs | IN DEVELOPMENT | compiles; IMGUI placeholders over tested view-models |
+| UI Toolkit in-game interface: HUD (clock, weather, cash, health, wanted, phone badge, weapon, prompt, subtitles, FPS), toasts, pause/settings (Audio, Controls, Display, Accessibility), phone (Messages, News, Bank, Properties, Inventory, Map; online data from the server) | IN DEVELOPMENT | compiles; uses tested view-models; IMGUI placeholders remain as fallback |
+| Combat controller (X cycles weapons, attack the person in front; offline and online), weapons counters in shops, permit desk, NPC flinch, procedural combat sounds | IN DEVELOPMENT | compiles |
 | Online presentation from the replica (fires, props, for-sale signs, rebuilt interiors in build mode) | IN DEVELOPMENT | compiles |
 | Metro greybox scene (HeroGame ▸ Build Greybox Full Metro) and `GameBootstrap.LayoutFile` | IN DEVELOPMENT | compiles; heavy scene, not yet built in Unity |
 
@@ -206,5 +213,5 @@ _Last updated: full metro, world replication, Phase 24 UI, save-stall work, Stor
 | MCP command surface | FUNCTIONAL | `mcp_commands.run`; exercised via CLI |
 
 ## Not started (PLANNED)
-Combat & weapons · recorded music, SFX and VO (procedural placeholders exist) · UI Toolkit phone skin · animation set · character creator 3D preview ·
+Recorded music, SFX and VO (procedural placeholders exist) · final UI art (typeface, icons, motion) and UI Toolkit versions of the rarer phone apps · animation set (combat, hit reactions) · character creator 3D preview ·
 Addressables cell content · HLOD · hand-authored district art, terrain and water for the metro (the metro exists as data and greybox).

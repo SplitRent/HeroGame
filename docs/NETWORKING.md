@@ -41,13 +41,16 @@ Frames: `[uint32 length][uint16 type][payload]`, little-endian, version `Wire.Pr
 Messages: `Hello/Welcome/Reject`, `Ping/Pong`, `PlayerState` (client → server, ~10 Hz), `Snapshot`
 (server → client, ~10 Hz: clock, weather, your authoritative position/corrections, nearby players),
 `WorldDelta` (server → client, every 500 ms when something changed; the full state right after `Welcome`),
-`LayoutData` (a rebuilt building's layout, on request),
+`LayoutData` (a rebuilt building's layout, on request), `PlayerView` (the player's own cash, health, wanted level,
+messages, statement, inventory, property and businesses as JSON, sent on join and whenever it changes),
 `Request/Response` (op name + bounded string map), chat, phone `Notice` pushes, `Kick`.
 
 Request ops (see `StandardRequests`): `me.status`, `property.buy|mortgage|repair`, `build.commit`,
 `business.buy|start|price|wage|ads|hire|fire|withdraw|invest|restock`, `finance.transfer|savings|loan|repay`,
 `insurance.buy|claim`, `character.mask`, `crime.shoplift|rob|burgle|steal_vehicle|pickpocket|fence`,
-`justice.bail|fines|attorney|plea|surrender`, `power.use`, `radio.now`, `property.layout`, `prop.impact`, `ripple.post|feed|like|follow` (posting is refused while
+`justice.bail|fines|attorney|plea|surrender`, `power.use`, `combat.attack` (target npc|character|none; positions come
+from the server), `weapons.buy|ammo` (at the shop), `civic.firearm_permit` (at City Hall), `phone.read`, `radio.now`,
+`property.layout`, `prop.impact`, `ripple.post|feed|like|follow` (posting is refused while
 muted; the author name comes from the signed ticket), `civic.register_powers|ballot|file|donate|campaign|propose|council_vote|budget`
 (filing requires standing at City Hall), `admin.kick|ban|unban|mute|unmute|grant|role`.
 
