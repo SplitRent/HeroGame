@@ -64,6 +64,10 @@ namespace HeroGame.Core.Simulation
 
         private long Now => _w.Clock.Now.TotalSeconds;
 
+        private static bool Finite(WorldPosition p) =>
+            !float.IsNaN(p.X) && !float.IsNaN(p.Y) && !float.IsNaN(p.Z) && !float.IsInfinity(p.X) && !float.IsInfinity(p.Y) && !float.IsInfinity(p.Z)
+            && Math.Abs(p.X) < 100000f && Math.Abs(p.Z) < 100000f && Math.Abs(p.Y) < 10000f;
+
         public PowerOutcome Use(ServerCharacter c, PowerUseRequest r)
         {
             if (!_w.Config.Powers.PowersEnabled) return PowerOutcome.Refused("Powers are disabled on this server.");
@@ -77,6 +81,7 @@ namespace HeroGame.Core.Simulation
             var requirement = MissingRequirement(power, r);
             if (requirement != null) return PowerOutcome.Refused(requirement);
             if (r.Target == TargetKind.Character && !_w.Config.Gameplay.PvpEnabled) return PowerOutcome.Refused("PvP is disabled on this server.");
+            if (!Finite(r.Origin) || !Finite(r.Point)) return PowerOutcome.Refused("Invalid position.");
 
             var intensity = Math.Max(0.05f, Math.Min(1f, float.IsNaN(r.Intensity) ? 0.5f : r.Intensity));
             var hasTarget = TryTargetPosition(r, out var targetPos);

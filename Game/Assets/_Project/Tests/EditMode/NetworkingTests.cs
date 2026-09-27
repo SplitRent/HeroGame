@@ -376,6 +376,61 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void DisconnectMidPurchase_ThenRetry_ChargesOnce()
+        {
+            var a = Join("acc-dc", "Dee");
+            var me = _world.Characters[a.Welcome.CharacterId];
+            Assert.IsTrue(_world.AdminGrant(me.CheckingAccount, Money.FromDollars(500000L), "admin", "test").Success);
+            var land = _world.Properties.All.Where(p => p.ForSale && p.ListingPriceCents > 0).OrderBy(p => p.ListingPriceCents).First();
+            var before = _world.Ledger.BalanceOf(me.CheckingAccount);
+            var pending = a.Request("property.buy", new Dictionary<string, string> { ["property"] = land.Id.ToString() }, "buy-once");
+            a.Dispose(); // the player's connection dies right after sending
+            Until(() => _server.Players.Count == 0);
+            var after = _world.Ledger.BalanceOf(me.CheckingAccount);
+
+            var b = Join("acc-dc", "Dee");
+            var retry = Call(b, "property.buy", new Dictionary<string, string> { ["property"] = land.Id.ToString() }, "buy-once");
+            if (_world.Ownership.IsOwnedBy(land.Id, me.CharacterId))
+            {
+                Assert.IsFalse(retry.Success, "the retry of a purchase that went through is refused");
+                Assert.AreEqual(after, _world.Ledger.BalanceOf(me.CheckingAccount), "charged exactly once");
+                Assert.Less(after.Cents, before.Cents);
+            }
+            else
+            {
+                Assert.IsTrue(retry.Success, "the request never arrived, so the retry buys it");
+                Assert.IsTrue(_world.Ownership.IsOwnedBy(land.Id, me.CharacterId));
+            }
+            Assert.IsFalse(Call(b, "property.buy", new Dictionary<string, string> { ["property"] = land.Id.ToString() }, "buy-again").Success, "never twice");
+            Assert.IsTrue(_world.Ledger.VerifyInvariant(out _));
+        }
+
+        [Test]
+        public void DisconnectingDuringAChase_IsEvading_AndTheManhuntContinues()
+        {
+            var a = Join("acc-run", "Runner");
+            var me = _world.Characters[a.Welcome.CharacterId];
+            var incident = new Core.Crime.CrimeIncident { Id = _world.Ids.Next(EntityKind.CrimeIncident), CrimeTypeId = "store_robbery", Perpetrator = me.CharacterId, OccurredAt = _world.Clock.Now };
+            _world.Justice.Incidents.Add(incident);
+            _world.Wanted.ReportCrime(incident, _world.Content.FindCrime("store_robbery"), _world.Clock.Now, policeWitnessed: true);
+            a.Dispose();
+            Until(() => _server.Players.Count == 0);
+            Assert.IsTrue(_world.Justice.Incidents.Any(i => i.Perpetrator == me.CharacterId && i.CrimeTypeId == "evading_police"), "logging off mid-chase is fleeing");
+            Assert.IsNotNull(_world.Wanted.Get(me.CharacterId), "the police are still looking");
+        }
+
+        [Test]
+        public void ServerShutdown_TellsEveryoneWhy()
+        {
+            var a = Join("acc-s1", "One");
+            var b = Join("acc-s2", "Two");
+            _server.Stop();
+            Until(() => a.State == ClientState.Disconnected && b.State == ClientState.Disconnected);
+            StringAssert.Contains("shutting down", a.DisconnectReason);
+            StringAssert.Contains("shutting down", b.DisconnectReason);
+        }
+
+        [Test]
         public void BuildOps_SurviveTheWireEncoding()
         {
             var op = new Core.Building.BuildOp { Kind = Core.Building.BuildOpKind.AddRoom, RoomType = Core.Building.RoomType.Bar, Floor = 1, Polygon = { 2, 2, 27.25f, 2, 27.25f, 47, 2, 47 } };

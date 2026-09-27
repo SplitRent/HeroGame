@@ -237,6 +237,7 @@ namespace HeroGame.Core.Simulation
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
             Transactions.Committed += tx => Dirty.Mark(SaveChunks.Transactional);
             History.Recorded += r => Dirty.Mark(SaveChunks.History);
+            Wanted.LevelChanged += s => Dirty.Mark(SaveChunks.Justice);
         }
 
         public long Today => Clock.Now.DayIndex;
@@ -265,6 +266,7 @@ namespace HeroGame.Core.Simulation
         {
             Justice = state ?? new JusticeState();
             foreach (var e in Justice.Evidence) Wanted.AddEvidence(e);
+            if (Justice.Wanted != null) foreach (var s in Justice.Wanted) Wanted.Restore(s);
         }
 
         public void EnsureInstitutions()

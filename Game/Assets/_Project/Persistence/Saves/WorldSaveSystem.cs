@@ -331,6 +331,7 @@ namespace HeroGame.Persistence.Saves
                     env.AnomalyLog.AddRange(world.AnomalyLog);
                     return env;
                 case SaveChunks.Justice:
+                    world.Justice.Wanted = world.Wanted.Snapshot();
                     return world.Justice;
                 case SaveChunks.Emergency:
                     return world.Emergency;

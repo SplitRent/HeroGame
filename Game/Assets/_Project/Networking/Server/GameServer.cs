@@ -531,6 +531,7 @@ namespace HeroGame.Networking.Server
             if (c.Authenticated)
             {
                 c.Character.LastOnlineSecond = _world.Clock.Now.TotalSeconds;
+                if (reason != "shutdown" && !reason.StartsWith("kicked", StringComparison.Ordinal)) _world.Courts.LeftDuringPursuit(c.Character);
                 Log?.Invoke(c.Ticket.DisplayName + " left (" + reason + ")");
                 PlayerLeft?.Invoke(c);
             }

@@ -88,6 +88,8 @@ namespace HeroGame.Core.Crime
         public List<CrimeIncident> Incidents = new List<CrimeIncident>();
         public List<EvidenceItem> Evidence = new List<EvidenceItem>();
         public List<CourtCase> Cases = new List<CourtCase>();
+        /// <summary>Active wanted episodes at save time (restored into the wanted system on load).</summary>
+        public List<WantedStatus> Wanted = new List<WantedStatus>();
 
         public CrimeIncident Incident(EntityId id)
         {

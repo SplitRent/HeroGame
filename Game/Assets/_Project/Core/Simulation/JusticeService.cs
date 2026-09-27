@@ -58,6 +58,26 @@ namespace HeroGame.Core.Simulation
         }
 
         /// <summary>
+        /// A player who disconnects while police are chasing them has fled: the officers' observation becomes an
+        /// evading charge and evidence, and the manhunt carries on while they are away (it is saved with the world).
+        /// </summary>
+        public void LeftDuringPursuit(ServerCharacter c)
+        {
+            var wanted = _w.Wanted.Get(c.CharacterId);
+            if (wanted == null || wanted.Phase != WantedPhase.Pursuit || c.Record.InCustody) return;
+            var evading = new CrimeIncident
+            {
+                Id = _w.Ids.Next(EntityKind.CrimeIncident), CrimeTypeId = "evading_police", Perpetrator = c.CharacterId, OccurredAt = _w.Clock.Now,
+                ReportedToPolice = true, ReportedAt = _w.Clock.Now, Position = c.LastPosition, District = _w.Crimes.DistrictAt(c.LastPosition),
+            };
+            S.Incidents.Add(evading);
+            var e = new EvidenceItem { Kind = EvidenceKind.PoliceObservation, Incident = evading.Id, Suspect = c.CharacterId, Confidence = 0.9f, CollectedAt = _w.Clock.Now, Note = "Fled by disconnecting" };
+            S.Evidence.Add(e);
+            _w.Wanted.AddEvidence(e);
+            _w.Dirty.Mark(SaveChunks.Justice);
+        }
+
+        /// <summary>
         /// Police take the character into custody. When officers were in pursuit they add their own observation of
         /// the offences reported this episode. Stolen goods and contraband are seized.
         /// </summary>

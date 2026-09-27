@@ -178,6 +178,22 @@ namespace HeroGame.Core.Crime
             foreach (var id in ended) EndEpisode(id);
         }
 
+        /// <summary>Re-files an active episode loaded from a save (a restart must not end a manhunt).</summary>
+        public void Restore(WantedStatus s)
+        {
+            if (s == null || s.Phase == WantedPhase.Clear || !s.Suspect.IsValid) return;
+            _status[s.Suspect] = s;
+        }
+
+        /// <summary>Active episodes in stable id order, for saving.</summary>
+        public List<WantedStatus> Snapshot()
+        {
+            var list = new List<WantedStatus>();
+            foreach (var s in _status.Values) if (s.Phase != WantedPhase.Clear) list.Add(s);
+            list.Sort((a, b) => a.Suspect.CompareTo(b.Suspect));
+            return list;
+        }
+
         public void Arrested(EntityId suspect)
         {
             _status.Remove(suspect);
