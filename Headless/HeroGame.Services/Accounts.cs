@@ -16,11 +16,21 @@ public sealed class AccountRecord
     public long CreatedUnix;
     public int FailedLogins;
     public long LockedUntilUnix;
+    /// <summary>Sessions issued before this moment are void ("sign out everywhere", password change).</summary>
+    public long SessionsValidFromUnix;
+}
+
+public sealed class RevokedSession
+{
+    public string Nonce = "";
+    public long ExpiresUnix;
 }
 
 public sealed class AccountsDocument
 {
     public List<AccountRecord> Accounts = new();
+    /// <summary>Signed-out session tokens that have not expired yet.</summary>
+    public List<RevokedSession> RevokedSessions = new();
 }
 
 public sealed class ServiceException : Exception
@@ -145,12 +155,62 @@ public sealed class AccountDirectory
         return (record, token, expires);
     }
 
-    /// <summary>Resolves a bearer session token to its account (401 if invalid or expired).</summary>
-    public AccountRecord Authenticate(string? token)
+    /// <summary>Resolves a bearer session token to its account (401 if invalid, expired or signed out).</summary>
+    public AccountRecord Authenticate(string? token) => Session(token).account;
+
+    private (AccountRecord account, Ticket session) Session(string? token)
     {
         if (!TicketCodec.TryVerify(_masterSecret, token ?? "", TicketCodec.MasterAudience, _now(), out var t, out var error))
             throw new ServiceException(401, error ?? "Not signed in.");
         lock (_lock)
-            return _store.Value.Accounts.FirstOrDefault(a => a.AccountId == t.AccountId) ?? throw new ServiceException(401, "Account no longer exists.");
+        {
+            var record = _store.Value.Accounts.FirstOrDefault(a => a.AccountId == t.AccountId) ?? throw new ServiceException(401, "Account no longer exists.");
+            if (t.ExpiresUnix - SessionSeconds < record.SessionsValidFromUnix) throw new ServiceException(401, "This session was signed out.");
+            if (_store.Value.RevokedSessions.Any(r => r.Nonce == t.Nonce)) throw new ServiceException(401, "This session was signed out.");
+            return (record, t);
+        }
+    }
+
+    /// <summary>Signs this session out: the token stops working immediately, not at expiry.</summary>
+    public void Logout(string? token)
+    {
+        var (_, t) = Session(token);
+        lock (_lock)
+        {
+            var now = _now();
+            _store.Value.RevokedSessions.RemoveAll(r => r.ExpiresUnix <= now);
+            _store.Value.RevokedSessions.Add(new RevokedSession { Nonce = t.Nonce, ExpiresUnix = t.ExpiresUnix });
+            _store.Save();
+        }
+    }
+
+    /// <summary>Signs out every session of the account (lost device, suspected theft).</summary>
+    public void LogoutEverywhere(string? token)
+    {
+        var (record, t) = Session(token);
+        lock (_lock)
+        {
+            record.SessionsValidFromUnix = Math.Max(record.SessionsValidFromUnix, t.ExpiresUnix - SessionSeconds + 1);
+            record.SessionsValidFromUnix = Math.Max(record.SessionsValidFromUnix, _now());
+            _store.Save();
+        }
+    }
+
+    /// <summary>Changes the password (the current one is required) and signs out every existing session.</summary>
+    public void ChangePassword(string? token, string currentPassword, string newPassword)
+    {
+        var (record, t) = Session(token);
+        if (!PasswordHasher.Verify(currentPassword ?? "", record.PasswordHash, record.Salt, record.Iterations)) throw new ServiceException(401, "Wrong password.");
+        if ((newPassword ?? "").Length < 10) throw new ServiceException(400, "Passwords must be at least 10 characters.");
+        if (newPassword!.Length > 256) throw new ServiceException(400, "Password too long.");
+        var (hash, salt) = PasswordHasher.Hash(newPassword, _iterations);
+        lock (_lock)
+        {
+            record.PasswordHash = hash;
+            record.Salt = salt;
+            record.Iterations = _iterations;
+            record.SessionsValidFromUnix = Math.Max(_now(), t.ExpiresUnix - SessionSeconds + 1);
+            _store.Save();
+        }
     }
 }

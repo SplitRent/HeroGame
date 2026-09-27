@@ -55,6 +55,8 @@ namespace HeroGame.Core.Servers
         /// <summary>Where clients connect (from the master's registration; not shown in the browser).</summary>
         public string Host = "";
         public int Port;
+        /// <summary>SHA-256 of the server's TLS certificate, published by the server's own heartbeat; clients pin it.</summary>
+        public string TlsFingerprint = "";
         public List<string> Rules = new List<string>();
         public List<string> FriendsOnline = new List<string>();
         public List<string> Tags = new List<string>();

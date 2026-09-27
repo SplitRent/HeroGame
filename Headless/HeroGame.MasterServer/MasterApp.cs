@@ -13,6 +13,13 @@ public sealed class MasterOptions
     public string Urls = "http://0.0.0.0:5080";
     /// <summary>PBKDF2 iterations (tests lower this; production keeps the default).</summary>
     public int PasswordIterations = PasswordHasher.Iterations;
+    /// <summary>PFX certificate for https:// URLs (alternatively terminate TLS at a reverse proxy).</summary>
+    public string? CertificatePath;
+    public string? CertificatePassword;
+
+    /// <summary>True when sessions and passwords would cross a network in the clear.</summary>
+    public bool PlaintextOnNetwork => Urls.Split(';').Any(u => u.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+        && !u.Contains("127.0.0.1") && !u.Contains("localhost") && !u.Contains("[::1]"));
 }
 
 /// <summary>
@@ -26,6 +33,11 @@ public static class MasterApp
         if (o.Secret.Length < 32) throw new ArgumentException("The master secret must be at least 32 bytes.");
         var builder = WebApplication.CreateBuilder(args ?? Array.Empty<string>());
         builder.WebHost.UseUrls(o.Urls);
+        if (!string.IsNullOrEmpty(o.CertificatePath))
+        {
+            var certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(o.CertificatePath, o.CertificatePassword);
+            builder.WebHost.ConfigureKestrel(k => k.ConfigureHttpsDefaults(h => h.ServerCertificate = certificate));
+        }
         builder.Logging.SetMinimumLevel(LogLevel.Warning);
         builder.Services.ConfigureHttpJsonOptions(j => j.SerializerOptions.IncludeFields = true);
         var app = builder.Build();
@@ -62,6 +74,14 @@ public static class MasterApp
             return Run(() => new Dictionary<string, string> { ["accountId"] = accounts.Register(body.Username ?? "", body.Password ?? "", body.DisplayName ?? "").AccountId });
         });
 
+        app.MapPost("/api/accounts/logout", (HttpContext ctx) => Run(() => { accounts.Logout(Bearer(ctx)); return null; }));
+        app.MapPost("/api/accounts/logout-all", (HttpContext ctx) => Run(() => { accounts.LogoutEverywhere(Bearer(ctx)); return null; }));
+        app.MapPost("/api/accounts/password", (HttpContext ctx, PasswordBody body) =>
+        {
+            if (!authLimiter.Allow("password:" + Caller(ctx))) return Results.Text("Slow down.", statusCode: 429);
+            return Run(() => { accounts.ChangePassword(Bearer(ctx), body.Current ?? "", body.New ?? ""); return null; });
+        });
+
         app.MapPost("/api/accounts/login", (HttpContext ctx, LoginBody body) =>
         {
             if (!authLimiter.Allow("login:" + Caller(ctx))) return Results.Text("Slow down.", statusCode: 429);
@@ -83,7 +103,7 @@ public static class MasterApp
 
         app.MapPost("/api/servers/{id}/heartbeat", (HttpContext ctx, string id, HeartbeatBody body) => Run(() =>
         {
-            servers.Heartbeat(id, ctx.Request.Headers["X-Server-Key"].ToString(), body.Players, body.MaxPlayers);
+            servers.Heartbeat(id, ctx.Request.Headers["X-Server-Key"].ToString(), body.Players, body.MaxPlayers, body.TlsFingerprint);
             return null;
         }));
 
@@ -92,7 +112,7 @@ public static class MasterApp
             var account = accounts.Authenticate(Bearer(ctx));
             var ticket = servers.IssueTicket(account, id);
             var listing = servers.Find(id)!.Listing;
-            return new Dictionary<string, object> { ["Ticket"] = ticket, ["Host"] = listing.Host, ["Port"] = listing.Port };
+            return new Dictionary<string, object> { ["Ticket"] = ticket, ["Host"] = listing.Host, ["Port"] = listing.Port, ["TlsFingerprint"] = listing.TlsFingerprint ?? "" };
         }));
 
         return app;
@@ -105,6 +125,12 @@ public static class MasterApp
         public string? DisplayName { get; set; }
     }
 
+    public sealed class PasswordBody
+    {
+        public string? Current { get; set; }
+        public string? New { get; set; }
+    }
+
     public sealed class LoginBody
     {
         public string? Username { get; set; }
@@ -115,5 +141,6 @@ public static class MasterApp
     {
         public int Players { get; set; }
         public int MaxPlayers { get; set; }
+        public string? TlsFingerprint { get; set; }
     }
 }

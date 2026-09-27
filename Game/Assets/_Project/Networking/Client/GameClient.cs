@@ -28,7 +28,7 @@ namespace HeroGame.Networking.Client
         private readonly Dictionary<int, TaskCompletionSource<Response>> _pending = new Dictionary<int, TaskCompletionSource<Response>>();
         private readonly object _sendLock = new object();
         private TcpClient _tcp;
-        private NetworkStream _stream;
+        private System.IO.Stream _stream;
         private int _nextRequest;
         private int _sequence;
         private volatile string _disconnectReason;
@@ -45,13 +45,38 @@ namespace HeroGame.Networking.Client
         public event Action<Notice> NoticeReceived;
         public event Action<string> Disconnected;
 
-        /// <summary>Connects and sends the join ticket. Completes when the TCP connection is up; watch <see cref="Connected"/>.</summary>
-        public async Task ConnectAsync(string host, int port, string ticket, string clientVersion = "dev", bool sendHello = true)
+        public bool Encrypted { get; private set; }
+
+        /// <summary>
+        /// Connects and sends the join ticket. Completes when the TCP connection (and TLS, if requested) is up; watch
+        /// <see cref="Connected"/>. With <paramref name="tls"/> the server's certificate must match the pinned
+        /// fingerprint from the server listing, or be publicly trusted when no pin is given.
+        /// </summary>
+        public async Task ConnectAsync(string host, int port, string ticket, string clientVersion = "dev", bool sendHello = true, Security.ClientTls tls = null)
         {
             State = ClientState.Connecting;
             _tcp = new TcpClient { NoDelay = true };
             await _tcp.ConnectAsync(host, port).ConfigureAwait(false);
             _stream = _tcp.GetStream();
+            if (tls != null)
+            {
+                var ssl = new System.Net.Security.SslStream(_stream, false, (sender, cert, chain, errors) =>
+                    string.IsNullOrEmpty(tls.PinnedFingerprint) ? errors == System.Net.Security.SslPolicyErrors.None : Security.TlsPinning.Matches(cert, tls.PinnedFingerprint));
+                try
+                {
+                    await ssl.AuthenticateAsClientAsync(string.IsNullOrEmpty(tls.ServerName) ? host : tls.ServerName, null,
+                        System.Security.Authentication.SslProtocols.Tls12, false).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    _disconnectReason = "Secure connection failed: " + ex.Message;
+                    State = ClientState.Disconnected;
+                    try { _tcp.Close(); } catch (Exception) { /* closing */ }
+                    throw;
+                }
+                _stream = ssl;
+                Encrypted = true;
+            }
             State = ClientState.Handshaking;
             var reader = new Thread(ReadLoop) { IsBackground = true, Name = "net-client-read" };
             reader.Start();

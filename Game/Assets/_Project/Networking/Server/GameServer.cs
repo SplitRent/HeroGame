@@ -37,6 +37,10 @@ namespace HeroGame.Networking.Server
         public float SnapshotRadius = 400f;
         public float LocalChatRadius = 60f;
         public WorldPosition Spawn;
+        /// <summary>When set, every connection is TLS 1.2+ with this certificate (it must carry its private key).</summary>
+        public System.Security.Cryptography.X509Certificates.X509Certificate2 Certificate;
+        /// <summary>Refuse connections that do not complete TLS (always true when a certificate is set).</summary>
+        public bool RequireTls => Certificate != null;
     }
 
     /// <summary>Leaky-bucket rate limiter (per connection).</summary>
@@ -68,7 +72,7 @@ namespace HeroGame.Networking.Server
     public sealed class ServerConnection
     {
         internal readonly TcpClient Tcp;
-        internal readonly NetworkStream Stream;
+        internal System.IO.Stream Stream { get; private set; }
         private readonly object _sendLock = new object();
         private readonly int _sendTimeoutMs;
 
@@ -105,6 +109,18 @@ namespace HeroGame.Networking.Server
         }
 
         public string AccountId => Ticket != null ? Ticket.AccountId : "";
+        public bool Encrypted { get; private set; }
+
+        /// <summary>Runs the TLS handshake on this connection's reader thread before any frame is read.</summary>
+        internal void UpgradeToTls(System.Security.Cryptography.X509Certificates.X509Certificate2 certificate, int timeoutMs)
+        {
+            var ssl = new System.Net.Security.SslStream(Stream, false);
+            Tcp.ReceiveTimeout = timeoutMs;
+            ssl.AuthenticateAsServer(certificate, false, System.Security.Authentication.SslProtocols.Tls12, false);
+            Tcp.ReceiveTimeout = 0;
+            lock (_sendLock) Stream = ssl;
+            Encrypted = true;
+        }
 
         /// <summary>Thread-safe send; a slow or dead peer is closed instead of blocking the simulation.</summary>
         public void Send(NetMessage message)
@@ -238,6 +254,18 @@ namespace HeroGame.Networking.Server
         {
             try
             {
+                if (_o.Certificate != null)
+                {
+                    try
+                    {
+                        conn.UpgradeToTls(_o.Certificate, _o.HandshakeTimeoutMs);
+                    }
+                    catch (Exception)
+                    {
+                        _inbox.Enqueue((conn, null, "TLS handshake failed"));
+                        return;
+                    }
+                }
                 while (!conn.Closed)
                 {
                     var msg = Wire.ReadFrame(conn.Stream);

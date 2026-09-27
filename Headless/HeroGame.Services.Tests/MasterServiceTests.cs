@@ -47,6 +47,52 @@ public class MasterServiceTests
     }
 
     [Test]
+    public void Sessions_CanBeSignedOut_Individually_Everywhere_AndByPasswordChange()
+    {
+        var accounts = Accounts();
+        accounts.Register("sam", "long-enough-pw", "Sam");
+        var (_, phone, _) = accounts.Login("sam", "long-enough-pw");
+        _now += 5;
+        var (_, laptop, _) = accounts.Login("sam", "long-enough-pw");
+        accounts.Logout(phone);
+        Assert.AreEqual(401, Assert.Throws<ServiceException>(() => accounts.Authenticate(phone))!.Status, "signed out now, not in 12 hours");
+        Assert.DoesNotThrow(() => accounts.Authenticate(laptop), "other sessions are unaffected");
+
+        _now += 5;
+        var (_, tablet, _) = accounts.Login("sam", "long-enough-pw");
+        _now += 5;
+        accounts.LogoutEverywhere(laptop);
+        Assert.Throws<ServiceException>(() => accounts.Authenticate(laptop));
+        Assert.Throws<ServiceException>(() => accounts.Authenticate(tablet));
+        _now += 1;
+        var (_, fresh, _) = accounts.Login("sam", "long-enough-pw");
+        Assert.DoesNotThrow(() => accounts.Authenticate(fresh), "signing in again works");
+
+        Assert.AreEqual(401, Assert.Throws<ServiceException>(() => accounts.ChangePassword(fresh, "wrong-password", "new-long-password"))!.Status);
+        accounts.ChangePassword(fresh, "long-enough-pw", "new-long-password");
+        Assert.Throws<ServiceException>(() => accounts.Authenticate(fresh), "a password change signs everyone out");
+        Assert.Throws<ServiceException>(() => accounts.Login("sam", "long-enough-pw"));
+        _now += 1;
+        Assert.DoesNotThrow(() => accounts.Authenticate(accounts.Login("sam", "new-long-password").token));
+    }
+
+    [Test]
+    public void Heartbeat_PublishesTheServersTlsPin_AndRejectsGarbage()
+    {
+        var accounts = Accounts();
+        var owner = accounts.Register("host", "long-enough-pw", "Host");
+        var servers = Servers();
+        var (record, key) = servers.Register(owner, new ServerListing { Name = "Pinned City", Host = "play.example", Port = 27015, MaxPopulation = 32 });
+        var pin = new string('a', 64);
+        servers.Heartbeat(record.Listing.ServerId, key, 3, 32, pin);
+        Assert.AreEqual(pin, servers.Online().Single().TlsFingerprint);
+        Assert.AreEqual(400, Assert.Throws<ServiceException>(() => servers.Heartbeat(record.Listing.ServerId, key, 3, 32, "not-hex"))!.Status);
+        Assert.AreEqual(401, Assert.Throws<ServiceException>(() => servers.Heartbeat(record.Listing.ServerId, Convert.ToBase64String(new byte[32]), 3, 32, new string('b', 64)))!.Status,
+            "only the server itself can change its pin");
+        Assert.AreEqual(pin, servers.Online().Single().TlsFingerprint);
+    }
+
+    [Test]
     public void Servers_RegisterUnderAnAccount_HeartbeatWithTheirKey_AndDropOffWhenSilent()
     {
         var accounts = Accounts();

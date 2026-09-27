@@ -1,7 +1,8 @@
 using HeroGame.MasterServer;
 
 // herogame-master — accounts, server list, join tickets.
-// Environment: HEROGAME_MASTER_SECRET (base64, ≥ 32 bytes, required), HEROGAME_DATA (default ./master-data), HEROGAME_URLS.
+// Environment: HEROGAME_MASTER_SECRET (base64, ≥ 32 bytes, required), HEROGAME_DATA (default ./master-data), HEROGAME_URLS,
+//              HEROGAME_CERT / HEROGAME_CERT_PASSWORD (PFX for https:// URLs; or terminate TLS at a reverse proxy).
 var secretText = Environment.GetEnvironmentVariable("HEROGAME_MASTER_SECRET");
 if (string.IsNullOrEmpty(secretText))
 {
@@ -20,7 +21,12 @@ var options = new MasterOptions
     Secret = secret,
     DataDirectory = Environment.GetEnvironmentVariable("HEROGAME_DATA") ?? "master-data",
     Urls = Environment.GetEnvironmentVariable("HEROGAME_URLS") ?? "http://0.0.0.0:5080",
+    CertificatePath = Environment.GetEnvironmentVariable("HEROGAME_CERT"),
+    CertificatePassword = Environment.GetEnvironmentVariable("HEROGAME_CERT_PASSWORD"),
 };
+if (options.PlaintextOnNetwork)
+    Console.WriteLine("WARNING: the master API is plain HTTP on a network interface; passwords and session tokens are readable in transit. " +
+                      "Use an https:// URL with HEROGAME_CERT, or put it behind a TLS reverse proxy, before any public test.");
 var app = MasterApp.Build(options, args);
 Console.WriteLine("Master server listening on " + options.Urls + ", data in " + Path.GetFullPath(options.DataDirectory));
 app.Run();

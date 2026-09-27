@@ -24,6 +24,9 @@ namespace HeroGame.Server
     ///                   [--master URL --server-id ID --server-key BASE64 --public-host HOST]
     ///                   [--dev-secret BASE64]   (offline/LAN: verify tickets with a local secret; 'ticket' console command mints them)
     ///                   [--owner ACCOUNT_ID]    (grant the owner role to an account on first start)
+    ///                   [--cert FILE.pfx [--cert-password PW] | --no-tls]
+    ///                                           (TLS is on by default with a self-signed certificate kept in the save
+    ///                                            directory; its fingerprint is published to the master for pinning)
     ///
     /// Console: status | save | ticket ACCOUNT NAME | op ACCOUNT ROLE | kick ACCOUNT | say TEXT | stop
     /// </summary>
@@ -103,6 +106,12 @@ namespace HeroGame.Server
                 MaxPlayers = o.TryGetValue("max", out var max) ? int.Parse(max) : world.Config.Gameplay.MaxPlayers,
                 Spawn = new Core.Foundation.WorldPosition(-200f, 0f, 40f),
             };
+            if (!o.ContainsKey("no-tls"))
+                options.Certificate = o.TryGetValue("cert", out var certPath)
+                    ? new System.Security.Cryptography.X509Certificates.X509Certificate2(certPath, o.TryGetValue("cert-password", out var pw) ? pw : null)
+                    : SelfSignedCertificate(Path.Combine(saveDir, "server-tls.pfx"), serverId);
+            var fingerprint = options.Certificate != null ? Networking.Security.TlsPinning.Fingerprint(options.Certificate) : null;
+            Console.WriteLine(fingerprint != null ? "TLS on; certificate fingerprint " + fingerprint : "TLS OFF (--no-tls): game traffic is not encrypted.");
             using var server = new GameServer(options, world, moderation);
             server.Log += line => Console.WriteLine("[" + DateTime.UtcNow.ToString("HH:mm:ss") + "] " + line);
             server.Start();
@@ -153,7 +162,7 @@ namespace HeroGame.Server
                 {
                     sinceHeartbeat = 0;
                     var players = server.Players.Count;
-                    master.Heartbeat(serverId, serverKey, players, options.MaxPlayers).ContinueWith(t =>
+                    master.Heartbeat(serverId, serverKey, players, options.MaxPlayers, fingerprint ?? "").ContinueWith(t =>
                     {
                         if (t.IsFaulted) Console.WriteLine("heartbeat failed: " + t.Exception?.GetBaseException().Message);
                     });
@@ -166,6 +175,21 @@ namespace HeroGame.Server
             journal.Dispose();
             Console.WriteLine("Saved and stopped.");
             return 0;
+        }
+
+        /// <summary>Loads the server's self-signed certificate, creating it (RSA-2048, 5 years) on first start.</summary>
+        private static System.Security.Cryptography.X509Certificates.X509Certificate2 SelfSignedCertificate(string path, string serverId)
+        {
+            if (!File.Exists(path))
+            {
+                using var rsa = System.Security.Cryptography.RSA.Create(2048);
+                var request = new System.Security.Cryptography.X509Certificates.CertificateRequest("CN=herogame-" + serverId, rsa,
+                    System.Security.Cryptography.HashAlgorithmName.SHA256, System.Security.Cryptography.RSASignaturePadding.Pkcs1);
+                using var created = request.CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(5));
+                File.WriteAllBytes(path, created.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Pfx));
+                if (!OperatingSystem.IsWindows()) File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite);
+            }
+            return new System.Security.Cryptography.X509Certificates.X509Certificate2(File.ReadAllBytes(path));
         }
 
         private static bool Command(string line, GameServer server, World world, WorldSaveSystem saves, FileTransactionJournal journal,

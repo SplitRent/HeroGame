@@ -49,6 +49,18 @@ Request ops (see `StandardRequests`): `me.status`, `property.buy|mortgage|repair
 muted; the author name comes from the signed ticket), `civic.register_powers|ballot|file|donate|campaign|propose|council_vote|budget`
 (filing requires standing at City Hall), `admin.kick|ban|unban|mute|unmute|grant|role`.
 
+## Transport security
+
+* **Game protocol:** TLS 1.2+ (`SslStream`) on by default in `herogame-server`. Without `--cert FILE.pfx` a self-signed
+  RSA-2048 certificate is created on first start as `server-tls.pfx` in the save directory (owner-only permissions) and
+  reused. Its SHA-256 fingerprint is printed at start-up, published through the server's authenticated heartbeat, and
+  returned by the master with every join ticket; clients pin it (`ClientTls.PinnedFingerprint`) so self-signed community
+  servers are still protected against a man in the middle. `--no-tls` exists for local debugging only.
+* **Master API:** HTTPS with `HEROGAME_URLS=https://…` and `HEROGAME_CERT`/`HEROGAME_CERT_PASSWORD`, or plain HTTP on
+  loopback behind a TLS reverse proxy. It warns at start-up when it would serve HTTP on a network interface.
+* **Sessions:** `POST /api/accounts/logout`, `/api/accounts/logout-all`, `/api/accounts/password` (current + new; signs out
+  every session).
+
 ## Running
 
 ```bash

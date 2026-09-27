@@ -29,6 +29,8 @@ namespace HeroGame.Networking.Client
         public string Ticket = "";
         public string Host = "";
         public int Port;
+        /// <summary>Pin for the server's TLS certificate (empty: the server does not use TLS).</summary>
+        public string TlsFingerprint = "";
     }
 
     /// <summary>Master-server API (TDD §8.4): accounts, the public server list, server registration/heartbeat and join tickets.</summary>
@@ -57,14 +59,22 @@ namespace HeroGame.Networking.Client
 
         public Task<List<ServerListing>> ListServers() => Get<List<ServerListing>>("api/servers");
 
+        /// <summary>Signs this session out on the master (the token stops working at once).</summary>
+        public async Task Logout()
+        {
+            if (string.IsNullOrEmpty(Token)) return;
+            await Post<object>("api/accounts/logout", new { }, auth: true).ConfigureAwait(false);
+            Token = null;
+        }
+
         public Task<ServerRegistration> RegisterServer(ServerListing listing) => Post<ServerRegistration>("api/servers", listing, auth: true);
 
-        public async Task Heartbeat(string serverId, string serverKey, int players, int maxPlayers)
+        public async Task Heartbeat(string serverId, string serverKey, int players, int maxPlayers, string tlsFingerprint = null)
         {
             using (var req = new HttpRequestMessage(HttpMethod.Post, "api/servers/" + Uri.EscapeDataString(serverId) + "/heartbeat"))
             {
                 req.Headers.Add("X-Server-Key", serverKey);
-                req.Content = Json(new { players, maxPlayers });
+                req.Content = Json(new { players, maxPlayers, tlsFingerprint });
                 using (var resp = await _http.SendAsync(req).ConfigureAwait(false)) await Ensure(resp).ConfigureAwait(false);
             }
         }

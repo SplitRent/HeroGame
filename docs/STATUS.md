@@ -131,8 +131,10 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Dedicated server host (`herogame-server`) | FUNCTIONAL | CI smoke test (create, status, save, stop) |
 | Unity online session (login, join, movement, remote players) | IN DEVELOPMENT | compiles; not run in Unity |
 | Handler faults isolated (logged, generic error, connection survives) | TESTED | `AHandlerThatThrows_FailsOnlyThatRequest_AndTheServerCarriesOn` |
-| Security audit (request surface, tickets, master API, saves) | FUNCTIONAL | `SECURITY_AUDIT.md`: 3 findings fixed with tests; TLS and session revocation open |
-| Transport encryption (TLS) for game protocol and master API | PLANNED | audit finding #4 |
+| Security audit (request surface, tickets, master API, saves) | FUNCTIONAL | `SECURITY_AUDIT.md`: 7 findings fixed with tests; per-account quotas and text moderation open |
+| Transport encryption (TLS with pinned fingerprints) for the game protocol; HTTPS option and warning for the master | TESTED | `Tls_PinnedConnectionsWork_WrongPinsAndPlaintextAreRefused`, `Heartbeat_PublishesTheServersTlsPin_*`; CI smoke runs with TLS |
+| Session sign-out, sign-out everywhere, password change | TESTED | `Sessions_CanBeSignedOut_Individually_Everywhere_AndByPasswordChange` |
+| Persisted manhunts; disconnecting mid-chase is evading | TESTED | `ActiveManhunt_SurvivesARestart`, `DisconnectingDuringAChase_*` |
 | Load test (30 Hz, 128 players) | PLANNED | not yet measured |
 | Replication of player-made world changes to other clients | PLANNED | see NETWORKING.md limitations |
 

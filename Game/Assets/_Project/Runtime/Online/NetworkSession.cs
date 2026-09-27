@@ -47,7 +47,7 @@ namespace HeroGame.Runtime.Online
                 await _master.Login(username, password);
                 Status = "Requesting a ticket…";
                 var ticket = await _master.RequestTicket(serverId);
-                await JoinDirect(ticket.Host, ticket.Port, ticket.Ticket);
+                await JoinDirect(ticket.Host, ticket.Port, ticket.Ticket, ticket.TlsFingerprint);
             }
             catch (MasterServerException ex)
             {
@@ -59,8 +59,11 @@ namespace HeroGame.Runtime.Online
             }
         }
 
-        /// <summary>LAN/dev: connect with a ticket minted by the server console.</summary>
-        public async Task JoinDirect(string host, int port, string ticket)
+        /// <summary>
+        /// Connects with a ticket. When the server publishes a TLS fingerprint the connection is encrypted and pinned
+        /// to it (LAN/dev: pass the fingerprint the server console prints, or empty for a plaintext dev server).
+        /// </summary>
+        public async Task JoinDirect(string host, int port, string ticket, string tlsFingerprint = "")
         {
             _client?.Dispose();
             _client = new GameClient();
@@ -70,7 +73,8 @@ namespace HeroGame.Runtime.Online
             _client.NoticeReceived += n => SubtitleFeed.Say(n.From, n.Text, 6f);
             _client.Disconnected += reason => Status = "Disconnected: " + reason;
             Status = "Connecting…";
-            await _client.ConnectAsync(host, port, ticket, Application.version);
+            var tls = string.IsNullOrEmpty(tlsFingerprint) ? null : new HeroGame.Networking.Security.ClientTls { PinnedFingerprint = tlsFingerprint };
+            await _client.ConnectAsync(host, port, ticket, Application.version, tls: tls);
         }
 
         public Task<Response> Request(string op, Dictionary<string, string> args = null)

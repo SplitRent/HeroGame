@@ -64,7 +64,7 @@ public sealed class ServerDirectory
         }
     }
 
-    public void Heartbeat(string serverId, string? keyBase64, int players, int maxPlayers)
+    public void Heartbeat(string serverId, string? keyBase64, int players, int maxPlayers, string? tlsFingerprint = null)
     {
         var record = Find(serverId) ?? throw new ServiceException(404, "Unknown server.");
         byte[] presented;
@@ -76,6 +76,12 @@ public sealed class ServerDirectory
             record.LastHeartbeatUnix = _now();
             record.Listing.Population = Math.Max(0, Math.Min(players, 1000));
             if (maxPlayers > 0 && maxPlayers <= 512) record.Listing.MaxPopulation = maxPlayers;
+            if (tlsFingerprint != null)
+            {
+                var fp = tlsFingerprint.Trim().ToLowerInvariant();
+                if (fp.Length != 0 && (fp.Length != 64 || fp.Any(ch => !Uri.IsHexDigit(ch)))) throw new ServiceException(400, "Bad TLS fingerprint.");
+                record.Listing.TlsFingerprint = fp;
+            }
             _store.Save();
         }
     }

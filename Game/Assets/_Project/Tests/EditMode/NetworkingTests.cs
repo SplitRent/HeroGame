@@ -430,6 +430,73 @@ namespace HeroGame.Tests
             StringAssert.Contains("shutting down", b.DisconnectReason);
         }
 
+        private static System.Security.Cryptography.X509Certificates.X509Certificate2 TestCertificate()
+        {
+            try
+            {
+                using (var rsa = System.Security.Cryptography.RSA.Create(2048))
+                {
+                    var request = new System.Security.Cryptography.X509Certificates.CertificateRequest("CN=herogame-test", rsa,
+                        System.Security.Cryptography.HashAlgorithmName.SHA256, System.Security.Cryptography.RSASignaturePadding.Pkcs1);
+                    using (var cert = request.CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1)))
+                        return new System.Security.Cryptography.X509Certificates.X509Certificate2(cert.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Pfx));
+                }
+            }
+            catch (PlatformNotSupportedException)
+            {
+                Assert.Ignore("Certificate generation is not supported on this runtime.");
+                return null;
+            }
+        }
+
+        [Test]
+        public void Tls_PinnedConnectionsWork_WrongPinsAndPlaintextAreRefused()
+        {
+            var cert = TestCertificate();
+            var world = WorldGenerator.Create("net-tls", TestContent.DefaultConfig(), TestContent.Load(), new MemoryTransactionJournal());
+            using (var secure = new GameServer(new GameServerOptions
+            {
+                ServerId = ServerId, TicketKey = TicketCodec.DeriveServerKey(MasterSecret, ServerId), HandshakeTimeoutMs = 1500, Certificate = cert,
+            }, world, new ModerationService()))
+            {
+                secure.Start();
+                void Pump(Func<bool> done)
+                {
+                    var start = Environment.TickCount;
+                    while (!done() && Environment.TickCount - start < 4000)
+                    {
+                        secure.Pump();
+                        foreach (var c in _clients) c.Pump();
+                        Thread.Sleep(2);
+                    }
+                }
+
+                var pin = Networking.Security.TlsPinning.Fingerprint(cert);
+                Assert.AreEqual(64, pin.Length);
+                var good = new GameClient();
+                _clients.Add(good);
+                good.ConnectAsync("127.0.0.1", secure.Port, TicketFor("acc-tls", "Tess"), tls: new Networking.Security.ClientTls { PinnedFingerprint = pin }).Wait(4000);
+                Pump(() => good.State == ClientState.Connected);
+                Assert.AreEqual(ClientState.Connected, good.State, good.DisconnectReason);
+                Assert.IsTrue(good.Encrypted);
+                Assert.IsTrue(secure.Players.Single().Encrypted);
+
+                var wrongPin = new GameClient();
+                _clients.Add(wrongPin);
+                var bad = new string('0', 64);
+                Assert.Catch<Exception>(() => wrongPin.ConnectAsync("127.0.0.1", secure.Port, TicketFor("acc-tls2", "Mal"), tls: new Networking.Security.ClientTls { PinnedFingerprint = bad }).Wait(4000),
+                    "a man-in-the-middle certificate is rejected");
+                Assert.AreNotEqual(ClientState.Connected, wrongPin.State);
+
+                var plain = new GameClient();
+                _clients.Add(plain);
+                plain.ConnectAsync("127.0.0.1", secure.Port, TicketFor("acc-tls3", "Pat")).Wait(4000);
+                Pump(() => plain.State == ClientState.Disconnected);
+                Assert.AreNotEqual(ClientState.Connected, plain.State, "a secure server never talks plaintext");
+                Assert.AreEqual(1, secure.Players.Count);
+            }
+        }
+
         [Test]
         public void BuildOps_SurviveTheWireEncoding()
         {
