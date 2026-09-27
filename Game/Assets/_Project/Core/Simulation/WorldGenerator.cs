@@ -7,6 +7,7 @@ using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
 using HeroGame.Core.Population;
 using HeroGame.Core.Property;
+using HeroGame.Core.Time;
 using HeroGame.Core.Vehicles;
 using HeroGame.Core.World;
 
@@ -19,12 +20,13 @@ namespace HeroGame.Core.Simulation
     /// </summary>
     public static class WorldGenerator
     {
-        public static World Create(string serverId, ServerConfig config, ContentSet content, ITransactionJournal journal)
+        public static World Create(string serverId, ServerConfig config, ContentSet content, ITransactionJournal journal, GameDateTime? start = null)
         {
             var report = ServerConfigValidator.ValidateAndClamp(config);
             if (report.HasErrors) throw new InvalidOperationException("Invalid server config:\n" + report);
 
-            var world = new World(serverId, config, content, journal);
+            var clock = start.HasValue ? new WorldClock(start.Value, WorldClock.TimeScaleForDayLength(config.Gameplay.RealMinutesPerGameDay)) : null;
+            var world = new World(serverId, config, content, journal, clock);
             CreateInstitutions(world);
             var expanded = LayoutExpander.Expand(content.Layout, world.Seed, world.Ids, world.Geography);
             var propertyByPlace = CreateProperties(world, expanded);

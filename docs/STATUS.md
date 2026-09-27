@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phases 11–14 (power execution)._
+_Last updated: Phases 15–17 (story framework, teen chapter, time jump)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -76,6 +76,18 @@ _Last updated: Phases 11–14 (power execution)._
 | Fire growth, suppression, spread, building loss | TESTED | `Fire_IsFoughtAndPutOut_Deterministically`, `Fire_WithNoEnginesAvailable_BurnsTheBuildingDown` |
 | EMS transport, hospital stay, billing via health cover, medical debt, permadeath rule | TESTED | `DownedPlayer_*`, `UninsuredBrokePatient_*`, `Permadeath_*` |
 | Background city calls at realistic rates | TESTED | `BackgroundCalls_ComeInAtRealisticRates_AndAreAnswered` |
+
+## Story Mode
+| System | Status | Evidence / notes |
+|---|---|---|
+| Story framework (missions, objectives, branching, dialogue trees, effects/conditions, cutscene requests) | TESTED | `Dialogue_*`, `RafasFavor_RefusingSkipsTheDeliveryBranch` |
+| Story content validation (ids, places, branches, scripted effects) | TESTED | `StoryContent_PassesValidation`, `Validator_CatchesWriterMistakes` |
+| Cast as real NPCs in a 2026 world; teen restrictions | TESTED | `Begin_CastsRealPeople_InARealWorld_In2026` |
+| Part One "Magnolia Street" (7 missions) + four-year time jump (simulated) + Part Two opener | TESTED | `PartOne_PlaysThrough_Isadora_AndTheFourYearJump` (scripted playthrough) |
+| Story save/resume | TESTED | `StoryState_SurvivesSaveAndLoad_MidMission` |
+| Part Two acts II–IV and finale | PLANNED | GDD §6; framework ready, content not written |
+| Story presenter (objective HUD, dialogue box, letterbox cutscenes, interaction points) | IN DEVELOPMENT | compiles; IMGUI placeholder; not run in Unity |
+| Voice acting, animation, Timeline cutscenes | PLANNED | ASSET_TRACKER |
 
 ## Persistence
 | System | Status | Evidence / notes |

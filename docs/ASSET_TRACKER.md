@@ -14,6 +14,8 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Build mode UI | IMGUI side panel in `BuildModeController`; greybox cube walls/furniture from `LayoutRenderer` | Runtime/Building | UI Toolkit build palette + catalog prefabs | PLACEHOLDER |
 | Business office / bank & insurance apps | IMGUI `BusinessPanel`, `FinancePanel` | Runtime/UI | phone apps + office screen (Phases 23–24) | PLACEHOLDER |
 | Police desk / court UI | IMGUI `JusticePanel` | Runtime/UI | UI Toolkit screens (Phase 24) | PLACEHOLDER |
+| Story dialogue box, objective HUD, cutscenes | IMGUI `StoryPresenter`; cutscenes are camera cuts with subtitles | Runtime/Story | UI Toolkit dialogue UI, Timeline cutscenes, voice and animation | PLACEHOLDER |
+| Story cast appearance | generic NPC capsules | — | authored character models for the cast (Rosa, Pilar, Lupe, Dee, Mai, Rafa, Coach, Abernathy…) | PLACEHOLDER |
 | Police car / fire engine / ambulance | tinted boxes with a point-light bar (`*_Greybox.prefab`) | Generated/ | modelled service vehicles with livery, sirens | PLACEHOLDER |
 | Fire | single orange particle system | `Fire_Placeholder.prefab` | layered fire/smoke VFX Graph | PLACEHOLDER |
 | Power effects | one burst particle system tinted per element | `PowerImpact_Placeholder.prefab` | per-archetype VFX Graph effects, audio, animation | PLACEHOLDER |

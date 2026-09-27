@@ -32,6 +32,159 @@ namespace HeroGame.Persistence.Content
         public const string Furniture = "furniture_catalog.json";
         public const string BusinessRequirements = "business_requirements.json";
         public const string Items = "items.json";
+        public const string Story = "story_port_arden.json";
+
+        /// <summary>Story Mode content (not needed by player servers).</summary>
+        public static Core.Story.StoryDefinition LoadStory(string dataDirectory, string file = Story) => Read<Core.Story.StoryDefinition>(dataDirectory, file);
+
+        /// <summary>
+        /// Checks every id, place, branch target and scripted effect/condition in a story, so a writer's typo fails
+        /// the build instead of soft-locking a player mid-chapter.
+        /// </summary>
+        public static ValidationReport ValidateStory(Core.Story.StoryDefinition s, ContentSet content)
+        {
+            var r = new ValidationReport();
+            var places = new HashSet<string>();
+            foreach (var d in content.Layout.Districts) foreach (var p in d.Places) places.Add(p.Name);
+            var cast = new HashSet<string>();
+            foreach (var c in s.Cast)
+            {
+                if (!cast.Add(c.Id)) r.Error("story.cast." + c.Id, "Duplicate cast id.");
+                if (!string.IsNullOrEmpty(c.Occupation) && !content.Occupations.Exists(o => o.Id == c.Occupation)) r.Error("story.cast." + c.Id, "Unknown occupation " + c.Occupation);
+                if (!string.IsNullOrEmpty(c.Workplace) && !places.Contains(c.Workplace)) r.Error("story.cast." + c.Id, "Unknown place " + c.Workplace);
+            }
+            var missions = new HashSet<string>();
+            foreach (var m in s.Missions) if (!missions.Add(m.Id)) r.Error("story.missions." + m.Id, "Duplicate mission id.");
+            var dialogues = new HashSet<string>();
+            foreach (var d in s.Dialogues) if (!dialogues.Add(d.Id)) r.Error("story.dialogues." + d.Id, "Duplicate dialogue id.");
+
+            void Effects(string path, List<string> list)
+            {
+                foreach (var e in list) CheckOp(r, path, e, effect: true, s, missions, cast);
+            }
+            void Where(string path, string where)
+            {
+                if (string.IsNullOrEmpty(where) || where == "home") return;
+                if (where.StartsWith("cast:", System.StringComparison.Ordinal)) { if (!cast.Contains(where.Substring(5))) r.Error(path, "Unknown cast " + where); }
+                else if (!places.Contains(where)) r.Error(path, "Unknown place '" + where + "'.");
+            }
+            foreach (var m in s.Missions)
+            {
+                var path = "story.missions." + m.Id;
+                foreach (var req in m.Requires) if (!missions.Contains(req)) r.Error(path, "Requires unknown mission " + req);
+                if (m.Objectives.Count == 0) r.Error(path, "No objectives.");
+                Effects(path + ".OnStart", m.OnStart);
+                Effects(path + ".OnComplete", m.OnComplete);
+                foreach (var o in m.Objectives)
+                {
+                    var op = path + "." + o.Id;
+                    Effects(op, o.OnComplete);
+                    if (!string.IsNullOrEmpty(o.Condition)) CheckOp(r, op, o.Condition, effect: false, s, missions, cast);
+                    if (!string.IsNullOrEmpty(o.Dialogue) && !dialogues.Contains(o.Dialogue)) r.Error(op, "Unknown dialogue " + o.Dialogue);
+                    switch (o.Kind)
+                    {
+                        case Core.Story.ObjectiveKind.TalkTo:
+                            if (!cast.Contains(o.Target)) r.Error(op, "Talks to unknown cast member " + o.Target);
+                            break;
+                        case Core.Story.ObjectiveKind.GoTo:
+                        case Core.Story.ObjectiveKind.Stay:
+                            Where(op, o.Target);
+                            break;
+                        case Core.Story.ObjectiveKind.Interact:
+                            Where(op, o.Location);
+                            if (string.IsNullOrEmpty(o.Target)) r.Error(op, "Interact objectives need a tag.");
+                            break;
+                        case Core.Story.ObjectiveKind.Condition:
+                            if (string.IsNullOrEmpty(o.Condition)) r.Error(op, "Condition objective without a condition.");
+                            break;
+                    }
+                }
+            }
+            foreach (var d in s.Dialogues)
+            {
+                var path = "story.dialogues." + d.Id;
+                if (d.Node(d.Start) == null) r.Error(path, "Start node missing.");
+                foreach (var n in d.Nodes)
+                {
+                    if (n.Speaker != "player" && n.Speaker != "narrator" && !cast.Contains(n.Speaker)) r.Error(path + "." + n.Id, "Unknown speaker " + n.Speaker);
+                    if (!string.IsNullOrEmpty(n.Next) && d.Node(n.Next) == null) r.Error(path + "." + n.Id, "Next node missing: " + n.Next);
+                    Effects(path + "." + n.Id, n.Effects);
+                    foreach (var c in n.Choices)
+                    {
+                        if (!string.IsNullOrEmpty(c.Next) && d.Node(c.Next) == null) r.Error(path + "." + n.Id, "Choice leads to missing node " + c.Next);
+                        Effects(path + "." + n.Id, c.Effects);
+                        foreach (var cond in c.Conditions) CheckOp(r, path + "." + n.Id, cond, effect: false, s, missions, cast);
+                    }
+                }
+            }
+            foreach (var c in s.Cutscenes)
+                foreach (var shot in c.Shots)
+                    if (shot.Camera.StartsWith("place:", System.StringComparison.Ordinal) && !places.Contains(shot.Camera.Substring(6))) r.Error("story.cutscenes." + c.Id, "Unknown place " + shot.Camera);
+            foreach (var t in s.TimeJumps)
+            {
+                Effects("story.timejumps." + t.Id, t.Effects);
+                foreach (var ch in t.CastChanges)
+                {
+                    if (!cast.Contains(ch.Cast)) r.Error("story.timejumps." + t.Id, "Unknown cast " + ch.Cast);
+                    if (!string.IsNullOrEmpty(ch.Occupation) && !content.Occupations.Exists(o => o.Id == ch.Occupation)) r.Error("story.timejumps." + t.Id, "Unknown occupation " + ch.Occupation);
+                    if (!string.IsNullOrEmpty(ch.Workplace) && !places.Contains(ch.Workplace)) r.Error("story.timejumps." + t.Id, "Unknown place " + ch.Workplace);
+                    if (!string.IsNullOrEmpty(ch.Condition)) CheckOp(r, "story.timejumps." + t.Id, ch.Condition, effect: false, s, missions, cast);
+                }
+                if (!string.IsNullOrEmpty(t.Cutscene) && s.Cutscene(t.Cutscene) == null) r.Error("story.timejumps." + t.Id, "Unknown cutscene " + t.Cutscene);
+            }
+            return r;
+        }
+
+        private static void CheckOp(ValidationReport r, string path, string text, bool effect, Core.Story.StoryDefinition s, HashSet<string> missions, HashSet<string> cast)
+        {
+            var op = Core.Story.StoryOp.Parse(text);
+            var verbs = effect ? Core.Story.StoryOp.EffectVerbs : Core.Story.StoryOp.ConditionVerbs;
+            if (System.Array.IndexOf(verbs, op.Verb) < 0)
+            {
+                r.Error(path, "Unknown " + (effect ? "effect" : "condition") + " '" + text + "'.");
+                return;
+            }
+            bool Num(string v) => double.TryParse(v, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _);
+            switch (op.Verb)
+            {
+                case "rel":
+                    var name = op.Arg(0);
+                    var i = name.IndexOfAny(new[] { '+', '-', '=', '>', '<' }, 1);
+                    if (i < 0 || !cast.Contains(name.Substring(0, i))) r.Error(path, "Bad relationship in '" + text + "'.");
+                    break;
+                case "money":
+                    if (effect && !Num(op.Arg(0))) r.Error(path, "Bad amount in '" + text + "'.");
+                    break;
+                case "pay":
+                    if (!Num(op.Arg(1))) r.Error(path, "Bad amount in '" + text + "'.");
+                    break;
+                case "mission":
+                    var id = effect ? op.Arg(1) : Core.Story.StoryOp.SplitComparison(op.Arg(0)).name;
+                    if (!missions.Contains(id)) r.Error(path, "Unknown mission in '" + text + "'.");
+                    break;
+                case "cutscene":
+                    if (s.Cutscene(op.Arg(0)) == null) r.Error(path, "Unknown cutscene in '" + text + "'.");
+                    break;
+                case "timejump":
+                    if (s.TimeJump(op.Arg(0)) == null) r.Error(path, "Unknown time jump in '" + text + "'.");
+                    break;
+                case "storm":
+                    if (!Num(op.Arg(1)) || !Num(op.Arg(2))) r.Error(path, "storm:NAME:CATEGORY:HOURS expected, got '" + text + "'.");
+                    break;
+                case "anomaly":
+                    if (op.Arg(0) != "player" || !Num(op.Arg(1)) || !Num(op.Arg(4))) r.Error(path, "anomaly:player:DAYS:DOMAINS:ELEMENTS:INTENSITY expected, got '" + text + "'.");
+                    foreach (var d in op.Arg(2).Split(',')) if (!System.Enum.TryParse(d, out Core.Powers.PowerDomain _)) r.Error(path, "Unknown power domain " + d);
+                    foreach (var e in op.Arg(3).Split(',')) if (!System.Enum.TryParse(e, out Core.Powers.PowerElement _)) r.Error(path, "Unknown element " + e);
+                    break;
+                case "cast":
+                case "say":
+                    if (op.Verb == "cast" && !cast.Contains(op.Arg(0)) || op.Verb == "say" && op.Arg(0) != "narrator" && !cast.Contains(op.Arg(0))) r.Error(path, "Unknown cast in '" + text + "'.");
+                    break;
+                case "time":
+                    if (op.Arg(0) != "advance" && op.Arg(0) != "to") r.Error(path, "time:advance:H or time:to:HH:MM expected.");
+                    break;
+            }
+        }
         public const string DefaultServerConfig = "server_default.json";
 
         public static ContentSet Load(string dataDirectory, string layoutFile = DefaultLayout)

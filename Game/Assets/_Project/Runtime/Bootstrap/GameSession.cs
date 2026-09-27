@@ -56,7 +56,7 @@ namespace HeroGame.Runtime.Bootstrap
         public static string SaveRoot => Path.Combine(Application.persistentDataPath, "Saves");
 
         /// <summary>Opens (or creates) a world in <paramref name="saveDirectory"/>.</summary>
-        public static GameSession OpenOrCreate(SessionMode mode, string serverId, string saveDirectory, ContentSet content)
+        public static GameSession OpenOrCreate(SessionMode mode, string serverId, string saveDirectory, ContentSet content, Core.Time.GameDateTime? start = null)
         {
             var saves = new WorldSaveSystem(saveDirectory);
             var journal = saves.OpenJournal();
@@ -76,10 +76,25 @@ namespace HeroGame.Runtime.Bootstrap
             else
             {
                 var config = ContentLoader.LoadServerConfig(Path.Combine(DataDirectory, ContentLoader.DefaultServerConfig));
-                world = WorldGenerator.Create(serverId, config, content, journal);
+                world = WorldGenerator.Create(serverId, config, content, journal, start);
                 saves.Save(world, full: true);
             }
             return new GameSession(mode, world, saves, journal);
+        }
+
+        /// <summary>Story Mode director when this session is a story slot.</summary>
+        public StoryService Story { get; private set; }
+
+        /// <summary>Story Mode gates some actions by chapter (a sixteen-year-old cannot sign a mortgage).</summary>
+        public OpResult CheckAllowed(string action) =>
+            Story == null || Story.Allows(action) ? OpResult.Ok() : OpResult.Fail("Not yet — that comes later in your story.");
+
+        /// <summary>Makes the story's protagonist the local character and lets story time effects run the simulation.</summary>
+        public void UseStory(StoryService story)
+        {
+            Story = story;
+            story.Simulation = Simulation;
+            LocalCharacter = story.Player;
         }
 
         /// <summary>Finds or creates this server's version of the local account's character.</summary>
@@ -126,6 +141,8 @@ namespace HeroGame.Runtime.Bootstrap
         public OpResult BuyProperty(EntityId property)
         {
             if (LocalCharacter == null) return OpResult.Fail("No character.");
+            var allowed = CheckAllowed("property.buy");
+            if (!allowed.Success) return allowed;
             var key = "buy:" + LocalCharacter.CharacterId + ":" + property + ":" + World.Clock.Now.TotalSeconds;
             return World.Properties.Purchase(property, LocalCharacter.CharacterId, LocalCharacter.CheckingAccount,
                 SellerAccountFor(property), World.Accounts.Treasury, World.Clock.Now, key);

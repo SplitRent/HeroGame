@@ -75,7 +75,11 @@ namespace HeroGame.Runtime.UI
                 {
                     var price = ops.PriceOf(b);
                     GUILayout.Label("For sale: business " + price.Business + " + till " + price.Cash + (price.Property.Cents > 0 ? " + building " + price.Property : "") + " + tax " + price.Tax);
-                    if (GUILayout.Button("Buy for " + price.Total)) Report(ops.Buy(b, me, session.NextRequestKey("buy-business")), "Purchased.");
+                    if (GUILayout.Button("Buy for " + price.Total))
+                    {
+                        var allowed = session.CheckAllowed("business.buy");
+                        Report(allowed.Success ? ops.Buy(b, me, session.NextRequestKey("buy-business")) : allowed, "Purchased.");
+                    }
                 }
                 else GUILayout.Label("Not for sale.");
             }

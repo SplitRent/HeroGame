@@ -99,7 +99,11 @@ namespace HeroGame.Runtime.UI
                     GUILayout.EndHorizontal();
                     var offer = fin.QuoteLoan(me, LoanKind.Personal, Parse(_loanAmount), 36, EntityId.None);
                     GUILayout.Label(offer.Approved ? "36 months at " + (offer.AnnualRate * 100).ToString("0.00") + "%: " + new Money(offer.MonthlyPaymentCents) + "/month" : offer.Reason);
-                    if (offer.Approved && GUILayout.Button("Accept")) Report(fin.TakeLoan(me, LoanKind.Personal, Parse(_loanAmount), 36, EntityId.None, session.NextRequestKey("loan")), "Funds deposited.");
+                    if (offer.Approved && GUILayout.Button("Accept"))
+                    {
+                        var allowed = session.CheckAllowed("finance.loan");
+                        Report(allowed.Success ? fin.TakeLoan(me, LoanKind.Personal, Parse(_loanAmount), 36, EntityId.None, session.NextRequestKey("loan")) : allowed, "Funds deposited.");
+                    }
                     break;
                 }
                 case Tab.Insurance:

@@ -1,0 +1,1606 @@
+{
+  "Id": "port_arden_story",
+  "Title": "Port Arden",
+  "Start": "2026-08-17 07:00",
+  "ProtagonistFirstName": "Eli",
+  "ProtagonistLastName": "Navarro",
+  "ProtagonistAge": 16,
+  "HomeStreet": "Magnolia St",
+  "TeenRestrictions": [
+    "property.buy",
+    "property.mortgage",
+    "business.buy",
+    "business.start",
+    "vehicle.buy",
+    "finance.loan"
+  ],
+  "Cast": [
+    {
+      "Id": "rosa",
+      "FirstName": "Rosa",
+      "LastName": "Navarro",
+      "Age": 44,
+      "Sex": "Female",
+      "Occupation": "nurse_night",
+      "Workplace": "Arden General Hospital - East Campus",
+      "Home": "navarro",
+      "Role": "Mother; ER nurse on nights."
+    },
+    {
+      "Id": "pilar",
+      "FirstName": "Pilar",
+      "LastName": "Navarro",
+      "Age": 9,
+      "Sex": "Female",
+      "Occupation": "",
+      "Workplace": "",
+      "Home": "navarro",
+      "Role": "Younger sister; notices everything."
+    },
+    {
+      "Id": "lupe",
+      "FirstName": "Lupe",
+      "LastName": "Salazar",
+      "Age": 67,
+      "Sex": "Female",
+      "Occupation": "store_manager",
+      "Workplace": "Lupe's Corner Market",
+      "Home": "",
+      "Role": "Corner store owner; the neighbourhood's memory."
+    },
+    {
+      "Id": "dee",
+      "FirstName": "Darnell",
+      "LastName": "Okafor",
+      "Age": 16,
+      "Sex": "Male",
+      "Occupation": "",
+      "Workplace": "Eastwater High School",
+      "Home": "",
+      "Role": "Best friend; engineer brain."
+    },
+    {
+      "Id": "mai",
+      "FirstName": "Mai",
+      "LastName": "Pham",
+      "Age": 16,
+      "Sex": "Female",
+      "Occupation": "",
+      "Workplace": "Eastwater High School",
+      "Home": "",
+      "Role": "Runs the school paper."
+    },
+    {
+      "Id": "rafa",
+      "FirstName": "Rafa",
+      "LastName": "Navarro",
+      "Age": 22,
+      "Sex": "Male",
+      "Occupation": "",
+      "Workplace": "",
+      "Home": "",
+      "Role": "Cousin; small scams, big charm."
+    },
+    {
+      "Id": "coach",
+      "FirstName": "Harold",
+      "LastName": "Dupree",
+      "Age": 58,
+      "Sex": "Male",
+      "Occupation": "teacher",
+      "Workplace": "Eastwater High School",
+      "Home": "",
+      "Role": "Pelicans football coach."
+    },
+    {
+      "Id": "abernathy",
+      "FirstName": "Ruth",
+      "LastName": "Abernathy",
+      "Age": 51,
+      "Sex": "Female",
+      "Occupation": "police_detective",
+      "Workplace": "PAPD Harbor Row Precinct",
+      "Home": "",
+      "Role": "Detective; methodical, fair, relentless."
+    },
+    {
+      "Id": "hollins",
+      "FirstName": "Yolanda",
+      "LastName": "Hollins",
+      "Age": 49,
+      "Sex": "Female",
+      "Occupation": "city_program_manager",
+      "Workplace": "Eastwater Community Center",
+      "Home": "",
+      "Role": "Eastwater's council member."
+    },
+    {
+      "Id": "calloway",
+      "FirstName": "Grant",
+      "LastName": "Calloway",
+      "Age": 38,
+      "Sex": "Male",
+      "Occupation": "plant_supervisor",
+      "Workplace": "Calloway Chemical Works",
+      "Home": "",
+      "Role": "Heir to Calloway Chemical."
+    }
+  ],
+  "Missions": [
+    {
+      "Id": "mornings",
+      "Title": "Mornings",
+      "Summary": "Magnolia Street wakes up. Rosa is heading to a night shift; Pilar needs walking to school.",
+      "Part": 1,
+      "Requires": [],
+      "AutoStart": true,
+      "OnStart": [
+        "cutscene:opening"
+      ],
+      "Objectives": [
+        {
+          "Id": "talk_rosa",
+          "Kind": "TalkTo",
+          "Text": "Talk to Mom before her shift",
+          "Target": "rosa",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_rosa_morning",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "walk_school",
+          "Kind": "GoTo",
+          "Text": "Walk Pilar to school",
+          "Target": "Eastwater High School",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [
+        "flag:day_one=1"
+      ],
+      "Checkpoint": true
+    },
+    {
+      "Id": "eastwater_high",
+      "Title": "Eastwater High",
+      "Summary": "Classes, lunch-table politics, and two friends with plans.",
+      "Part": 1,
+      "Requires": [
+        "mornings"
+      ],
+      "AutoStart": true,
+      "OnStart": [],
+      "Objectives": [
+        {
+          "Id": "first_period",
+          "Kind": "Stay",
+          "Text": "Get through first period",
+          "Target": "Eastwater High School",
+          "Location": "",
+          "Amount": 2,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "lunch_dee",
+          "Kind": "TalkTo",
+          "Text": "Find Dee at lunch",
+          "Target": "dee",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_dee_lunch",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "mai_paper",
+          "Kind": "TalkTo",
+          "Text": "Mai wants a word",
+          "Target": "mai",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_mai_paper",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "friday_lights",
+      "Title": "Friday Lights",
+      "Summary": "The Pelicans play Channelside. The whole neighbourhood is in the stands.",
+      "Part": 1,
+      "Requires": [
+        "eastwater_high"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "say:coach:Game's at seven. Don't make me regret putting you on the roster, Navarro."
+      ],
+      "Objectives": [
+        {
+          "Id": "wait_game",
+          "Kind": "Wait",
+          "Text": "Wait for Friday night",
+          "Target": "18:30",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "to_field",
+          "Kind": "GoTo",
+          "Text": "Get to the field",
+          "Target": "Eastwater High School",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "coach",
+          "Kind": "TalkTo",
+          "Text": "Talk to Coach Dupree",
+          "Target": "coach",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_coach_pregame",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "play",
+          "Kind": "Stay",
+          "Text": "Play the game",
+          "Target": "Eastwater High School",
+          "Location": "",
+          "Amount": 2,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [
+        "history:2:Pelicans edge Channelside in a Friday night thriller",
+        "flag:pelicans_won=1"
+      ],
+      "Checkpoint": true
+    },
+    {
+      "Id": "first_paycheck",
+      "Title": "First Paycheck",
+      "Summary": "Lupe needs help at the store. Money is tight at home.",
+      "Part": 1,
+      "Requires": [
+        "friday_lights"
+      ],
+      "AutoStart": true,
+      "OnStart": [],
+      "Objectives": [
+        {
+          "Id": "ask_lupe",
+          "Kind": "TalkTo",
+          "Text": "Ask Lupe about work",
+          "Target": "lupe",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_lupe_job",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "shift",
+          "Kind": "Stay",
+          "Text": "Work your first shift at Lupe's",
+          "Target": "Lupe's Corner Market",
+          "Location": "",
+          "Amount": 4,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "paid",
+          "Kind": "TalkTo",
+          "Text": "Collect your pay from Lupe",
+          "Target": "lupe",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_lupe_pay",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "rafas_favor",
+      "Title": "Rafa's Favor",
+      "Summary": "Your cousin needs a small favor. Small favors are rarely small.",
+      "Part": 1,
+      "Requires": [
+        "first_paycheck"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "say:rafa:Primo. Need a small favor. Come find me."
+      ],
+      "Objectives": [
+        {
+          "Id": "meet_rafa",
+          "Kind": "TalkTo",
+          "Text": "Meet Rafa",
+          "Target": "rafa",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_rafa_favor",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "drop",
+          "Kind": "GoTo",
+          "Text": "Drop the bag at Channelside Terminal 3",
+          "Target": "Channelside Terminal 3",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "flag:rafa_delivery>=1",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "stopped",
+          "Kind": "TalkTo",
+          "Text": "Someone is waiting at the gate",
+          "Target": "abernathy",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_stop",
+          "Condition": "flag:rafa_delivery>=1",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "lupe_after",
+          "Kind": "TalkTo",
+          "Text": "Face Lupe",
+          "Target": "lupe",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_lupe_after",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "rosa_knows",
+          "Kind": "TalkTo",
+          "Text": "Go home to Mom",
+          "Target": "rosa",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_rosa_finds_out",
+          "Condition": "flag:rafa_delivery>=1",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "canal_lights",
+      "Title": "The Canal Lights",
+      "Summary": "A night at the ship canal with Dee and Mai. The storm out over the Gulf is doing something strange.",
+      "Part": 1,
+      "Requires": [
+        "rafas_favor"
+      ],
+      "AutoStart": true,
+      "OnStart": [],
+      "Objectives": [
+        {
+          "Id": "dark",
+          "Kind": "Wait",
+          "Text": "Meet Dee and Mai after dark",
+          "Target": "21:00",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "canal",
+          "Kind": "GoTo",
+          "Text": "Go to the ship canal",
+          "Target": "Channelside Terminal 3",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "watch",
+          "Kind": "TalkTo",
+          "Text": "Watch the lightning with Dee",
+          "Target": "dee",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_canal",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    },
+    {
+      "Id": "isadora",
+      "Title": "Isadora",
+      "Summary": "A hurricane turns toward Port Arden. Rosa is stuck at the hospital.",
+      "Part": 1,
+      "Requires": [
+        "canal_lights"
+      ],
+      "AutoStart": true,
+      "OnStart": [
+        "storm:Isadora:3:8",
+        "say:rosa:Isadora is turning toward us and I'm stuck at the hospital. Get Pilar home and bring everything in from the yard."
+      ],
+      "Objectives": [
+        {
+          "Id": "home",
+          "Kind": "GoTo",
+          "Text": "Get home before the storm",
+          "Target": "home",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "sandbags",
+          "Kind": "Interact",
+          "Text": "Sandbag the front door",
+          "Target": "sandbags",
+          "Location": "home",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "lupe_storm",
+          "Kind": "TalkTo",
+          "Text": "Check on Lupe",
+          "Target": "lupe",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_lupe_storm",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "ride_out",
+          "Kind": "Survive",
+          "Text": "Ride out Isadora",
+          "Target": "",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "eye",
+          "Kind": "TalkTo",
+          "Text": "In the eye of the storm — find Pilar",
+          "Target": "pilar",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_eye",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [
+        "timejump:four_years"
+      ],
+      "Checkpoint": true
+    },
+    {
+      "Id": "back_on_magnolia",
+      "Title": "Back on Magnolia",
+      "Summary": "Eli, twenty, back from two years on offshore platforms. The street has changed.",
+      "Part": 2,
+      "Requires": [
+        "isadora"
+      ],
+      "AutoStart": true,
+      "OnStart": [],
+      "Objectives": [
+        {
+          "Id": "rosa_return",
+          "Kind": "TalkTo",
+          "Text": "See Mom",
+          "Target": "rosa",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_rosa_return",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "lupe_return",
+          "Kind": "TalkTo",
+          "Text": "Visit Lupe's",
+          "Target": "lupe",
+          "Location": "",
+          "Amount": 0,
+          "Dialogue": "d_lupe_return",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        },
+        {
+          "Id": "savings",
+          "Kind": "Earn",
+          "Text": "Save $3,000 for a place of your own",
+          "Target": "",
+          "Location": "",
+          "Amount": 300000,
+          "Dialogue": "",
+          "Condition": "",
+          "OnComplete": [],
+          "Optional": false
+        }
+      ],
+      "OnComplete": [],
+      "Checkpoint": true
+    }
+  ],
+  "Dialogues": [
+    {
+      "Id": "d_rosa_morning",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "rosa",
+          "Text": "You're up before the alarm. Who are you and what did you do with my son?",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "player",
+          "Text": "Couldn't sleep. The Hendersons' dog was doing its opera again.",
+          "Next": "c",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "rosa",
+          "Text": "I'm on nights all week. Pilar needs walking to school, and the light bill is on the fridge. Don't open it. Just... know it's there.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "I've got Pilar. And I'll look for work after school.",
+              "Next": "d",
+              "Effects": [
+                "rel:rosa+0.15",
+                "flag:promised_work=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Mom, relax. Everything's fine.",
+              "Next": "e",
+              "Effects": [
+                "rel:rosa-0.05"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "How bad is the bill?",
+              "Next": "f",
+              "Effects": [
+                "rel:rosa+0.05",
+                "flag:knows_bills=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "d",
+          "Speaker": "rosa",
+          "Text": "Your father used to say that exact sentence in that exact voice. Go on. Lunch is in the blue bag.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "rosa",
+          "Text": "Everything is always fine at sixteen. Walk your sister. Blue bag, lunch.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "f",
+          "Speaker": "rosa",
+          "Text": "Bad enough that I'm glad you asked and sorry you had to. Go. Walk Pilar. We'll figure it out.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_dee_lunch",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "dee",
+          "Text": "Okay, don't laugh. I rebuilt the robotics club's drive train with parts from the Delacroix scrap bin.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "player",
+          "Text": "The same scrap bin Mr. Delacroix chased us out of with a tire iron?",
+          "Next": "c",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "dee",
+          "Text": "He calls it 'inventory'. Anyway. Regional qualifier is in October. I need a driver with reflexes and no sense of self-preservation.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Sign me up.",
+              "Next": "d",
+              "Effects": [
+                "rel:dee+0.2",
+                "flag:robotics=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I need a job, not a hobby.",
+              "Next": "e",
+              "Effects": [
+                "rel:dee+0.05"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "d",
+          "Speaker": "dee",
+          "Text": "Knew it. You're the only person I know who reads a warning label as a dare.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "dee",
+          "Text": "Fair. When you're rich, you can sponsor us. Put your name on the robot. 'The Navarro'.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_mai_paper",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "mai",
+          "Text": "Navarro. You live on Magnolia, right? The canal floods your street every time it drizzles?",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "player",
+          "Text": "We have a canoe. It's a whole lifestyle.",
+          "Next": "c",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "mai",
+          "Text": "I'm writing about why the drainage on the east side never gets fixed but Meridian Tower got a new plaza. I need people who'll talk on the record.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "I'll talk. And I know half the street.",
+              "Next": "d",
+              "Effects": [
+                "rel:mai+0.2",
+                "flag:mai_paper=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "People around here don't talk to reporters.",
+              "Next": "e",
+              "Effects": [
+                "rel:mai-0.05"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "d",
+          "Speaker": "mai",
+          "Text": "Perfect. Bring your cynicism. It photographs well.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "mai",
+          "Text": "They talk to someone. I'd rather it was me than a rumor.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_coach_pregame",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "coach",
+          "Text": "Navarro. Channelside's got a linebacker the size of a vending machine. You're going to run past him, not through him.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "coach",
+          "Text": "There's a scout in the stands from Tarrow State. Doesn't mean anything. Means everything. Your call how you play it.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Put me in on every down.",
+              "Next": "c",
+              "Effects": [
+                "rel:coach+0.1",
+                "flag:played_hard=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Just want the team to win, Coach.",
+              "Next": "d",
+              "Effects": [
+                "rel:coach+0.15"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "coach",
+          "Text": "That's the spirit. Also the kind of spirit that ends up in an ice bath. Go.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "coach",
+          "Text": "Now that's what a scout should hear. Go get 'em.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_lupe_job",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "lupe",
+          "Text": "Your mother told me you're looking for work. She didn't ask me to hire you. She'd rather eat the register than ask.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "lupe",
+          "Text": "Stocking, mopping, the register when I trust you. Fifteen an hour, cash in hand, and you don't touch the lottery machine.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Deal. When do I start?",
+              "Next": "c",
+              "Effects": [
+                "rel:lupe+0.15",
+                "flag:works_at_lupes=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Fifteen? The Fuel Stop pays sixteen.",
+              "Next": "d",
+              "Effects": [
+                "rel:lupe+0.05",
+                "flag:works_at_lupes=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "lupe",
+          "Text": "Now. Apron's on the hook. The one without the hole is mine.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "lupe",
+          "Text": "The Fuel Stop also gets robbed every other Tuesday. Fifteen and I feed you. Apron's on the hook.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_lupe_pay",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "lupe",
+          "Text": "Four hours, nothing broken, one customer made to smile. Here.",
+          "Next": "b",
+          "Effects": [
+            "pay:Lupe's Corner Market:6000"
+          ],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "player",
+          "Text": "Sixty dollars. I'm a tycoon.",
+          "Next": "c",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "lupe",
+          "Text": "Put forty of it where your mother will find it and not ask where it came from. Keep twenty. Being broke at sixteen is a tradition, not a requirement.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_rafa_favor",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "rafa",
+          "Text": "Primo! Look at you, working man. Listen, I need a favor, small thing, nothing thing.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "rafa",
+          "Text": "A bag. Terminal 3, by the canal, guy in a green cap. You drop it, you walk away, you've got two hundred bucks. That's thirteen shifts at Lupe's. I did the math.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Fine. Just this once.",
+              "Next": "c",
+              "Effects": [
+                "flag:rafa_delivery=1",
+                "rel:rafa+0.2",
+                "money:20000"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "No. Whatever that is, no.",
+              "Next": "d",
+              "Effects": [
+                "flag:refused_rafa=1",
+                "rel:rafa-0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I'm telling Lupe you're doing this out of her parking lot.",
+              "Next": "e",
+              "Effects": [
+                "flag:told_lupe=1",
+                "rel:rafa-0.3",
+                "rel:lupe+0.1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "rafa",
+          "Text": "That's my cousin. Half now, half never, because I'm generous and you're family.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "rafa",
+          "Text": "Okay, okay. Saint Eli of Magnolia Street. Don't come crying when you're still broke at forty.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "rafa",
+          "Text": "Seriously? ...Fine. You're right. Don't tell your mom, though. She's got enough.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_stop",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "abernathy",
+          "Text": "Evening. Detective Abernathy, PAPD. You're a long way from Magnolia Street with a bag that isn't yours.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "It's my cousin's. I didn't look inside. Rafa Navarro.",
+              "Next": "b",
+              "Effects": [
+                "flag:rafa_arrested=1",
+                "rel:abernathy+0.3",
+                "rel:rafa-0.5",
+                "cast:rafa:arrest"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "It's laundry. Mine.",
+              "Next": "c",
+              "Effects": [
+                "rel:abernathy-0.2",
+                "flag:lied_to_abernathy=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Drop the bag and run.",
+              "Next": "d",
+              "Effects": [
+                "rel:abernathy-0.4",
+                "flag:ran_from_police=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "b",
+          "Speaker": "abernathy",
+          "Text": "That's the first honest thing anyone has said to me this week. Go home, Eli. I'll be talking to your cousin, not you. This time.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "abernathy",
+          "Text": "Laundry. Sure. I'm keeping the laundry. I'm also keeping your name. Go home.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "narrator",
+          "Text": "You run. Behind you, nobody chases. You get the feeling that's worse.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_lupe_after",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "lupe",
+          "Text": "Heard some things today. The street talks faster than the radio.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "I stayed out of it.",
+              "Next": "b",
+              "Effects": [],
+              "Conditions": [
+                "flag:refused_rafa>=1"
+              ]
+            },
+            {
+              "Text": "I told you because it was right.",
+              "Next": "c",
+              "Effects": [],
+              "Conditions": [
+                "flag:told_lupe>=1"
+              ]
+            },
+            {
+              "Text": "I messed up, Lupe.",
+              "Next": "d",
+              "Effects": [
+                "rel:lupe+0.1"
+              ],
+              "Conditions": [
+                "flag:rafa_delivery>=1"
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "b",
+          "Speaker": "lupe",
+          "Text": "Good. Your cousin has a big heart and no brakes. Don't be his brakes. Be somewhere else.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "lupe",
+          "Text": "It was. It won't feel like it for a while. That's how you know.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "lupe",
+          "Text": "You did. Now you know what it costs. Most people learn that lesson later and pay more for it.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_rosa_finds_out",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "rosa",
+          "Text": "A detective called my work. My WORK, Eli.",
+          "Next": "b",
+          "Effects": [
+            "rel:rosa-0.3"
+          ],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "rosa",
+          "Text": "I can't do this twice. I buried your father because a company decided a canal fire was an acceptable cost. I will not lose you to something even stupider.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "I'm sorry. It won't happen again.",
+              "Next": "c",
+              "Effects": [
+                "rel:rosa+0.1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I was trying to help pay the bills!",
+              "Next": "d",
+              "Effects": [
+                "flag:rosa_argument=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "rosa",
+          "Text": "I know you're sorry. Sorry isn't the part I'm scared of.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "rosa",
+          "Text": "The bills are my job. You being alive at twenty is yours.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_canal",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "dee",
+          "Text": "Okay, so the storm cell's eight kilometers out and the lightning's been hitting the same crane for ten minutes. Same crane. That's not how lightning works.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "mai",
+          "Text": "I've got forty photos of the same bolt. Look. It's... it's the same shape. Every time.",
+          "Next": "c",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "narrator",
+          "Text": "A bolt hits the crane again. For a moment the air tastes like pennies and every hair on your arms stands up. Then nothing.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Let's go. Now.",
+              "Next": "d",
+              "Effects": [
+                "rel:dee+0.05"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Mai, send me those photos.",
+              "Next": "e",
+              "Effects": [
+                "rel:mai+0.1",
+                "flag:canal_photos=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "d",
+          "Speaker": "dee",
+          "Text": "Agreed. Nobody tell my mother I was near a lightning rod on purpose.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "e",
+          "Speaker": "mai",
+          "Text": "Already did. Don't show anyone. Something about this feels like a story before it's a story.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_lupe_storm",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "lupe",
+          "Text": "I'm not leaving my store, mijo. I've ridden out six of these.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "Then I'm staying to board the windows with you.",
+              "Next": "b",
+              "Effects": [
+                "rel:lupe+0.2"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "Lupe, the water was chest-high in '32 stories. Please come to our place.",
+              "Next": "c",
+              "Effects": [
+                "rel:lupe+0.15",
+                "flag:lupe_sheltered=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "b",
+          "Speaker": "lupe",
+          "Text": "Stubborn like your father. Get the plywood from the back.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "lupe",
+          "Text": "...Your mother will make me eat. Fine. Carry the photos, not the cans.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_eye",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "narrator",
+          "Text": "The wind stops. Not slows. Stops. The rain hangs in the streetlight like beads on a wire.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "pilar",
+          "Text": "Eli. Eli, look at the trash can. It's not falling.",
+          "Next": "c",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "c",
+          "Speaker": "narrator",
+          "Text": "A garbage can lid, a shopping cart, a stop sign bent flat — all of it is floating, motionless, in a ring around you. Only around you.",
+          "Next": "d",
+          "Effects": [
+            "anomaly:player:1475:Gravity,Force:Kinetic,Gravitic:0.8",
+            "history:5:Witnesses in Eastwater describe debris frozen in the air during Isadora's eye"
+          ],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "pilar",
+          "Text": "It's you. It's around you. Why is it around you?",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "It's the pressure. The eye does weird things. Come inside.",
+              "Next": "e",
+              "Effects": [
+                "rel:pilar+0.05",
+                "flag:pilar_suspects=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I don't know. Don't tell anyone. Please.",
+              "Next": "f",
+              "Effects": [
+                "rel:pilar+0.15",
+                "flag:pilar_knows=1"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "e",
+          "Speaker": "narrator",
+          "Text": "The wind comes back all at once. Everything falls. Pilar doesn't say anything else. She doesn't have to.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "f",
+          "Speaker": "narrator",
+          "Text": "She nods. The wind comes back all at once, and everything falls, and your sister holds your hand like she's the older one.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_rosa_return",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "rosa",
+          "Text": "Look at those arms. The platforms fed you, at least.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "rosa",
+          "Text": "Pilar made a banner. Then she decided banners were childish and made a spreadsheet of everything that changed while you were gone. It's on the fridge. Where the bills used to be.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    },
+    {
+      "Id": "d_lupe_return",
+      "Start": "a",
+      "Nodes": [
+        {
+          "Id": "a",
+          "Speaker": "lupe",
+          "Text": "Four years. The street's half cranes now. Meridian bought the Hendersons' place, the laundromat, the lot where you boys played.",
+          "Next": "b",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "b",
+          "Speaker": "lupe",
+          "Text": "I still need someone on the register who doesn't steal the lottery tickets. Same fifteen. It's worth less now. Everything is.",
+          "Next": "",
+          "Effects": [],
+          "Choices": [
+            {
+              "Text": "I'll take it until I find my feet.",
+              "Next": "c",
+              "Effects": [
+                "rel:lupe+0.1",
+                "flag:back_at_lupes=1"
+              ],
+              "Conditions": []
+            },
+            {
+              "Text": "I want more than the register this time, Lupe.",
+              "Next": "d",
+              "Effects": [
+                "rel:lupe+0.05"
+              ],
+              "Conditions": []
+            }
+          ]
+        },
+        {
+          "Id": "c",
+          "Speaker": "lupe",
+          "Text": "Good. Apron's on the hook. The hole is bigger.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        },
+        {
+          "Id": "d",
+          "Speaker": "lupe",
+          "Text": "Good. Want it loud. This street's been too quiet about what it wants.",
+          "Next": "",
+          "Effects": [],
+          "Choices": []
+        }
+      ]
+    }
+  ],
+  "Cutscenes": [
+    {
+      "Id": "opening",
+      "Title": "Magnolia Street",
+      "Shots": [
+        {
+          "Camera": "sky",
+          "Speaker": "",
+          "Text": "Port Arden, Texas. August 2026.",
+          "Seconds": 3
+        },
+        {
+          "Camera": "place:Lupe's Corner Market",
+          "Speaker": "narrator",
+          "Text": "Eastwater wakes up the way it always has: early, loud, and a little behind on everything.",
+          "Seconds": 4
+        },
+        {
+          "Camera": "player",
+          "Speaker": "player",
+          "Text": "Sixteen years on Magnolia Street. Nothing ever happens here.",
+          "Seconds": 3
+        }
+      ]
+    },
+    {
+      "Id": "four_years_later",
+      "Title": "Four Years Later",
+      "Shots": [
+        {
+          "Camera": "sky",
+          "Speaker": "",
+          "Text": "FOUR YEARS LATER",
+          "Seconds": 3
+        },
+        {
+          "Camera": "place:Eastwater Community Center",
+          "Speaker": "narrator",
+          "Text": "Cranes over Eastwater. New buildings with old names. Some doors closed for good.",
+          "Seconds": 4
+        },
+        {
+          "Camera": "place:The Arden Ledger Newsroom",
+          "Speaker": "narrator",
+          "Text": "Mai writes for the Ledger now. Dee measures things at Tarrow State that nobody can explain.",
+          "Seconds": 4
+        },
+        {
+          "Camera": "player",
+          "Speaker": "player",
+          "Text": "Same street. Different city.",
+          "Seconds": 3
+        }
+      ]
+    }
+  ],
+  "TimeJumps": [
+    {
+      "Id": "four_years",
+      "Years": 4,
+      "Cutscene": "four_years_later",
+      "CastChanges": [
+        {
+          "Cast": "mai",
+          "Occupation": "journalist",
+          "Workplace": "The Arden Ledger Newsroom",
+          "Condition": "",
+          "Note": "Reporter at The Arden Ledger."
+        },
+        {
+          "Cast": "rosa",
+          "Occupation": "charge_nurse",
+          "Workplace": "Arden General Hospital - East Campus",
+          "Condition": "",
+          "Note": "Promoted to charge nurse."
+        },
+        {
+          "Cast": "dee",
+          "Occupation": "",
+          "Workplace": "",
+          "Condition": "",
+          "Note": "Graduate student at the Halvorsen Institute, Tarrow State."
+        },
+        {
+          "Cast": "rafa",
+          "Occupation": "",
+          "Workplace": "",
+          "Condition": "flag:rafa_arrested>=1",
+          "Note": "Served time; out on parole and trying to stay out."
+        },
+        {
+          "Cast": "rafa",
+          "Occupation": "",
+          "Workplace": "",
+          "Condition": "flag:rafa_arrested<1",
+          "Note": "Runs a stall at the Night Market. Nobody asks what's under the counter."
+        }
+      ],
+      "PropertyTransfers": [
+        {
+          "District": "eastwater",
+          "Share": 0.25,
+          "NewOwner": "Meridian Holdings"
+        }
+      ],
+      "Headlines": [
+        "Meridian Holdings completes purchase of flood-damaged Eastwater lots",
+        "Federal anomaly directorate opens a field office at the Port of Arden",
+        "Four years after Isadora, Eastwater rebuilds — on whose terms?"
+      ],
+      "Effects": [
+        "part:2",
+        "money:250000",
+        "say:pilar:Welcome home. I made a spreadsheet."
+      ]
+    }
+  ]
+}

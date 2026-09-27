@@ -82,6 +82,7 @@ namespace HeroGame.Persistence.Saves
             // Meta and transactional state are always written together: they must agree on time and journal sequence.
             var dirty = new HashSet<string>(world.Dirty.Chunks) { SaveChunks.Meta, SaveChunks.Transactional };
             if (full || previous == null) foreach (var c in SaveChunks.WorldChunks) dirty.Add(c);
+            if (world.Story != null && (full || previous == null || !previous.ChunkGenerations.ContainsKey(SaveChunks.Story))) dirty.Add(SaveChunks.Story);
             foreach (var id in world.Characters.Keys)
             {
                 var key = SaveChunks.CharacterPrefix + id;
@@ -168,6 +169,8 @@ namespace HeroGame.Persistence.Saves
             foreach (var p in ReadChunk<PropertiesChunk>(manifest, SaveChunks.Properties).Properties) world.Properties.Add(p);
             foreach (var b in ReadChunk<BusinessesChunk>(manifest, SaveChunks.Businesses).Businesses) world.Businesses[b.Id] = b;
 
+            if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Story))
+                world.Story = ReadChunk<Core.Story.StoryState>(manifest, SaveChunks.Story);
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Emergency))
                 world.Emergency = ReadChunk<Core.Emergency.EmergencyState>(manifest, SaveChunks.Emergency);
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Justice))
@@ -256,6 +259,8 @@ namespace HeroGame.Persistence.Saves
                     return world.Justice;
                 case SaveChunks.Emergency:
                     return world.Emergency;
+                case SaveChunks.Story:
+                    return world.Story ?? new Core.Story.StoryState();
                 case SaveChunks.Vehicles:
                     var vehicles = new VehiclesChunk();
                     vehicles.Vehicles.AddRange(world.Vehicles.All);

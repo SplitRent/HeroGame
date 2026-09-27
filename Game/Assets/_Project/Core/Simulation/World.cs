@@ -77,6 +77,8 @@ namespace HeroGame.Core.Simulation
         public const string Businesses = "businesses";
         public const string Justice = "justice";
         public const string Emergency = "emergency";
+        /// <summary>Story Mode progress (only present in story saves).</summary>
+        public const string Story = "story";
         public const string Environment = "environment";
         public const string History = "history";
         public const string Vehicles = "vehicles";
@@ -150,6 +152,8 @@ namespace HeroGame.Core.Simulation
         public readonly JusticeService Courts;
         /// <summary>Emergency incidents and unit assignments (persisted in the emergency chunk).</summary>
         public EmergencyState Emergency = new EmergencyState();
+        /// <summary>Story Mode progress; null on player servers.</summary>
+        public Story.StoryState Story;
         public readonly EmergencyDispatch Dispatch;
         /// <summary>Executes power uses against the world (effects, collateral, witnesses, crimes).</summary>
         public readonly PowerService PowerUse;

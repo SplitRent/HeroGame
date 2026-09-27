@@ -91,6 +91,9 @@ namespace HeroGame.Editor
                 custody.ReleasePoint.localPosition = new Vector3(0f, 0.1f, -14f);
             }
 
+            var story = systems.AddComponent<Runtime.Story.StoryPresenter>();
+            story.Player = player.transform;
+
             var hud = systems.AddComponent<PrototypeHud>();
             systems.AddComponent<FinancePanel>();
             hud.Interactor = player.GetComponent<PlayerInteractor>();

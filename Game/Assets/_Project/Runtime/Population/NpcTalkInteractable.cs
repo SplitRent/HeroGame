@@ -45,6 +45,8 @@ namespace HeroGame.Runtime.Population
                 if (theft.CaughtInAct) SubtitleFeed.Say(npc.FirstName, "Hey! Get your hands off me!", 3f);
                 return;
             }
+            // Story characters with something to say about the current mission take over the conversation.
+            if (session.Story != null && session.Story.TalkTo(npc.Id)) return;
             // Alternate greeting and small talk so a conversation feels like one.
             var kind = _talkCount++ % 2 == 0 ? InteractionKind.Greet : InteractionKind.SmallTalk;
             var identity = ServiceRegistry.TryGet<Core.Characters.AccountProfile>(out var account) ? account.Character : null;

@@ -5,6 +5,8 @@ using HeroGame.Core.Foundation;
 using HeroGame.Core.World;
 using HeroGame.Persistence.Content;
 using HeroGame.Persistence.Saves;
+using HeroGame.Core.Simulation;
+using HeroGame.Core.Story;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Bootstrap
@@ -52,12 +54,28 @@ namespace HeroGame.Runtime.Bootstrap
 
             Account = LoadOrCreateAccount();
             var folder = Mode == SessionMode.Story ? Path.Combine(GameSession.SaveRoot, "story", SaveSlot) : Path.Combine(GameSession.SaveRoot, "servers", SaveSlot);
-            Session = GameSession.OpenOrCreate(Mode, ServerId, folder, Content);
+            StoryDefinition story = null;
+            Core.Time.GameDateTime? start = null;
+            if (Mode == SessionMode.Story)
+            {
+                story = ContentLoader.LoadStory(GameSession.DataDirectory);
+                var storyReport = ContentLoader.ValidateStory(story, Content);
+                foreach (var m in storyReport.Messages) Debug.LogWarning("[Story] " + m);
+                if (storyReport.HasErrors) throw new InvalidDataException("Story validation failed; see warnings above.");
+                start = ParseStart(story.Start);
+            }
+            Session = GameSession.OpenOrCreate(Mode, ServerId, folder, Content, start);
             Session.AutosaveIntervalSeconds = AutosaveSeconds;
             Session.Saved += r => Debug.Log("[Save] generation " + r.Generation + ": " + r.ChunksWritten + " chunks in " + r.Milliseconds.ToString("0") + " ms");
 
             var spawn = PlayerSpawn != null ? PlayerSpawn.position : Vector3.zero;
-            Session.EnsureCharacter(Account, spawn);
+            if (story != null)
+            {
+                // New story: cast the characters and start Part One. Loaded story: resume where the save left off.
+                if (Session.World.Story == null) Session.UseStory(StoryService.Begin(Session.World, story, Account));
+                else Session.UseStory(StoryService.Attach(Session.World, story, Session.World.Story, Session.EnsureCharacter(Account, spawn)));
+            }
+            else Session.EnsureCharacter(Account, spawn);
 
             ServiceRegistry.Register(Session);
             ServiceRegistry.Register(Content);
@@ -82,6 +100,12 @@ namespace HeroGame.Runtime.Bootstrap
             ServiceRegistry.Unregister(Session);
             Session?.Dispose();
             Instance = null;
+        }
+
+        private static Core.Time.GameDateTime ParseStart(string text)
+        {
+            var p = text.Split(' ', '-', ':');
+            return Core.Time.GameDateTime.FromCalendar(int.Parse(p[0]), int.Parse(p[1]), int.Parse(p[2]), int.Parse(p[3]), int.Parse(p[4]));
         }
 
         public static AccountStore Accounts => new AccountStore(Path.Combine(GameSession.SaveRoot, "accounts"));
