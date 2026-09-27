@@ -181,6 +181,8 @@ namespace HeroGame.Core.Simulation
             foreach (var npc in _world.Population.Ordered)
                 if (npc.Powers != null) PowerProgression.AdvanceDay(npc.Powers, day + 1);
 
+            _world.Phone.DailyMessages(day);
+
             if (_world.Macro.InRecession && _world.Macro.DaysInCurrentPhase == 1)
                 _world.History.Record(day, HistoryCategory.Economy, 4, "Economists warn " + _world.Config.Identity.CityName + " has entered a recession");
 

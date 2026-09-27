@@ -3,6 +3,7 @@ using HeroGame.Core.Business;
 using HeroGame.Core.Crime;
 using HeroGame.Core.Population;
 using HeroGame.Core.Powers;
+using HeroGame.Core.Social;
 
 namespace HeroGame.Core.World
 {
@@ -20,6 +21,7 @@ namespace HeroGame.Core.World
         public List<InteractionRule> InteractionRules = new List<InteractionRule>();
         public List<CrimeType> CrimeTypes = new List<CrimeType>();
         public WorldLayout Layout = new WorldLayout();
+        public List<BarkLine> Barks = new List<BarkLine>();
 
         public CrimeType FindCrime(string id)
         {

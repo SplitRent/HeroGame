@@ -201,6 +201,18 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void PeopleAt_ListsWorkersInsideTheirWorkplace()
+        {
+            var world = NewWorld("interior");
+            var tuesdayNoon = GameDateTime.FromCalendar(2030, 5, 7, 12, 0);
+            var school = world.Geography.FindPlaceByName("Eastwater High School");
+            var inside = world.Director.PeopleAt(school, tuesdayNoon);
+            Assert.Greater(inside.Count, 10, "students and staff are at school on a Tuesday at noon");
+            foreach (var id in inside) Assert.AreEqual(school.Id, world.Schedules.Resolve(world.Population.Get(id), tuesdayNoon).Place);
+            Assert.AreEqual(0, world.Director.PeopleAt(school, tuesdayNoon.AddHours(14)).Count, "empty at 2 a.m.");
+        }
+
+        [Test]
         public void Memory_IsBoundedAndKeepsSignificantPeople()
         {
             var npc = new NpcRecord { Id = EntityId.Create(EntityKind.Npc, 1) };

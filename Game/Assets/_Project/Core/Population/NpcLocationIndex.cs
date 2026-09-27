@@ -118,6 +118,17 @@ namespace HeroGame.Core.Population
             foreach (var id in _commuters) results.Add(id);
         }
 
+        /// <summary>NPCs whose current (non-commuting) activity is at <paramref name="place"/>, in id order.</summary>
+        public void AtPlace(Place place, List<EntityId> results)
+        {
+            if (place == null) return;
+            if (!_grid.TryGetValue(Key(Coord(place.Position.X), Coord(place.Position.Z)), out var cell)) return;
+            var start = results.Count;
+            foreach (var id in cell)
+                if (_entries.TryGetValue(id, out var e) && e.Activity.Place == place.Id) results.Add(id);
+            results.Sort(start, results.Count - start, null);
+        }
+
         private void Refresh(EntityId id, GameDateTime now)
         {
             var npc = _population.Get(id);

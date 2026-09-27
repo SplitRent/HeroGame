@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HeroGame.Core.Crime;
 using HeroGame.Core.Foundation;
 using HeroGame.Core.Identity;
+using HeroGame.Core.Phone;
 using HeroGame.Core.Population;
 using HeroGame.Core.Powers;
 
@@ -176,6 +177,9 @@ namespace HeroGame.Core.Characters
         public List<Relationship> Relationships = new List<Relationship>();
         public List<EntityId> Organizations = new List<EntityId>();
         public List<string> Achievements = new List<string>();
-        public List<string> Contacts = new List<string>();
+        public List<PhoneContact> PhoneContacts = new List<PhoneContact>();
+        public List<PhoneMessage> Inbox = new List<PhoneMessage>();
+        public long NextMessageId;
+        public List<StatementLine> Statement = new List<StatementLine>();
     }
 }

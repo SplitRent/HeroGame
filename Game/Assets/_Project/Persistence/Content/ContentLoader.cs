@@ -26,6 +26,7 @@ namespace HeroGame.Persistence.Content
         public const string InteractionRules = "interaction_rules.json";
         public const string CrimeTypes = "crime_types.json";
         public const string DefaultLayout = "layout_vertical_slice.json";
+        public const string Barks = "barks.json";
         public const string DefaultServerConfig = "server_default.json";
 
         public static ContentSet Load(string dataDirectory, string layoutFile = DefaultLayout)
@@ -40,6 +41,7 @@ namespace HeroGame.Persistence.Content
                 InteractionRules = Read<List<InteractionRule>>(dataDirectory, InteractionRules),
                 CrimeTypes = Read<List<CrimeType>>(dataDirectory, CrimeTypes),
                 Layout = Read<WorldLayout>(dataDirectory, layoutFile),
+                Barks = Read<List<Core.Social.BarkLine>>(dataDirectory, Barks),
             };
             return set;
         }
@@ -99,6 +101,19 @@ namespace HeroGame.Persistence.Content
             }
             if (c.AnomalyCauses.Count == 0) r.Warn("anomaly_causes", "No anomaly causes: powers can never appear.");
             if (!c.Names.IsUsable) r.Error("names", "Name tables are empty.");
+
+            var barkIds = new HashSet<string>();
+            var topics = new HashSet<string>();
+            foreach (var b in c.Barks)
+            {
+                if (string.IsNullOrEmpty(b.Id) || !barkIds.Add(b.Id)) r.Error("barks." + b.Id, "Missing or duplicate id.");
+                if (string.IsNullOrWhiteSpace(b.Text)) r.Error("barks." + b.Id, "Empty text.");
+                if (b.MinAffinity > b.MaxAffinity) r.Error("barks." + b.Id, "MinAffinity > MaxAffinity.");
+                topics.Add(b.Topic);
+            }
+            foreach (var required in new[] { "greet", "idle", "weather", "work", "economy", "sports", "gossip", "customer", "gift", "thanks", "insulted", "threatened",
+                                             "compliment_accepted", "compliment_rejected", "flirt_accepted", "flirt_rejected", "number_shared", "number_refused" })
+                if (!topics.Contains(required)) r.Error("barks", "No lines for topic '" + required + "'.");
 
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)

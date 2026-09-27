@@ -1,0 +1,937 @@
+[
+ {
+  "Id": "greet_stranger_1",
+  "Topic": "greet",
+  "Text": "Hey.",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger"
+  ]
+ },
+ {
+  "Id": "greet_stranger_2",
+  "Topic": "greet",
+  "Text": "Afternoon.",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger"
+  ],
+  "DayParts": [
+   "Afternoon"
+  ]
+ },
+ {
+  "Id": "greet_stranger_3",
+  "Topic": "greet",
+  "Text": "Morning.",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger"
+  ],
+  "DayParts": [
+   "Morning"
+  ]
+ },
+ {
+  "Id": "greet_stranger_4",
+  "Topic": "greet",
+  "Text": "Evening.",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger"
+  ],
+  "DayParts": [
+   "Evening"
+  ]
+ },
+ {
+  "Id": "greet_stranger_5",
+  "Topic": "greet",
+  "Text": "You lost? You look lost.",
+  "Weight": 0.3,
+  "Familiarity": [
+   "Stranger"
+  ]
+ },
+ {
+  "Id": "greet_recognized_1",
+  "Topic": "greet",
+  "Text": "Hey \u2014 I've seen you around, right?",
+  "Weight": 1,
+  "Familiarity": [
+   "Recognized"
+  ]
+ },
+ {
+  "Id": "greet_recognized_2",
+  "Topic": "greet",
+  "Text": "You again. How's it going?",
+  "Weight": 1,
+  "Familiarity": [
+   "Recognized"
+  ]
+ },
+ {
+  "Id": "greet_acq_1",
+  "Topic": "greet",
+  "Text": "{player_first}! How you doing?",
+  "Weight": 1,
+  "Familiarity": [
+   "Acquaintance"
+  ]
+ },
+ {
+  "Id": "greet_acq_2",
+  "Topic": "greet",
+  "Text": "Hey {player_first}. Staying out of trouble?",
+  "Weight": 1,
+  "Familiarity": [
+   "Acquaintance"
+  ]
+ },
+ {
+  "Id": "greet_acq_morning",
+  "Topic": "greet",
+  "Text": "Morning, {player_first}. Coffee kicked in yet?",
+  "Weight": 1,
+  "Familiarity": [
+   "Acquaintance"
+  ],
+  "DayParts": [
+   "Morning"
+  ]
+ },
+ {
+  "Id": "greet_friend_1",
+  "Topic": "greet",
+  "Text": "There they are! {player_first}, what's good?",
+  "Weight": 1,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "greet_friend_2",
+  "Topic": "greet",
+  "Text": "{player_first}! I was just thinking about you.",
+  "Weight": 1,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "greet_friend_night",
+  "Topic": "greet",
+  "Text": "Out late again, {player_first}? Me too, apparently.",
+  "Weight": 1,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ],
+  "DayParts": [
+   "Night"
+  ]
+ },
+ {
+  "Id": "greet_close_1",
+  "Topic": "greet",
+  "Text": "Hey you. Get over here.",
+  "Weight": 1,
+  "Familiarity": [
+   "Close"
+  ]
+ },
+ {
+  "Id": "greet_wary_1",
+  "Topic": "greet",
+  "Text": "...Hi.",
+  "Weight": 1,
+  "Familiarity": [
+   "Wary"
+  ]
+ },
+ {
+  "Id": "greet_wary_2",
+  "Topic": "greet",
+  "Text": "I don't want any trouble.",
+  "Weight": 1,
+  "Familiarity": [
+   "Wary"
+  ]
+ },
+ {
+  "Id": "greet_hostile_1",
+  "Topic": "greet",
+  "Text": "Keep walking.",
+  "Weight": 1,
+  "Familiarity": [
+   "Hostile"
+  ]
+ },
+ {
+  "Id": "greet_hostile_2",
+  "Topic": "greet",
+  "Text": "You've got some nerve showing your face.",
+  "Weight": 1,
+  "Familiarity": [
+   "Hostile"
+  ]
+ },
+ {
+  "Id": "greet_crime_witness",
+  "Topic": "greet",
+  "Text": "I saw what you did. Don't think I didn't.",
+  "Weight": 1,
+  "RequiresFlags": "WitnessedCrime",
+  "MaxAffinity": 0.2
+ },
+ {
+  "Id": "greet_victim",
+  "Topic": "greet",
+  "Text": "You. Stay away from me.",
+  "Weight": 1,
+  "RequiresFlags": "VictimOfCrime"
+ },
+ {
+  "Id": "greet_rescued",
+  "Topic": "greet",
+  "Text": "{player_first}! I never properly thanked you for what you did.",
+  "Weight": 2,
+  "RequiresFlags": "WasRescued"
+ },
+ {
+  "Id": "greet_customer_regular",
+  "Topic": "greet",
+  "Text": "My regular! The usual?",
+  "Weight": 2,
+  "Familiarity": [
+   "Acquaintance",
+   "Friend",
+   "Close"
+  ],
+  "RequiresFlags": "Customer",
+  "PlaceKinds": [
+   "Shop",
+   "Restaurant",
+   "GasStation",
+   "Nightlife"
+  ]
+ },
+ {
+  "Id": "greet_customer_new",
+  "Topic": "greet",
+  "Text": "Welcome in. Let me know if you need anything.",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger",
+   "Recognized"
+  ],
+  "PlaceKinds": [
+   "Shop",
+   "Restaurant",
+   "GasStation"
+  ]
+ },
+ {
+  "Id": "greet_wanted",
+  "Topic": "greet",
+  "Text": "Cops were just asking around. Were they asking about you?",
+  "Weight": 1,
+  "WorldTags": [
+   "player_wanted"
+  ]
+ },
+ {
+  "Id": "greet_notorious",
+  "Topic": "greet",
+  "Text": "I know who you are. Everyone around here does.",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger",
+   "Recognized"
+  ],
+  "WorldTags": [
+   "player_notorious"
+  ]
+ },
+ {
+  "Id": "greet_heroic",
+  "Topic": "greet",
+  "Text": "Hey, aren't you the one who helped out on the news?",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger",
+   "Recognized"
+  ],
+  "WorldTags": [
+   "player_heroic"
+  ]
+ },
+ {
+  "Id": "greet_rain",
+  "Topic": "greet",
+  "Text": "Get in out of that {weather}!",
+  "Weight": 1,
+  "Weather": [
+   "LightRain",
+   "HeavyRain",
+   "Thunderstorm"
+  ],
+  "PlaceKinds": [
+   "Shop",
+   "Restaurant",
+   "Nightlife"
+  ]
+ },
+ {
+  "Id": "greet_heat",
+  "Topic": "greet",
+  "Text": "Lord, it's {temp} degrees. Come stand by the AC.",
+  "Weight": 1,
+  "PlaceKinds": [
+   "Shop",
+   "Restaurant"
+  ],
+  "WorldTags": [
+   "heat"
+  ]
+ },
+ {
+  "Id": "idle_1",
+  "Topic": "idle",
+  "Text": "*checks phone*",
+  "Weight": 1
+ },
+ {
+  "Id": "idle_2",
+  "Topic": "idle",
+  "Text": "Traffic on Tidewater was a nightmare this morning.",
+  "Weight": 1
+ },
+ {
+  "Id": "idle_3",
+  "Topic": "idle",
+  "Text": "I swear this city gets louder every year.",
+  "Weight": 1
+ },
+ {
+  "Id": "idle_4",
+  "Topic": "idle",
+  "Text": "Is it Friday yet?",
+  "Weight": 1,
+  "DayParts": [
+   "Morning",
+   "Afternoon"
+  ]
+ },
+ {
+  "Id": "idle_heat",
+  "Topic": "idle",
+  "Text": "Too hot to be outside. Too hot to be anywhere.",
+  "Weight": 1,
+  "WorldTags": [
+   "heat"
+  ]
+ },
+ {
+  "Id": "idle_rain",
+  "Topic": "idle",
+  "Text": "Of course it's raining. It's always raining.",
+  "Weight": 1,
+  "Weather": [
+   "LightRain",
+   "HeavyRain",
+   "Thunderstorm"
+  ]
+ },
+ {
+  "Id": "idle_fog",
+  "Topic": "idle",
+  "Text": "Can't see the end of the block in this fog.",
+  "Weight": 1,
+  "Weather": [
+   "Fog"
+  ]
+ },
+ {
+  "Id": "idle_storm_coming",
+  "Topic": "idle",
+  "Text": "You stocked up yet? Shelves are empty everywhere.",
+  "Weight": 2,
+  "WorldTags": [
+   "storm_coming"
+  ]
+ },
+ {
+  "Id": "idle_flooding",
+  "Topic": "idle",
+  "Text": "Street's flooding again. Every time.",
+  "Weight": 2,
+  "WorldTags": [
+   "flooding"
+  ]
+ },
+ {
+  "Id": "idle_anomaly",
+  "Topic": "idle",
+  "Text": "You hear about that thing that happened? People are saying all kinds of stuff.",
+  "Weight": 2,
+  "WorldTags": [
+   "anomaly_recent"
+  ]
+ },
+ {
+  "Id": "idle_recession",
+  "Topic": "idle",
+  "Text": "My cousin got laid off last week. Whole crew, gone.",
+  "Weight": 1,
+  "WorldTags": [
+   "recession"
+  ]
+ },
+ {
+  "Id": "idle_night",
+  "Topic": "idle",
+  "Text": "Should've been home an hour ago.",
+  "Weight": 1,
+  "DayParts": [
+   "Night"
+  ]
+ },
+ {
+  "Id": "idle_wanted",
+  "Topic": "idle",
+  "Text": "Lot of cop cars around today.",
+  "Weight": 1,
+  "WorldTags": [
+   "player_wanted"
+  ]
+ },
+ {
+  "Id": "weather_clear",
+  "Topic": "weather",
+  "Text": "Beautiful day. Won't last \u2014 it never does.",
+  "Weight": 1,
+  "Weather": [
+   "Clear",
+   "PartlyCloudy"
+  ]
+ },
+ {
+  "Id": "weather_humid",
+  "Topic": "weather",
+  "Text": "It's not the heat, it's the humidity. Okay, it's also the heat.",
+  "Weight": 2,
+  "WorldTags": [
+   "heat"
+  ]
+ },
+ {
+  "Id": "weather_rain",
+  "Topic": "weather",
+  "Text": "This {weather} better stop before I get off work.",
+  "Weight": 1,
+  "Weather": [
+   "LightRain",
+   "HeavyRain",
+   "Thunderstorm"
+  ]
+ },
+ {
+  "Id": "weather_storm",
+  "Topic": "weather",
+  "Text": "They're saying {storm} could come right at us. You got somewhere to go?",
+  "Weight": 3,
+  "WorldTags": [
+   "storm_coming"
+  ]
+ },
+ {
+  "Id": "weather_hurricane",
+  "Topic": "weather",
+  "Text": "We shouldn't even be out in this.",
+  "Weight": 3,
+  "Weather": [
+   "Thunderstorm",
+   "TropicalStorm",
+   "Hurricane"
+  ]
+ },
+ {
+  "Id": "weather_fog",
+  "Topic": "weather",
+  "Text": "Fog like this, the ship channel shuts right down.",
+  "Weight": 1,
+  "Weather": [
+   "Fog"
+  ]
+ },
+ {
+  "Id": "weather_generic",
+  "Topic": "weather",
+  "Text": "Weather's been strange lately, hasn't it?",
+  "Weight": 1
+ },
+ {
+  "Id": "weather_flood",
+  "Topic": "weather",
+  "Text": "My street was underwater again. Bayou just can't take it.",
+  "Weight": 2,
+  "WorldTags": [
+   "flooding"
+  ]
+ },
+ {
+  "Id": "work_generic",
+  "Topic": "work",
+  "Text": "Work's work. Pays the rent. Mostly.",
+  "Weight": 1
+ },
+ {
+  "Id": "work_health",
+  "Topic": "work",
+  "Text": "Double shift at the hospital. I've forgotten what my bed looks like.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Healthcare"
+  ]
+ },
+ {
+  "Id": "work_police",
+  "Topic": "work",
+  "Text": "Can't talk about work. You understand.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Law Enforcement"
+  ]
+ },
+ {
+  "Id": "work_port",
+  "Topic": "work",
+  "Text": "Three ships in this morning. My back's going to feel it.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Port",
+   "Logistics"
+  ]
+ },
+ {
+  "Id": "work_industry",
+  "Topic": "work",
+  "Text": "Plant's running flat out. Twelve hours on, twelve off.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Industry"
+  ]
+ },
+ {
+  "Id": "work_food",
+  "Topic": "work",
+  "Text": "Dinner rush nearly killed me last night.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Food Service",
+   "Hospitality"
+  ]
+ },
+ {
+  "Id": "work_retail",
+  "Topic": "work",
+  "Text": "If one more person asks if we have it in the back...",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Retail"
+  ]
+ },
+ {
+  "Id": "work_teacher",
+  "Topic": "work",
+  "Text": "Grading papers until midnight. Again.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Education"
+  ]
+ },
+ {
+  "Id": "work_trades",
+  "Topic": "work",
+  "Text": "Every job's a rush job this time of year.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Trades"
+  ]
+ },
+ {
+  "Id": "work_office",
+  "Topic": "work",
+  "Text": "Meetings about meetings. You know how it is.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Professional",
+   "Technology",
+   "Finance",
+   "Administration"
+  ]
+ },
+ {
+  "Id": "work_student",
+  "Topic": "work",
+  "Text": "School's fine. I guess.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Student"
+  ]
+ },
+ {
+  "Id": "work_unemployed",
+  "Topic": "work",
+  "Text": "Still looking. Putting in applications everywhere.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Unemployed"
+  ]
+ },
+ {
+  "Id": "work_retired",
+  "Topic": "work",
+  "Text": "Retired! Best job I ever had.",
+  "Weight": 1,
+  "OccupationCategories": [
+   "Retired"
+  ]
+ },
+ {
+  "Id": "work_recession",
+  "Topic": "work",
+  "Text": "Everybody at work is waiting to see who's next.",
+  "Weight": 2,
+  "WorldTags": [
+   "recession"
+  ]
+ },
+ {
+  "Id": "econ_generic",
+  "Topic": "economy",
+  "Text": "Groceries cost twice what they did. Where's it all going?",
+  "Weight": 1
+ },
+ {
+  "Id": "econ_rent",
+  "Topic": "economy",
+  "Text": "Rent went up again. I love this neighborhood but it's getting hard.",
+  "Weight": 1
+ },
+ {
+  "Id": "econ_recession",
+  "Topic": "economy",
+  "Text": "Tough times. Everyone's tightening their belt.",
+  "Weight": 2,
+  "WorldTags": [
+   "recession"
+  ]
+ },
+ {
+  "Id": "econ_developers",
+  "Topic": "economy",
+  "Text": "Developers keep knocking on doors, trying to buy people out.",
+  "Weight": 1,
+  "PlaceKinds": [
+   "Residence",
+   "ApartmentBuilding",
+   "Shop",
+   "Restaurant"
+  ]
+ },
+ {
+  "Id": "sports_1",
+  "Topic": "sports",
+  "Text": "You catch the {team} game? Heartbreaking.",
+  "Weight": 1
+ },
+ {
+  "Id": "sports_2",
+  "Topic": "sports",
+  "Text": "This is the year for the {team}. I say that every year.",
+  "Weight": 1
+ },
+ {
+  "Id": "sports_3",
+  "Topic": "sports",
+  "Text": "My kid made the team! First game's Friday.",
+  "Weight": 0.5,
+  "OccupationCategories": [
+   "Education",
+   "Healthcare",
+   "Retail"
+  ]
+ },
+ {
+  "Id": "gossip_rumor",
+  "Topic": "gossip",
+  "Text": "Did you hear? {rumor}",
+  "Weight": 3
+ },
+ {
+  "Id": "gossip_none",
+  "Topic": "gossip",
+  "Text": "Honestly? Quiet week. Which around here means something's coming.",
+  "Weight": 0.5
+ },
+ {
+  "Id": "gossip_anomaly",
+  "Topic": "gossip",
+  "Text": "People are saying the thing near the canal wasn't lightning. My cousin swears the water glowed.",
+  "Weight": 2,
+  "WorldTags": [
+   "anomaly_recent"
+  ]
+ },
+ {
+  "Id": "gossip_friend",
+  "Topic": "gossip",
+  "Text": "Between you and me? {rumor}",
+  "Weight": 4,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "customer_1",
+  "Topic": "customer",
+  "Text": "Here you go. Come back soon.",
+  "Weight": 1
+ },
+ {
+  "Id": "customer_2",
+  "Topic": "customer",
+  "Text": "Thanks. Have a good one.",
+  "Weight": 1
+ },
+ {
+  "Id": "customer_regular",
+  "Topic": "customer",
+  "Text": "Always good to see you, {player_first}. Put a little extra in there for you.",
+  "Weight": 2,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ],
+  "RequiresFlags": "Customer"
+ },
+ {
+  "Id": "customer_rain",
+  "Topic": "customer",
+  "Text": "Stay dry out there.",
+  "Weight": 1,
+  "Weather": [
+   "LightRain",
+   "HeavyRain",
+   "Thunderstorm"
+  ]
+ },
+ {
+  "Id": "customer_night",
+  "Topic": "customer",
+  "Text": "Last one before close. Get home safe.",
+  "Weight": 1,
+  "DayParts": [
+   "Night"
+  ]
+ },
+ {
+  "Id": "gift_1",
+  "Topic": "gift",
+  "Text": "Oh \u2014 you didn't have to do that. Thank you.",
+  "Weight": 1
+ },
+ {
+  "Id": "gift_friend",
+  "Topic": "gift",
+  "Text": "{player_first}, you're too good to me.",
+  "Weight": 1,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "gift_wary",
+  "Topic": "gift",
+  "Text": "...What's this for? What do you want?",
+  "Weight": 2,
+  "Familiarity": [
+   "Wary"
+  ]
+ },
+ {
+  "Id": "thanks_1",
+  "Topic": "thanks",
+  "Text": "I owe you one. Seriously.",
+  "Weight": 1
+ },
+ {
+  "Id": "thanks_friend",
+  "Topic": "thanks",
+  "Text": "This is why you're my favorite person in {city}.",
+  "Weight": 1,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "insulted_1",
+  "Topic": "insulted",
+  "Text": "Wow. Okay.",
+  "Weight": 1
+ },
+ {
+  "Id": "insulted_2",
+  "Topic": "insulted",
+  "Text": "Say that again. I dare you.",
+  "Weight": 1,
+  "MaxAffinity": 0.3
+ },
+ {
+  "Id": "insulted_friend",
+  "Topic": "insulted",
+  "Text": "...I thought we were friends, {player_first}.",
+  "Weight": 2,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "threatened_1",
+  "Topic": "threatened",
+  "Text": "Okay, okay! Take it easy!",
+  "Weight": 1
+ },
+ {
+  "Id": "threatened_2",
+  "Topic": "threatened",
+  "Text": "I'm calling the police.",
+  "Weight": 0.7
+ },
+ {
+  "Id": "threatened_hostile",
+  "Topic": "threatened",
+  "Text": "You don't scare me.",
+  "Weight": 1,
+  "Familiarity": [
+   "Hostile"
+  ]
+ },
+ {
+  "Id": "compliment_acc_1",
+  "Topic": "compliment_accepted",
+  "Text": "Ha! Thank you. Made my day.",
+  "Weight": 1
+ },
+ {
+  "Id": "compliment_acc_2",
+  "Topic": "compliment_accepted",
+  "Text": "Stop, you're going to make me blush.",
+  "Weight": 1
+ },
+ {
+  "Id": "compliment_acc_friend",
+  "Topic": "compliment_accepted",
+  "Text": "Flattery will get you everywhere, {player_first}.",
+  "Weight": 1,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "compliment_rej_1",
+  "Topic": "compliment_rejected",
+  "Text": "Uh-huh. Sure.",
+  "Weight": 1
+ },
+ {
+  "Id": "compliment_rej_2",
+  "Topic": "compliment_rejected",
+  "Text": "Don't know you well enough for that.",
+  "Weight": 1,
+  "Familiarity": [
+   "Stranger",
+   "Recognized"
+  ]
+ },
+ {
+  "Id": "flirt_acc_1",
+  "Topic": "flirt_accepted",
+  "Text": "Smooth. Real smooth. ...Keep going.",
+  "Weight": 1
+ },
+ {
+  "Id": "flirt_acc_2",
+  "Topic": "flirt_accepted",
+  "Text": "You free this weekend?",
+  "Weight": 2,
+  "Familiarity": [
+   "Friend",
+   "Close"
+  ]
+ },
+ {
+  "Id": "flirt_rej_1",
+  "Topic": "flirt_rejected",
+  "Text": "I'm going to stop you right there.",
+  "Weight": 1
+ },
+ {
+  "Id": "flirt_rej_2",
+  "Topic": "flirt_rejected",
+  "Text": "That's sweet, but no.",
+  "Weight": 1
+ },
+ {
+  "Id": "flirt_rej_wary",
+  "Topic": "flirt_rejected",
+  "Text": "Absolutely not.",
+  "Weight": 1,
+  "Familiarity": [
+   "Wary"
+  ]
+ },
+ {
+  "Id": "number_yes_1",
+  "Topic": "number_shared",
+  "Text": "Sure, give me your phone. Text me sometime.",
+  "Weight": 1
+ },
+ {
+  "Id": "number_yes_2",
+  "Topic": "number_shared",
+  "Text": "Yeah, let's keep in touch.",
+  "Weight": 1
+ },
+ {
+  "Id": "number_no_1",
+  "Topic": "number_refused",
+  "Text": "Maybe once I know you a little better.",
+  "Weight": 1
+ },
+ {
+  "Id": "number_no_2",
+  "Topic": "number_refused",
+  "Text": "I don't really give my number out.",
+  "Weight": 1
+ },
+ {
+  "Id": "number_no_wary",
+  "Topic": "number_refused",
+  "Text": "No. Please leave me alone.",
+  "Weight": 1,
+  "Familiarity": [
+   "Wary"
+  ]
+ }
+]

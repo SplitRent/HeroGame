@@ -6,9 +6,11 @@ using HeroGame.Core.Config;
 using HeroGame.Core.Crime;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
+using HeroGame.Core.Phone;
 using HeroGame.Core.Population;
 using HeroGame.Core.Powers;
 using HeroGame.Core.Property;
+using HeroGame.Core.Social;
 using HeroGame.Core.Time;
 using HeroGame.Core.Weather;
 using HeroGame.Core.World;
@@ -115,6 +117,9 @@ namespace HeroGame.Core.Simulation
         public readonly ServerHistory History = new ServerHistory();
         public readonly List<AnomalyEvent> AnomalyLog = new List<AnomalyEvent>();
         public readonly Dictionary<EntityId, ServerCharacter> Characters = new Dictionary<EntityId, ServerCharacter>();
+        /// <summary>Player ↔ NPC conversations and memory (distinct from <see cref="Interactions"/>, the power/material rules).</summary>
+        public readonly InteractionService Conversations;
+        public readonly PhoneService Phone;
 
         public WellKnownAccounts Accounts = new WellKnownAccounts();
         public SimulationCursor Cursor = new SimulationCursor();
@@ -155,6 +160,9 @@ namespace HeroGame.Core.Simulation
             });
             Interactions = new PowerInteractionResolver(content.InteractionRules);
             Wanted = new WantedSystem(new WantedSettings { ResponseMultiplier = config.Gameplay.PoliceResponseMultiplier });
+
+            Conversations = new InteractionService(this, content.Barks);
+            Phone = new PhoneService(this);
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
             Transactions.Committed += tx => Dirty.Mark(SaveChunks.Transactional);

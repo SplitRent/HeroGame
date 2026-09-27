@@ -29,6 +29,7 @@ namespace HeroGame.Editor
         public const string GreyboxScene = SceneFolder + "/VerticalSlice_Greybox.unity";
         public const string MenuScene = SceneFolder + "/MainMenu.unity";
         public const string GeneratedFolder = "Assets/_Project/Generated";
+        private static NpcAvatar _npcPrefab;
 
         [MenuItem("HeroGame/Build Greybox Vertical Slice", priority = 1)]
         public static void BuildGreybox()
@@ -44,6 +45,7 @@ namespace HeroGame.Editor
             var root = new GameObject("World");
             BuildGround(root.transform, materials);
             BuildRoads(root.transform, content.Layout, materials);
+            _npcPrefab = BuildNpcPrefab(materials);
             var places = BuildPlaces(root.transform, content.Layout, materials);
 
             var systems = new GameObject("Systems");
@@ -68,7 +70,7 @@ namespace HeroGame.Editor
 
             var populationGo = new GameObject("Population");
             var population = populationGo.AddComponent<NpcPopulationPresenter>();
-            population.AvatarPrefab = BuildNpcPrefab(materials);
+            population.AvatarPrefab = _npcPrefab;
             population.Observer = player.transform;
 
             var hud = systems.AddComponent<PrototypeHud>();
@@ -221,6 +223,21 @@ namespace HeroGame.Editor
                     var s = sign.AddComponent<PropertyForSaleSign>();
                     s.Place = marker;
                 }
+                if (e.Business != null || p.Kind == PlaceKind.School || p.Kind == PlaceKind.Hospital || p.Kind == PlaceKind.Church)
+                {
+                    // Greybox buildings are solid, so the "interior" is an open-front zone at the entrance where the
+                    // people inside are shown. Replaced by real interior scenes in Phase 3 art (ASSET_TRACKER).
+                    var interior = new GameObject("Interior (greybox stub)");
+                    interior.transform.SetParent(go.transform);
+                    interior.transform.position = front + go.transform.rotation * new Vector3(0f, 1f, -3f);
+                    interior.transform.rotation = go.transform.rotation;
+                    var box = interior.AddComponent<BoxCollider>();
+                    box.isTrigger = true;
+                    box.size = new Vector3(Mathf.Max(6f, e.Width), 3f, 10f);
+                    var presenter = interior.AddComponent<InteriorPresenter>();
+                    presenter.Place = marker;
+                    presenter.AvatarPrefab = _npcPrefab;
+                }
                 if (e.Business != null)
                 {
                     var counter = new GameObject("Counter");
@@ -253,7 +270,9 @@ namespace HeroGame.Editor
             body.transform.localPosition = new Vector3(0f, 0.9f, 0f);
             body.transform.localScale = new Vector3(0.64f, 0.9f, 0.64f);
 
+            player.tag = "Player";
             var motor = player.AddComponent<PlayerMotor>();
+            player.AddComponent<PlayerCharacterSync>();
             player.AddComponent<PlayerAnimatorBridge>();
             var interactor = player.AddComponent<PlayerInteractor>();
 
@@ -320,6 +339,7 @@ namespace HeroGame.Editor
             go.transform.localScale = new Vector3(0.6f, 0.9f, 0.6f);
             go.GetComponent<Renderer>().sharedMaterial = m.Get("npc", new Color(0.7f, 0.6f, 0.5f));
             var avatar = go.AddComponent<NpcAvatar>();
+            go.AddComponent<NpcTalkInteractable>();
             var path = GeneratedFolder + "/NpcAvatar_Placeholder.prefab";
             var prefab = PrefabUtility.SaveAsPrefabAsset(go, path);
             Object.DestroyImmediate(go);

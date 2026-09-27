@@ -102,6 +102,15 @@ namespace HeroGame.Core.Population
             return result;
         }
 
+        /// <summary>Who is inside a place right now (interiors materialise these when the player enters).</summary>
+        public List<EntityId> PeopleAt(Place place, GameDateTime now)
+        {
+            _index.Update(now);
+            var list = new List<EntityId>();
+            _index.AtPlace(place, list);
+            return list;
+        }
+
         /// <summary>Street position for an activity; commuters are interpolated between origin and destination.</summary>
         public bool TryGetPosition(ScheduledActivity activity, out WorldPosition position)
         {
