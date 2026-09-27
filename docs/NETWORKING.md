@@ -40,14 +40,29 @@ Status: see `STATUS.md` (protocol, server, master and tickets are TESTED headles
 Frames: `[uint32 length][uint16 type][payload]`, little-endian, version `Wire.ProtocolVersion`.
 Messages: `Hello/Welcome/Reject`, `Ping/Pong`, `PlayerState` (client → server, ~10 Hz), `Snapshot`
 (server → client, ~10 Hz: clock, weather, your authoritative position/corrections, nearby players),
+`WorldDelta` (server → client, every 500 ms when something changed; the full state right after `Welcome`),
+`LayoutData` (a rebuilt building's layout, on request),
 `Request/Response` (op name + bounded string map), chat, phone `Notice` pushes, `Kick`.
 
 Request ops (see `StandardRequests`): `me.status`, `property.buy|mortgage|repair`, `build.commit`,
 `business.buy|start|price|wage|ads|hire|fire|withdraw|invest|restock`, `finance.transfer|savings|loan|repay`,
 `insurance.buy|claim`, `character.mask`, `crime.shoplift|rob|burgle|steal_vehicle|pickpocket|fence`,
-`justice.bail|fines|attorney|plea|surrender`, `power.use`, `radio.now`, `ripple.post|feed|like|follow` (posting is refused while
+`justice.bail|fines|attorney|plea|surrender`, `power.use`, `radio.now`, `property.layout`, `prop.impact`, `ripple.post|feed|like|follow` (posting is refused while
 muted; the author name comes from the signed ticket), `civic.register_powers|ballot|file|donate|campaign|propose|council_vote|budget`
 (filing requires standing at City Hall), `admin.kick|ban|unban|mute|unmute|grant|role`.
+
+## Shared world replication
+
+`WorldReplicator` diffs the authoritative world against the view it last published, so no gameplay code has to
+announce changes: broken street props (state), fires (position, intensity; intensity changes under 0.05 are not
+sent), and for every property that differs from the default — a player owner, a sale listing and price, damage, or a
+rebuilt layout (a version number bumped whenever the copy-on-write layout object changes). A property returning to
+all defaults is sent once with defaults and dropped. A joining player first gets the full view (split across frames:
+≤ 2,000 props, 256 fires, 1,200 properties each, under the 64 KiB frame), then deltas. Rebuilt layouts are fetched on
+demand with `property.layout` and arrive as `LayoutData` (JSON of the layout, ≤ 60,000 bytes). On the client,
+`GameClient.World` (`ReplicatedWorld`) holds the mirror and raises change events; fire, prop, for-sale-sign and
+build-mode presenters use it while online. `Welcome` carries the server's layout id and the client warns when its
+local map differs.
 
 ## Transport security
 
@@ -79,9 +94,10 @@ herogame-server --save ./world --dev-secret $(openssl rand -base64 48) --owner d
 ## Known limitations (honest list)
 
 * The Unity client has not been run against a server inside Unity yet (compile-checked only).
-* The client shows other players and receives corrections, but player-made world changes (ownership,
-  building layouts) are not yet replicated to other clients' local presentation; NPC/weather/time agree because
-  they are deterministic from the shared seed and clock. State replication is scheduled with the phone/UI work.
-* Transport is plain TCP; production needs TLS (or a DTLS/UDP transport for movement) in front of it.
+* Shared world changes are replicated (see above), but businesses, vehicles, NPC positions and phone/bank screens
+  are still read from the client's local presentation world or through requests; NPC/weather/time agree because
+  they are deterministic from the shared seed and clock. A player-facing bank/business view over requests is next.
+* The game protocol is TLS with pinned fingerprints (see Transport security); movement still rides TCP, so a
+  DTLS/UDP channel for movement remains an option under heavy loss.
 * HMAC tickets mean the master must be trusted with the secret; moving to asymmetric signatures would let game
   servers verify without any shared key.

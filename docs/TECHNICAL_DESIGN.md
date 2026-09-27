@@ -232,7 +232,8 @@ large worlds (§14 tech debt); the chunk/manifest structure is format-independen
 <save>/manifest.prev.json       the previous commit record, kept as a fallback (its chunks are kept too)
 <save>/chunks/<chunk>.g<N>.json immutable chunk files: meta, transactional, population, properties,
                                 businesses, environment, history, vehicles, justice, emergency, civic,
-                                social, story (Story Mode only), population_<shard>, character_<id>
+                                social, destruction, story (Story Mode only), population_<shard>,
+                                layouts_<0..15>, character_<id>
 <save>/journal.log              write-ahead journal (JSON lines, fsync per entry)
 ```
 
@@ -241,6 +242,15 @@ Only dirty chunks are rewritten (`DirtyTracker`); unchanged chunks keep their pr
 atomic (temp + fsync + rename). Because the manifest is written last, a crash at any point leaves the previous
 snapshot intact. `meta` and `transactional` (ledger + ownership + loans + journal sequence) are always written
 together so they agree.
+
+The manifest records the city layout (`LayoutId`, `LayoutFile`); a world only opens on its own layout
+(`LayoutMismatchException` otherwise) and hosts reopen it on the recorded file without being told.
+
+What blocks the simulation thread is kept small: population shards and households are captured as detached copies
+(`NpcRecord.SnapshotCopy`, a member-wise copy of the nested lists; life events and power definitions are immutable and
+shared) and serialized with the building layouts inside `Commit`, which a background save runs on another thread.
+Building layouts are copy-on-write (a build replaces the object), so the 16 layout shards are rewritten only when a
+layout reference changed since the shard was last written; older saves with layouts inline in `properties` still load.
 
 ### 9.4 Recovery
 Load manifest → load chunks → replay journal entries with sequence > snapshot sequence (player/admin transactions) →
@@ -348,6 +358,13 @@ the treasury; collapsed buildings not owned by players are rebuilt with a recons
 
 ## 11. World streaming (GDD §77, §113)
 
+**City layouts.** `layout_vertical_slice.json` (3 districts) is the default. `layout_port_arden.json` is the full
+19-district metro: `Tools/World/generate_metro.py` writes it deterministically, embedding the slice verbatim (every Story
+Mode place keeps its name and position) and laying out the other sixteen bible districts with arterial grids, landmarks,
+services, template businesses, parcel blocks and a connected freeway/avenue network (~7,500 places, ~50,000 residents,
+302 businesses). CI fails if the file is out of date with its generator. Hosts choose with `--layout` (server, world
+host) or `GameBootstrap.LayoutFile` (Unity); the editor menu can build a greybox scene of either.
+
 * The city is partitioned into 256 m square cells, each an additive scene (`Cell_{x}_{z}`) → Addressables groups.
   `WorldStreamer` loads cells within 600 m (plus velocity look-ahead), unloads beyond 800 m (hysteresis), capped
   concurrent async operations.
@@ -409,16 +426,16 @@ Full detail: [`ASSET_PIPELINE.md`](ASSET_PIPELINE.md). Summary:
 
 ## 16. Performance targets (GDD §114, §142)
 
-| Area | Target | Current measurement (Phases 19–28, container CPU, Release) |
+| Area | Target | Current measurement (container CPU, 4 cores, Release; `herogame-world bench`) |
 |---|---|---|
 | Client frame rate | 60 fps @1440p High on RTX 3070-class / 30–60 fps consoles | not yet measurable (greybox) |
 | Server tick | 30 Hz with 128 players | **30 Hz held with 128 bot clients** (`herogame-server loadtest`, TLS on): main-thread p50 0.2 ms, p99 21 ms of a 33 ms budget; snapshots p50 6 ms for all 128; 12 KiB/s per client. Bots, sockets and server share one 4-core machine, so this overstates server cost |
-| Whole daily world step (NPCs, businesses, civic incl. an election campaign, disasters, finance, courts, EMS) | ≤ 250 ms per game day at 50,000 NPCs | **20.8 ms/day at 9,302 NPCs (2.23 µs per NPC-day)** → ~112 ms / 50k extrapolated |
-| Population director | ≤ 2 ms per evaluation per server tick budget | **1.6 ms** (8 observers, 4,449 places, spatial index) |
-| Offline catch-up | ≤ 15 s for 60 days @50k NPCs | 1.25 s for 60 days @9.3k → ~6.7 s @50k extrapolated |
-| Incremental save | ≤ 16 ms hitch on the main thread | routine autosave **12.9 ms** blocked (writes on a background thread); the save right after a daily step, when every NPC shard is dirty, blocks ~270 ms for 9.3k NPCs (serialization of a consistent snapshot) ⚠ |
-| Load + journal replay + invariant check | — | 1.4 s for 9.3k NPCs |
-| Server memory | — | 117 MiB managed for the 9.3k-NPC world |
+| Whole daily world step (NPCs, businesses, civic incl. an election campaign, disasters, finance, courts, EMS, destruction) | ≤ 250 ms per game day at 50,000 NPCs | **measured on the full metro: 200–264 ms/day at 49,792 NPCs (4.0–5.3 µs per NPC-day)** across runs; 45 ms/day at 9,302 NPCs. At the target, with no headroom ⚠ |
+| Population director | ≤ 2 ms per evaluation per server tick budget | **1.5–1.7 ms** at 50k NPCs / 7,530 places; 2.6–3.2 ms on the dense 9.3k stress layout (more candidates near the observers) ⚠ |
+| Offline catch-up | ≤ 15 s for 60 days @50k NPCs | **12.9 s** for 60 days on the metro, including a 2.6 s load and 3.5 s full save |
+| Incremental save | ≤ 16 ms hitch on the main thread | routine autosave: 12–21 ms blocked at 9.3k NPCs, **28–38 ms at 50k** ⚠. Save right after a daily step: **140–300 ms at 50k** (was ~860 ms), 83–113 ms at 9.3k (was ~270 ms): NPC and household snapshots are copied, not serialized, on the simulation thread; building layouts live in 16 copy-on-write shards rewritten only when a building changes ⚠ |
+| Load + journal replay + invariant check | — | 1.5 s at 9.3k NPCs; 2.6–3.0 s at 50k |
+| Server memory | — | 230–330 MiB managed for the 50k-NPC metro |
 | Streaming hitch | none > 50 ms | Phase 2 |
 | Client memory | ≤ 10 GB RAM / 8 GB VRAM (High) | Phase 25 |
 

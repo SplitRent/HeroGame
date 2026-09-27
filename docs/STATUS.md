@@ -3,11 +3,12 @@
 Labels (GDD §148): **PLANNED · PROTOTYPING · IN DEVELOPMENT · FUNCTIONAL · POLISHED · TESTED · OPTIMIZED · COMPLETE**
 
 Rules: a label is raised only with evidence. "Evidence" column names the test, measurement or tool that justifies it.
-*Code written but never executed inside Unity* is at most **IN DEVELOPMENT** — Unity has not been run on this project
-yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
-assemblies only.
+*Code written but never executed inside Unity* is at most **IN DEVELOPMENT** — there is no editor in the development
+environment; Unity scripts are verified by compiling against Unity reference assemblies only. The project owner has
+opened the project in Unity, but no Health Check report or Console log has confirmed a successful run yet, so no
+Unity row is raised.
 
-_Last updated: Phases 23–28 (radio, phone apps, security audit, failure testing, documentation). See `reports/DEV_REPORT_002_SYSTEMS.md`._
+_Last updated: full metro, world replication, Phase 24 UI, save-stall work, Story Part Two, destruction, audio, debug tools. See `reports/DEV_REPORT_003_WORLD_AND_POLISH.md`._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -100,6 +101,9 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Youth curfew enforced in NPC schedules (minors home in the window; adults unaffected; repeal lifts it) | TESTED | `YouthCurfew_KeepsMinorsHome_AndLiftsWithRepeal` |
 | Weekend late nights for ages 15–29 (Fri/Sat, past midnight, extraversion-driven) | TESTED | exercised by the curfew test; offline/live equivalence tests still pass |
 | Campaign funds carry over between a player's campaigns | TESTED | `LeftoverCampaignFunds_CarryOverToTheNextRun` |
+| Full Port Arden metro layout: 19 districts (slice embedded verbatim), landmarks, services, 302 businesses, ~7,500 places, one connected road network, generated deterministically | TESTED | `FullMetro_Validates_*`, `FullMetro_HoldsAboutFiftyThousandResidents_OnOneConnectedRoadNetwork`; CI `generate_metro.py --check` |
+| 50k-NPC simulation (daily step, director, catch-up) | FUNCTIONAL | `herogame-world bench --layout layout_port_arden.json` (CI): 200–264 ms/day at 49,792 NPCs (target 250 ⚠), director 1.5–1.7 ms, 60-day catch-up 12.9 s |
+| Player UI logic: settings (validated, persisted, unit/clock formatting), notification queue (folding, priority, bounds), property portfolio (equity, rent, net, alerts), inventory (stacks, stolen/contraband) | TESTED | `PlayerUiTests` (5) |
 
 ## Story Mode
 | System | Status | Evidence / notes |
@@ -125,6 +129,8 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Damaged-snapshot fallback (previous generation + journal) | TESTED | `DamagedSnapshot_FallsBackToThePreviousOne_*`, `CorruptManifest_FallsBack_AndWithNoFallbackLoadFailsLoudly` |
 | Corrupt journal entries skipped and reported | TESTED | `GarbageInTheMiddleOfTheJournal_IsSkipped_AndTheRestReplays`, `TornJournalTail_IsDiscarded` |
 | Story save slots | TESTED | `StorySlots_RotateAutosaves` |
+| City layout recorded in saves; wrong layout refused; hosts reopen on the recorded layout | TESTED | `Saves_RememberTheirLayout_AndRefuseToOpenOnAnotherMap` |
+| Off-thread population serialization (detached NPC/household snapshots) and copy-on-write layout shards | TESTED | `NpcAndHouseholdSnapshots_ShareNothingMutable_*`, `EditingOneBuilding_RewritesOnlyItsLayoutShard_*`, `SavesFromBeforeLayoutShards_*`; bench: post-daily-step save blocks 140–300 ms at 50k (was ~860) ⚠ target 16 ms |
 | Account profiles (local) | FUNCTIONAL | used by front end |
 | Binary save format | PLANNED | tech debt #1 |
 | PostgreSQL backend | PLANNED | file-backed JSON stores in use; see NETWORKING.md |
@@ -152,7 +158,8 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Persisted manhunts; disconnecting mid-chase is evading | TESTED | `ActiveManhunt_SurvivesARestart`, `DisconnectingDuringAChase_*` |
 | Load test (30 Hz, 128 players) | TESTED | `herogame-server loadtest` (CI: 64 clients over TLS); 128 clients: p99 21 ms/tick, 12 KiB/s per client; async per-connection writers, 32-nearest snapshot interest |
 | Background autosave (snapshot on the simulation thread, writes off it; failed writes retried) | TESTED | `BackgroundSave_Commits_*`; bench: routine autosave 12.9 ms blocked |
-| Replication of player-made world changes to other clients | PLANNED | see NETWORKING.md limitations |
+| Replication of shared world changes (broken props, fires, player ownership, sale listings, damage, rebuilt buildings on demand); full state on join | TESTED | `WorldChanges_ReachEveryone_LateJoinersGetTheFullState_AndRebuiltBuildingsCanBeFetched`, `WorldDeltas_RoundTrip_AndHostileCountsAreRejected`; load test unchanged |
+| `--layout` for the dedicated server and world host | FUNCTIONAL | CI metro bench; manual `new --layout` → `run` reopens on the metro |
 
 ## Headless tools
 | System | Status | Evidence / notes |
@@ -183,6 +190,10 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | City Hall panel (budget, council, elections, registration), Ripple phone app | IN DEVELOPMENT | compiles; IMGUI placeholders; greybox builder places a City Hall counter |
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
+| Health check (HeroGame ▸ Health Check): Unity version, HDRP, input, colour space, data, story, simulation smoke, scenes | IN DEVELOPMENT | compiles; waiting on the first report from a real editor |
+| Pause/settings menu (live audio/quality/FOV/sensitivity/subtitles), toasts, phone Properties & Inventory tabs | IN DEVELOPMENT | compiles; IMGUI placeholders over tested view-models |
+| Online presentation from the replica (fires, props, for-sale signs, rebuilt interiors in build mode) | IN DEVELOPMENT | compiles |
+| Metro greybox scene (HeroGame ▸ Build Greybox Full Metro) and `GameBootstrap.LayoutFile` | IN DEVELOPMENT | compiles; heavy scene, not yet built in Unity |
 
 ## Asset pipeline
 | System | Status | Evidence / notes |
@@ -196,4 +207,4 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 
 ## Not started (PLANNED)
 Combat & weapons · recorded music, SFX and VO (procedural placeholders exist) · UI Toolkit phone skin · animation set · character creator 3D preview ·
-Addressables cell content · HLOD · full city.
+Addressables cell content · HLOD · hand-authored district art, terrain and water for the metro (the metro exists as data and greybox).
