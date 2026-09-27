@@ -29,6 +29,8 @@ namespace HeroGame.Persistence.Content
         public const string Barks = "barks.json";
         public const string VehicleCatalog = "vehicle_catalog.json";
         public const string VehicleMods = "vehicle_mods.json";
+        public const string Furniture = "furniture_catalog.json";
+        public const string BusinessRequirements = "business_requirements.json";
         public const string DefaultServerConfig = "server_default.json";
 
         public static ContentSet Load(string dataDirectory, string layoutFile = DefaultLayout)
@@ -46,6 +48,8 @@ namespace HeroGame.Persistence.Content
                 Barks = Read<List<Core.Social.BarkLine>>(dataDirectory, Barks),
                 VehicleModels = Read<List<Core.Vehicles.VehicleModel>>(dataDirectory, VehicleCatalog),
                 VehicleMods = Read<List<Core.Vehicles.VehicleMod>>(dataDirectory, VehicleMods),
+                Furniture = Read<List<Core.Building.FurnitureDefinition>>(dataDirectory, Furniture),
+                BusinessRequirements = Read<List<Core.Building.BusinessRequirement>>(dataDirectory, BusinessRequirements),
             };
             return set;
         }
@@ -135,6 +139,25 @@ namespace HeroGame.Persistence.Content
                 foreach (var cls in m.AllowedClasses)
                     if (!System.Enum.TryParse(cls, out Core.Vehicles.VehicleClass _)) r.Error("vehicle_mods." + m.Id, "Unknown vehicle class " + cls);
             }
+
+            var furnitureIds = new HashSet<string>();
+            var providedTags = new HashSet<string>();
+            foreach (var f in c.Furniture)
+            {
+                if (!furnitureIds.Add(f.Id)) r.Error("furniture." + f.Id, "Duplicate id.");
+                if (f.Width <= 0 || f.Depth <= 0) r.Error("furniture." + f.Id, "Footprint must be positive.");
+                foreach (var t in f.Tags) providedTags.Add(t);
+            }
+            foreach (var required in new[] { Core.Building.BuildingLayout.ColumnItem, Core.Building.BuildingLayout.StairsItem })
+                if (!furnitureIds.Contains(required)) r.Error("furniture", "Generated layouts need catalog item " + required + ".");
+            foreach (var req in c.BusinessRequirements)
+            {
+                if (!templateIds.Contains(req.TemplateId)) r.Error("business_requirements." + req.TemplateId, "Unknown business template.");
+                foreach (var t in req.RequiredTags) if (!providedTags.Contains(t)) r.Error("business_requirements." + req.TemplateId, "No furniture provides tag " + t + ".");
+                foreach (var z in req.AllowedZoning) if (!System.Enum.TryParse(z, out Core.Property.ZoningType _)) r.Error("business_requirements." + req.TemplateId, "Unknown zoning " + z);
+            }
+            foreach (var t in c.BusinessTemplates)
+                if (!c.BusinessRequirements.Exists(x => x.TemplateId == t.Id)) r.Warn("business_requirements", "No permit rules for " + t.Id + " (it cannot be opened by players).");
 
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)

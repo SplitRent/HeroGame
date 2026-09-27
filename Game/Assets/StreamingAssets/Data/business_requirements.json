@@ -1,0 +1,369 @@
+[
+ {
+  "TemplateId": "corner_store",
+  "RequiredTags": [
+   "register",
+   "shelving",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 40,
+  "PermitFeeCents": 40000
+ },
+ {
+  "TemplateId": "supermarket",
+  "RequiredTags": [
+   "register",
+   "shelving",
+   "cooler",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Storage",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 400,
+  "PermitFeeCents": 250000
+ },
+ {
+  "TemplateId": "pharmacy",
+  "RequiredTags": [
+   "register",
+   "shelving",
+   "safe",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 80,
+  "PermitFeeCents": 120000
+ },
+ {
+  "TemplateId": "clothing_boutique",
+  "RequiredTags": [
+   "register",
+   "clothes_rack",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 40,
+  "PermitFeeCents": 50000
+ },
+ {
+  "TemplateId": "hardware_store",
+  "RequiredTags": [
+   "register",
+   "shelving",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Storage",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse",
+   "Industrial"
+  ],
+  "MinFloorArea": 120,
+  "PermitFeeCents": 80000
+ },
+ {
+  "TemplateId": "barbershop",
+  "RequiredTags": [
+   "barber_chair",
+   "sink",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 30,
+  "PermitFeeCents": 40000
+ },
+ {
+  "TemplateId": "laundromat",
+  "RequiredTags": [
+   "washer",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 50,
+  "PermitFeeCents": 50000
+ },
+ {
+  "TemplateId": "diner",
+  "RequiredTags": [
+   "commercial_kitchen",
+   "fridge",
+   "restaurant_seating",
+   "sink",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Kitchen",
+   "Dining",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 90,
+  "PermitFeeCents": 150000
+ },
+ {
+  "TemplateId": "taqueria",
+  "RequiredTags": [
+   "commercial_kitchen",
+   "fridge",
+   "restaurant_seating",
+   "sink",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Kitchen",
+   "Dining",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 60,
+  "PermitFeeCents": 120000
+ },
+ {
+  "TemplateId": "coffee_shop",
+  "RequiredTags": [
+   "counter",
+   "register",
+   "restaurant_seating",
+   "sink",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Dining",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 40,
+  "PermitFeeCents": 80000
+ },
+ {
+  "TemplateId": "seafood_restaurant",
+  "RequiredTags": [
+   "commercial_kitchen",
+   "walk_in_cooler",
+   "restaurant_seating",
+   "sink",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Kitchen",
+   "Dining",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 150,
+  "PermitFeeCents": 250000
+ },
+ {
+  "TemplateId": "neighborhood_bar",
+  "RequiredTags": [
+   "bar_counter",
+   "seating",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Bar",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse",
+   "Industrial"
+  ],
+  "MinFloorArea": 60,
+  "PermitFeeCents": 200000
+ },
+ {
+  "TemplateId": "nightclub",
+  "RequiredTags": [
+   "bar_counter",
+   "sound_system",
+   "toilet",
+   "security_camera"
+  ],
+  "RequiredRooms": [
+   "DanceFloor",
+   "Bar",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse",
+   "Industrial"
+  ],
+  "MinFloorArea": 250,
+  "PermitFeeCents": 600000
+ },
+ {
+  "TemplateId": "auto_garage",
+  "RequiredTags": [
+   "lift",
+   "tools",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Workshop",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse",
+   "Industrial"
+  ],
+  "MinFloorArea": 120,
+  "PermitFeeCents": 150000
+ },
+ {
+  "TemplateId": "gas_station",
+  "RequiredTags": [
+   "register",
+   "shelving",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Retail",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse",
+   "Industrial"
+  ],
+  "MinFloorArea": 50,
+  "PermitFeeCents": 500000
+ },
+ {
+  "TemplateId": "gym",
+  "RequiredTags": [
+   "gym_equipment",
+   "shower",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Living",
+   "Bathroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse",
+   "Industrial"
+  ],
+  "MinFloorArea": 120,
+  "PermitFeeCents": 80000
+ },
+ {
+  "TemplateId": "logistics_depot",
+  "RequiredTags": [
+   "pallet_rack",
+   "loading_dock",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Warehouse",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Industrial"
+  ],
+  "MinFloorArea": 600,
+  "PermitFeeCents": 350000
+ },
+ {
+  "TemplateId": "bank_branch",
+  "RequiredTags": [
+   "safe_heavy",
+   "security_camera",
+   "alarm",
+   "desk",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Office",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse"
+  ],
+  "MinFloorArea": 120,
+  "PermitFeeCents": 800000
+ },
+ {
+  "TemplateId": "car_dealership",
+  "RequiredTags": [
+   "desk",
+   "computer",
+   "toilet"
+  ],
+  "RequiredRooms": [
+   "Showroom",
+   "Office",
+   "Restroom"
+  ],
+  "AllowedZoning": [
+   "Commercial",
+   "MixedUse",
+   "Industrial"
+  ],
+  "MinFloorArea": 300,
+  "PermitFeeCents": 400000
+ }
+]

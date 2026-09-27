@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HeroGame.Core.Building;
 using HeroGame.Core.Business;
 using HeroGame.Core.Config;
 using HeroGame.Core.Economy;
@@ -32,6 +33,7 @@ namespace HeroGame.Core.Simulation
             generator.Generate(world.Population, world.Today, config.Gameplay.NpcDensity);
 
             AssignResidentialOwnership(world, propertyByPlace);
+            CreateLayoutsAndUnits(world, expanded, propertyByPlace);
             CreateBusinesses(world, expanded, propertyByPlace);
             CreateVehicles(world);
 
@@ -61,7 +63,12 @@ namespace HeroGame.Core.Simulation
             a.BankReserves = world.Ids.Next(EntityKind.LedgerAccount);
             world.Ledger.Open(a.BankReserves, a.BankOrganization, LedgerAccountKind.Bank, "Gulf Tidewater Bank reserves");
 
+            a.PropertyManagementAccount = world.Ids.Next(EntityKind.LedgerAccount);
+            world.Ledger.Open(a.PropertyManagementAccount, a.PropertyManagement, LedgerAccountKind.Business, "Tidewater Property Management");
+            a.Contractors = world.Ids.Next(EntityKind.LedgerAccount);
+            world.Ledger.Open(a.Contractors, EntityId.None, LedgerAccountKind.External, "Contractors & suppliers");
             Seed(world, a.Treasury, Money.FromDollars(50000000L), "Initial municipal budget");
+            Seed(world, a.PropertyManagementAccount, Money.FromDollars(2000000L), "Property management reserves");
             Seed(world, a.BankReserves, Money.FromDollars(750000000L), "Bank capitalisation");
         }
 
@@ -204,6 +211,59 @@ namespace HeroGame.Core.Simulation
                     if (business.Property.IsValid) world.Ownership.AssignInitial(business.Property, ownerOrg);
                 }
                 world.Businesses[business.Id] = business;
+            }
+        }
+
+        private static void CreateLayoutsAndUnits(World world, List<ExpandedPlace> expanded, Dictionary<EntityId, PropertyRecord> propertyByPlace)
+        {
+            var householdsByHome = new Dictionary<EntityId, List<Household>>();
+            foreach (var h in SortedHouseholds(world))
+            {
+                if (!householdsByHome.TryGetValue(h.Home, out var list)) householdsByHome[h.Home] = list = new List<Household>();
+                list.Add(h);
+            }
+            foreach (var e in expanded)
+            {
+                if (!propertyByPlace.TryGetValue(e.Place.Id, out var property) || property.Kind == PropertyKind.Land) continue;
+                property.Layout = BuildingLayout.Shell(property.Id.ToString(), e.Width, e.Depth, RoomFor(e.Place.Kind), Math.Max(1, property.Floors));
+                if (property.Kind != PropertyKind.Apartment) continue;
+
+                // Apartment units: one per resident household plus ~10% vacancy for renters (players included).
+                householdsByHome.TryGetValue(e.Place.Id, out var households);
+                var occupied = households != null ? households.Count : 0;
+                var total = occupied + Math.Max(1, (int)Math.Ceiling(occupied * 0.1));
+                var district = world.Geography.GetDistrict(e.Place.District);
+                var wealth = district != null ? district.Wealth : 0.5f;
+                for (var i = 0; i < total; i++)
+                {
+                    var bedrooms = 1 + (int)(StableHash.Combine(world.Seed, property.Id.Value, (ulong)i) % 3);
+                    property.Units.Add(new RentalUnit
+                    {
+                        Id = i + 1,
+                        Label = "Apt " + (1 + i / 6) + (char)('A' + i % 6),
+                        Bedrooms = bedrooms,
+                        AreaSqm = 45f + bedrooms * 22f,
+                        MonthlyRentCents = (long)((65000 + bedrooms * 28000) * (0.6 + wealth * 0.9)) / 100 * 100,
+                        NpcHousehold = i < occupied ? households[i].Id : EntityId.None,
+                    });
+                }
+            }
+        }
+
+        private static RoomType RoomFor(PlaceKind kind)
+        {
+            switch (kind)
+            {
+                case PlaceKind.Shop:
+                case PlaceKind.GasStation: return RoomType.Retail;
+                case PlaceKind.Restaurant: return RoomType.Dining;
+                case PlaceKind.Nightlife: return RoomType.Bar;
+                case PlaceKind.Office: return RoomType.Office;
+                case PlaceKind.Warehouse:
+                case PlaceKind.Factory:
+                case PlaceKind.Dock: return RoomType.Warehouse;
+                case PlaceKind.Garage: return RoomType.Workshop;
+                default: return RoomType.Living;
             }
         }
 

@@ -48,6 +48,10 @@ namespace HeroGame.Core.Economy
         Bail = 21,
         Fee = 22,
         Reversal = 23,
+        Refund = 24,
+        Deposit = 25,
+        Payout = 26,
+        Premium = 27,
     }
 
     [Serializable]

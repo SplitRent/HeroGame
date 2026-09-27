@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HeroGame.Core.Building;
 using HeroGame.Core.Business;
 using HeroGame.Core.Characters;
 using HeroGame.Core.Config;
@@ -7,6 +8,7 @@ using HeroGame.Core.Crime;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
 using HeroGame.Core.Phone;
+using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
 using HeroGame.Core.Population;
 using HeroGame.Core.Powers;
 using HeroGame.Core.Property;
@@ -28,6 +30,9 @@ namespace HeroGame.Core.Simulation
         public EntityId External;
         public EntityId Treasury;
         public EntityId BankReserves;
+        public EntityId PropertyManagementAccount;
+        /// <summary>Contractors, suppliers and other businesses outside the simulated area.</summary>
+        public EntityId Contractors;
     }
 
     /// <summary>Simulation bookkeeping that must survive restarts.</summary>
@@ -123,6 +128,8 @@ namespace HeroGame.Core.Simulation
         /// <summary>Player ↔ NPC conversations and memory (distinct from <see cref="Interactions"/>, the power/material rules).</summary>
         public readonly InteractionService Conversations;
         public readonly VehicleService Vehicles;
+        public readonly ConstructionService Construction;
+        public readonly RentalService Rentals;
         public RoadNetwork Roads { get; private set; }
         public TrafficModel Traffic { get; private set; }
         public readonly PhoneService Phone;
@@ -170,6 +177,9 @@ namespace HeroGame.Core.Simulation
             Conversations = new InteractionService(this, content.Barks);
             Vehicles = new VehicleService(content.VehicleModels, content.VehicleMods, Transactions, Ownership, Taxes, Ids, Seed);
             RebuildRoads();
+            Construction = new ConstructionService(new BuildingValidator(content.Furniture), Transactions, Ownership, content.BusinessRequirements);
+            Rentals = new RentalService(Properties, Transactions, Ownership, Taxes);
+            Rentals.Event += OnRentalEvent;
             Phone = new PhoneService(this);
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
@@ -178,6 +188,50 @@ namespace HeroGame.Core.Simulation
         }
 
         public long Today => Clock.Now.DayIndex;
+
+        /// <summary>The checking account of a player character, or None.</summary>
+        public EntityId CheckingAccountOf(EntityId character) => Characters.TryGetValue(character, out var c) ? c.CheckingAccount : EntityId.None;
+
+        /// <summary>The ledger account that receives money for an owner (character, business owner org, management…).</summary>
+        public EntityId AccountFor(EntityId owner)
+        {
+            if (!owner.IsValid) return Accounts.Treasury;
+            if (Characters.TryGetValue(owner, out var c)) return c.CheckingAccount;
+            if (owner == Accounts.PropertyManagement && Accounts.PropertyManagementAccount.IsValid) return Accounts.PropertyManagementAccount;
+            if (owner == Accounts.Government) return Accounts.Treasury;
+            if (owner == Accounts.BankOrganization) return Accounts.BankReserves;
+            foreach (var a in Ledger.Accounts) if (a.Owner == owner && a.Kind != LedgerAccountKind.External) return a.Id;
+            return Accounts.Treasury;
+        }
+
+        /// <summary>
+        /// Applies a build session to a property the character owns, charging the contractor at today's price
+        /// level. The layout lives in the properties chunk, so callers that journal only money must save that
+        /// chunk promptly (see GameSession.Build) to keep layout and payment consistent across a crash.
+        /// </summary>
+        public OpResult Build(PropertyRecord property, IReadOnlyList<BuildOp> ops, ServerCharacter builder, string idempotencyKey)
+        {
+            if (property == null || builder == null) return OpResult.Fail("Nothing to build.");
+            if (property.Layout == null) return OpResult.Fail("This property has no editable structure.");
+            return Construction.Commit(property, property.Layout, ops, builder.CharacterId, builder.CheckingAccount, Accounts.Contractors, Clock.Now,
+                Macro.PriceLevel, idempotencyKey, l =>
+                {
+                    property.Layout = l;
+                    Dirty.Mark(SaveChunks.Properties);
+                });
+        }
+
+        private void OnRentalEvent(RentalEvent e)
+        {
+            Dirty.Mark(SaveChunks.Properties);
+            if (Characters.TryGetValue(e.Party, out var c) && e.Kind != RentalEventKind.RentPaid && e.Kind != RentalEventKind.TaxPaid)
+                Phone.Send(c, Accounts.PropertyManagement, e.Kind == RentalEventKind.TaxArrears || e.Kind == RentalEventKind.TaxSale ? Config.Identity.GovernmentName : "Landlord",
+                    Phone_Category(e.Kind), e.Detail);
+            if (e.Kind == RentalEventKind.TaxSale || e.Kind == RentalEventKind.Evicted)
+                History.Record(Today, HistoryCategory.Economy, 1, e.Detail, "", EntityId.None, e.Property);
+        }
+
+        private static PhoneCategory Phone_Category(RentalEventKind kind) => kind == RentalEventKind.TaxArrears || kind == RentalEventKind.TaxSale ? PhoneCategory.Server : PhoneCategory.Personal;
 
         /// <summary>Rebuilds the road graph from layout data (after load or layout edits).</summary>
         public void RebuildRoads()

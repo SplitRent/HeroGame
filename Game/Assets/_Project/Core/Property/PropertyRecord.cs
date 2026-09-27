@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HeroGame.Core.Building;
 using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Property
@@ -35,21 +36,31 @@ namespace HeroGame.Core.Property
     }
 
     [Serializable]
-    public sealed class FurnitureItem
-    {
-        public string CatalogId = "";
-        public float X, Y, Z, RotationY;
-        public int Floor;
-    }
-
-    [Serializable]
     public sealed class Tenancy
     {
         public EntityId Tenant;
         public EntityId TenantAccount;
+        public EntityId LandlordAccount;
         public long MonthlyRentCents;
+        public long DepositCents;
         public long NextRentDueSecond;
+        public long StartDay;
         public int MissedPayments;
+    }
+
+    /// <summary>A rentable unit inside a multi-unit building (apartments).</summary>
+    [Serializable]
+    public sealed class RentalUnit
+    {
+        public int Id;
+        public string Label = "";
+        public int Bedrooms = 1;
+        public float AreaSqm = 60f;
+        public long MonthlyRentCents;
+        /// <summary>Occupied by an NPC household (aggregate; not a ledger tenancy).</summary>
+        public EntityId NpcHousehold;
+        public Tenancy Tenancy;
+        public bool Vacant => Tenancy == null && !NpcHousehold.IsValid;
     }
 
     /// <summary>
@@ -85,9 +96,12 @@ namespace HeroGame.Core.Property
         public bool HasSafe;
         public bool UtilitiesConnected = true;
         public Tenancy Tenancy;
-        public List<FurnitureItem> Furniture = new List<FurnitureItem>();
-        /// <summary>Id of a building-system layout (rooms/walls) if customised.</summary>
-        public string LayoutId = "";
+        /// <summary>Walls, rooms, openings and furniture (the building system). Null until generated/edited.</summary>
+        public BuildingLayout Layout;
+        public List<RentalUnit> Units = new List<RentalUnit>();
+        /// <summary>Unpaid property tax. Long arrears lead to a tax sale.</summary>
+        public long TaxArrearsCents;
+        public long ArrearsSinceDay;
 
         public Money MarketValue => new Money(MarketValueCents);
     }

@@ -168,6 +168,7 @@ namespace HeroGame.Core.Simulation
                     _world.History.Record(day, HistoryCategory.Economy, 2, "Bank repossesses property after loan default", "", EntityId.None, loan.Borrower, loan.Collateral);
                 }
             }
+            _world.Rentals.ProcessDay(date.AddHours(12), _world.CheckingAccountOf, _world.Accounts.Treasury, taxDay: day % 30 == 0);
             _world.Properties.ApplyDailyWear();
             if (day % 7 == 0) _world.Properties.Reassess(_world.Geography, _world.Macro, _world.Config.Economy.PropertyPriceMultiplier);
 

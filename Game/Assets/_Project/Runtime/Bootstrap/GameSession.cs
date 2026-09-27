@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using HeroGame.Core.Building;
 using HeroGame.Core.Characters;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
+using HeroGame.Core.Property;
 using HeroGame.Core.Simulation;
 using HeroGame.Core.World;
 using HeroGame.Persistence.Content;
@@ -120,6 +123,16 @@ namespace HeroGame.Runtime.Bootstrap
             var key = "buy:" + LocalCharacter.CharacterId + ":" + property + ":" + World.Clock.Now.TotalSeconds;
             return World.Properties.Purchase(property, LocalCharacter.CharacterId, LocalCharacter.CheckingAccount,
                 SellerAccountFor(property), World.Accounts.Treasury, World.Clock.Now, key);
+        }
+
+        /// <summary>Commits a build session on an owned property and saves at once so the layout is never behind its payment.</summary>
+        public OpResult Build(PropertyRecord property, IReadOnlyList<BuildOp> ops)
+        {
+            if (LocalCharacter == null) return OpResult.Fail("No character.");
+            var key = "build:" + LocalCharacter.CharacterId + ":" + property.Id + ":" + World.Clock.Now.TotalSeconds + ":" + ops.Count;
+            var result = World.Build(property, ops, LocalCharacter, key);
+            if (result.Success) Save();
+            return result;
         }
 
         private EntityId SellerAccountFor(EntityId property)

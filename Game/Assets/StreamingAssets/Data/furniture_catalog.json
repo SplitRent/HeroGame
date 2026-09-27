@@ -1,0 +1,1010 @@
+[
+ {
+  "Id": "bed_single",
+  "DisplayName": "Single bed",
+  "Category": "Bedroom",
+  "PriceCents": 35000,
+  "Width": 1.0,
+  "Depth": 2.0,
+  "Height": 0.6,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "bed"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "Id": "bed_queen",
+  "DisplayName": "Queen bed",
+  "Category": "Bedroom",
+  "PriceCents": 90000,
+  "Width": 1.6,
+  "Depth": 2.1,
+  "Height": 0.6,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "bed"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "Id": "dresser",
+  "DisplayName": "Dresser",
+  "Category": "Bedroom",
+  "PriceCents": 28000,
+  "Width": 1.2,
+  "Depth": 0.5,
+  "Height": 0.9,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "storage"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "wardrobe",
+  "DisplayName": "Wardrobe",
+  "Category": "Bedroom",
+  "PriceCents": 42000,
+  "Width": 1.2,
+  "Depth": 0.6,
+  "Height": 2.0,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "storage"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "sofa",
+  "DisplayName": "Sofa",
+  "Category": "Living",
+  "PriceCents": 75000,
+  "Width": 2.1,
+  "Depth": 0.9,
+  "Height": 0.85,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "seating"
+  ],
+  "Capacity": 3,
+  "StockDays": 0
+ },
+ {
+  "Id": "armchair",
+  "DisplayName": "Armchair",
+  "Category": "Living",
+  "PriceCents": 32000,
+  "Width": 0.9,
+  "Depth": 0.9,
+  "Height": 0.9,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "seating"
+  ],
+  "Capacity": 1,
+  "StockDays": 0
+ },
+ {
+  "Id": "coffee_table",
+  "DisplayName": "Coffee table",
+  "Category": "Living",
+  "PriceCents": 15000,
+  "Width": 1.2,
+  "Depth": 0.6,
+  "Height": 0.45,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "table"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "tv_stand",
+  "DisplayName": "TV and stand",
+  "Category": "Living",
+  "PriceCents": 68000,
+  "Width": 1.6,
+  "Depth": 0.45,
+  "Height": 1.2,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "television"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "bookshelf",
+  "DisplayName": "Bookshelf",
+  "Category": "Living",
+  "PriceCents": 21000,
+  "Width": 0.9,
+  "Depth": 0.35,
+  "Height": 1.9,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "storage"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "dining_table",
+  "DisplayName": "Dining table",
+  "Category": "Dining",
+  "PriceCents": 54000,
+  "Width": 1.8,
+  "Depth": 0.9,
+  "Height": 0.75,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "table",
+   "seating"
+  ],
+  "Capacity": 4,
+  "StockDays": 0
+ },
+ {
+  "Id": "stove",
+  "DisplayName": "Gas range",
+  "Category": "Kitchen",
+  "PriceCents": 85000,
+  "Width": 0.8,
+  "Depth": 0.65,
+  "Height": 0.9,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": true,
+  "Tags": [
+   "stove"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "Id": "fridge",
+  "DisplayName": "Refrigerator",
+  "Category": "Kitchen",
+  "PriceCents": 110000,
+  "Width": 0.9,
+  "Depth": 0.75,
+  "Height": 1.8,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "fridge"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "Id": "kitchen_sink",
+  "DisplayName": "Kitchen sink",
+  "Category": "Kitchen",
+  "PriceCents": 32000,
+  "Width": 1.0,
+  "Depth": 0.6,
+  "Height": 0.9,
+  "NeedsWater": true,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "sink"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "Id": "counter_run",
+  "DisplayName": "Kitchen counter",
+  "Category": "Kitchen",
+  "PriceCents": 60000,
+  "Width": 2.0,
+  "Depth": 0.65,
+  "Height": 0.9,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "counter"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "Id": "toilet",
+  "DisplayName": "Toilet",
+  "Category": "Bathroom",
+  "PriceCents": 26000,
+  "Width": 0.45,
+  "Depth": 0.7,
+  "Height": 0.8,
+  "NeedsWater": true,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "toilet"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Bathroom",
+   "Restroom"
+  ]
+ },
+ {
+  "Id": "bathroom_sink",
+  "DisplayName": "Bathroom sink",
+  "Category": "Bathroom",
+  "PriceCents": 18000,
+  "Width": 0.6,
+  "Depth": 0.45,
+  "Height": 0.85,
+  "NeedsWater": true,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "sink"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Bathroom",
+   "Restroom"
+  ]
+ },
+ {
+  "Id": "shower",
+  "DisplayName": "Shower",
+  "Category": "Bathroom",
+  "PriceCents": 90000,
+  "Width": 0.9,
+  "Depth": 0.9,
+  "Height": 2.1,
+  "NeedsWater": true,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "shower"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "Id": "desk",
+  "DisplayName": "Desk",
+  "Category": "Office",
+  "PriceCents": 26000,
+  "Width": 1.4,
+  "Depth": 0.7,
+  "Height": 0.75,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "desk"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "office_chair",
+  "DisplayName": "Office chair",
+  "Category": "Office",
+  "PriceCents": 14000,
+  "Width": 0.6,
+  "Depth": 0.6,
+  "Height": 1.1,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "seating"
+  ],
+  "Capacity": 1,
+  "StockDays": 0
+ },
+ {
+  "Id": "computer",
+  "DisplayName": "Computer workstation",
+  "Category": "Office",
+  "PriceCents": 120000,
+  "Width": 0.8,
+  "Depth": 0.5,
+  "Height": 0.5,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "computer"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "safe_small",
+  "DisplayName": "Floor safe",
+  "Category": "Security",
+  "PriceCents": 95000,
+  "Width": 0.5,
+  "Depth": 0.5,
+  "Height": 0.6,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "safe"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "safe_vault",
+  "DisplayName": "Vault safe",
+  "Category": "Security",
+  "PriceCents": 680000,
+  "Width": 1.0,
+  "Depth": 0.9,
+  "Height": 1.8,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "safe",
+   "safe_heavy"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "security_camera",
+  "DisplayName": "Security camera",
+  "Category": "Security",
+  "PriceCents": 28000,
+  "Width": 0.2,
+  "Depth": 0.2,
+  "Height": 0.2,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "security_camera"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "alarm_panel",
+  "DisplayName": "Alarm system",
+  "Category": "Security",
+  "PriceCents": 65000,
+  "Width": 0.3,
+  "Depth": 0.1,
+  "Height": 0.4,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "alarm"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "reinforced_door_kit",
+  "DisplayName": "Reinforced door kit",
+  "Category": "Security",
+  "PriceCents": 140000,
+  "Width": 0.3,
+  "Depth": 0.1,
+  "Height": 0.3,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "reinforced_door"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "register",
+  "DisplayName": "Cash register",
+  "Category": "Commercial",
+  "PriceCents": 60000,
+  "Width": 0.8,
+  "Depth": 0.6,
+  "Height": 1.0,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "register"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "shop_counter",
+  "DisplayName": "Shop counter",
+  "Category": "Commercial",
+  "PriceCents": 90000,
+  "Width": 2.0,
+  "Depth": 0.7,
+  "Height": 1.0,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "counter",
+   "shop_counter"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "shelving",
+  "DisplayName": "Retail shelving",
+  "Category": "Commercial",
+  "PriceCents": 45000,
+  "Width": 2.0,
+  "Depth": 0.6,
+  "Height": 2.0,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "shelving"
+  ],
+  "Capacity": 0,
+  "StockDays": 0.8,
+  "AllowedRooms": [
+   "Retail",
+   "Storage",
+   "Showroom",
+   "Warehouse"
+  ]
+ },
+ {
+  "Id": "clothes_rack",
+  "DisplayName": "Clothing rack",
+  "Category": "Commercial",
+  "PriceCents": 22000,
+  "Width": 1.5,
+  "Depth": 0.6,
+  "Height": 1.6,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "shelving",
+   "clothes_rack"
+  ],
+  "Capacity": 0,
+  "StockDays": 0.5,
+  "AllowedRooms": [
+   "Retail",
+   "Showroom"
+  ]
+ },
+ {
+  "Id": "fridge_display",
+  "DisplayName": "Display cooler",
+  "Category": "Commercial",
+  "PriceCents": 220000,
+  "Width": 1.8,
+  "Depth": 0.8,
+  "Height": 2.0,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "cooler",
+   "shelving"
+  ],
+  "Capacity": 0,
+  "StockDays": 1.0,
+  "AllowedRooms": [
+   "Retail"
+  ]
+ },
+ {
+  "Id": "commercial_stove",
+  "DisplayName": "Commercial range",
+  "Category": "Commercial",
+  "PriceCents": 480000,
+  "Width": 1.5,
+  "Depth": 0.9,
+  "Height": 0.95,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": true,
+  "Tags": [
+   "stove",
+   "commercial_kitchen"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "Id": "prep_table",
+  "DisplayName": "Prep table",
+  "Category": "Commercial",
+  "PriceCents": 70000,
+  "Width": 1.8,
+  "Depth": 0.75,
+  "Height": 0.9,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "counter",
+   "prep_table"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "Id": "walk_in_cooler",
+  "DisplayName": "Walk-in cooler",
+  "Category": "Commercial",
+  "PriceCents": 980000,
+  "Width": 2.5,
+  "Depth": 2.5,
+  "Height": 2.4,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "cooler",
+   "fridge",
+   "walk_in_cooler"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Kitchen",
+   "Storage"
+  ]
+ },
+ {
+  "Id": "restaurant_table",
+  "DisplayName": "Restaurant table (4)",
+  "Category": "Commercial",
+  "PriceCents": 65000,
+  "Width": 1.2,
+  "Depth": 1.2,
+  "Height": 0.75,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "table",
+   "seating",
+   "restaurant_seating"
+  ],
+  "Capacity": 4,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Dining",
+   "Bar",
+   "Living"
+  ]
+ },
+ {
+  "Id": "booth",
+  "DisplayName": "Booth (4)",
+  "Category": "Commercial",
+  "PriceCents": 140000,
+  "Width": 1.8,
+  "Depth": 1.2,
+  "Height": 1.1,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "seating",
+   "restaurant_seating"
+  ],
+  "Capacity": 4,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Dining",
+   "Bar"
+  ]
+ },
+ {
+  "Id": "bar_counter",
+  "DisplayName": "Bar counter",
+  "Category": "Commercial",
+  "PriceCents": 520000,
+  "Width": 4.0,
+  "Depth": 0.8,
+  "Height": 1.1,
+  "NeedsWater": true,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "bar_counter",
+   "counter"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Bar",
+   "DanceFloor",
+   "Dining"
+  ]
+ },
+ {
+  "Id": "bar_stool",
+  "DisplayName": "Bar stool",
+  "Category": "Commercial",
+  "PriceCents": 12000,
+  "Width": 0.45,
+  "Depth": 0.45,
+  "Height": 0.8,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "seating"
+  ],
+  "Capacity": 1,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Bar",
+   "DanceFloor",
+   "Dining"
+  ]
+ },
+ {
+  "Id": "sound_system",
+  "DisplayName": "Club sound system",
+  "Category": "Commercial",
+  "PriceCents": 1400000,
+  "Width": 2.0,
+  "Depth": 1.0,
+  "Height": 2.0,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "sound_system"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "dj_booth",
+  "DisplayName": "DJ booth",
+  "Category": "Commercial",
+  "PriceCents": 380000,
+  "Width": 2.0,
+  "Depth": 1.2,
+  "Height": 1.2,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "dj_booth"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "DanceFloor",
+   "Bar"
+  ]
+ },
+ {
+  "Id": "stage_lights",
+  "DisplayName": "Stage lighting rig",
+  "Category": "Commercial",
+  "PriceCents": 650000,
+  "Width": 3.0,
+  "Depth": 0.5,
+  "Height": 0.5,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "lighting"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "car_lift",
+  "DisplayName": "Two-post car lift",
+  "Category": "Commercial",
+  "PriceCents": 540000,
+  "Width": 3.5,
+  "Depth": 2.5,
+  "Height": 2.2,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "lift"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Workshop",
+   "Garage"
+  ]
+ },
+ {
+  "Id": "tool_wall",
+  "DisplayName": "Tool wall",
+  "Category": "Commercial",
+  "PriceCents": 160000,
+  "Width": 3.0,
+  "Depth": 0.5,
+  "Height": 2.0,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "tools"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Workshop",
+   "Garage",
+   "Storage"
+  ]
+ },
+ {
+  "Id": "gym_rack",
+  "DisplayName": "Squat rack",
+  "Category": "Commercial",
+  "PriceCents": 190000,
+  "Width": 1.5,
+  "Depth": 1.5,
+  "Height": 2.3,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "gym_equipment"
+  ],
+  "Capacity": 2,
+  "StockDays": 0
+ },
+ {
+  "Id": "treadmill",
+  "DisplayName": "Treadmill",
+  "Category": "Commercial",
+  "PriceCents": 280000,
+  "Width": 0.9,
+  "Depth": 2.0,
+  "Height": 1.4,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "gym_equipment"
+  ],
+  "Capacity": 1,
+  "StockDays": 0
+ },
+ {
+  "Id": "barber_chair",
+  "DisplayName": "Barber chair",
+  "Category": "Commercial",
+  "PriceCents": 180000,
+  "Width": 0.8,
+  "Depth": 0.9,
+  "Height": 1.1,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "barber_chair",
+   "seating"
+  ],
+  "Capacity": 1,
+  "StockDays": 0
+ },
+ {
+  "Id": "washer_bank",
+  "DisplayName": "Commercial washers (4)",
+  "Category": "Commercial",
+  "PriceCents": 800000,
+  "Width": 3.0,
+  "Depth": 0.8,
+  "Height": 1.2,
+  "NeedsWater": true,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "washer"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "pallet_rack",
+  "DisplayName": "Pallet racking",
+  "Category": "Industrial",
+  "PriceCents": 240000,
+  "Width": 2.7,
+  "Depth": 1.1,
+  "Height": 5.0,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "shelving",
+   "pallet_rack"
+  ],
+  "Capacity": 0,
+  "StockDays": 3.0,
+  "AllowedRooms": [
+   "Warehouse",
+   "Storage"
+  ]
+ },
+ {
+  "Id": "loading_dock_kit",
+  "DisplayName": "Dock leveler",
+  "Category": "Industrial",
+  "PriceCents": 760000,
+  "Width": 2.5,
+  "Depth": 3.0,
+  "Height": 0.5,
+  "NeedsWater": false,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "loading_dock"
+  ],
+  "Capacity": 0,
+  "StockDays": 0,
+  "AllowedRooms": [
+   "Warehouse",
+   "Garage"
+  ]
+ },
+ {
+  "Id": "structural_column",
+  "DisplayName": "Structural column",
+  "Category": "Structure",
+  "PriceCents": 120000,
+  "Width": 0.4,
+  "Depth": 0.4,
+  "Height": 3.2,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "column"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "stairs_straight",
+  "DisplayName": "Staircase",
+  "Category": "Structure",
+  "PriceCents": 350000,
+  "Width": 1.1,
+  "Depth": 3.6,
+  "Height": 3.2,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "stairs"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "water_heater",
+  "DisplayName": "Water heater",
+  "Category": "Utilities",
+  "PriceCents": 90000,
+  "Width": 0.6,
+  "Depth": 0.6,
+  "Height": 1.5,
+  "NeedsWater": true,
+  "NeedsPower": true,
+  "NeedsGas": false,
+  "Tags": [
+   "water_heater"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "potted_plant",
+  "DisplayName": "Potted plant",
+  "Category": "Decor",
+  "PriceCents": 6000,
+  "Width": 0.5,
+  "Depth": 0.5,
+  "Height": 1.2,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "decor"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ },
+ {
+  "Id": "rug",
+  "DisplayName": "Rug",
+  "Category": "Decor",
+  "PriceCents": 18000,
+  "Width": 2.0,
+  "Depth": 1.4,
+  "Height": 0.02,
+  "NeedsWater": false,
+  "NeedsPower": false,
+  "NeedsGas": false,
+  "Tags": [
+   "decor"
+  ],
+  "Capacity": 0,
+  "StockDays": 0
+ }
+]

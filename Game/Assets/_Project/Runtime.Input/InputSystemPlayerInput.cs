@@ -24,6 +24,13 @@ namespace HeroGame.Runtime.Input
         private readonly InputAction _enterExit;
         private readonly InputAction _horn;
         private readonly InputAction _phone;
+        private readonly InputAction _build;
+        private readonly InputAction _pointer;
+        private readonly InputAction _primary;
+        private readonly InputAction _secondary;
+        private readonly InputAction _rotate;
+        private readonly InputAction _nextTool;
+        private readonly InputAction _confirm;
 
         public bool GameplayEnabled { get; set; } = true;
 
@@ -68,7 +75,21 @@ namespace HeroGame.Runtime.Input
             _phone = new InputAction("Phone", InputActionType.Button, "<Keyboard>/upArrow");
             _phone.AddBinding("<Gamepad>/dpad/up");
 
-            foreach (var a in new[] { _move, _look, _zoom, _sprint, _walk, _jump, _interact, _crouch, _console, _inspector, _pause, _enterExit, _horn, _phone }) a.Enable();
+            _build = new InputAction("BuildMode", InputActionType.Button, "<Keyboard>/b");
+            _build.AddBinding("<Gamepad>/select");
+            _pointer = new InputAction("Pointer", InputActionType.Value, "<Pointer>/position");
+            _primary = new InputAction("Primary", InputActionType.Button, "<Mouse>/leftButton");
+            _primary.AddBinding("<Gamepad>/rightTrigger");
+            _secondary = new InputAction("Secondary", InputActionType.Button, "<Mouse>/rightButton");
+            _secondary.AddBinding("<Gamepad>/leftTrigger");
+            _rotate = new InputAction("Rotate", InputActionType.Button, "<Keyboard>/r");
+            _rotate.AddBinding("<Gamepad>/leftShoulder");
+            _nextTool = new InputAction("NextTool", InputActionType.Button, "<Keyboard>/tab");
+            _nextTool.AddBinding("<Gamepad>/rightShoulder");
+            _confirm = new InputAction("Confirm", InputActionType.Button, "<Keyboard>/enter");
+
+            foreach (var a in new[] { _move, _look, _zoom, _sprint, _walk, _jump, _interact, _crouch, _console, _inspector, _pause, _enterExit, _horn, _phone,
+                         _build, _pointer, _primary, _secondary, _rotate, _nextTool, _confirm }) a.Enable();
         }
 
         public PlayerInputState Read()
@@ -90,6 +111,13 @@ namespace HeroGame.Runtime.Input
                 ToggleConsolePressed = _console.WasPressedThisFrame(),
                 ToggleInspectorPressed = _inspector.WasPressedThisFrame(),
                 PausePressed = _pause.WasPressedThisFrame(),
+                BuildModePressed = _build.WasPressedThisFrame(),
+                Pointer = _pointer.ReadValue<Vector2>(),
+                PrimaryPressed = _primary.WasPressedThisFrame(),
+                SecondaryPressed = _secondary.WasPressedThisFrame(),
+                RotatePressed = _rotate.WasPressedThisFrame(),
+                NextToolPressed = _nextTool.WasPressedThisFrame(),
+                ConfirmPressed = _confirm.WasPressedThisFrame(),
             };
         }
     }

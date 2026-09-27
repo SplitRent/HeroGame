@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phase 0 (foundation)._
+_Last updated: Phase 5 (building, construction, rentals)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -35,7 +35,7 @@ _Last updated: Phase 0 (foundation)._
 | NPC life sim + offline catch-up | TESTED | `CatchUp_InOneStepEqualsManySmallSteps`, `OfflineCatchUp_MatchesLiveSimulation` |
 | Social sim (dating, marriage, divorce, births) | FUNCTIONAL | runs in 30-day tests; no dedicated assertions |
 | NPC memory of players | FUNCTIONAL | `Memory_IsBoundedAndKeepsSignificantPeople`; not yet used by dialogue |
-| Population director (tiers, materialisation set) | TESTED | `Director_*`; ⚠ 6 ms/eval at 4.4k places — needs spatial index |
+| Population director (tiers, materialisation set) | TESTED | `Director_*`, `LocationIndex_AgreesWithDirectResolution`; expiry-heap + spatial-hash index |
 | Weather + tropical systems | TESTED | `Weather_IsDeterministicAndHurricanesOnlyInSeason` |
 | Crime: witnesses, evidence, wanted | TESTED | `CrimeAndIdentityTests` |
 | Secret identity discovery | TESTED | `SecretIdentity_*` |
@@ -48,6 +48,13 @@ _Last updated: Phase 0 (foundation)._
 | Server history & news | FUNCTIONAL | `News_IsBuiltFromRealHistory` |
 | Server browser filtering | TESTED | `Browser_FiltersAndSorts` |
 | Moderation roles/permissions | TESTED | `Moderation_EnforcesRanksAndLogsActions` |
+| NPC barks & memory-driven dialogue | TESTED | `Barks_*`, `RepeatedFriendlyContact_BuildsARelationship`, `Threats_AndWitnessedCrimes_AreRemembered`, `Gossip_UsesRealServerHistory` |
+| Phone core (messages, statement, news, map search) | TESTED | `Phone_*` |
+| Vehicles (dealership, fuel, wear, damage, repair, mods, garages, impound) | TESTED | `VehicleTests` (9) |
+| Road graph, routing, aggregate traffic | TESTED | `RoadNetwork_*`, `Traffic_PeaksAtRushHourAndFallsInStorms` |
+| Building layouts (walls/rooms/openings/furniture) + validator | TESTED | `EveryGeneratedLayout_IsValid`, `Validator_CatchesUnbelievableArchitecture` |
+| Construction (preview, pricing, atomic commit), change of use | TESTED | `WarehouseToNightclub_ConversionEndToEnd`, `Construction_IsAtomic_*`, `WorldBuild_*`, `BuildTools_*` |
+| Rentals (units, deposit, rent, eviction) & property tax / tax sale | TESTED | `Renting_CollectsRentAndEvictsNonPayers`, `PropertyTax_ArrearsLeadToTaxSale` |
 
 ## Persistence
 | System | Status | Evidence / notes |
@@ -78,6 +85,9 @@ _Last updated: Phase 0 (foundation)._
 | World streaming (cells) | IN DEVELOPMENT | compiles; no cell scenes yet |
 | Main menu, server browser UI, character creator | IN DEVELOPMENT | compiles |
 | Dev console, world/NPC inspector overlay | IN DEVELOPMENT | dev builds only |
+| NPC conversation, subtitles, interiors with real occupants | IN DEVELOPMENT | compiles |
+| Vehicle controller (WheelCollider), entry/exit, traffic presenter | IN DEVELOPMENT | compiles |
+| Build mode (overhead editor, live cost/validation, layout renderer) | IN DEVELOPMENT | compiles; greybox builder adds a build zone to every property |
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 

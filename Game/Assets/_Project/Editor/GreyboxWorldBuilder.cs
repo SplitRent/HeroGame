@@ -4,6 +4,7 @@ using HeroGame.Core.Foundation;
 using HeroGame.Core.World;
 using HeroGame.Persistence.Content;
 using HeroGame.Runtime.Bootstrap;
+using HeroGame.Runtime.Building;
 using HeroGame.Runtime.DevTools;
 using HeroGame.Runtime.Interaction;
 using HeroGame.Runtime.Player;
@@ -230,6 +231,27 @@ namespace HeroGame.Editor
                     sign.GetComponent<Renderer>().sharedMaterial = m.Get("sign", new Color(0.9f, 0.75f, 0.2f));
                     var s = sign.AddComponent<PropertyForSaleSign>();
                     s.Place = marker;
+                }
+                if (e.Property != null)
+                {
+                    // Build mode: the layout's lot-local origin is the lot's min corner (footprint + 2 m setback).
+                    var build = new GameObject("Build Zone");
+                    build.transform.SetParent(go.transform, false);
+                    build.transform.localPosition = new Vector3(-(e.Width * 0.5f + 2f), 0f, -(e.Depth * 0.5f + 2f));
+                    var zone = build.AddComponent<BoxCollider>();
+                    zone.isTrigger = true;
+                    zone.center = new Vector3(e.Width * 0.5f + 2f, 2f, e.Depth * 0.5f + 2f);
+                    zone.size = new Vector3(e.Width + 8f, 4f, e.Depth + 8f);
+                    var renderer = build.AddComponent<LayoutRenderer>();
+                    renderer.WallMaterial = m.Get("build_wall", new Color(0.86f, 0.84f, 0.8f));
+                    renderer.ExteriorWallMaterial = m.Get("build_exterior", new Color(0.62f, 0.58f, 0.52f));
+                    renderer.FloorMaterial = m.Get("build_floor", new Color(0.5f, 0.42f, 0.33f));
+                    renderer.FurnitureMaterial = m.Get("build_item", new Color(0.3f, 0.45f, 0.6f));
+                    renderer.PreviewMaterial = m.Get("build_invalid", new Color(0.85f, 0.25f, 0.2f));
+                    var controller = build.AddComponent<BuildModeController>();
+                    controller.Place = marker;
+                    var body = go.transform.Find("Greybox");
+                    if (body != null) controller.Exterior = body.gameObject;
                 }
                 if (e.Business != null || p.Kind == PlaceKind.School || p.Kind == PlaceKind.Hospital || p.Kind == PlaceKind.Church)
                 {

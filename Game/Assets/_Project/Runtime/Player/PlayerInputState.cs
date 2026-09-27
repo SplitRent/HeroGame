@@ -23,6 +23,17 @@ namespace HeroGame.Runtime.Player
         public bool ToggleConsolePressed;
         public bool ToggleInspectorPressed;
         public bool PausePressed;
+        /// <summary>Toggle build mode on an owned property (B / gamepad Select).</summary>
+        public bool BuildModePressed;
+        /// <summary>Pointer position in screen pixels (build/placement tools).</summary>
+        public Vector2 Pointer;
+        public bool PrimaryPressed;
+        public bool SecondaryPressed;
+        public bool RotatePressed;
+        /// <summary>Cycle the active build tool (Tab / gamepad right shoulder).</summary>
+        public bool NextToolPressed;
+        /// <summary>Confirm (Enter / gamepad A in build mode).</summary>
+        public bool ConfirmPressed;
     }
 
     /// <summary>Source of player intent. Implemented by the Input System adapter, AI test drivers and replay.</summary>

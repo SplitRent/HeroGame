@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HeroGame.Core.Building;
 using HeroGame.Core.Business;
 using HeroGame.Core.Crime;
 using HeroGame.Core.Population;
@@ -25,6 +26,8 @@ namespace HeroGame.Core.World
         public List<BarkLine> Barks = new List<BarkLine>();
         public List<VehicleModel> VehicleModels = new List<VehicleModel>();
         public List<VehicleMod> VehicleMods = new List<VehicleMod>();
+        public List<FurnitureDefinition> Furniture = new List<FurnitureDefinition>();
+        public List<BusinessRequirement> BusinessRequirements = new List<BusinessRequirement>();
 
         public CrimeType FindCrime(string id)
         {
