@@ -228,9 +228,11 @@ large worlds (§14 tech debt); the chunk/manifest structure is format-independen
 
 ### 9.2 Layout
 ```
-<save>/manifest.json            commit record: generation + chunk → generation map (written last, atomically)
+<save>/manifest.json            commit record: generation + chunk → generation map + journal sequence (written last, atomically)
+<save>/manifest.prev.json       the previous commit record, kept as a fallback (its chunks are kept too)
 <save>/chunks/<chunk>.g<N>.json immutable chunk files: meta, transactional, population, properties,
-                                businesses, environment, history, character_<id>
+                                businesses, environment, history, vehicles, justice, emergency, civic,
+                                social, story (Story Mode only), population_<shard>, character_<id>
 <save>/journal.log              write-ahead journal (JSON lines, fsync per entry)
 ```
 
@@ -243,8 +245,15 @@ together so they agree.
 ### 9.4 Recovery
 Load manifest → load chunks → replay journal entries with sequence > snapshot sequence (player/admin transactions) →
 verify ledger invariant → resume simulation from the cursor (simulation transactions are recomputed). The journal
-discards a torn final line (interrupted, never-acknowledged append) before appending. After a successful save the
-journal is compacted.
+discards a torn final line (interrupted, never-acknowledged append) before appending; an unreadable entry in the middle
+is skipped and reported (each entry is balanced on its own, so the books stay consistent).
+
+If the latest snapshot is damaged after it was committed (unreadable manifest, missing or truncated chunk), load falls
+back to `manifest.prev.json` and replays the journal from *its* sequence; the next save is then a full snapshot and the
+good fallback is kept until that save succeeds. To make this possible the journal is compacted only up to the previous
+snapshot's sequence, never the latest one. Non-journaled simulation state (NPC lives, weather) rolls back by at most one
+save interval in that case; money and ownership do not. Fault injection (`WorldSaveSystem.BeforeCommit`) lets tests cut
+the power between chunk writes and the manifest commit (`FailureTests`).
 
 ### 9.5 Story Mode
 Same `WorldSaveSystem` per slot: 10 manual slots, 3 rotating autosaves, 1 mission checkpoint (`StorySlotManager`).
@@ -292,6 +301,34 @@ Seasonal Markov chain per hour + tropical systems in June–November announced 2
 (traction, visibility, pedestrian density, business demand, outage risk, emergency declarations) are consumed by
 traffic, NPCs, businesses and emergency services.
 
+Local disasters (`CalendarService`) are rolled from world state with deterministic per-district, per-hour random
+streams: flash floods need heavy rain and scale with district flood risk (property damage, water rescues); chemical
+incidents happen in industrial/port districts (a district closure that forces its businesses shut once it covers half
+the trading day, hazmat calls, phone alerts); blackouts are likelier in storms and heat (outage hours cut business
+hours); heat waves occur in hot summers (evening demand shifts, heat-exhaustion EMS calls among older residents). A
+server multiplier (`DisasterFrequencyMultiplier`, 0 disables) scales them.
+
+### 10.5 Government, elections, social media and radio
+* **Budget.** Monthly: households' local taxes flow External → Treasury; each department is paid its share
+  Treasury → External. Funding relative to need (per resident) becomes a service level that sets the number of police,
+  fire and EMS units on duty (`EmergencyUnit.OffDuty`), the wanted-system response multiplier, flood-risk drift, park
+  amenity and police trust. All of it goes through `TransactionProcessor`.
+* **Ordinances** (`ordinances.json`) carry typed effects (tax rates, permit fee %, rent-increase cap, curfew, response
+  multiplier, registration). Continuous effects are recomputed from the configured baseline on every enactment, repeal
+  and load, so they are never written into the server config; one-time effects (foot traffic) change persisted
+  district state. Unknown effect keys fail content validation.
+* **Council and elections.** NPC officeholders vote by slate stance and district opinion (logistic, deterministic);
+  players holding office vote explicitly. Elections run on `ElectionIntervalDays`: every adult NPC is a potential voter
+  (turnout from age, conscientiousness and weather; choice from issue agreement, recognition and incumbency); players
+  file (fee to the treasury, a campaign ledger account opened in the same transaction), raise capped donations, buy
+  recognition with ads, and vote once.
+* **Ripple** posts are generated from history records (so NPC chatter is always about something that happened), capped
+  at 1,500 retained posts; player posts are rate-limited, mute-aware over the network, and earn NPC engagement from
+  followers and public reputation.
+* **Radio** runs on a real-time timeline (world clock ÷ time scale) so songs last their real length while game time
+  runs ~30× faster. Each station's hour is built deterministically from the world when first requested: bulletins from
+  history, weather, ads weighted by businesses' real ad spend, host lines with world tokens, emergency cut-ins.
+
 ## 11. World streaming (GDD §77, §113)
 
 * The city is partitioned into 256 m square cells, each an additive scene (`Cell_{x}_{z}`) → Addressables groups.
@@ -325,7 +362,11 @@ Full detail: [`ASSET_PIPELINE.md`](ASSET_PIPELINE.md). Summary:
 * Content/mod data is data only (no scripting) until a sandboxed modding runtime is designed.
 * Developer tools compile only in editor/development builds (`#if UNITY_EDITOR || DEVELOPMENT_BUILD`); server admin
   commands require `ServerPermission.WorldAdmin` and are logged.
-* Accounts: OAuth-style tokens from the account service; servers verify tokens, never passwords.
+* Accounts: PBKDF2 password hashes with lockout on the master server; game servers accept short-lived HMAC join tickets
+  signed with a per-server derived key (constant-time comparison) and never see passwords.
+* Every network request resolves positions from the server's own state (player position, NPC schedule positions),
+  bounds every argument, and fails closed; handler exceptions are logged and answered with a generic error.
+* The Phase 25 audit and its findings are in [`SECURITY_AUDIT.md`](SECURITY_AUDIT.md).
 
 ## 14. Testing strategy (GDD §143–144)
 
@@ -333,7 +374,7 @@ Full detail: [`ASSET_PIPELINE.md`](ASSET_PIPELINE.md). Summary:
 |---|---|---|
 | Core unit/system tests | NUnit 3 (classic asserts, Unity-compatible) | `Game/Assets/_Project/Tests/EditMode`, run by Unity Test Runner **and** `dotnet test` |
 | Determinism tests | same | offline-vs-live equivalence, catch-up equivalence, generator determinism |
-| Failure tests | same | journal failure, torn journal tail, crash after purchase, stale ownership, broke businesses, broken-ledger save refusal |
+| Failure tests | same | journal failure, torn/garbage journal entries, crash after purchase, power cut between chunks and manifest, damaged snapshot fallback, corrupt manifest, failed save keeps its dirty set, throwing request handler, stale ownership, broken-ledger save refusal |
 | Unity script compile check | `Headless/UnityCompileCheck` | CI, no Unity license needed |
 | Asset pipeline | `unittest` + `bpy` | `Tools/Blender/tests` |
 | Play mode / integration | Unity Test Runner PlayMode (Phase 1+) | GameCI when a license secret exists |
@@ -351,14 +392,16 @@ Full detail: [`ASSET_PIPELINE.md`](ASSET_PIPELINE.md). Summary:
 
 ## 16. Performance targets (GDD §114, §142)
 
-| Area | Target | Current measurement (Phase 0) |
+| Area | Target | Current measurement (Phases 19–28, container CPU, Release) |
 |---|---|---|
 | Client frame rate | 60 fps @1440p High on RTX 3070-class / 30–60 fps consoles | not yet measurable (greybox) |
-| Server tick | 30 Hz with 128 players | Phase 9 |
-| NPC background sim | ≤ 250 ms per game day for 50,000 NPCs on one core | **3.4 µs per NPC-day → ~170 ms / 50k** |
-| Population director | ≤ 2 ms per evaluation per server tick budget | 6.0 ms with 4,448 places / 8 observers ⚠ needs spatial index |
-| Offline catch-up | ≤ 15 s for 60 days @50k NPCs | ~10 s (extrapolated) |
-| Incremental save (main thread) | ≤ 16 ms hitch | ~1 s for 10k NPCs ⚠ (JSON, main thread) |
+| Server tick | 30 Hz with 128 players | not yet load-tested (functional tests only) |
+| Whole daily world step (NPCs, businesses, civic incl. an election campaign, disasters, finance, courts, EMS) | ≤ 250 ms per game day at 50,000 NPCs | **20.8 ms/day at 9,302 NPCs (2.23 µs per NPC-day)** → ~112 ms / 50k extrapolated |
+| Population director | ≤ 2 ms per evaluation per server tick budget | **1.6 ms** (8 observers, 4,449 places, spatial index) |
+| Offline catch-up | ≤ 15 s for 60 days @50k NPCs | 1.25 s for 60 days @9.3k → ~6.7 s @50k extrapolated |
+| Incremental save | ≤ 16 ms hitch on the main thread | 1.1 s for 9.3k NPCs (chunks serialize in parallel; still JSON and not yet off the main thread) ⚠ |
+| Load + journal replay + invariant check | — | 1.4 s for 9.3k NPCs |
+| Server memory | — | 117 MiB managed for the 9.3k-NPC world |
 | Streaming hitch | none > 50 ms | Phase 2 |
 | Client memory | ≤ 10 GB RAM / 8 GB VRAM (High) | Phase 25 |
 

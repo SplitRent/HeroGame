@@ -26,6 +26,8 @@ namespace HeroGame.Persistence.Saves
         public World World;
         public int JournalEntriesReplayed;
         public int CorruptJournalEntries;
+        /// <summary>The latest snapshot was damaged and the one before it was loaded instead (plus the journal).</summary>
+        public bool RecoveredFromPreviousSnapshot;
         public ValidationReport Report = new ValidationReport();
     }
 
@@ -40,16 +42,24 @@ namespace HeroGame.Persistence.Saves
     /// Only dirty chunks are rewritten. A crash at any point leaves the previous manifest (and all
     /// chunk files it references) intact; player transactions committed after that snapshot are
     /// recovered from the journal.
+    ///
+    /// One generation back is also kept (manifest.prev.json, its chunks, and the journal since it), so a
+    /// snapshot damaged after it was committed — a bad disk sector, a truncated copy — falls back to the one
+    /// before it and replays the journal instead of losing the world.
     /// </summary>
     public sealed class WorldSaveSystem
     {
         /// <summary>2: NPCs split into population shards.</summary>
         public const int CurrentSchema = 2;
         public const string ManifestFile = "manifest.json";
+        public const string PreviousManifestFile = "manifest.prev.json";
         public const string JournalFile = "journal.log";
         public string GameVersion = "0.1.0";
 
         private readonly string _directory;
+
+        /// <summary>Fault injection for tests and tools: runs after chunks are written, before the manifest commits.</summary>
+        public Action<SaveManifest> BeforeCommit;
 
         public WorldSaveSystem(string directory)
         {
@@ -68,7 +78,13 @@ namespace HeroGame.Persistence.Saves
             if (!world.Ledger.VerifyInvariant(out var sum))
                 throw new InvalidOperationException("Refusing to save: ledger invariant broken (sum " + sum + "). Investigate before persisting.");
 
-            var previous = ReadManifest();
+            SaveManifest previous;
+            try { previous = ReadManifest(ManifestFile); }
+            catch (InvalidDataException) { previous = null; } // damaged: start a fresh full snapshot
+            // After recovering from a damaged snapshot, write everything and keep the good previous one as the fallback.
+            var recovering = _forceFullSave;
+            if (previous == null || recovering) full = true;
+            _forceFullSave = false;
             var manifest = new SaveManifest
             {
                 GameVersion = GameVersion,
@@ -124,17 +140,57 @@ namespace HeroGame.Persistence.Saves
             foreach (var key in stale) manifest.ChunkGenerations.Remove(key);
             result.ChunksSkipped = manifest.ChunkGenerations.Count - result.ChunksWritten;
 
+            manifest.JournalSequence = world.Transactions.LastSequence;
+            BeforeCommit?.Invoke(manifest);
+            if (previous != null && !recovering) AtomicFile.WriteAllText(Path.Combine(_directory, PreviousManifestFile), JsonSetup.Serialize(previous, true));
             AtomicFile.WriteAllText(Path.Combine(_directory, ManifestFile), JsonSetup.Serialize(manifest, true));
             world.Dirty.Clear();
-            CollectGarbage(manifest);
+            SaveManifest fallback;
+            try { fallback = ReadManifest(PreviousManifestFile); }
+            catch (InvalidDataException) { fallback = null; }
+            CollectGarbage(manifest, fallback);
             result.Milliseconds = watch.Elapsed.TotalMilliseconds;
             return result;
         }
 
-        /// <summary>Loads the last committed snapshot and replays the journal on top of it.</summary>
+        /// <summary>
+        /// Loads the last committed snapshot and replays the journal on top of it. If that snapshot is damaged, the
+        /// previous one is loaded instead (the journal still holds every transaction since it) and the next save is
+        /// a full one.
+        /// </summary>
         public LoadResult Load(ContentSet content, FileTransactionJournal journal)
         {
-            var manifest = ReadManifest() ?? throw new FileNotFoundException("No save manifest in " + _directory);
+            SaveManifest manifest = null;
+            InvalidDataException damage = null;
+            try
+            {
+                manifest = ReadManifest(ManifestFile);
+                if (manifest == null && !File.Exists(Path.Combine(_directory, PreviousManifestFile))) throw new FileNotFoundException("No save manifest in " + _directory);
+                if (manifest != null) return LoadFrom(manifest, content, journal);
+            }
+            catch (InvalidDataException ex)
+            {
+                if (ex.Message.StartsWith("Save schema", StringComparison.Ordinal)) throw;
+                damage = ex;
+            }
+            var previous = ReadManifest(PreviousManifestFile);
+            if (previous == null || manifest != null && previous.Generation >= manifest.Generation)
+                throw damage ?? new InvalidDataException("The save manifest is missing and there is no earlier snapshot.");
+            var result = LoadFrom(previous, content, journal);
+            result.RecoveredFromPreviousSnapshot = true;
+            result.Report.Warn("save", "Snapshot " + (manifest != null ? manifest.Generation.ToString(System.Globalization.CultureInfo.InvariantCulture) : "?") + " is damaged (" +
+                                       (damage != null ? damage.Message : "manifest missing") + "); recovered snapshot " + previous.Generation + " and replayed the journal.");
+            var w = result.World;
+            w.Dirty.MarkAll(SaveChunks.WorldChunks);
+            foreach (var id in w.Characters.Keys) w.Dirty.Mark(SaveChunks.CharacterPrefix + id);
+            _forceFullSave = true;
+            return result;
+        }
+
+        private bool _forceFullSave;
+
+        private LoadResult LoadFrom(SaveManifest manifest, ContentSet content, FileTransactionJournal journal)
+        {
             if (manifest.SchemaVersion > CurrentSchema)
                 throw new InvalidDataException("Save schema " + manifest.SchemaVersion + " is newer than this build supports (" + CurrentSchema + ").");
 
@@ -212,8 +268,18 @@ namespace HeroGame.Persistence.Saves
             return result;
         }
 
-        /// <summary>Removes journal entries that are now inside the snapshot.</summary>
-        public void CompactJournal(World world, ITransactionJournal journal) => journal.Compact(world.Transactions.LastSequence);
+        /// <summary>
+        /// Removes journal entries already inside the <em>previous</em> snapshot: entries since then are kept so that
+        /// snapshot stays recoverable if the latest one is ever damaged.
+        /// </summary>
+        public void CompactJournal(World world, ITransactionJournal journal)
+        {
+            SaveManifest previous;
+            try { previous = ReadManifest(PreviousManifestFile); }
+            catch (InvalidDataException) { previous = null; }
+            var upTo = previous != null ? Math.Min(previous.JournalSequence, world.Transactions.LastSequence) : world.Transactions.LastSequence;
+            if (upTo > 0) journal.Compact(upTo);
+        }
 
         private object BuildChunk(World world, string chunk)
         {
@@ -307,10 +373,15 @@ namespace HeroGame.Persistence.Saves
             return new List<int>(set);
         }
 
-        private SaveManifest ReadManifest()
+        private SaveManifest ReadManifest(string file = ManifestFile)
         {
-            var path = Path.Combine(_directory, ManifestFile);
-            return File.Exists(path) ? JsonSetup.Deserialize<SaveManifest>(AtomicFile.ReadAllText(path)) : null;
+            var path = Path.Combine(_directory, file);
+            if (!File.Exists(path)) return null;
+            SaveManifest m;
+            try { m = JsonSetup.Deserialize<SaveManifest>(AtomicFile.ReadAllText(path)); }
+            catch (Newtonsoft.Json.JsonException ex) { throw new InvalidDataException("Manifest " + file + " is corrupt: " + ex.Message, ex); }
+            if (m == null || m.ChunkGenerations == null) throw new InvalidDataException("Manifest " + file + " is empty.");
+            return m;
         }
 
         private T ReadChunk<T>(SaveManifest manifest, string chunk) where T : class
@@ -318,7 +389,10 @@ namespace HeroGame.Persistence.Saves
             if (!manifest.ChunkGenerations.TryGetValue(chunk, out var gen)) throw new InvalidDataException("Manifest has no chunk " + chunk);
             var path = ChunkPath(chunk, gen);
             if (!File.Exists(path)) throw new InvalidDataException("Missing chunk file " + path);
-            return JsonSetup.Deserialize<T>(AtomicFile.ReadAllText(path));
+            T value;
+            try { value = JsonSetup.Deserialize<T>(AtomicFile.ReadAllText(path)); }
+            catch (Newtonsoft.Json.JsonException ex) { throw new InvalidDataException("Chunk " + chunk + " is corrupt: " + ex.Message, ex); }
+            return value ?? throw new InvalidDataException("Chunk " + chunk + " is empty.");
         }
 
         private string ChunkPath(string chunk, long generation)
@@ -327,10 +401,11 @@ namespace HeroGame.Persistence.Saves
             return Path.Combine(_directory, "chunks", safe + ".g" + generation + ".json");
         }
 
-        private void CollectGarbage(SaveManifest manifest)
+        private void CollectGarbage(SaveManifest manifest, SaveManifest previous)
         {
             var keep = new HashSet<string>();
             foreach (var kv in manifest.ChunkGenerations) keep.Add(Path.GetFileName(ChunkPath(kv.Key, kv.Value)));
+            if (previous != null) foreach (var kv in previous.ChunkGenerations) keep.Add(Path.GetFileName(ChunkPath(kv.Key, kv.Value)));
             foreach (var file in Directory.GetFiles(Path.Combine(_directory, "chunks")))
             {
                 var name = Path.GetFileName(file);

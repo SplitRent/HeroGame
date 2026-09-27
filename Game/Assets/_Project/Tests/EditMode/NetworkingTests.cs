@@ -360,6 +360,22 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void AHandlerThatThrows_FailsOnlyThatRequest_AndTheServerCarriesOn()
+        {
+            string logged = null;
+            _server.Log += line => logged = line;
+            _server.Router.Register("test.boom", ctx => throw new System.InvalidOperationException("secret internals"));
+            var a = Join("acc-boom", "Boom");
+            var r = Call(a, "test.boom");
+            Assert.IsFalse(r.Success);
+            Assert.AreEqual("Server error.", r.Error, "internal details are logged, not sent to the client");
+            StringAssert.Contains("secret internals", logged);
+            Assert.AreEqual(ClientState.Connected, a.State);
+            Assert.IsTrue(Call(a, "me.status").Success, "the same connection keeps working");
+            Assert.IsFalse(Call(a, "no.such.op").Success);
+        }
+
+        [Test]
         public void BuildOps_SurviveTheWireEncoding()
         {
             var op = new Core.Building.BuildOp { Kind = Core.Building.BuildOpKind.AddRoom, RoomType = Core.Building.RoomType.Bar, Floor = 1, Polygon = { 2, 2, 27.25f, 2, 27.25f, 47, 2, 47 } };

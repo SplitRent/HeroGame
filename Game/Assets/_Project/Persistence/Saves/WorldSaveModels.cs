@@ -23,6 +23,8 @@ namespace HeroGame.Persistence.Saves
         public string ServerId = "";
         public long SavedAtUnix;
         public long Generation;
+        /// <summary>Last journal sequence folded into this snapshot (the journal is compacted only up to the previous one).</summary>
+        public long JournalSequence;
         public Dictionary<string, long> ChunkGenerations = new Dictionary<string, long>();
     }
 

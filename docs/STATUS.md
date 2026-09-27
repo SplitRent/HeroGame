@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phases 19–20 (government, elections, Ripple social feed, city calendar, disasters)._
+_Last updated: Phases 23–28 (radio, phone apps, security audit, failure testing, documentation). See `reports/DEV_REPORT_002_SYSTEMS.md`._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -106,6 +106,9 @@ _Last updated: Phases 19–20 (government, elections, Ripple social feed, city c
 | Chunked snapshots + manifest | TESTED | `World_SavesAndLoadsFaithfully`, `IncrementalSave_*` |
 | Write-ahead journal + recovery | TESTED | `Crash_AfterPurchase_*`, `TornJournalTail_IsDiscarded` |
 | Integrity gate (refuse broken ledger) | TESTED | `Save_RefusesToPersistBrokenLedger` |
+| Power cut between chunk writes and manifest; failed save keeps its dirty set | TESTED | `PowerCut_BetweenChunksAndManifest_*`, `FailedSave_KeepsItsChangesDirty_*` |
+| Damaged-snapshot fallback (previous generation + journal) | TESTED | `DamagedSnapshot_FallsBackToThePreviousOne_*`, `CorruptManifest_FallsBack_AndWithNoFallbackLoadFailsLoudly` |
+| Corrupt journal entries skipped and reported | TESTED | `GarbageInTheMiddleOfTheJournal_IsSkipped_AndTheRestReplays`, `TornJournalTail_IsDiscarded` |
 | Story save slots | TESTED | `StorySlots_RotateAutosaves` |
 | Account profiles (local) | FUNCTIONAL | used by front end |
 | Binary save format | PLANNED | tech debt #1 |
@@ -127,6 +130,10 @@ _Last updated: Phases 19–20 (government, elections, Ripple social feed, city c
 | Master HTTP API + full-stack join | TESTED | `FullStack_LoginOverHttp_TicketFromMaster_JoinTheGameServer`; CI smoke test |
 | Dedicated server host (`herogame-server`) | FUNCTIONAL | CI smoke test (create, status, save, stop) |
 | Unity online session (login, join, movement, remote players) | IN DEVELOPMENT | compiles; not run in Unity |
+| Handler faults isolated (logged, generic error, connection survives) | TESTED | `AHandlerThatThrows_FailsOnlyThatRequest_AndTheServerCarriesOn` |
+| Security audit (request surface, tickets, master API, saves) | FUNCTIONAL | `SECURITY_AUDIT.md`: 3 findings fixed with tests; TLS and session revocation open |
+| Transport encryption (TLS) for game protocol and master API | PLANNED | audit finding #4 |
+| Load test (30 Hz, 128 players) | PLANNED | not yet measured |
 | Replication of player-made world changes to other clients | PLANNED | see NETWORKING.md limitations |
 
 ## Headless tools
