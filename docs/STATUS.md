@@ -97,7 +97,9 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Audio director, vehicle engines, radio playback (procedural music/host voice), dialogue/UI/phone/power sounds | IN DEVELOPMENT | compiles; not run in Unity |
 | Admin/debug commands shared by dev console, server console (`admin`, `as ACCOUNT`) and `admin.cmd` (WorldAdmin, audited): spawn NPCs/vehicles, events, weather, time, money, ownership, powers, anomalies, police, elections, ordinances, businesses, props, status | TESTED | `AdminCommandTests` (4), `AdminCommands_RequireWorldAdmin_AndAreAudited` |
 | World inspector: active events, emergencies, manhunts, elections, broken props, network state | IN DEVELOPMENT | compiles (F3 overlay) |
-| Youth curfew enforcement on individual minors | PLANNED | the ordinance exists and costs police trust in poorer districts; no per-NPC enforcement yet |
+| Youth curfew enforced in NPC schedules (minors home in the window; adults unaffected; repeal lifts it) | TESTED | `YouthCurfew_KeepsMinorsHome_AndLiftsWithRepeal` |
+| Weekend late nights for ages 15–29 (Fri/Sat, past midnight, extraversion-driven) | TESTED | exercised by the curfew test; offline/live equivalence tests still pass |
+| Campaign funds carry over between a player's campaigns | TESTED | `LeftoverCampaignFunds_CarryOverToTheNextRun` |
 
 ## Story Mode
 | System | Status | Evidence / notes |

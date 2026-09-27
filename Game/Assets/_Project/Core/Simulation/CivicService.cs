@@ -30,6 +30,7 @@ namespace HeroGame.Core.Simulation
         private readonly World _w;
         private readonly Dictionary<string, OrdinanceDefinition> _ordinances = new Dictionary<string, OrdinanceDefinition>();
         private readonly float _basePropertyTax;
+        private int _lastCurfew = -1;
         private readonly float _baseSalesTax;
 
         public CivicService(World world)
@@ -450,6 +451,15 @@ namespace HeroGame.Core.Simulation
             econ.PropertyTaxAnnualRate = Has("PropertyTaxRate") ? (float)Effect("PropertyTaxRate") : _basePropertyTax;
             econ.SalesTaxRate = Has("SalesTaxRate") ? (float)Effect("SalesTaxRate") : _baseSalesTax;
             _w.Construction.PermitFeeMultiplier = (float)Math.Max(0.1, 1.0 + Effect("PermitFeePercent") / 100.0);
+            // Youth curfew: minors' schedules keep them home in the window.
+            var curfew = Has("CurfewStartHour");
+            _w.Schedules.CurfewStartMinute = curfew ? (int)Effect("CurfewStartHour") % 24 * 60 : -1;
+            _w.Schedules.CurfewEndMinute = curfew ? (int)Effect("CurfewEndHour") % 24 * 60 : -1;
+            if (_w.Schedules.CurfewStartMinute != _lastCurfew)
+            {
+                _lastCurfew = _w.Schedules.CurfewStartMinute;
+                _w.Director.Index.Clear(); // cached whereabouts were computed under the old rules
+            }
             _w.Rentals.MaxAnnualIncreasePercent = (float)Effect("RentIncreaseCapPercent");
         }
 
@@ -556,17 +566,21 @@ namespace HeroGame.Core.Simulation
             if (c.Record.Convictions > 0 && c.Record.Charges.Exists(ch => ch.Convicted && (_w.Content.FindCrime(ch.CrimeTypeId)?.Severity ?? 0) >= 6))
                 return OpResult.Fail("Serious convictions disqualify candidates.");
             if (slate != Slates.Renewal && slate != Slates.Working) slate = Slates.Independent;
-            var account = _w.Ids.Next(EntityKind.LedgerAccount);
-            var result = _w.Transactions.Execute(new WorldTransaction
+            // A returning candidate keeps their campaign account (and what is left in it); a first-timer opens one.
+            var reuse = S.CampaignAccounts.TryGetValue(c.CharacterId.ToString(), out var account) && _w.Ledger.Exists(account);
+            if (!reuse) account = _w.Ids.Next(EntityKind.LedgerAccount);
+            var tx = new WorldTransaction
             {
                 IdempotencyKey = idempotencyKey ?? "",
                 Initiator = c.CharacterId,
                 Timestamp = _w.Clock.Now,
                 Description = "Filing fee",
                 Money = LedgerTransaction.Transfer(c.CheckingAccount, _w.Accounts.Treasury, new Money(FilingFeeCents), TransactionReason.Fee, "Candidate filing fee"),
-                OpenAccounts = { new LedgerAccount { Id = account, Owner = c.CharacterId, Kind = LedgerAccountKind.Organization, Label = displayName + " campaign" } },
-            });
+            };
+            if (!reuse) tx.OpenAccounts.Add(new LedgerAccount { Id = account, Owner = c.CharacterId, Kind = LedgerAccountKind.Organization, Label = displayName + " campaign" });
+            var result = _w.Transactions.Execute(tx);
             if (!result.Success) return result;
+            S.CampaignAccounts[c.CharacterId.ToString()] = account;
             e.Candidates.Add(new Candidate { Person = c.CharacterId, IsPlayer = true, Name = displayName, Slate = slate, District = e.District, CampaignAccount = account, Recognition = 0.05f });
             _w.History.Record(_w.Today, HistoryCategory.Politics, 3, displayName + " enters the race for " + (office == Office.Mayor ? "mayor" : district + " council"));
             return result;

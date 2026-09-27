@@ -184,6 +184,11 @@ namespace HeroGame.Core.Civic
         public List<Election> PastElections = new List<Election>();
         /// <summary>Characters registered under the anomalous-abilities ordinance.</summary>
         public List<EntityId> RegisteredPowered = new List<EntityId>();
+        /// <summary>
+        /// Each player candidate's campaign account (character id → account id). Money left after an election stays
+        /// there for their next run: it is campaign money, not personal money.
+        /// </summary>
+        public Dictionary<string, EntityId> CampaignAccounts = new Dictionary<string, EntityId>();
         public long LastElectionScheduledDay = -1;
 
         public bool IsActive(string ordinance) => Ordinances.Exists(o => o.Id == ordinance);

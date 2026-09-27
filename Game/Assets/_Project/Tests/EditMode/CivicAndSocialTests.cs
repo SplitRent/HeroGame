@@ -476,5 +476,67 @@ namespace HeroGame.Tests
                 Assert.AreEqual(next, again.Id, "post ids continue");
             }
         }
+
+        [Test]
+        public void YouthCurfew_KeepsMinorsHome_AndLiftsWithRepeal()
+        {
+            var adult = _world.Population.Ordered.First(n => n.Alive && n.AgeYears(_world.Today) >= 25 && n.Home.IsValid);
+            // Find a teenager who is out between 23:00 and 05:00 on some night without a curfew.
+            Core.Population.NpcRecord teen = null;
+            GameDateTime? outLate = null;
+            foreach (var n in _world.Population.Ordered.Where(n => n.Alive && n.Home.IsValid && n.AgeYears(_world.Today) >= 12 && n.AgeYears(_world.Today) <= 17))
+            {
+                for (var d = 0; d < 14 && outLate == null; d++)
+                    for (var m = 23 * 60; m < 29 * 60 && outLate == null; m += 15)
+                    {
+                        var t = GameDateTime.FromCalendar(2030, 5, 7).AddDays(d).AddMinutes(m);
+                        var a = _world.Schedules.Resolve(n, t).Activity;
+                        if (a != Core.Population.ActivityKind.Sleeping && a != Core.Population.ActivityKind.AtHome && a != Core.Population.ActivityKind.Working) outLate = t;
+                    }
+                if (outLate != null) { teen = n; break; }
+            }
+            var gov = _world.Government;
+            var adultLate = GameDateTime.FromCalendar(2030, 5, 8, 23, 30);
+            var adultBefore = _world.Schedules.Resolve(adult, adultLate).Activity;
+            gov.Enact(gov.Ordinance("youth_curfew"));
+            Assert.AreEqual(adultBefore, _world.Schedules.Resolve(adult, adultLate).Activity, "adults are unaffected");
+            Assert.IsNotNull(teen, "some teenager stays out late without a curfew");
+            for (var d = 0; d < 20; d++)
+                foreach (var hm in new[] { 23 * 60 + 15, 23 * 60 + 45, 24 * 60 + 90, 24 * 60 + 4 * 60 + 30 })
+                {
+                    var t = GameDateTime.FromCalendar(2030, 5, 7).AddDays(d).AddMinutes(hm);
+                    var a = _world.Schedules.Resolve(teen, t, out var until).Activity;
+                    Assert.That(a, Is.EqualTo(Core.Population.ActivityKind.Sleeping).Or.EqualTo(Core.Population.ActivityKind.AtHome).Or.EqualTo(Core.Population.ActivityKind.Working), "day " + d + " " + t);
+                    Assert.Greater(until.TotalSeconds, t.TotalSeconds);
+                }
+            Assert.IsTrue(outLate.HasValue, "some teen evening out exists to test against");
+            if (outLate.HasValue)
+            {
+                Assert.AreNotEqual(Core.Population.ActivityKind.Leisure, _world.Schedules.Resolve(teen, outLate.Value).Activity);
+                gov.Repeal(gov.Ordinance("youth_curfew"));
+                Assert.AreNotEqual(Core.Population.ActivityKind.AtHome, _world.Schedules.Resolve(teen, outLate.Value).Activity, "repeal lifts it");
+            }
+        }
+
+        [Test]
+        public void LeftoverCampaignFunds_CarryOverToTheNextRun()
+        {
+            _world.Government.ScheduleElections(_world.Today);
+            var race = Civic.Elections.Single(e => e.Office == Office.Mayor);
+            Assert.IsTrue(_world.Government.FileCandidacy(_player, Office.Mayor, "", Slates.Renewal, "Dana", "f1").Success);
+            var account = race.Candidates.Single(c => c.IsPlayer).CampaignAccount;
+            var donor = NewPlayer(_world, 24, "Lou");
+            Assert.IsTrue(_world.Government.Donate(donor, race.Id, _player.CharacterId, Money.FromDollars(2000), "d1").Success);
+            CivicDays(_world.Today + 1, race.ElectionDay);
+            Assert.IsTrue(race.Held);
+            Assert.AreEqual(Money.FromDollars(2000), _world.Ledger.BalanceOf(account), "unspent donations stay campaign money");
+
+            _world.Government.ScheduleElections(_world.Today);
+            Assert.IsTrue(_world.Government.FileCandidacy(_player, Office.Mayor, "", Slates.Renewal, "Dana", "f2").Success);
+            var again = Civic.Elections.Single(e => e.Office == Office.Mayor).Candidates.Single(c => c.IsPlayer);
+            Assert.AreEqual(account, again.CampaignAccount, "the same account, with the same money, for the next run");
+            Assert.IsTrue(_world.Government.SpendCampaign(_player, Civic.Elections.Single(e => e.Office == Office.Mayor).Id, Money.FromDollars(1500), "ads").Success);
+            Assert.IsTrue(_world.Ledger.VerifyInvariant(out _));
+        }
     }
 }

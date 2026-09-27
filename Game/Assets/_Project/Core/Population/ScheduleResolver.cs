@@ -50,8 +50,40 @@ namespace HeroGame.Core.Population
             var minute = time.MinuteOfDay;
             var next = 1440;
             var result = ResolveCore(npc, time, minute, ref next);
+            if (CurfewStartMinute >= 0 && npc.Alive) result = ApplyCurfew(npc, time, minute, result, ref next);
             validUntil = dayStart.AddMinutes(next);
             return result;
+        }
+
+        /// <summary>Youth curfew window in minutes of day (set by the city's ordinance; -1 = none). May wrap midnight.</summary>
+        public int CurfewStartMinute = -1;
+        public int CurfewEndMinute = -1;
+        public const int CurfewMinAge = 10;
+        public const int CurfewMaxAge = 17;
+
+        /// <summary>Minors go home during curfew instead of being out (work shifts and hospital/custody stand).</summary>
+        private ScheduledActivity ApplyCurfew(NpcRecord npc, GameDateTime time, int minute, ScheduledActivity result, ref int next)
+        {
+            var age = npc.AgeYears(time.DayIndex);
+            if (age < CurfewMinAge || age > CurfewMaxAge) return result;
+            Boundary(CurfewStartMinute, minute, ref next);
+            Boundary(CurfewEndMinute, minute, ref next);
+            var inCurfew = CurfewStartMinute > CurfewEndMinute
+                ? minute >= CurfewStartMinute || minute < CurfewEndMinute
+                : minute >= CurfewStartMinute && minute < CurfewEndMinute;
+            if (!inCurfew) return result;
+            switch (result.Activity)
+            {
+                case ActivityKind.Sleeping:
+                case ActivityKind.AtHome:
+                case ActivityKind.Working:
+                case ActivityKind.Hospitalized:
+                case ActivityKind.InCustody:
+                case ActivityKind.Deceased:
+                    return result;
+                default:
+                    return AtHome(npc, false);
+            }
         }
 
         private ScheduledActivity ResolveCore(NpcRecord npc, GameDateTime time, int minute, ref int next)
@@ -74,6 +106,17 @@ namespace HeroGame.Core.Population
                 Boundary(wake, minute, ref next);
                 Boundary(sleep - 90, minute, ref next);
                 return AtHome(npc, minute < wake || minute >= sleep - 90);
+            }
+
+            // Friday/Saturday late nights (teens and young adults) run past midnight into the next day.
+            if (minute < 6 * 60 && LateNight(npc, day - 1, out var yStart, out var yDuration, out var yPlace) && yStart + yDuration > 1440)
+            {
+                var endToday = yStart + yDuration - 1440;
+                Boundary(endToday, minute, ref next);
+                Boundary(endToday + 20, minute, ref next);
+                if (minute < endToday) return new ScheduledActivity { Activity = ActivityFor(_geography.GetPlace(yPlace).Kind), Place = yPlace };
+                if (minute < endToday + 20) return Commute(yPlace, npc.Home, (minute - endToday) / 20f);
+                return AtHome(npc, true); // sleeps in after a late night
             }
 
             // Work/school commitment for today.
@@ -135,6 +178,20 @@ namespace HeroGame.Core.Population
                 if (commitStart < wake) wake = Math.Max(0, commitStart - CommuteMinutes - 45);
             }
 
+            if (commitEnd <= 21 * 60 && LateNight(npc, day, out var lStart, out var lDuration, out var lPlace))
+            {
+                var end = Math.Min(1440, lStart + lDuration);
+                Boundary(lStart - 20, minute, ref next);
+                Boundary(lStart, minute, ref next);
+                if (lStart + lDuration + 20 < 1440) Boundary(lStart + lDuration, minute, ref next);
+                if (lStart + lDuration + 20 < 1440) Boundary(lStart + lDuration + 20, minute, ref next);
+                if (minute >= lStart && minute < end) return new ScheduledActivity { Activity = ActivityFor(_geography.GetPlace(lPlace).Kind), Place = lPlace };
+                if (minute >= lStart - 20 && minute < lStart) return Commute(npc.Home, lPlace, (minute - (lStart - 20)) / 20f);
+                if (lStart + lDuration < 1440 && minute >= lStart + lDuration && minute < lStart + lDuration + 20) return Commute(lPlace, npc.Home, (minute - lStart - lDuration) / 20f);
+                if (minute >= lStart - 20) return AtHome(npc, true);
+                sleep = Math.Max(sleep, 1439);
+            }
+
             Boundary(wake, minute, ref next);
             Boundary(sleep, minute, ref next);
             if (minute < wake || minute >= sleep) return AtHome(npc, true);
@@ -164,6 +221,37 @@ namespace HeroGame.Core.Population
             }
 
             return AtHome(npc, false);
+        }
+
+        /// <summary>
+        /// Whether <paramref name="npc"/> goes out late on <paramref name="day"/>: Friday and Saturday nights, ages 15–29,
+        /// likelier for extraverts, to a favourite nightlife/food/park spot that is open at 21:00–22:00. Deterministic
+        /// per (world, NPC, day) so the part after midnight can be recomputed the next day.
+        /// </summary>
+        private bool LateNight(NpcRecord npc, long day, out int start, out int duration, out EntityId place)
+        {
+            start = 0;
+            duration = 0;
+            place = EntityId.None;
+            var date = new GameDateTime(day * GameDateTime.SecondsPerDay);
+            if (date.DayOfWeek != DayOfWeek.Friday && date.DayOfWeek != DayOfWeek.Saturday) return false;
+            var age = npc.AgeYears(day);
+            if (age < 15 || age > 29 || npc.FavoritePlaces.Count == 0) return false;
+            var rng = DeterministicRandom.For(_worldSeed, npc.Id.Value, (ulong)day, 0x1A7E);
+            if (!rng.Chance(0.12 + 0.4 * npc.Personality.Extraversion)) return false;
+            start = rng.NextInt(21 * 60, 22 * 60);
+            duration = rng.NextInt(150, 300);
+            foreach (var candidate in npc.FavoritePlaces)
+            {
+                var p = _geography.GetPlace(candidate);
+                if (p == null || !p.IsOpenAt(start)) continue;
+                if (p.Kind == PlaceKind.Nightlife || p.Kind == PlaceKind.Restaurant || p.Kind == PlaceKind.Park || p.Kind == PlaceKind.Beach)
+                {
+                    place = candidate;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static void Boundary(int threshold, int minute, ref int next)
