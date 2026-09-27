@@ -172,7 +172,21 @@ namespace HeroGame.WorldHost
                 sim.AdvanceDays(1);
                 watch.Restart();
                 var inc = saves.Save(world);
-                Console.WriteLine("Incremental save after 1 day: " + inc.ChunksWritten + " written, " + inc.ChunksSkipped + " skipped, " + (inc.Bytes / 1024) + " KiB in " + watch.Elapsed.TotalMilliseconds.ToString("0") + " ms");
+                Console.WriteLine("Incremental save after 1 day: " + inc.ChunksWritten + " written, " + inc.ChunksSkipped + " skipped, " + (inc.Bytes / 1024) + " KiB in " + watch.Elapsed.TotalMilliseconds.ToString("0") +
+                                  " ms (snapshot " + inc.SnapshotMilliseconds.ToString("0") + " ms + write/commit " + inc.WriteMilliseconds.ToString("0") + " ms)");
+                sim.AdvanceDays(1);
+                watch.Restart();
+                var background = saves.SaveInBackground(world);
+                var blocked = watch.Elapsed.TotalMilliseconds;
+                var bg = background.Result;
+                Console.WriteLine("Background save after 1 day: simulation thread blocked " + blocked.ToString("0") + " ms, write/commit " + bg.WriteMilliseconds.ToString("0") + " ms on a background thread");
+                world.Clock.AdvanceGame(3 * 3600);
+                sim.Update();
+                watch.Restart();
+                var routine = saves.SaveInBackground(world);
+                var routineBlocked = watch.Elapsed.TotalMilliseconds;
+                var r2 = routine.Result;
+                Console.WriteLine("Routine autosave between daily steps: " + r2.ChunksWritten + " chunks, " + (r2.Bytes / 1024) + " KiB; simulation thread blocked " + routineBlocked.ToString("0.0") + " ms");
 
                 watch.Restart();
                 var load = saves.Load(content, journal);

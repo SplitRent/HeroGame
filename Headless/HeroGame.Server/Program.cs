@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using HeroGame.Core.Servers;
@@ -28,12 +29,19 @@ namespace HeroGame.Server
     ///                                           (TLS is on by default with a self-signed certificate kept in the save
     ///                                            directory; its fingerprint is published to the master for pinning)
     ///
+    ///   herogame-server loadtest [--clients 128] [--seconds 30] [--tls]   (in-process bots; see LoadTest)
+    ///
     /// Console: status | save | ticket ACCOUNT NAME | op ACCOUNT ROLE | kick ACCOUNT | say TEXT | stop
     /// </summary>
     public static class Program
     {
         public static int Main(string[] args)
         {
+            if (args.Length > 0 && args[0] == "loadtest")
+            {
+                var lo = Args(args.Skip(1).ToArray());
+                return LoadTest.Run(lo, lo.TryGetValue("data", out var ld) ? ld : FindDataDirectory());
+            }
             var o = Args(args);
             if (!o.ContainsKey("save"))
             {
@@ -136,6 +144,7 @@ namespace HeroGame.Server
             var frame = Stopwatch.StartNew();
             var sinceSnapshot = 0.0;
             var sinceSave = 0.0;
+            System.Threading.Tasks.Task<SaveResult> autosave = null;
             var sinceHeartbeat = 1e9;
             Console.WriteLine("Server '" + options.ServerName + "' running on port " + server.Port + ". Type 'help' for commands.");
             while (!stopping)
@@ -152,10 +161,18 @@ namespace HeroGame.Server
                     server.BroadcastSnapshots();
                 }
                 sinceSave += dt;
-                if (sinceSave >= 300)
+                if (sinceSave >= 300 && autosave == null)
                 {
                     sinceSave = 0;
-                    Save(saves, world, journal, moderation, moderationPath);
+                    // Serialize now (consistent snapshot), write on a background thread.
+                    autosave = saves.SaveInBackground(world);
+                    AtomicFile.WriteAllText(moderationPath, JsonSetup.Serialize(moderation.Export()));
+                }
+                if (autosave != null && autosave.IsCompleted)
+                {
+                    if (autosave.IsFaulted) Console.WriteLine("autosave failed (will retry): " + autosave.Exception?.GetBaseException().Message);
+                    else saves.CompactJournal(world, journal); // the journal belongs to this thread
+                    autosave = null;
                 }
                 sinceHeartbeat += dt;
                 if (master != null && sinceHeartbeat >= 30 && o.TryGetValue("server-key", out var serverKey))

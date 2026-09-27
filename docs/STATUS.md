@@ -135,7 +135,8 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Transport encryption (TLS with pinned fingerprints) for the game protocol; HTTPS option and warning for the master | TESTED | `Tls_PinnedConnectionsWork_WrongPinsAndPlaintextAreRefused`, `Heartbeat_PublishesTheServersTlsPin_*`; CI smoke runs with TLS |
 | Session sign-out, sign-out everywhere, password change | TESTED | `Sessions_CanBeSignedOut_Individually_Everywhere_AndByPasswordChange` |
 | Persisted manhunts; disconnecting mid-chase is evading | TESTED | `ActiveManhunt_SurvivesARestart`, `DisconnectingDuringAChase_*` |
-| Load test (30 Hz, 128 players) | PLANNED | not yet measured |
+| Load test (30 Hz, 128 players) | TESTED | `herogame-server loadtest` (CI: 64 clients over TLS); 128 clients: p99 21 ms/tick, 12 KiB/s per client; async per-connection writers, 32-nearest snapshot interest |
+| Background autosave (snapshot on the simulation thread, writes off it; failed writes retried) | TESTED | `BackgroundSave_Commits_*`; bench: routine autosave 12.9 ms blocked |
 | Replication of player-made world changes to other clients | PLANNED | see NETWORKING.md limitations |
 
 ## Headless tools

@@ -251,7 +251,12 @@ is skipped and reported (each entry is balanced on its own, so the books stay co
 If the latest snapshot is damaged after it was committed (unreadable manifest, missing or truncated chunk), load falls
 back to `manifest.prev.json` and replays the journal from *its* sequence; the next save is then a full snapshot and the
 good fallback is kept until that save succeeds. To make this possible the journal is compacted only up to the previous
-snapshot's sequence, never the latest one. Non-journaled simulation state (NPC lives, weather) rolls back by at most one
+snapshot's sequence, never the latest one.
+
+Autosaves use `SaveInBackground`: the calling thread takes a consistent snapshot (builds and serializes the dirty
+chunks), clears the dirty set and returns; writes, fsyncs, the manifest commit and garbage collection run on a background
+thread. A failed background write puts its chunks back for the next save. Journal compaction waits for the task on the
+simulation thread, which owns the journal. Explicit saves (quit, checkpoints, console) stay synchronous. Non-journaled simulation state (NPC lives, weather) rolls back by at most one
 save interval in that case; money and ownership do not. Fault injection (`WorldSaveSystem.BeforeCommit`) lets tests cut
 the power between chunk writes and the manifest commit (`FailureTests`).
 
@@ -395,11 +400,11 @@ Full detail: [`ASSET_PIPELINE.md`](ASSET_PIPELINE.md). Summary:
 | Area | Target | Current measurement (Phases 19–28, container CPU, Release) |
 |---|---|---|
 | Client frame rate | 60 fps @1440p High on RTX 3070-class / 30–60 fps consoles | not yet measurable (greybox) |
-| Server tick | 30 Hz with 128 players | not yet load-tested (functional tests only) |
+| Server tick | 30 Hz with 128 players | **30 Hz held with 128 bot clients** (`herogame-server loadtest`, TLS on): main-thread p50 0.2 ms, p99 21 ms of a 33 ms budget; snapshots p50 6 ms for all 128; 12 KiB/s per client. Bots, sockets and server share one 4-core machine, so this overstates server cost |
 | Whole daily world step (NPCs, businesses, civic incl. an election campaign, disasters, finance, courts, EMS) | ≤ 250 ms per game day at 50,000 NPCs | **20.8 ms/day at 9,302 NPCs (2.23 µs per NPC-day)** → ~112 ms / 50k extrapolated |
 | Population director | ≤ 2 ms per evaluation per server tick budget | **1.6 ms** (8 observers, 4,449 places, spatial index) |
 | Offline catch-up | ≤ 15 s for 60 days @50k NPCs | 1.25 s for 60 days @9.3k → ~6.7 s @50k extrapolated |
-| Incremental save | ≤ 16 ms hitch on the main thread | 1.1 s for 9.3k NPCs (chunks serialize in parallel; still JSON and not yet off the main thread) ⚠ |
+| Incremental save | ≤ 16 ms hitch on the main thread | routine autosave **12.9 ms** blocked (writes on a background thread); the save right after a daily step, when every NPC shard is dirty, blocks ~270 ms for 9.3k NPCs (serialization of a consistent snapshot) ⚠ |
 | Load + journal replay + invariant check | — | 1.4 s for 9.3k NPCs |
 | Server memory | — | 117 MiB managed for the 9.3k-NPC world |
 | Streaming hitch | none > 50 ms | Phase 2 |

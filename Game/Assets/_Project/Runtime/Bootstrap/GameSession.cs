@@ -116,16 +116,31 @@ namespace HeroGame.Runtime.Bootstrap
             Simulation.Update();
             World.Events.Flush();
             _autosaveTimer += realDeltaSeconds;
-            if (_autosaveTimer >= AutosaveIntervalSeconds)
+            if (_autosaveTimer >= AutosaveIntervalSeconds && _autosave == null)
             {
                 _autosaveTimer = 0f;
-                Save();
+                // Only serialization happens on this frame; disk writes run on a background thread.
+                _autosave = Saves.SaveInBackground(World);
+            }
+            if (_autosave != null && _autosave.IsCompleted)
+            {
+                if (_autosave.IsFaulted) Debug.LogWarning("[Save] autosave failed, will retry: " + _autosave.Exception?.GetBaseException().Message);
+                else
+                {
+                    Saves.CompactJournal(World, _journal);
+                    Saved?.Invoke(_autosave.Result);
+                }
+                _autosave = null;
             }
         }
 
+        private System.Threading.Tasks.Task<SaveResult> _autosave;
+
+        /// <summary>Synchronous save (menus, quitting, story checkpoints); waits for any autosave still writing.</summary>
         public SaveResult Save()
         {
             var result = Saves.Save(World);
+            _autosave = null;
             Saves.CompactJournal(World, _journal);
             Saved?.Invoke(result);
             return result;

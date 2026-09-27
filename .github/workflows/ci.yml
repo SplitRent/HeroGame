@@ -46,6 +46,8 @@ jobs:
             --save "$RUNNER_TEMP/server" --dev-secret "$HEROGAME_MASTER_SECRET" --bind 127.0.0.1 --port 0 | tee server.txt
           grep -q "ledger balanced" server.txt
           grep -q "Saved and stopped" server.txt
+      - name: Server load test (64 bot clients over TLS, 15 s)
+        run: Headless/HeroGame.Server/bin/Release/net8.0/herogame-server loadtest --clients 64 --seconds 15 --tls | tee loadtest.txt
       - name: Performance benchmark (10k NPC stress layout)
         run: Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world bench --days 7 | tee bench.txt
       - uses: actions/upload-artifact@v4
@@ -55,6 +57,7 @@ jobs:
           path: |
             **/TestResults/*.trx
             bench.txt
+            loadtest.txt
 
   blender:
     name: Blender asset pipeline — tests and kit export

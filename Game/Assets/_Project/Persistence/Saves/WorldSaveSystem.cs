@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using HeroGame.Core.Characters;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;
@@ -18,7 +19,12 @@ namespace HeroGame.Persistence.Saves
         public int ChunksSkipped;
         public long Generation;
         public long Bytes;
+        /// <summary>Total time from snapshot to commit.</summary>
         public double Milliseconds;
+        /// <summary>Time on the calling thread to take a consistent snapshot (payloads + serialization).</summary>
+        public double SnapshotMilliseconds;
+        /// <summary>Time to write, fsync and commit (a background thread with <see cref="WorldSaveSystem.SaveInBackground"/>).</summary>
+        public double WriteMilliseconds;
     }
 
     public sealed class LoadResult
@@ -72,7 +78,77 @@ namespace HeroGame.Persistence.Saves
 
         public FileTransactionJournal OpenJournal() => new FileTransactionJournal(JournalPath);
 
+        /// <summary>Saves synchronously: snapshot, write, commit. The world's dirty set is cleared only on success.</summary>
         public SaveResult Save(World world, bool full = false)
+        {
+            WaitForBackgroundSave();
+            var pending = Prepare(world, full);
+            try
+            {
+                Commit(pending);
+            }
+            catch
+            {
+                _forceFullSave |= pending.Recovering;
+                throw;
+            }
+            world.Dirty.Clear();
+            return pending.Result;
+        }
+
+        /// <summary>
+        /// Takes a consistent snapshot on the calling thread (serialization only), then writes, fsyncs and commits it on
+        /// a background thread, so the simulation thread pays only for serialization. Changes made while the write runs
+        /// are tracked for the next save; if the write fails, its chunks are retried by the next save. Journal
+        /// compaction must wait until the task completes (it touches the journal, which the simulation thread owns).
+        /// </summary>
+        public Task<SaveResult> SaveInBackground(World world, bool full = false)
+        {
+            WaitForBackgroundSave();
+            var pending = Prepare(world, full);
+            world.Dirty.Clear();
+            _background = Task.Run(() =>
+            {
+                try
+                {
+                    Commit(pending);
+                    return pending.Result;
+                }
+                catch
+                {
+                    lock (_retry) _retry.UnionWith(pending.Dirty);
+                    if (pending.Recovering) _forceFullSave = true;
+                    throw;
+                }
+            });
+            return _background;
+        }
+
+        /// <summary>Blocks until a background save (if any) has committed or failed.</summary>
+        public void WaitForBackgroundSave()
+        {
+            var t = _background;
+            if (t == null) return;
+            try { t.Wait(); }
+            catch (AggregateException) { /* reported through the task; its chunks are retried */ }
+            _background = null;
+        }
+
+        private Task<SaveResult> _background;
+        private readonly HashSet<string> _retry = new HashSet<string>();
+
+        private sealed class PendingSave
+        {
+            public SaveManifest Manifest;
+            public SaveManifest Previous;
+            public bool Recovering;
+            public HashSet<string> Dirty;
+            public List<KeyValuePair<string, string>> Chunks;
+            public SaveResult Result;
+            public System.Diagnostics.Stopwatch Watch;
+        }
+
+        private PendingSave Prepare(World world, bool full)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             if (!world.Ledger.VerifyInvariant(out var sum))
@@ -97,6 +173,11 @@ namespace HeroGame.Persistence.Saves
 
             // Meta and transactional state are always written together: they must agree on time and journal sequence.
             var dirty = new HashSet<string>(world.Dirty.Chunks) { SaveChunks.Meta, SaveChunks.Transactional };
+            lock (_retry)
+            {
+                dirty.UnionWith(_retry);
+                _retry.Clear();
+            }
             foreach (var c in SaveChunks.WorldChunks)
                 if (full || previous == null || !previous.ChunkGenerations.ContainsKey(c)) dirty.Add(c); // new chunk kinds after an upgrade
             if (world.Story != null && (full || previous == null || !previous.ChunkGenerations.ContainsKey(SaveChunks.Story))) dirty.Add(SaveChunks.Story);
@@ -109,27 +190,23 @@ namespace HeroGame.Persistence.Saves
             if (dirty.Contains(SaveChunks.Population))
                 foreach (var shard in ShardsOf(world)) dirty.Add(SaveChunks.PopulationShard(shard));
 
-            // Build payloads on the calling thread (they reference live objects, which nothing mutates during a
-            // save), then serialize and write chunks in parallel: chunk files are independent until the manifest.
+            // Build payloads on the calling thread (they reference live objects, which nothing mutates while this runs),
+            // and serialize them in parallel. After this point nothing refers to live world objects.
             var jobs = new List<KeyValuePair<string, object>>();
             foreach (var chunk in dirty)
             {
                 var payload = BuildChunk(world, chunk);
                 if (payload != null) jobs.Add(new KeyValuePair<string, object>(chunk, payload));
             }
-            var sizes = new long[jobs.Count];
-            var generation = manifest.Generation;
-            System.Threading.Tasks.Parallel.For(0, jobs.Count, i =>
-            {
-                var json = JsonSetup.Serialize(jobs[i].Value);
-                AtomicFile.WriteAllText(ChunkPath(jobs[i].Key, generation), json);
-                sizes[i] = json.Length;
-            });
+            var json = new string[jobs.Count];
+            System.Threading.Tasks.Parallel.For(0, jobs.Count, i => json[i] = JsonSetup.Serialize(jobs[i].Value));
+            var chunks = new List<KeyValuePair<string, string>>(jobs.Count);
             for (var i = 0; i < jobs.Count; i++)
             {
-                manifest.ChunkGenerations[jobs[i].Key] = generation;
+                chunks.Add(new KeyValuePair<string, string>(jobs[i].Key, json[i]));
+                manifest.ChunkGenerations[jobs[i].Key] = manifest.Generation;
                 result.ChunksWritten++;
-                result.Bytes += sizes[i];
+                result.Bytes += json[i].Length;
             }
             // Shards that no longer exist must not linger in the manifest.
             var liveShards = new HashSet<string>();
@@ -139,18 +216,25 @@ namespace HeroGame.Persistence.Saves
                 if (key.StartsWith(SaveChunks.PopulationShardPrefix, StringComparison.Ordinal) && !liveShards.Contains(key)) stale.Add(key);
             foreach (var key in stale) manifest.ChunkGenerations.Remove(key);
             result.ChunksSkipped = manifest.ChunkGenerations.Count - result.ChunksWritten;
-
             manifest.JournalSequence = world.Transactions.LastSequence;
-            BeforeCommit?.Invoke(manifest);
-            if (previous != null && !recovering) AtomicFile.WriteAllText(Path.Combine(_directory, PreviousManifestFile), JsonSetup.Serialize(previous, true));
-            AtomicFile.WriteAllText(Path.Combine(_directory, ManifestFile), JsonSetup.Serialize(manifest, true));
-            world.Dirty.Clear();
+            result.SnapshotMilliseconds = watch.Elapsed.TotalMilliseconds;
+            return new PendingSave { Manifest = manifest, Previous = previous, Recovering = recovering, Dirty = dirty, Chunks = chunks, Result = result, Watch = watch };
+        }
+
+        private void Commit(PendingSave p)
+        {
+            var write = System.Diagnostics.Stopwatch.StartNew();
+            var generation = p.Manifest.Generation;
+            System.Threading.Tasks.Parallel.For(0, p.Chunks.Count, i => AtomicFile.WriteAllText(ChunkPath(p.Chunks[i].Key, generation), p.Chunks[i].Value));
+            BeforeCommit?.Invoke(p.Manifest);
+            if (p.Previous != null && !p.Recovering) AtomicFile.WriteAllText(Path.Combine(_directory, PreviousManifestFile), JsonSetup.Serialize(p.Previous, true));
+            AtomicFile.WriteAllText(Path.Combine(_directory, ManifestFile), JsonSetup.Serialize(p.Manifest, true));
             SaveManifest fallback;
             try { fallback = ReadManifest(PreviousManifestFile); }
             catch (InvalidDataException) { fallback = null; }
-            CollectGarbage(manifest, fallback);
-            result.Milliseconds = watch.Elapsed.TotalMilliseconds;
-            return result;
+            CollectGarbage(p.Manifest, fallback);
+            p.Result.WriteMilliseconds = write.Elapsed.TotalMilliseconds;
+            p.Result.Milliseconds = p.Watch.Elapsed.TotalMilliseconds;
         }
 
         /// <summary>
@@ -187,7 +271,7 @@ namespace HeroGame.Persistence.Saves
             return result;
         }
 
-        private bool _forceFullSave;
+        private volatile bool _forceFullSave;
 
         private LoadResult LoadFrom(SaveManifest manifest, ContentSet content, FileTransactionJournal journal)
         {

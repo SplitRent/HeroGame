@@ -35,6 +35,8 @@ namespace HeroGame.Networking.Server
         public float MaxOnFootSpeed = 11f;
         public float MaxVehicleSpeed = 75f;
         public float SnapshotRadius = 400f;
+        /// <summary>Nearest players replicated per snapshot (interest management; farther players are not sent).</summary>
+        public int SnapshotMaxPlayers = 32;
         public float LocalChatRadius = 60f;
         public WorldPosition Spawn;
         /// <summary>When set, every connection is TLS 1.2+ with this certificate (it must carry its private key).</summary>
@@ -95,6 +97,11 @@ namespace HeroGame.Networking.Server
         public bool MaskOn;
         public volatile bool Closed;
         public string CloseReason = "";
+        private long _bytesSent;
+        private long _messagesSent;
+        /// <summary>Bytes framed and written to this peer (for bandwidth budgets and the load test).</summary>
+        public long BytesSent => System.Threading.Interlocked.Read(ref _bytesSent);
+        public long MessagesSent => System.Threading.Interlocked.Read(ref _messagesSent);
 
         internal ServerConnection(int id, TcpClient tcp, long nowMs, int sendTimeoutMs)
         {
@@ -106,7 +113,15 @@ namespace HeroGame.Networking.Server
             tcp.SendTimeout = sendTimeoutMs;
             RemoteAddress = tcp.Client.RemoteEndPoint != null ? tcp.Client.RemoteEndPoint.ToString() : "?";
             ConnectedAtMs = nowMs;
+            new System.Threading.Thread(WriteLoop) { IsBackground = true, Name = "net-write-" + id }.Start();
         }
+
+        /// <summary>Frames waiting for the writer thread. A peer that falls this far behind is closed as too slow.</summary>
+        public const int MaxQueuedFrames = 512;
+        private readonly System.Collections.Concurrent.ConcurrentQueue<byte[]> _outbox = new System.Collections.Concurrent.ConcurrentQueue<byte[]>();
+        private readonly System.Threading.SemaphoreSlim _signal = new System.Threading.SemaphoreSlim(0);
+        private int _queued;
+        public int QueuedFrames => System.Threading.Volatile.Read(ref _queued);
 
         public string AccountId => Ticket != null ? Ticket.AccountId : "";
         public bool Encrypted { get; private set; }
@@ -122,27 +137,67 @@ namespace HeroGame.Networking.Server
             Encrypted = true;
         }
 
-        /// <summary>Thread-safe send; a slow or dead peer is closed instead of blocking the simulation.</summary>
+        /// <summary>
+        /// Thread-safe, non-blocking send: the frame is queued for this connection's writer thread, so socket writes
+        /// and TLS encryption never run on the simulation thread. A peer that cannot keep up is closed.
+        /// </summary>
         public void Send(NetMessage message)
         {
             if (Closed) return;
-            var frame = Wire.Frame(message);
+            SendFrame(Wire.Frame(message));
+        }
+
+        internal void SendFrame(byte[] frame)
+        {
+            if (Closed) return;
+            if (System.Threading.Interlocked.Increment(ref _queued) > MaxQueuedFrames)
+            {
+                System.Threading.Interlocked.Decrement(ref _queued);
+                Close("send backlog (connection too slow)");
+                return;
+            }
+            _outbox.Enqueue(frame);
+            _signal.Release();
+        }
+
+        private void WriteLoop()
+        {
             try
             {
-                lock (_sendLock) Stream.Write(frame, 0, frame.Length);
+                while (true)
+                {
+                    _signal.Wait(250);
+                    while (_outbox.TryDequeue(out var frame))
+                    {
+                        System.Threading.Interlocked.Decrement(ref _queued);
+                        lock (_sendLock) Stream.Write(frame, 0, frame.Length);
+                        System.Threading.Interlocked.Add(ref _bytesSent, frame.Length);
+                        System.Threading.Interlocked.Increment(ref _messagesSent);
+                    }
+                    if (Closed) break; // frames queued before Close (a Kick, a Reject) have been delivered
+                }
             }
-            catch (Exception ex) when (ex is System.IO.IOException || ex is ObjectDisposedException || ex is SocketException)
+            catch (Exception ex) when (ex is System.IO.IOException || ex is ObjectDisposedException || ex is SocketException || ex is InvalidOperationException)
             {
-                Close("send failed");
+                if (!Closed)
+                {
+                    CloseReason = "send failed";
+                    Closed = true;
+                }
+            }
+            finally
+            {
+                try { Tcp.Close(); } catch (Exception) { /* already gone */ }
             }
         }
 
+        /// <summary>Marks the connection closed; the writer delivers what was already queued, then closes the socket.</summary>
         public void Close(string reason)
         {
             if (Closed) return;
-            Closed = true;
             CloseReason = reason ?? "";
-            try { Tcp.Close(); } catch (Exception) { /* already gone */ }
+            Closed = true;
+            _signal.Release();
         }
     }
 
@@ -493,12 +548,32 @@ namespace HeroGame.Networking.Server
         }
 
         /// <summary>Sends each player the world state around them. Call at the snapshot rate (≈10 Hz).</summary>
+        /// <summary>
+        /// Sends each player the world near them. Per-player data (wanted level, name) is looked up once per broadcast,
+        /// not once per viewer, and only the nearest <see cref="GameServerOptions.SnapshotMaxPlayers"/> are replicated.
+        /// </summary>
         public void BroadcastSnapshots()
         {
             var players = Players;
+            var n = players.Count;
             var weather = _world.Weather.State.Current;
-            foreach (var c in players)
+            if (_entries.Length < n) _entries = new RemotePlayer[Math.Max(n, _entries.Length * 2)];
+            for (var i = 0; i < n; i++)
             {
+                var o = players[i];
+                var wanted = _world.Wanted.Get(o.Character.CharacterId);
+                _entries[i] = new RemotePlayer
+                {
+                    CharacterId = o.Character.CharacterId, Name = o.Ticket.DisplayName, Position = o.Position, Heading = o.Heading, Speed = o.Speed,
+                    WantedLevel = (byte)(wanted != null ? wanted.Level : 0),
+                };
+            }
+            var cap = Math.Min(_o.SnapshotMaxPlayers, Snapshot.MaxPlayers);
+            var radiusSq = _o.SnapshotRadius * _o.SnapshotRadius;
+            if (_near.Length < n) _near = new (float, int)[Math.Max(n, _near.Length * 2)];
+            for (var ci = 0; ci < n; ci++)
+            {
+                var c = players[ci];
                 var snap = new Snapshot
                 {
                     WorldSecond = _world.Clock.Now.TotalSeconds,
@@ -509,27 +584,24 @@ namespace HeroGame.Networking.Server
                     Corrected = c.PendingCorrection,
                 };
                 c.PendingCorrection = false;
-                var near = new List<(float d, ServerConnection other)>();
-                foreach (var other in players)
+                var count = 0;
+                for (var oi = 0; oi < n; oi++)
                 {
-                    if (other == c) continue;
-                    var d = WorldPosition.DistanceXZ(other.Position, c.Position);
-                    if (d <= _o.SnapshotRadius) near.Add((d, other));
+                    if (oi == ci) continue;
+                    var dx = _entries[oi].Position.X - c.Position.X;
+                    var dz = _entries[oi].Position.Z - c.Position.Z;
+                    var d = dx * dx + dz * dz;
+                    if (d <= radiusSq) _near[count++] = (d, oi);
                 }
-                near.Sort((a, b) => a.d.CompareTo(b.d));
-                for (var i = 0; i < near.Count && i < Snapshot.MaxPlayers; i++)
-                {
-                    var o = near[i].other;
-                    var wanted = _world.Wanted.Get(o.Character.CharacterId);
-                    snap.Players.Add(new RemotePlayer
-                    {
-                        CharacterId = o.Character.CharacterId, Name = o.Ticket.DisplayName, Position = o.Position, Heading = o.Heading, Speed = o.Speed,
-                        WantedLevel = (byte)(wanted != null ? wanted.Level : 0),
-                    });
-                }
+                if (count > cap) Array.Sort(_near, 0, count, NearComparer);
+                for (var i = 0; i < count && i < cap; i++) snap.Players.Add(_entries[_near[i].index]);
                 c.Send(snap);
             }
         }
+
+        private RemotePlayer[] _entries = new RemotePlayer[16];
+        private (float d, int index)[] _near = new (float, int)[16];
+        private static readonly IComparer<(float d, int index)> NearComparer = Comparer<(float d, int index)>.Create((a, b) => a.d != b.d ? a.d.CompareTo(b.d) : a.index.CompareTo(b.index));
 
         public ServerConnection FindByAccount(string accountId)
         {

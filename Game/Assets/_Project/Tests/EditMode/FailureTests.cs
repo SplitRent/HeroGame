@@ -305,5 +305,36 @@ namespace HeroGame.Tests
             Assert.IsFalse(world.PowerUse.Use(c, new PowerUseRequest { PowerIndex = 0, Intensity = 1f, Target = TargetKind.Point, Origin = c.LastPosition, Point = new WorldPosition(float.NaN, 0f, 0f) }).Attempted,
                 "non-finite aim points are refused");
         }
+
+        [Test]
+        public void BackgroundSave_Commits_ChangesDuringTheWriteGoToTheNextSave_AndFailuresRetry()
+        {
+            var dir = TestContent.TempDirectory("background");
+            var saves = new WorldSaveSystem(dir);
+            EntityId first, second;
+            using (var journal = saves.OpenJournal())
+            {
+                var world = WorldGenerator.Create("background", TestContent.DefaultConfig(), TestContent.Load(), journal);
+                first = world.CreateCharacter(Account("Bea"), new WorldPosition()).CharacterId;
+                var task = saves.SaveInBackground(world);
+                // The simulation keeps going while the snapshot is written.
+                second = world.CreateCharacter(Account("Cal"), new WorldPosition()).CharacterId;
+                Assert.Greater(task.Result.ChunksWritten, 5);
+                Assert.IsTrue(world.Dirty.IsDirty(SaveChunks.CharacterPrefix + second), "changes after the snapshot wait for the next save");
+
+                saves.BeforeCommit = _ => throw new IOException("disk full");
+                var failing = saves.SaveInBackground(world);
+                Assert.Throws<System.AggregateException>(() => failing.Wait());
+                saves.BeforeCommit = null;
+                Assert.IsFalse(world.Dirty.IsDirty(SaveChunks.CharacterPrefix + second), "cleared when the snapshot was taken…");
+                saves.Save(world); // …but the failed chunks are retried here
+            }
+            using (var journal = saves.OpenJournal())
+            {
+                var w = saves.Load(TestContent.Load(), journal).World;
+                Assert.IsTrue(w.Characters.ContainsKey(first));
+                Assert.IsTrue(w.Characters.ContainsKey(second), "the character saved only by the failed background write was retried");
+            }
+        }
     }
 }
