@@ -59,6 +59,25 @@ namespace HeroGame.Core.Economy
         public Loan Loan;
         public InsurancePolicy Policy;
         public Business.BusinessRecord Business;
+        /// <summary>Goods handed over with the payment (a weapon, ammunition).</summary>
+        public List<ItemGrant> Items;
+        /// <summary>A license issued with its fee (a firearm permit).</summary>
+        public LicenseGrant License;
+    }
+
+    [Serializable]
+    public sealed class ItemGrant
+    {
+        public EntityId Character;
+        public string ItemId = "";
+        public int Quantity = 1;
+    }
+
+    [Serializable]
+    public sealed class LicenseGrant
+    {
+        public EntityId Character;
+        public Characters.License License;
     }
 
     /// <summary>Durable append-only log of committed transactions (write-ahead journal).</summary>

@@ -103,6 +103,16 @@ namespace HeroGame.Networking.Server
 
             r.Register("power.use", UsePower);
 
+            r.Register("combat.attack", Attack);
+            r.Register("weapons.buy", ctx => AtShop(ctx, b => ctx.World.Combat.BuyWeapon(ctx.Me, b, ctx.Str("weapon", 64), ctx.Key)));
+            r.Register("weapons.ammo", ctx => AtShop(ctx, b => ctx.World.Combat.BuyAmmo(ctx.Me, b, ctx.Str("weapon", 64), (int)ctx.Long("packs", 1, 10), ctx.Key)));
+            r.Register("civic.firearm_permit", ctx =>
+            {
+                var cityHall = CityHall(ctx.World);
+                if (cityHall != null && !ctx.Near(cityHall.Position, BuildingReach)) return RequestContext.Fail("Apply in person at City Hall.");
+                return RequestContext.From(ctx.World.Combat.ApplyForFirearmPermit(ctx.Me, ctx.Key));
+            });
+
             r.Register("justice.bail", ctx => RequestContext.From(ctx.World.Courts.PostBail(ctx.Me, ctx.Key)));
             r.Register("justice.fines", ctx => RequestContext.From(ctx.World.Courts.PayFines(ctx.Me, new Money(ctx.Long("amount", 1)), ctx.Key)));
             r.Register("justice.attorney", ctx => RequestContext.From(ctx.World.Courts.HireAttorney(ctx.Me, ctx.Key)));
@@ -268,11 +278,75 @@ namespace HeroGame.Networking.Server
 
         private static string Clean(string s) => (s ?? "").Replace('|', '/').Replace('\n', ' ');
 
+        /// <summary>
+        /// combat.attack: the server supplies both positions (the attacker's from its own movement record, an NPC's from
+        /// its schedule, a player's from their connection), so a client can neither reach across town nor fake a target.
+        /// </summary>
+        private static Response Attack(RequestContext ctx)
+        {
+            var w = ctx.World;
+            var request = new Core.Combat.AttackRequest { WeaponId = ctx.Str("weapon", 64), Origin = ctx.Connection.Position };
+            switch (ctx.OptStr("target", "none"))
+            {
+                case "npc":
+                {
+                    var npc = w.Population.Get(ctx.Id("id"));
+                    if (npc == null || !w.Director.TryGetPosition(w.Schedules.Resolve(npc, w.Clock.Now), out var at)) return RequestContext.Fail("There is nobody there.");
+                    request.TargetKind = Core.Combat.AttackTargetKind.Npc;
+                    request.Target = npc.Id;
+                    request.TargetPosition = at;
+                    break;
+                }
+                case "character":
+                {
+                    var target = ctx.Id("id");
+                    ServerConnection other = null;
+                    foreach (var p in ctx.Server.Players) if (p.Character.CharacterId == target) other = p;
+                    if (other == null) return RequestContext.Fail("They are not here.");
+                    request.TargetKind = Core.Combat.AttackTargetKind.Character;
+                    request.Target = target;
+                    request.TargetPosition = other.Position;
+                    break;
+                }
+                default:
+                    request.TargetPosition = ctx.Connection.Position;
+                    break;
+            }
+            var outcome = w.Combat.Attack(ctx.Me, request);
+            if (!outcome.Attempted) return RequestContext.Fail(outcome.Message.Length > 0 ? outcome.Message : "Not ready.");
+            var data = new Dictionary<string, string>
+            {
+                ["hit"] = outcome.Hit ? "true" : "false",
+                ["down"] = outcome.TargetDown ? "true" : "false",
+                ["killed"] = outcome.TargetKilled ? "true" : "false",
+                ["justified"] = outcome.Justified ? "true" : "false",
+                ["retaliated"] = outcome.Retaliated ? "true" : "false",
+                ["message"] = outcome.Message,
+            };
+            if (outcome.AmmoLeft >= 0) data["ammo"] = outcome.AmmoLeft.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (outcome.Crime != null && outcome.Crime.Reported) data["reported"] = "true";
+            return RequestContext.Ok(data);
+        }
+
+        private static Response AtShop(RequestContext ctx, Func<Core.Business.BusinessRecord, OpResult> action)
+        {
+            if (!ctx.World.Businesses.TryGetValue(ctx.Id("business"), out var b)) return RequestContext.Fail("Unknown shop.");
+            var place = ctx.World.Geography.GetPlace(b.Place);
+            if (place == null || !ctx.Near(place.Position, CounterReach)) return RequestContext.Fail("You are not there.");
+            return RequestContext.From(action(b));
+        }
+
         private static Core.World.Place CityHall(World w)
         {
+            // The metro has a real City Hall; the vertical slice's civic counter is its first government building.
             Core.World.Place best = null;
             foreach (var p in w.Geography.Places)
-                if (p.Kind == Core.World.PlaceKind.Government && (best == null || p.Id.CompareTo(best.Id) < 0)) best = p;
+            {
+                if (p.Kind != Core.World.PlaceKind.Government) continue;
+                var named = p.Name.IndexOf("City Hall", StringComparison.OrdinalIgnoreCase) >= 0;
+                var bestNamed = best != null && best.Name.IndexOf("City Hall", StringComparison.OrdinalIgnoreCase) >= 0;
+                if (best == null || named && !bestNamed || named == bestNamed && p.Id.CompareTo(best.Id) < 0) best = p;
+            }
             return best;
         }
 

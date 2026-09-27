@@ -73,6 +73,11 @@ namespace HeroGame.Runtime.UI
                     foreach (var e in w.Calendar.ActiveOn(w.Clock.Now)) GUILayout.Label("Today: " + e.Name);
                     foreach (var d in w.Disasters.Active) GUILayout.Label("ACTIVE: " + d.Headline);
 
+                    GUILayout.Space(6);
+                    if (w.Combat.HasLicense(me, Core.Simulation.CombatService.FirearmPermit)) GUILayout.Label("Firearm permit: held");
+                    else if (GUILayout.Button("Apply for a firearm permit (" + new Money((long)(Core.Simulation.CombatService.PermitFeeCents * w.Macro.PriceLevel)) + ", background check)"))
+                        Report(w.Combat.ApplyForFirearmPermit(me, session.NextRequestKey("permit")), "Permit issued. Valid for five years.");
+
                     if (gov.Holds(me.CharacterId, Office.Mayor))
                     {
                         GUILayout.Space(8);

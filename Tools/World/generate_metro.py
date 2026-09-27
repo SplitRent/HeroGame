@@ -41,7 +41,7 @@ TEMPLATE_KIND = {
     "taqueria": "Restaurant", "coffee_shop": "Restaurant", "seafood_restaurant": "Restaurant",
     "neighborhood_bar": "Nightlife", "nightclub": "Nightlife", "auto_garage": "Garage",
     "gas_station": "GasStation", "gym": "Gym", "logistics_depot": "Warehouse", "bank_branch": "Office",
-    "car_dealership": "Shop",
+    "car_dealership": "Shop", "sporting_goods": "Shop",
 }
 
 TEMPLATE_SIZE = {  # width, depth, height, capacity
@@ -51,7 +51,7 @@ TEMPLATE_SIZE = {  # width, depth, height, capacity
     "coffee_shop": (14, 14, 5, 24), "seafood_restaurant": (28, 22, 6, 90), "neighborhood_bar": (18, 20, 6, 60),
     "nightclub": (34, 30, 9, 300), "auto_garage": (32, 24, 7, 10), "gas_station": (36, 30, 6, 12),
     "gym": (30, 24, 7, 60), "logistics_depot": (80, 50, 11, 120), "bank_branch": (24, 20, 7, 40),
-    "car_dealership": (60, 40, 7, 30),
+    "car_dealership": (60, 40, 7, 30), "sporting_goods": (44, 32, 8, 60),
 }
 
 TEMPLATE_VALUE = {  # base property value in dollars
@@ -59,7 +59,7 @@ TEMPLATE_VALUE = {  # base property value in dollars
     "hardware_store": 1600000, "barbershop": 260000, "laundromat": 300000, "diner": 480000,
     "taqueria": 460000, "coffee_shop": 380000, "seafood_restaurant": 900000, "neighborhood_bar": 520000,
     "nightclub": 1900000, "auto_garage": 720000, "gas_station": 1400000, "gym": 700000,
-    "logistics_depot": 4200000, "bank_branch": 1300000, "car_dealership": 3200000,
+    "logistics_depot": 4200000, "bank_branch": 1300000, "car_dealership": 3200000, "sporting_goods": 1700000,
 }
 
 # Words for generated, original business names (no real brands).
@@ -96,6 +96,7 @@ PATTERNS = {
     "logistics_depot": ["{a} Freight Depot", "{s} Logistics", "{d} Distribution Center"],
     "bank_branch": ["Gulf Tidewater Bank - {d}", "Crescent Savings - {d}", "Pelican Credit Union - {d}"],
     "car_dealership": ["{s} Motors", "{a} Auto Plaza", "{d} Pre-Owned"],
+    "sporting_goods": ["{d} Outfitters", "{s} Sporting Goods", "{a} {n} Outdoor Supply"],
 }
 
 STREET_WORDS = ["Acadia", "Alder", "Ambrose", "Anchorage", "Arbor", "Ashland", "Audubon", "Azalea", "Balsam",
@@ -277,7 +278,7 @@ DISTRICTS = [
               ("fh_fields", "Fairhaven Ball Fields", "Park", 120, 90, 0, 400, []),
               ("fh_library", "Fairhaven Branch Library", "Government", 30, 24, 8, 120, ["library"])],
              ["police", "fire", "school", "school", "park", "church", "church", "transit"],
-             ["supermarket", "pharmacy", "hardware_store", "diner", "coffee_shop", "taqueria", "gym", "barbershop",
+             ["sporting_goods", "supermarket", "pharmacy", "hardware_store", "diner", "coffee_shop", "taqueria", "gym", "barbershop",
               "laundromat", "gas_station", "gas_station", "auto_garage", "neighborhood_bar", "bank_branch"]),
     district("pinecrest_hollow", "Pinecrest Hollow", "Suburban", 0.6, 0.1, 0.8, 0.68, 0.2, -2800, 1800, 620, 300,
              "Newer subdivisions, megachurches, big-box retail and a long commute.", "Pinecrest Parkway",
@@ -287,7 +288,7 @@ DISTRICTS = [
               ("ph_bigbox", "Pinecrest Crossing", "Shop", 120, 80, 10, 900, ["big_box"]),
               ("ph_sports", "Pinecrest Sportsplex", "Park", 140, 100, 0, 500, [])],
              ["police", "fire", "school", "school", "school", "park", "church", "transit"],
-             ["supermarket", "supermarket", "hardware_store", "pharmacy", "coffee_shop", "diner", "gym", "gym",
+             ["sporting_goods", "supermarket", "supermarket", "hardware_store", "pharmacy", "coffee_shop", "diner", "gym", "gym",
               "gas_station", "gas_station", "auto_garage", "car_dealership", "bank_branch", "taqueria"]),
     district("oak_terrace", "Oak Terrace", "Wealthy", 0.95, 0.05, 0.6, 0.8, 0.15, 600, 2000, 420, 260,
              "Old-money mansions under live oaks, private clubs and quiet, well-patrolled streets.",
@@ -327,7 +328,7 @@ DISTRICTS = [
               ("lp_plaza", "Lantana Fan Plaza", "Park", 90, 60, 0, 1500, []),
               ("lp_arena", "Lantana Community Arena", "Gym", 60, 50, 14, 800, [])],
              ["police", "fire", "school", "transit", "transit"],
-             ["neighborhood_bar", "neighborhood_bar", "neighborhood_bar", "nightclub", "diner", "taqueria",
+             ["sporting_goods", "neighborhood_bar", "neighborhood_bar", "neighborhood_bar", "nightclub", "diner", "taqueria",
               "gas_station", "corner_store", "seafood_restaurant", "clothing_boutique"]),
     district("westmarch_commons", "Westmarch Commons", "Suburban", 0.65, 0.16, 1.2, 0.62, 0.2, -3200, 200, 460, 260,
              "The shopping district: the Westmarch Commons mall, an outlet strip and auto row.",
@@ -337,7 +338,7 @@ DISTRICTS = [
               ("wm_outlets", "Westmarch Outlet Strip", "Shop", 160, 50, 8, 800, ["outlets"]),
               ("wm_cinema", "Westmarch 16 Cinemas", "Nightlife", 70, 50, 14, 900, ["cinema"])],
              ["police", "fire", "school", "park", "church", "transit"],
-             ["car_dealership", "car_dealership", "car_dealership", "car_dealership", "supermarket", "clothing_boutique",
+             ["sporting_goods", "car_dealership", "car_dealership", "car_dealership", "car_dealership", "supermarket", "clothing_boutique",
               "clothing_boutique", "coffee_shop", "diner", "gym", "hardware_store", "gas_station", "bank_branch",
               "auto_garage", "pharmacy"]),
     district("coquina_key", "Coquina Key", "Coastal", 0.7, 0.18, 1.3, 0.6, 0.9, 4500, -2500, 700, 300,
@@ -377,7 +378,7 @@ DISTRICTS = [
               ("tp_fairgrounds", "Tarrow County Fairgrounds", "Park", 200, 160, 0, 2000, ["fairgrounds"]),
               ("tp_rodeo", "Tarrow Rodeo Arena", "Stadium", 90, 70, 12, 3000, [])],
              ["police", "fire", "school", "church", "church"],
-             ["corner_store", "diner", "gas_station", "gas_station", "auto_garage", "hardware_store",
+             ["sporting_goods", "corner_store", "diner", "gas_station", "gas_station", "auto_garage", "hardware_store",
               "neighborhood_bar"]),
     district("kessler_field", "Kessler Field", "Industrial", 0.4, 0.2, 0.7, 0.6, 0.25, -4200, 2800, 620, 300,
              "The regional airport, air cargo sheds and general-aviation hangars on the metro's northern edge.",

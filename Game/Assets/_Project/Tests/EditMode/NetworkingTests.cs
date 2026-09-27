@@ -600,6 +600,41 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void Combat_OverTheWire_UsesTheServersPositions_AndRespectsPvp()
+        {
+            var a = Join("acc-fight-a", "Rae");
+            var b = Join("acc-fight-b", "Sol");
+            var ca = _server.Players.Single(p => p.AccountId == "acc-fight-a");
+            var cb = _server.Players.Single(p => p.AccountId == "acc-fight-b");
+
+            // An NPC across town is out of reach whatever the client claims.
+            var npc = _world.Population.Ordered.First(n => n.Alive && n.AgeYears(_world.Today) >= 20 && _world.Director.TryGetPosition(_world.Schedules.Resolve(n, _world.Clock.Now), out _));
+            _world.Director.TryGetPosition(_world.Schedules.Resolve(npc, _world.Clock.Now), out var npcAt);
+            ca.Position = new WorldPosition(npcAt.X + 300f, 0f, npcAt.Z);
+            var far = Call(a, "combat.attack", new Dictionary<string, string> { ["weapon"] = "fists", ["target"] = "npc", ["id"] = npc.Id.ToString() });
+            Assert.IsFalse(far.Success);
+            StringAssert.Contains("Too far", far.Error);
+
+            ca.Position = npcAt;
+            var near = Call(a, "combat.attack", new Dictionary<string, string> { ["weapon"] = "fists", ["target"] = "npc", ["id"] = npc.Id.ToString() });
+            Assert.IsTrue(near.Success, near.Error);
+            Assert.IsTrue(near.Data.ContainsKey("hit"));
+            StringAssert.Contains("don't have", Call(a, "combat.attack", new Dictionary<string, string> { ["weapon"] = "compact_pistol", ["target"] = "none" }).Error, "no gun, no shot");
+
+            // Player against player: only where the server allows it, and only within reach.
+            cb.Position = ca.Position;
+            _world.Clock.AdvanceGame(5);
+            _world.Config.Gameplay.PvpEnabled = false;
+            StringAssert.Contains("does not allow", Call(a, "combat.attack", new Dictionary<string, string> { ["weapon"] = "fists", ["target"] = "character", ["id"] = cb.Character.CharacterId.ToString() }).Error);
+            _world.Config.Gameplay.PvpEnabled = true;
+            Assert.IsTrue(Call(a, "combat.attack", new Dictionary<string, string> { ["weapon"] = "fists", ["target"] = "character", ["id"] = cb.Character.CharacterId.ToString() }).Success);
+
+            // Buying needs the shop: from the street, no.
+            var shop = _world.Businesses.Values.First(x => x.TemplateId == "hardware_store");
+            StringAssert.Contains("not there", Call(b, "weapons.buy", new Dictionary<string, string> { ["business"] = shop.Id.ToString(), ["weapon"] = "crowbar" }).Error);
+        }
+
+        [Test]
         public void AdminCommands_RequireWorldAdmin_AndAreAudited()
         {
             _server.Admin = new AdminCommands(_world, new WorldSimulation(_world));

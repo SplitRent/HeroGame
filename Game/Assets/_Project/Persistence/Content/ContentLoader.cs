@@ -38,6 +38,7 @@ namespace HeroGame.Persistence.Content
         public const string RippleTemplates = "ripple_templates.json";
         public const string RadioStations = "radio_stations.json";
         public const string Destructibles = "destructibles.json";
+        public const string Weapons = "weapons.json";
 
         /// <summary>Story Mode content (not needed by player servers).</summary>
         public static Core.Story.StoryDefinition LoadStory(string dataDirectory, string file = Story) => Read<Core.Story.StoryDefinition>(dataDirectory, file);
@@ -279,6 +280,7 @@ namespace HeroGame.Persistence.Content
                 RippleTemplates = Read<List<Core.Social.RippleTemplate>>(dataDirectory, RippleTemplates),
                 RadioStations = Read<List<Core.Audio.RadioStation>>(dataDirectory, RadioStations),
                 Destructibles = Read<List<DestructibleKind>>(dataDirectory, Destructibles),
+                Weapons = Read<List<Core.Combat.WeaponDefinition>>(dataDirectory, Weapons),
             };
             return set;
         }
@@ -504,6 +506,25 @@ namespace HeroGame.Persistence.Content
             }
             foreach (var required in new[] { "street_light", "traffic_signal", "fire_hydrant" })
                 if (!propIds.Contains(required)) r.Error("destructibles", "Missing required kind " + required + ".");
+
+            var weaponIds = new HashSet<string>();
+            foreach (var wpn in c.Weapons)
+            {
+                var path = "weapons." + wpn.Id;
+                if (string.IsNullOrEmpty(wpn.Id) || !weaponIds.Add(wpn.Id)) r.Error(path, "Missing or duplicate id.");
+                if (!string.IsNullOrEmpty(wpn.ItemId) && c.FindItem(wpn.ItemId) == null) r.Error(path, "Unknown item " + wpn.ItemId);
+                if (!string.IsNullOrEmpty(wpn.AmmoItemId) && c.FindItem(wpn.AmmoItemId) == null) r.Error(path, "Unknown ammunition item " + wpn.AmmoItemId);
+                if (wpn.UsesAmmo && (wpn.AmmoPackSize <= 0 || wpn.AmmoPackPriceCents <= 0)) r.Error(path, "Ammunition needs a pack size and price.");
+                if (c.FindCrime(wpn.CrimeId) == null) r.Error(path, "Unknown crime " + wpn.CrimeId);
+                if (wpn.Damage < 0f || wpn.Damage > 1f || wpn.Range <= 0f || wpn.Range > 200f || wpn.CooldownSeconds <= 0f || wpn.Accuracy <= 0f || wpn.Accuracy > 1f)
+                    r.Error(path, "Damage 0..1, range 0..200, cooldown > 0, accuracy 0..1.");
+                if (wpn.Damage == 0f && wpn.StunSeconds <= 0f && wpn.BlindSeconds <= 0f) r.Error(path, "A weapon must do something.");
+                foreach (var t in wpn.SoldBy) if (!templateIds.Contains(t)) r.Error(path, "Unknown shop template " + t);
+                if (wpn.SoldBy.Count > 0 && wpn.PriceCents <= 0) r.Error(path, "Sold weapons need a price.");
+            }
+            if (c.FindWeapon("fists") == null) r.Error("weapons", "Missing required weapon fists.");
+            foreach (var required in new[] { "homicide", "unlawful_discharge", "unlicensed_firearm" })
+                if (c.FindCrime(required) == null) r.Error("crime_types", "Missing required crime " + required + ".");
 
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)

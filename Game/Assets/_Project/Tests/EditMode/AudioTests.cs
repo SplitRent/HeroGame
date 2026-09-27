@@ -43,6 +43,7 @@ namespace HeroGame.Tests
             AssertClean(Synth.PowerCharge("Fire"), "charge");
             AssertClean(Synth.PowerImpact("Electric"), "impact");
             AssertClean(Synth.Babble(42, "Lupe says the rent went up again."), "babble");
+            foreach (Synth.CombatSound k in Enum.GetValues(typeof(Synth.CombatSound))) AssertClean(Synth.Combat(k), k.ToString());
         }
 
         [Test]

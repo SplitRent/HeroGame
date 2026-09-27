@@ -275,6 +275,59 @@ namespace HeroGame.Core.Audio
             return s;
         }
 
+        public enum CombatSound { Punch, Blunt, Blade, Gunshot, Spray, Zap, Whoosh }
+
+        /// <summary>Placeholder combat sounds (one-shots): a thud, a crack, a hiss, a buzz.</summary>
+        public static float[] Combat(CombatSound kind)
+        {
+            var seconds = kind == CombatSound.Gunshot ? 1.2 : kind == CombatSound.Spray ? 0.9 : kind == CombatSound.Zap ? 0.7 : 0.35;
+            var n = (int)(SampleRate * seconds);
+            var s = new float[n];
+            double lp = 0, hp = 0;
+            for (var i = 0; i < n; i++)
+            {
+                var t = i / (double)SampleRate;
+                var noise = Noise(i + (int)kind * 7919);
+                double v;
+                switch (kind)
+                {
+                    case CombatSound.Punch:
+                        lp += (noise - lp) * 0.08;
+                        v = (lp * 1.2 + Math.Sin(Tau * 85 * t) * 0.9) * Math.Exp(-t * 28);
+                        break;
+                    case CombatSound.Blunt:
+                        lp += (noise - lp) * 0.12;
+                        v = (lp + Math.Sin(Tau * 140 * t) * Math.Exp(-t * 12) * 0.8 + Math.Sin(Tau * 1100 * t) * Math.Exp(-t * 60) * 0.3) * Math.Exp(-t * 16);
+                        break;
+                    case CombatSound.Blade:
+                        hp = noise - lp;
+                        lp += (noise - lp) * 0.3;
+                        v = hp * Math.Exp(-t * 22) * 0.8 + Math.Sin(Tau * (2400 - 1800 * t) * t) * Math.Exp(-t * 18) * 0.3;
+                        break;
+                    case CombatSound.Gunshot:
+                        // A sharp crack, then the report rolling off the buildings.
+                        lp += (noise - lp) * (t < 0.01 ? 0.9 : 0.05);
+                        v = t < 0.004 ? noise : lp * (Math.Exp(-t * 9) + 0.25 * Math.Exp(-t * 2.2) * (0.6 + 0.4 * Math.Sin(t * 40)));
+                        break;
+                    case CombatSound.Spray:
+                        hp = noise - lp;
+                        lp += (noise - lp) * 0.5;
+                        v = hp * (t < 0.05 ? t / 0.05 : 1.0) * Math.Exp(-Math.Max(0, t - 0.6) * 12) * 0.7;
+                        break;
+                    case CombatSound.Zap:
+                        v = Math.Sign(Math.Sin(Tau * 55 * t)) * 0.35 * (0.6 + 0.4 * noise) * Math.Exp(-t * 3) + noise * 0.15 * Math.Exp(-t * 6);
+                        break;
+                    default:
+                        lp += (noise - lp) * 0.04;
+                        v = lp * Math.Sin(Math.PI * t / seconds);
+                        break;
+                }
+                s[i] = (float)v;
+            }
+            Normalize(s, kind == CombatSound.Gunshot ? 0.95f : 0.8f);
+            return s;
+        }
+
         /// <summary>Impact burst: noise with an element-dependent colour and a pitched body.</summary>
         public static float[] PowerImpact(string element)
         {

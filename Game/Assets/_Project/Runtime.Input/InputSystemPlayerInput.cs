@@ -32,6 +32,8 @@ namespace HeroGame.Runtime.Input
         private readonly InputAction _nextTool;
         private readonly InputAction _confirm;
         private readonly InputAction _power;
+        private readonly InputAction _attack;
+        private readonly InputAction _nextWeapon;
         private readonly InputAction[] _powerSlots = new InputAction[4];
 
         public bool GameplayEnabled { get; set; } = true;
@@ -90,6 +92,11 @@ namespace HeroGame.Runtime.Input
             _nextTool.AddBinding("<Gamepad>/rightShoulder");
             _confirm = new InputAction("Confirm", InputActionType.Button, "<Keyboard>/enter");
 
+            _attack = new InputAction("Attack", InputActionType.Button, "<Mouse>/leftButton");
+            _attack.AddBinding("<Gamepad>/rightShoulder");
+            _nextWeapon = new InputAction("NextWeapon", InputActionType.Button, "<Keyboard>/x");
+            _nextWeapon.AddBinding("<Gamepad>/dpad/down");
+
             _power = new InputAction("Power", InputActionType.Button, "<Keyboard>/q");
             _power.AddBinding("<Gamepad>/rightTrigger");
             for (var i = 0; i < 4; i++)
@@ -101,7 +108,7 @@ namespace HeroGame.Runtime.Input
             _powerSlots[1].AddBinding("<Gamepad>/dpad/right");
 
             foreach (var a in new[] { _move, _look, _zoom, _sprint, _walk, _jump, _interact, _crouch, _console, _inspector, _pause, _enterExit, _horn, _phone,
-                         _build, _pointer, _primary, _secondary, _rotate, _nextTool, _confirm, _power }) a.Enable();
+                         _build, _pointer, _primary, _secondary, _rotate, _nextTool, _confirm, _power, _attack, _nextWeapon }) a.Enable();
         }
 
         public PlayerInputState Read()
@@ -132,6 +139,8 @@ namespace HeroGame.Runtime.Input
                 ConfirmPressed = _confirm.WasPressedThisFrame(),
                 PowerHeld = _power.IsPressed(),
                 PowerSlotPressed = SlotPressed(),
+                AttackPressed = _attack.WasPressedThisFrame(),
+                NextWeaponPressed = _nextWeapon.WasPressedThisFrame(),
             };
         }
 

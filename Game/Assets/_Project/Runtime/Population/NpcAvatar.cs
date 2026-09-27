@@ -55,6 +55,11 @@ namespace HeroGame.Runtime.Population
             if (_agent != null && _agent.enabled && _agent.isOnNavMesh) _agent.SetDestination(position);
         }
 
+        private float _flinch;
+
+        /// <summary>Placeholder hit reaction (a stagger) until the animation set exists.</summary>
+        public void Flinch() => _flinch = 0.35f;
+
         public void Release()
         {
             NpcId = EntityId.None;
@@ -64,6 +69,12 @@ namespace HeroGame.Runtime.Population
 
         private void Update()
         {
+            if (_flinch > 0f)
+            {
+                _flinch -= Time.deltaTime;
+                var e = transform.eulerAngles;
+                transform.rotation = Quaternion.Euler(Mathf.Sin(Mathf.Clamp01(_flinch / 0.35f) * Mathf.PI) * -18f, e.y, 0f);
+            }
             if (!_hasTarget || (_agent != null && _agent.enabled)) return;
             var to = _target - transform.position;
             to.y = 0f;

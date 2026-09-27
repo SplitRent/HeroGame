@@ -36,6 +36,13 @@ namespace HeroGame.Core.World
         public List<Social.RippleTemplate> RippleTemplates = new List<Social.RippleTemplate>();
         public List<Audio.RadioStation> RadioStations = new List<Audio.RadioStation>();
         public List<DestructibleKind> Destructibles = new List<DestructibleKind>();
+        public List<Combat.WeaponDefinition> Weapons = new List<Combat.WeaponDefinition>();
+
+        public Combat.WeaponDefinition FindWeapon(string id)
+        {
+            foreach (var w in Weapons) if (w.Id == id) return w;
+            return null;
+        }
 
         public ItemDefinition FindItem(string id)
         {

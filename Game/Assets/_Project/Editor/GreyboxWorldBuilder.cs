@@ -36,6 +36,7 @@ namespace HeroGame.Editor
         public const string GeneratedFolder = "Assets/_Project/Generated";
         private static NpcAvatar _npcPrefab;
         private static Transform _policeStation;
+        private static ContentSet _content;
 
         public const string MetroScene = SceneFolder + "/PortArden_Metro_Greybox.unity";
         public const string MetroLayout = "layout_port_arden.json";
@@ -51,6 +52,7 @@ namespace HeroGame.Editor
         {
             var dataDir = Path.Combine(Application.streamingAssetsPath, "Data");
             var content = ContentLoader.Load(dataDir, layoutFile);
+            _content = content;
             Directory.CreateDirectory(SceneFolder);
             Directory.CreateDirectory(GeneratedFolder);
 
@@ -132,6 +134,7 @@ namespace HeroGame.Editor
             fires.FirePrefab = BuildFirePrefab();
             player.AddComponent<PlayerVitals>();
             var powers = player.AddComponent<PowerController>();
+            player.AddComponent<Runtime.Combat.CombatController>();
             powers.ImpactVfx = BuildImpactPrefab();
 
             var traffic = new GameObject("Traffic").AddComponent<TrafficPresenter>();
@@ -384,6 +387,14 @@ namespace HeroGame.Editor
                     col.size = new Vector3(2f, 2f, 1f);
                     var c = counter.AddComponent<BusinessCounter>();
                     c.Place = marker;
+                    if (_content != null && _content.Weapons.Exists(wpn => wpn.SoldBy.Contains(e.Business.TemplateId)))
+                    {
+                        var weapons = new GameObject("Weapons Counter");
+                        weapons.transform.SetParent(go.transform);
+                        weapons.transform.position = front + go.transform.rotation * new Vector3(0f, 1f, 2.5f);
+                        weapons.AddComponent<BoxCollider>().isTrigger = true;
+                        weapons.AddComponent<Runtime.Combat.WeaponCounter>().Place = marker;
+                    }
                 }
             }
             return expanded.Count;

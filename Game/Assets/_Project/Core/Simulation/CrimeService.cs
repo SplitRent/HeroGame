@@ -326,6 +326,21 @@ namespace HeroGame.Core.Simulation
             return result;
         }
 
+        /// <summary>
+        /// A violent act from the combat system: everyone within earshot (<paramref name="radius"/>) may witness it, the
+        /// victim always does, and it is filed like any other crime.
+        /// </summary>
+        public CrimeResult ResolveViolence(ServerCharacter c, string crimeId, WorldPosition where, EntityId victim, float radius, NpcRecord victimNpc, DeterministicRandom rng,
+            bool alwaysReported = false)
+        {
+            var observers = ObserversNear(where, radius, victim, 0.9f);
+            if (victimNpc != null)
+                observers.Add(new Observer { Id = victimNpc.Id, Distance = 1f, Visibility = 1f, Civic = 0.85f, KnowsPerpetrator = victimNpc.MemoryOf(c.CharacterId, false, 0) != null });
+            var concealment = _w.PowerUse.ConcealmentFor(c);
+            return Resolve(c, crimeId, DistrictAt(where), where, victim, observers, concealment, rng, detect: 0.0,
+                alwaysReported: alwaysReported || _w.Characters.ContainsKey(victim));
+        }
+
         public CrimeResult Vandalize(ServerCharacter c, PropertyRecord p, ConcealmentState concealment)
         {
             if (Blocked(c, out var why)) return CrimeResult.Refused(why);

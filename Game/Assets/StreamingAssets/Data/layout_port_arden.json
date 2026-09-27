@@ -7121,9 +7121,41 @@
     },
     {
      "Key": "fairhaven_biz00",
+     "Name": "Fairhaven Outfitters",
+     "Kind": "Shop",
+     "X": -1724.0,
+     "Z": 1008.0,
+     "Width": 44,
+     "Depth": 32,
+     "Height": 8,
+     "RotationY": 0,
+     "Capacity": 60,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 1267,
+      "LotAreaSqm": 2816,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 187000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "sporting_goods",
+      "Name": "Fairhaven Outfitters",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "fairhaven_biz01",
      "Name": "Fairhaven Fresh Market",
      "Kind": "Shop",
-     "X": -1716.0,
+     "X": -1664.0,
      "Z": 1014.5,
      "Width": 60,
      "Depth": 45,
@@ -7152,10 +7184,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz01",
+     "Key": "fairhaven_biz02",
      "Name": "Fairhaven Pharmacy",
      "Kind": "Shop",
-     "X": -1666.0,
+     "X": -1614.0,
      "Z": 1002.0,
      "Width": 24,
      "Depth": 20,
@@ -7184,10 +7216,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz02",
-     "Name": "Fairhaven Hardware",
+     "Key": "fairhaven_biz03",
+     "Name": "Marsh Tool House",
      "Kind": "Shop",
-     "X": -1626.0,
+     "X": -1574.0,
      "Z": 1007.0,
      "Width": 40,
      "Depth": 30,
@@ -7210,16 +7242,16 @@
      },
      "Business": {
       "TemplateId": "hardware_store",
-      "Name": "Fairhaven Hardware",
+      "Name": "Marsh Tool House",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz03",
-     "Name": "Fairhaven Grill",
+     "Key": "fairhaven_biz04",
+     "Name": "Twin Spoonbill Diner",
      "Kind": "Restaurant",
-     "X": -1587.0,
+     "X": -1535.0,
      "Z": 1001.0,
      "Width": 22,
      "Depth": 18,
@@ -7242,17 +7274,17 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Fairhaven Grill",
+      "Name": "Twin Spoonbill Diner",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz04",
-     "Name": "Twin Spoonbill Coffee",
+     "Key": "fairhaven_biz05",
+     "Name": "Robichaux Roasters",
      "Kind": "Restaurant",
-     "X": -1561.0,
-     "Z": 999.0,
+     "X": -1739.0,
+     "Z": 1052.0,
      "Width": 14,
      "Depth": 14,
      "Height": 5,
@@ -7274,17 +7306,17 @@
      },
      "Business": {
       "TemplateId": "coffee_shop",
-      "Name": "Twin Spoonbill Coffee",
+      "Name": "Robichaux Roasters",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz05",
-     "Name": "Tacos Sunrise Mullet",
+     "Key": "fairhaven_biz06",
+     "Name": "Taqueria Sonnier",
      "Kind": "Restaurant",
-     "X": -1537.0,
-     "Z": 1000.0,
+     "X": -1715.0,
+     "Z": 1053.0,
      "Width": 18,
      "Depth": 16,
      "Height": 5,
@@ -7306,16 +7338,16 @@
      },
      "Business": {
       "TemplateId": "taqueria",
-      "Name": "Tacos Sunrise Mullet",
+      "Name": "Taqueria Sonnier",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz06",
-     "Name": "Tidal Mockingbird Fitness",
+     "Key": "fairhaven_biz07",
+     "Name": "Cypress Skillet Fitness",
      "Kind": "Gym",
-     "X": -1731.0,
+     "X": -1683.0,
      "Z": 1057.0,
      "Width": 30,
      "Depth": 24,
@@ -7338,16 +7370,16 @@
      },
      "Business": {
       "TemplateId": "gym",
-      "Name": "Tidal Mockingbird Fitness",
+      "Name": "Cypress Skillet Fitness",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz07",
-     "Name": "Richard's Barbershop",
+     "Key": "fairhaven_biz08",
+     "Name": "Chau's Barbershop",
      "Kind": "Shop",
-     "X": -1701.0,
+     "X": -1653.0,
      "Z": 1052.0,
      "Width": 14,
      "Depth": 14,
@@ -7370,16 +7402,16 @@
      },
      "Business": {
       "TemplateId": "barbershop",
-      "Name": "Richard's Barbershop",
+      "Name": "Chau's Barbershop",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz08",
+     "Key": "fairhaven_biz09",
      "Name": "Fairhaven Wash & Fold",
      "Kind": "Shop",
-     "X": -1677.0,
+     "X": -1629.0,
      "Z": 1053.0,
      "Width": 18,
      "Depth": 16,
@@ -7408,42 +7440,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz09",
-     "Name": "Fairhaven Fuel Stop",
-     "Kind": "GasStation",
-     "X": -1642.0,
-     "Z": 1060.0,
-     "Width": 36,
-     "Depth": 30,
-     "Height": 6,
-     "RotationY": 0,
-     "Capacity": 12,
-     "OpenMinute": 0,
-     "CloseMinute": 0,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 972,
-      "LotAreaSqm": 2160,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 154000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "gas_station",
-      "Name": "Fairhaven Fuel Stop",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
      "Key": "fairhaven_biz10",
      "Name": "Babineaux Service Station",
      "Kind": "GasStation",
-     "X": -1598.0,
+     "X": -1594.0,
      "Z": 1060.0,
      "Width": 36,
      "Depth": 30,
@@ -7473,10 +7473,42 @@
     },
     {
      "Key": "fairhaven_biz11",
-     "Name": "Fairhaven Tire & Lube",
+     "Name": "Hebert Service Station",
+     "Kind": "GasStation",
+     "X": -1550.0,
+     "Z": 1060.0,
+     "Width": 36,
+     "Depth": 30,
+     "Height": 6,
+     "RotationY": 0,
+     "Capacity": 12,
+     "OpenMinute": 0,
+     "CloseMinute": 0,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 972,
+      "LotAreaSqm": 2160,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 154000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "gas_station",
+      "Name": "Hebert Service Station",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "fairhaven_biz12",
+     "Name": "Cypress Marlin Garage",
      "Kind": "Garage",
-     "X": -1556.0,
-     "Z": 1057.0,
+     "X": -1730.0,
+     "Z": 1095.0,
      "Width": 32,
      "Depth": 24,
      "Height": 7,
@@ -7498,17 +7530,17 @@
      },
      "Business": {
       "TemplateId": "auto_garage",
-      "Name": "Fairhaven Tire & Lube",
+      "Name": "Cypress Marlin Garage",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz12",
-     "Name": "Carrizales's Tavern",
+     "Key": "fairhaven_biz13",
+     "Name": "The Bayou Mullet",
      "Kind": "Nightlife",
-     "X": -1523.0,
-     "Z": 1055.0,
+     "X": -1697.0,
+     "Z": 1093.0,
      "Width": 18,
      "Depth": 20,
      "Height": 6,
@@ -7530,16 +7562,16 @@
      },
      "Business": {
       "TemplateId": "neighborhood_bar",
-      "Name": "Carrizales's Tavern",
+      "Name": "The Bayou Mullet",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz13",
+     "Key": "fairhaven_biz14",
      "Name": "Gulf Tidewater Bank - Fairhaven",
      "Kind": "Office",
-     "X": -1734.0,
+     "X": -1668.0,
      "Z": 1093.0,
      "Width": 24,
      "Depth": 20,
@@ -7568,10 +7600,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz14",
+     "Key": "fairhaven_biz15",
      "Name": "Tran Lumber & Hardware",
      "Kind": "Shop",
-     "X": -1694.0,
+     "X": -1628.0,
      "Z": 1098.0,
      "Width": 40,
      "Depth": 30,
@@ -7600,10 +7632,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz15",
+     "Key": "fairhaven_biz16",
      "Name": "Driftwood Redfish Gas",
      "Kind": "GasStation",
-     "X": -1648.0,
+     "X": -1582.0,
      "Z": 1098.0,
      "Width": 36,
      "Depth": 30,
@@ -7632,10 +7664,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz16",
+     "Key": "fairhaven_biz17",
      "Name": "Coastal Suds Laundromat",
      "Kind": "Shop",
-     "X": -1613.0,
+     "X": -1547.0,
      "Z": 1091.0,
      "Width": 18,
      "Depth": 16,
@@ -7664,11 +7696,11 @@
      }
     },
     {
-     "Key": "fairhaven_biz17",
+     "Key": "fairhaven_biz18",
      "Name": "Pham Boxing Gym",
      "Kind": "Gym",
-     "X": -1581.0,
-     "Z": 1095.0,
+     "X": -1731.0,
+     "Z": 1133.0,
      "Width": 30,
      "Depth": 24,
      "Height": 7,
@@ -7696,11 +7728,11 @@
      }
     },
     {
-     "Key": "fairhaven_biz18",
+     "Key": "fairhaven_biz19",
      "Name": "Boudreaux Roasters",
      "Kind": "Restaurant",
-     "X": -1551.0,
-     "Z": 1090.0,
+     "X": -1701.0,
+     "Z": 1128.0,
      "Width": 14,
      "Depth": 14,
      "Height": 5,
@@ -7728,11 +7760,11 @@
      }
     },
     {
-     "Key": "fairhaven_biz19",
+     "Key": "fairhaven_biz20",
      "Name": "Tacos Salt Heron",
      "Kind": "Restaurant",
-     "X": -1527.0,
-     "Z": 1091.0,
+     "X": -1677.0,
+     "Z": 1129.0,
      "Width": 18,
      "Depth": 16,
      "Height": 5,
@@ -7760,10 +7792,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz20",
+     "Key": "fairhaven_biz21",
      "Name": "Salt Cross Pharmacy",
      "Kind": "Shop",
-     "X": -1734.0,
+     "X": -1648.0,
      "Z": 1131.0,
      "Width": 24,
      "Depth": 20,
@@ -7792,10 +7824,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz21",
+     "Key": "fairhaven_biz22",
      "Name": "Fairhaven Icehouse",
      "Kind": "Nightlife",
-     "X": -1705.0,
+     "X": -1619.0,
      "Z": 1131.0,
      "Width": 18,
      "Depth": 20,
@@ -7824,10 +7856,10 @@
      }
     },
     {
-     "Key": "fairhaven_biz22",
-     "Name": "Sonnier Auto Repair",
+     "Key": "fairhaven_biz23",
+     "Name": "Fairhaven Tire & Lube",
      "Kind": "Garage",
-     "X": -1672.0,
+     "X": -1586.0,
      "Z": 1133.0,
      "Width": 32,
      "Depth": 24,
@@ -7850,13 +7882,13 @@
      },
      "Business": {
       "TemplateId": "auto_garage",
-      "Name": "Sonnier Auto Repair",
+      "Name": "Fairhaven Tire & Lube",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz23",
+     "Key": "fairhaven_biz24",
      "Name": "Prejean Family Foods",
      "Kind": "Shop",
      "X": -1456.0,
@@ -7888,7 +7920,7 @@
      }
     },
     {
-     "Key": "fairhaven_biz24",
+     "Key": "fairhaven_biz25",
      "Name": "Fairhaven Clippers",
      "Kind": "Shop",
      "X": -1411.0,
@@ -7920,7 +7952,7 @@
      }
     },
     {
-     "Key": "fairhaven_biz25",
+     "Key": "fairhaven_biz26",
      "Name": "Ibarra's Diner",
      "Kind": "Restaurant",
      "X": -1385.0,
@@ -7952,8 +7984,8 @@
      }
     },
     {
-     "Key": "fairhaven_biz26",
-     "Name": "Olivier Lumber & Hardware",
+     "Key": "fairhaven_biz27",
+     "Name": "Fairhaven Hardware",
      "Kind": "Shop",
      "X": -1346.0,
      "Z": 669.0,
@@ -7978,14 +8010,14 @@
      },
      "Business": {
       "TemplateId": "hardware_store",
-      "Name": "Olivier Lumber & Hardware",
+      "Name": "Fairhaven Hardware",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz27",
-     "Name": "Crescent Lantern Gas",
+     "Key": "fairhaven_biz28",
+     "Name": "Cypress Tugboat Gas",
      "Kind": "GasStation",
      "X": -1300.0,
      "Z": 669.0,
@@ -8010,14 +8042,14 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Crescent Lantern Gas",
+      "Name": "Cypress Tugboat Gas",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "fairhaven_biz28",
-     "Name": "Chau Coin Laundry",
+     "Key": "fairhaven_biz29",
+     "Name": "Crescent Suds Laundromat",
      "Kind": "Shop",
      "X": -1265.0,
      "Z": 662.0,
@@ -8042,7 +8074,7 @@
      },
      "Business": {
       "TemplateId": "laundromat",
-      "Name": "Chau Coin Laundry",
+      "Name": "Crescent Suds Laundromat",
       "Owner": "npc",
       "Staff": -1
      }
@@ -8066,7 +8098,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Seagrass Row"
+      "Nutmeg Dr"
      ],
      "Property": {
       "Kind": "House",
@@ -8097,7 +8129,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Poplar Ct"
+      "Laurel Rd"
      ],
      "Property": {
       "Kind": "House",
@@ -8128,7 +8160,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Cottonwood Ln"
+      "Seagrass Row"
      ],
      "Property": {
       "Kind": "House",
@@ -8159,7 +8191,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Thistle Ln"
+      "Poplar Ct"
      ],
      "Property": {
       "Kind": "House",
@@ -8190,7 +8222,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Galvez Cir"
+      "Cottonwood Ln"
      ],
      "Property": {
       "Kind": "House",
@@ -8221,7 +8253,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Pampas Way"
+      "Thistle Ln"
      ],
      "Property": {
       "Kind": "House",
@@ -8252,6 +8284,68 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
+      "Galvez Cir"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "fairhaven_ranch7",
+     "Kind": "Residence",
+     "OriginX": -1218.0,
+     "OriginZ": 661.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Pampas Way"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "fairhaven_ranch8",
+     "Kind": "Residence",
+     "OriginX": -1218.0,
+     "OriginZ": 921.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
+     "StreetNames": [
       "Clearwater Ave"
      ],
      "Property": {
@@ -8267,10 +8361,10 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_garden_apartments7",
+     "KeyPrefix": "fairhaven_garden_apartments9",
      "Kind": "ApartmentBuilding",
-     "OriginX": -1206.0,
-     "OriginZ": 666.0,
+     "OriginX": -1986.0,
+     "OriginZ": 406.0,
      "Rows": 3,
      "Columns": 3,
      "SpacingX": 60,
@@ -8298,10 +8392,10 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_ranch8",
+     "KeyPrefix": "fairhaven_ranch10",
      "Kind": "Residence",
-     "OriginX": -1218.0,
-     "OriginZ": 921.0,
+     "OriginX": -1998.0,
+     "OriginZ": 1181.0,
      "Rows": 5,
      "Columns": 7,
      "SpacingX": 30,
@@ -8329,9 +8423,9 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_ranch9",
+     "KeyPrefix": "fairhaven_ranch11",
      "Kind": "Residence",
-     "OriginX": -1998.0,
+     "OriginX": -1218.0,
      "OriginZ": 401.0,
      "Rows": 5,
      "Columns": 7,
@@ -8360,9 +8454,9 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_garden_apartments10",
+     "KeyPrefix": "fairhaven_garden_apartments12",
      "Kind": "ApartmentBuilding",
-     "OriginX": -1986.0,
+     "OriginX": -1206.0,
      "OriginZ": 1186.0,
      "Rows": 3,
      "Columns": 3,
@@ -8391,68 +8485,6 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_ranch11",
-     "Kind": "Residence",
-     "OriginX": -1218.0,
-     "OriginZ": 401.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Thistle Loop"
-     ],
-     "Property": {
-      "Kind": "House",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "fairhaven_ranch12",
-     "Kind": "Residence",
-     "OriginX": -1218.0,
-     "OriginZ": 1181.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Briar St"
-     ],
-     "Property": {
-      "Kind": "House",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
      "KeyPrefix": "fairhaven_ranch13",
      "Kind": "Residence",
      "OriginX": -2258.0,
@@ -8469,7 +8501,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Kingfisher St"
+      "Thistle Loop"
      ],
      "Property": {
       "Kind": "House",
@@ -8500,7 +8532,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Willow Way"
+      "Briar St"
      ],
      "Property": {
       "Kind": "House",
@@ -8515,32 +8547,32 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_ranch15",
-     "Kind": "Residence",
-     "OriginX": -1738.0,
-     "OriginZ": 141.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
+     "KeyPrefix": "fairhaven_garden_apartments15",
+     "Kind": "ApartmentBuilding",
+     "OriginX": -1726.0,
+     "OriginZ": 146.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 40,
+     "Depth": 24,
+     "MinHeight": 9,
+     "MaxHeight": 12,
+     "MinCapacity": 40,
+     "MaxCapacity": 70,
+     "VacancyRate": 0.05,
      "StreetNames": [
-      "Sabine Ln"
+      "Kingfisher St"
      ],
      "Property": {
-      "Kind": "House",
+      "Kind": "Apartment",
       "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
+      "FloorAreaSqm": 2400,
+      "LotAreaSqm": 3000,
+      "Bedrooms": 0,
+      "Floors": 3,
+      "BaseValueCents": 320000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -8562,7 +8594,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Cedar Dr"
+      "Willow Way"
      ],
      "Property": {
       "Kind": "House",
@@ -8593,7 +8625,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Timberline Loop"
+      "Sabine Ln"
      ],
      "Property": {
       "Kind": "House",
@@ -8608,63 +8640,63 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_garden_apartments18",
-     "Kind": "ApartmentBuilding",
-     "OriginX": -1466.0,
-     "OriginZ": 1446.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 40,
-     "Depth": 24,
-     "MinHeight": 9,
-     "MaxHeight": 12,
-     "MinCapacity": 40,
-     "MaxCapacity": 70,
-     "VacancyRate": 0.05,
+     "KeyPrefix": "fairhaven_ranch18",
+     "Kind": "Residence",
+     "OriginX": -1478.0,
+     "OriginZ": 1441.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
      "StreetNames": [
-      "Bayberry St"
+      "Cedar Dr"
      ],
      "Property": {
-      "Kind": "Apartment",
+      "Kind": "House",
       "Zoning": "Residential",
-      "FloorAreaSqm": 2400,
-      "LotAreaSqm": 3000,
-      "Bedrooms": 0,
-      "Floors": 3,
-      "BaseValueCents": 320000000,
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
     },
     {
-     "KeyPrefix": "fairhaven_garden_apartments19",
-     "Kind": "ApartmentBuilding",
-     "OriginX": -946.0,
-     "OriginZ": 666.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 40,
-     "Depth": 24,
-     "MinHeight": 9,
-     "MaxHeight": 12,
-     "MinCapacity": 40,
-     "MaxCapacity": 70,
-     "VacancyRate": 0.05,
+     "KeyPrefix": "fairhaven_ranch19",
+     "Kind": "Residence",
+     "OriginX": -958.0,
+     "OriginZ": 661.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
      "StreetNames": [
-      "Sycamore Row"
+      "Timberline Loop"
      ],
      "Property": {
-      "Kind": "Apartment",
+      "Kind": "House",
       "Zoning": "Residential",
-      "FloorAreaSqm": 2400,
-      "LotAreaSqm": 3000,
-      "Bedrooms": 0,
-      "Floors": 3,
-      "BaseValueCents": 320000000,
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -8686,7 +8718,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Jasmine Rd"
+      "Bayberry St"
      ],
      "Property": {
       "Kind": "House",
@@ -8717,7 +8749,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Nutmeg Loop"
+      "Sycamore Row"
      ],
      "Property": {
       "Kind": "House",
@@ -8748,7 +8780,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Bayberry Loop"
+      "Jasmine Rd"
      ],
      "Property": {
       "Kind": "House",
@@ -8763,32 +8795,32 @@
      }
     },
     {
-     "KeyPrefix": "fairhaven_ranch23",
-     "Kind": "Residence",
-     "OriginX": -1998.0,
-     "OriginZ": 141.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
+     "KeyPrefix": "fairhaven_garden_apartments23",
+     "Kind": "ApartmentBuilding",
+     "OriginX": -1986.0,
+     "OriginZ": 146.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 40,
+     "Depth": 24,
+     "MinHeight": 9,
+     "MaxHeight": 12,
+     "MinCapacity": 40,
+     "MaxCapacity": 70,
+     "VacancyRate": 0.05,
      "StreetNames": [
-      "Juniper Ave"
+      "Nutmeg Loop"
      ],
      "Property": {
-      "Kind": "House",
+      "Kind": "Apartment",
       "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
+      "FloorAreaSqm": 2400,
+      "LotAreaSqm": 3000,
+      "Bedrooms": 0,
+      "Floors": 3,
+      "BaseValueCents": 320000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -8810,7 +8842,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Lotus Trace"
+      "Bayberry Loop"
      ],
      "Property": {
       "Kind": "House",
@@ -8841,7 +8873,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Esplanade Ct"
+      "Juniper Ave"
      ],
      "Property": {
       "Kind": "House",
@@ -8872,7 +8904,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Cedar Ct"
+      "Lotus Trace"
      ],
      "Property": {
       "Kind": "House",
@@ -8903,7 +8935,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Rosemary Dr"
+      "Esplanade Ct"
      ],
      "Property": {
       "Kind": "House",
@@ -8934,7 +8966,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Quail Ave"
+      "Cedar Ct"
      ],
      "Property": {
       "Kind": "House",
@@ -8965,7 +8997,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Live Oak Way"
+      "Rosemary Dr"
      ],
      "Property": {
       "Kind": "House",
@@ -9166,9 +9198,41 @@
     },
     {
      "Key": "pinecrest_hollow_biz00",
+     "Name": "Golden Oyster Outdoor Supply",
+     "Kind": "Shop",
+     "X": -3064.0,
+     "Z": 1908.0,
+     "Width": 44,
+     "Depth": 32,
+     "Height": 8,
+     "RotationY": 0,
+     "Capacity": 60,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 1267,
+      "LotAreaSqm": 2816,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 204000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "sporting_goods",
+      "Name": "Golden Oyster Outdoor Supply",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "pinecrest_hollow_biz01",
      "Name": "Pinecrest Hollow Fresh Market",
      "Kind": "Shop",
-     "X": -3056.0,
+     "X": -3004.0,
      "Z": 1914.5,
      "Width": 60,
      "Depth": 45,
@@ -9197,10 +9261,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz01",
-     "Name": "Sonnier Family Foods",
+     "Key": "pinecrest_hollow_biz02",
+     "Name": "Crescent Basket Supermarket",
      "Kind": "Shop",
-     "X": -2988.0,
+     "X": -2936.0,
      "Z": 1914.5,
      "Width": 60,
      "Depth": 45,
@@ -9223,16 +9287,16 @@
      },
      "Business": {
       "TemplateId": "supermarket",
-      "Name": "Sonnier Family Foods",
+      "Name": "Crescent Basket Supermarket",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "pinecrest_hollow_biz02",
-     "Name": "Pinecrest Hollow Hardware",
+     "Key": "pinecrest_hollow_biz03",
+     "Name": "Rusty Tool House",
      "Kind": "Shop",
-     "X": -2930.0,
+     "X": -2878.0,
      "Z": 1907.0,
      "Width": 40,
      "Depth": 30,
@@ -9255,16 +9319,16 @@
      },
      "Business": {
       "TemplateId": "hardware_store",
-      "Name": "Pinecrest Hollow Hardware",
+      "Name": "Rusty Tool House",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "pinecrest_hollow_biz03",
-     "Name": "Pinecrest Hollow Pharmacy",
+     "Key": "pinecrest_hollow_biz04",
+     "Name": "Golden Cross Pharmacy",
      "Kind": "Shop",
-     "X": -2890.0,
+     "X": -2838.0,
      "Z": 1902.0,
      "Width": 24,
      "Depth": 20,
@@ -9287,17 +9351,17 @@
      },
      "Business": {
       "TemplateId": "pharmacy",
-      "Name": "Pinecrest Hollow Pharmacy",
+      "Name": "Golden Cross Pharmacy",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "pinecrest_hollow_biz04",
+     "Key": "pinecrest_hollow_biz05",
      "Name": "Pinecrest Hollow Coffee House",
      "Kind": "Restaurant",
-     "X": -2863.0,
-     "Z": 1899.0,
+     "X": -3079.0,
+     "Z": 1952.0,
      "Width": 14,
      "Depth": 14,
      "Height": 5,
@@ -9325,11 +9389,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz05",
+     "Key": "pinecrest_hollow_biz06",
      "Name": "Brass Anchor Diner",
      "Kind": "Restaurant",
-     "X": -2837.0,
-     "Z": 1901.0,
+     "X": -3053.0,
+     "Z": 1954.0,
      "Width": 22,
      "Depth": 18,
      "Height": 5,
@@ -9357,10 +9421,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz06",
+     "Key": "pinecrest_hollow_biz07",
      "Name": "Robichaux Boxing Gym",
      "Kind": "Gym",
-     "X": -3071.0,
+     "X": -3019.0,
      "Z": 1957.0,
      "Width": 30,
      "Depth": 24,
@@ -9389,10 +9453,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz07",
+     "Key": "pinecrest_hollow_biz08",
      "Name": "Mouton Boxing Gym",
      "Kind": "Gym",
-     "X": -3033.0,
+     "X": -2981.0,
      "Z": 1957.0,
      "Width": 30,
      "Depth": 24,
@@ -9421,10 +9485,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz08",
+     "Key": "pinecrest_hollow_biz09",
      "Name": "Twin Mullet Gas",
      "Kind": "GasStation",
-     "X": -2992.0,
+     "X": -2940.0,
      "Z": 1960.0,
      "Width": 36,
      "Depth": 30,
@@ -9453,10 +9517,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz09",
+     "Key": "pinecrest_hollow_biz10",
      "Name": "Boudreaux Service Station",
      "Kind": "GasStation",
-     "X": -2948.0,
+     "X": -2896.0,
      "Z": 1960.0,
      "Width": 36,
      "Depth": 30,
@@ -9485,10 +9549,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz10",
+     "Key": "pinecrest_hollow_biz11",
      "Name": "Pinecrest Hollow Tire & Lube",
      "Kind": "Garage",
-     "X": -2906.0,
+     "X": -2854.0,
      "Z": 1957.0,
      "Width": 32,
      "Depth": 24,
@@ -9517,11 +9581,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz11",
+     "Key": "pinecrest_hollow_biz12",
      "Name": "Crescent Auto Plaza",
      "Kind": "Shop",
-     "X": -2852.0,
-     "Z": 1965.0,
+     "X": -3056.0,
+     "Z": 2003.0,
      "Width": 60,
      "Depth": 40,
      "Height": 7,
@@ -9549,11 +9613,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz12",
+     "Key": "pinecrest_hollow_biz13",
      "Name": "Pelican Credit Union - Pinecrest Hollow",
      "Kind": "Office",
-     "X": -3074.0,
-     "Z": 2003.0,
+     "X": -3006.0,
+     "Z": 1993.0,
      "Width": 24,
      "Depth": 20,
      "Height": 7,
@@ -9581,11 +9645,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz13",
+     "Key": "pinecrest_hollow_biz14",
      "Name": "Tacos Bayou Anchor",
      "Kind": "Restaurant",
-     "X": -3045.0,
-     "Z": 2001.0,
+     "X": -2977.0,
+     "Z": 1991.0,
      "Width": 18,
      "Depth": 16,
      "Height": 5,
@@ -9613,11 +9677,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz14",
+     "Key": "pinecrest_hollow_biz15",
      "Name": "Soileau Service Station",
      "Kind": "GasStation",
-     "X": -3010.0,
-     "Z": 2008.0,
+     "X": -2942.0,
+     "Z": 1998.0,
      "Width": 36,
      "Depth": 30,
      "Height": 6,
@@ -9645,11 +9709,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz15",
+     "Key": "pinecrest_hollow_biz16",
      "Name": "Pitre Coin Laundry",
      "Kind": "Shop",
-     "X": -2975.0,
-     "Z": 2001.0,
+     "X": -2907.0,
+     "Z": 1991.0,
      "Width": 18,
      "Depth": 16,
      "Height": 5,
@@ -9677,11 +9741,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz16",
+     "Key": "pinecrest_hollow_biz17",
      "Name": "Boudreaux Boxing Gym",
      "Kind": "Gym",
-     "X": -2943.0,
-     "Z": 2005.0,
+     "X": -2875.0,
+     "Z": 1995.0,
      "Width": 30,
      "Depth": 24,
      "Height": 7,
@@ -9709,11 +9773,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz17",
+     "Key": "pinecrest_hollow_biz18",
      "Name": "Venable Roasters",
      "Kind": "Restaurant",
-     "X": -2913.0,
-     "Z": 2000.0,
+     "X": -2845.0,
+     "Z": 1990.0,
      "Width": 14,
      "Depth": 14,
      "Height": 5,
@@ -9741,11 +9805,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz18",
+     "Key": "pinecrest_hollow_biz19",
      "Name": "Taqueria Landry",
      "Kind": "Restaurant",
-     "X": -2889.0,
-     "Z": 2001.0,
+     "X": -3077.0,
+     "Z": 2039.0,
      "Width": 18,
      "Depth": 16,
      "Height": 5,
@@ -9773,11 +9837,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz19",
+     "Key": "pinecrest_hollow_biz20",
      "Name": "Blue Cross Pharmacy",
      "Kind": "Shop",
-     "X": -2860.0,
-     "Z": 2003.0,
+     "X": -3048.0,
+     "Z": 2041.0,
      "Width": 24,
      "Depth": 20,
      "Height": 5,
@@ -9805,11 +9869,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz20",
+     "Key": "pinecrest_hollow_biz21",
      "Name": "The Copper Pecan",
      "Kind": "Nightlife",
-     "X": -2831.0,
-     "Z": 2003.0,
+     "X": -3019.0,
+     "Z": 2041.0,
      "Width": 18,
      "Depth": 20,
      "Height": 6,
@@ -9837,10 +9901,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz21",
+     "Key": "pinecrest_hollow_biz22",
      "Name": "Chau Auto Repair",
      "Kind": "Garage",
-     "X": -3070.0,
+     "X": -2986.0,
      "Z": 2043.0,
      "Width": 32,
      "Depth": 24,
@@ -9869,10 +9933,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz22",
+     "Key": "pinecrest_hollow_biz23",
      "Name": "Trahan Family Foods",
      "Kind": "Shop",
-     "X": -3016.0,
+     "X": -2932.0,
      "Z": 2053.5,
      "Width": 60,
      "Depth": 45,
@@ -9901,10 +9965,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz23",
+     "Key": "pinecrest_hollow_biz24",
      "Name": "Esposito's Barbershop",
      "Kind": "Shop",
-     "X": -2971.0,
+     "X": -2887.0,
      "Z": 2038.0,
      "Width": 14,
      "Depth": 14,
@@ -9933,10 +9997,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz24",
+     "Key": "pinecrest_hollow_biz25",
      "Name": "Chau's Diner",
      "Kind": "Restaurant",
-     "X": -2945.0,
+     "X": -2861.0,
      "Z": 2040.0,
      "Width": 22,
      "Depth": 18,
@@ -9965,11 +10029,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz25",
+     "Key": "pinecrest_hollow_biz26",
      "Name": "Palmetto Tool House",
      "Kind": "Shop",
-     "X": -2906.0,
-     "Z": 2046.0,
+     "X": -2766.0,
+     "Z": 1529.0,
      "Width": 40,
      "Depth": 30,
      "Height": 7,
@@ -9997,11 +10061,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz26",
+     "Key": "pinecrest_hollow_biz27",
      "Name": "Pinecrest Hollow Fuel Stop",
      "Kind": "GasStation",
-     "X": -2860.0,
-     "Z": 2046.0,
+     "X": -2720.0,
+     "Z": 1529.0,
      "Width": 36,
      "Depth": 30,
      "Height": 6,
@@ -10029,11 +10093,11 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz27",
+     "Key": "pinecrest_hollow_biz28",
      "Name": "Pinecrest Hollow Wash & Fold",
      "Kind": "Shop",
-     "X": -2825.0,
-     "Z": 2039.0,
+     "X": -2685.0,
+     "Z": 1522.0,
      "Width": 18,
      "Depth": 16,
      "Height": 5,
@@ -10061,10 +10125,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz28",
+     "Key": "pinecrest_hollow_biz29",
      "Name": "Yancey Boxing Gym",
      "Kind": "Gym",
-     "X": -2771.0,
+     "X": -2653.0,
      "Z": 1526.0,
      "Width": 30,
      "Depth": 24,
@@ -10093,10 +10157,10 @@
      }
     },
     {
-     "Key": "pinecrest_hollow_biz29",
+     "Key": "pinecrest_hollow_biz30",
      "Name": "Gulf Tugboat Coffee",
      "Kind": "Restaurant",
-     "X": -2741.0,
+     "X": -2623.0,
      "Z": 1521.0,
      "Width": 14,
      "Depth": 14,
@@ -13199,7 +13263,7 @@
     },
     {
      "Key": "mercer_heights_biz19",
-     "Name": "Robichaux Roasters",
+     "Name": "Rusty Egret Coffee",
      "Kind": "Restaurant",
      "X": 3259.0,
      "Z": 1447.0,
@@ -13224,14 +13288,14 @@
      },
      "Business": {
       "TemplateId": "coffee_shop",
-      "Name": "Robichaux Roasters",
+      "Name": "Rusty Egret Coffee",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "mercer_heights_biz20",
-     "Name": "Taqueria Mouton",
+     "Name": "Taqueria Venable",
      "Kind": "Restaurant",
      "X": 3283.0,
      "Z": 1448.0,
@@ -13256,7 +13320,7 @@
      },
      "Business": {
       "TemplateId": "taqueria",
-      "Name": "Taqueria Mouton",
+      "Name": "Taqueria Venable",
       "Owner": "npc",
       "Staff": -1
      }
@@ -13295,7 +13359,7 @@
     },
     {
      "Key": "mercer_heights_biz22",
-     "Name": "The Sunrise Mullet",
+     "Name": "Whitlock's Tavern",
      "Kind": "Nightlife",
      "X": 3341.0,
      "Z": 1450.0,
@@ -13320,7 +13384,7 @@
      },
      "Business": {
       "TemplateId": "neighborhood_bar",
-      "Name": "The Sunrise Mullet",
+      "Name": "Whitlock's Tavern",
       "Owner": "npc",
       "Staff": -1
      }
@@ -13344,7 +13408,7 @@
      "MaxCapacity": 12,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Iberia Ln"
+      "Carrollton Pl"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -13359,41 +13423,10 @@
      }
     },
     {
-     "KeyPrefix": "mercer_heights_student_housing1",
-     "Kind": "ApartmentBuilding",
-     "OriginX": 2736.0,
-     "OriginZ": 1377.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 44,
-     "Depth": 26,
-     "MinHeight": 12,
-     "MaxHeight": 18,
-     "MinCapacity": 60,
-     "MaxCapacity": 110,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Carrollton Pl"
-     ],
-     "Property": {
-      "Kind": "Apartment",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 3600,
-      "LotAreaSqm": 2400,
-      "Bedrooms": 0,
-      "Floors": 4,
-      "BaseValueCents": 640000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "mercer_heights_fourplex2",
+     "KeyPrefix": "mercer_heights_fourplex1",
      "Kind": "ApartmentBuilding",
      "OriginX": 2723.0,
-     "OriginZ": 1624.0,
+     "OriginZ": 1374.0,
      "Rows": 5,
      "Columns": 6,
      "SpacingX": 36,
@@ -13421,10 +13454,10 @@
      }
     },
     {
-     "KeyPrefix": "mercer_heights_student_housing3",
+     "KeyPrefix": "mercer_heights_student_housing2",
      "Kind": "ApartmentBuilding",
-     "OriginX": 2986.0,
-     "OriginZ": 1127.0,
+     "OriginX": 2736.0,
+     "OriginZ": 1627.0,
      "Rows": 3,
      "Columns": 3,
      "SpacingX": 60,
@@ -13452,32 +13485,63 @@
      }
     },
     {
-     "KeyPrefix": "mercer_heights_ranch4",
-     "Kind": "Residence",
-     "OriginX": 2972.0,
-     "OriginZ": 1871.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
+     "KeyPrefix": "mercer_heights_student_housing3",
+     "Kind": "ApartmentBuilding",
+     "OriginX": 2986.0,
+     "OriginZ": 1127.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 44,
+     "Depth": 26,
+     "MinHeight": 12,
+     "MaxHeight": 18,
+     "MinCapacity": 60,
+     "MaxCapacity": 110,
      "VacancyRate": 0.04,
      "StreetNames": [
       "Harrow Pl"
      ],
      "Property": {
-      "Kind": "House",
+      "Kind": "Apartment",
       "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
+      "FloorAreaSqm": 3600,
+      "LotAreaSqm": 2400,
+      "Bedrooms": 0,
+      "Floors": 4,
+      "BaseValueCents": 640000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "mercer_heights_student_housing4",
+     "Kind": "ApartmentBuilding",
+     "OriginX": 2986.0,
+     "OriginZ": 1877.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 44,
+     "Depth": 26,
+     "MinHeight": 12,
+     "MaxHeight": 18,
+     "MinCapacity": 60,
+     "MaxCapacity": 110,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Sparrow Way"
+     ],
+     "Property": {
+      "Kind": "Apartment",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 3600,
+      "LotAreaSqm": 2400,
+      "Bedrooms": 0,
+      "Floors": 4,
+      "BaseValueCents": 640000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -13499,7 +13563,7 @@
      "MaxCapacity": 110,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Sparrow Way"
+      "Tallow Ct"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -13530,7 +13594,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Tallow Ct"
+      "Cottonwood Rd"
      ],
      "Property": {
       "Kind": "House",
@@ -13545,56 +13609,87 @@
      }
     },
     {
-     "KeyPrefix": "mercer_heights_student_housing7",
-     "Kind": "ApartmentBuilding",
-     "OriginX": 3486.0,
-     "OriginZ": 1377.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 44,
-     "Depth": 26,
-     "MinHeight": 12,
-     "MaxHeight": 18,
-     "MinCapacity": 60,
-     "MaxCapacity": 110,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Cottonwood Rd"
-     ],
-     "Property": {
-      "Kind": "Apartment",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 3600,
-      "LotAreaSqm": 2400,
-      "Bedrooms": 0,
-      "Floors": 4,
-      "BaseValueCents": 640000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "mercer_heights_student_housing8",
-     "Kind": "ApartmentBuilding",
-     "OriginX": 3486.0,
-     "OriginZ": 1627.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 44,
-     "Depth": 26,
-     "MinHeight": 12,
-     "MaxHeight": 18,
-     "MinCapacity": 60,
-     "MaxCapacity": 110,
+     "KeyPrefix": "mercer_heights_ranch7",
+     "Kind": "Residence",
+     "OriginX": 3472.0,
+     "OriginZ": 1371.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
       "Fairmont Trace"
      ],
      "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "mercer_heights_ranch8",
+     "Kind": "Residence",
+     "OriginX": 3472.0,
+     "OriginZ": 1621.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Ambrose Dr"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "mercer_heights_student_housing9",
+     "Kind": "ApartmentBuilding",
+     "OriginX": 2736.0,
+     "OriginZ": 1127.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 44,
+     "Depth": 26,
+     "MinHeight": 12,
+     "MaxHeight": 18,
+     "MinCapacity": 60,
+     "MaxCapacity": 110,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Zinnia Trace"
+     ],
+     "Property": {
       "Kind": "Apartment",
       "Zoning": "Residential",
       "FloorAreaSqm": 3600,
@@ -13602,37 +13697,6 @@
       "Bedrooms": 0,
       "Floors": 4,
       "BaseValueCents": 640000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "mercer_heights_fourplex9",
-     "Kind": "ApartmentBuilding",
-     "OriginX": 2723.0,
-     "OriginZ": 1124.0,
-     "Rows": 5,
-     "Columns": 6,
-     "SpacingX": 36,
-     "SpacingZ": 40,
-     "Width": 18,
-     "Depth": 20,
-     "MinHeight": 7,
-     "MaxHeight": 9,
-     "MinCapacity": 8,
-     "MaxCapacity": 12,
-     "VacancyRate": 0.06,
-     "StreetNames": [
-      "Ambrose Dr"
-     ],
-     "Property": {
-      "Kind": "Apartment",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 420,
-      "LotAreaSqm": 700,
-      "Bedrooms": 0,
-      "Floors": 2,
-      "BaseValueCents": 52000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -13654,7 +13718,7 @@
      "MaxCapacity": 12,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Zinnia Trace"
+      "Vine Trace"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -13669,32 +13733,32 @@
      }
     },
     {
-     "KeyPrefix": "mercer_heights_ranch11",
-     "Kind": "Residence",
-     "OriginX": 3472.0,
-     "OriginZ": 1121.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
+     "KeyPrefix": "mercer_heights_student_housing11",
+     "Kind": "ApartmentBuilding",
+     "OriginX": 3486.0,
+     "OriginZ": 1127.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 44,
+     "Depth": 26,
+     "MinHeight": 12,
+     "MaxHeight": 18,
+     "MinCapacity": 60,
+     "MaxCapacity": 110,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Vine Trace"
+      "Spruce Trace"
      ],
      "Property": {
-      "Kind": "House",
+      "Kind": "Apartment",
       "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
+      "FloorAreaSqm": 3600,
+      "LotAreaSqm": 2400,
+      "Bedrooms": 0,
+      "Floors": 4,
+      "BaseValueCents": 640000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -13716,7 +13780,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Spruce Trace"
+      "Ambrose Ln"
      ],
      "Property": {
       "Kind": "House",
@@ -13747,7 +13811,7 @@
      "MaxCapacity": 12,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Ambrose Ln"
+      "Balsam Loop"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -13762,10 +13826,41 @@
      }
     },
     {
-     "KeyPrefix": "mercer_heights_ranch14",
+     "KeyPrefix": "mercer_heights_fourplex14",
+     "Kind": "ApartmentBuilding",
+     "OriginX": 2473.0,
+     "OriginZ": 1624.0,
+     "Rows": 5,
+     "Columns": 6,
+     "SpacingX": 36,
+     "SpacingZ": 40,
+     "Width": 18,
+     "Depth": 20,
+     "MinHeight": 7,
+     "MaxHeight": 9,
+     "MinCapacity": 8,
+     "MaxCapacity": 12,
+     "VacancyRate": 0.06,
+     "StreetNames": [
+      "Brazos Pl"
+     ],
+     "Property": {
+      "Kind": "Apartment",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 420,
+      "LotAreaSqm": 700,
+      "Bedrooms": 0,
+      "Floors": 2,
+      "BaseValueCents": 52000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "mercer_heights_ranch15",
      "Kind": "Residence",
-     "OriginX": 2472.0,
-     "OriginZ": 1621.0,
+     "OriginX": 2972.0,
+     "OriginZ": 871.0,
      "Rows": 5,
      "Columns": 7,
      "SpacingX": 30,
@@ -13778,7 +13873,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Balsam Loop"
+      "Wisteria Trace"
      ],
      "Property": {
       "Kind": "House",
@@ -13788,37 +13883,6 @@
       "Bedrooms": 3,
       "Floors": 1,
       "BaseValueCents": 24000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "mercer_heights_student_housing15",
-     "Kind": "ApartmentBuilding",
-     "OriginX": 2986.0,
-     "OriginZ": 877.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 44,
-     "Depth": 26,
-     "MinHeight": 12,
-     "MaxHeight": 18,
-     "MinCapacity": 60,
-     "MaxCapacity": 110,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Brazos Pl"
-     ],
-     "Property": {
-      "Kind": "Apartment",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 3600,
-      "LotAreaSqm": 2400,
-      "Bedrooms": 0,
-      "Floors": 4,
-      "BaseValueCents": 640000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -13840,7 +13904,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Wisteria Trace"
+      "Sequoia Trace"
      ],
      "Property": {
       "Kind": "House",
@@ -13871,7 +13935,7 @@
      "MaxCapacity": 110,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Sequoia Trace"
+      "Brazos Rd"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -14044,32 +14108,32 @@
     },
     {
      "Key": "lantana_park_biz00",
-     "Name": "The Driftwood Heron",
-     "Kind": "Nightlife",
-     "X": 3323.0,
-     "Z": -100.0,
-     "Width": 18,
-     "Depth": 20,
-     "Height": 6,
+     "Name": "Lantana Park Outfitters",
+     "Kind": "Shop",
+     "X": 3336.0,
+     "Z": -94.0,
+     "Width": 44,
+     "Depth": 32,
+     "Height": 8,
      "RotationY": 0,
      "Capacity": 60,
-     "OpenMinute": 1080,
-     "CloseMinute": 180,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
      "Tags": [],
      "Property": {
       "Kind": "Commercial",
       "Zoning": "Commercial",
-      "FloorAreaSqm": 324,
-      "LotAreaSqm": 720,
+      "FloorAreaSqm": 1267,
+      "LotAreaSqm": 2816,
       "Bedrooms": 0,
       "Floors": 1,
-      "BaseValueCents": 54600000,
+      "BaseValueCents": 178500000,
       "Variation": 0.12,
       "Owner": "npc"
      },
      "Business": {
-      "TemplateId": "neighborhood_bar",
-      "Name": "The Driftwood Heron",
+      "TemplateId": "sporting_goods",
+      "Name": "Lantana Park Outfitters",
       "Owner": "npc",
       "Staff": -1
      }
@@ -14078,7 +14142,7 @@
      "Key": "lantana_park_biz01",
      "Name": "The Levee Tugboat",
      "Kind": "Nightlife",
-     "X": 3349.0,
+     "X": 3375.0,
      "Z": -100.0,
      "Width": 18,
      "Depth": 20,
@@ -14110,7 +14174,7 @@
      "Key": "lantana_park_biz02",
      "Name": "Lantana Park Icehouse",
      "Kind": "Nightlife",
-     "X": 3375.0,
+     "X": 3401.0,
      "Z": -100.0,
      "Width": 18,
      "Depth": 20,
@@ -14140,9 +14204,41 @@
     },
     {
      "Key": "lantana_park_biz03",
+     "Name": "The Lucky Pelican",
+     "Kind": "Nightlife",
+     "X": 3427.0,
+     "Z": -100.0,
+     "Width": 18,
+     "Depth": 20,
+     "Height": 6,
+     "RotationY": 0,
+     "Capacity": 60,
+     "OpenMinute": 1080,
+     "CloseMinute": 180,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 324,
+      "LotAreaSqm": 720,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 54600000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "neighborhood_bar",
+      "Name": "The Lucky Pelican",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz04",
      "Name": "Lantana Park After Dark",
      "Kind": "Nightlife",
-     "X": 3409.0,
+     "X": 3461.0,
      "Z": -95.0,
      "Width": 34,
      "Depth": 30,
@@ -14171,10 +14267,10 @@
      }
     },
     {
-     "Key": "lantana_park_biz04",
-     "Name": "Lucky Pelican Diner",
+     "Key": "lantana_park_biz05",
+     "Name": "Lantana Park Grill",
      "Kind": "Restaurant",
-     "X": 3445.0,
+     "X": 3497.0,
      "Z": -101.0,
      "Width": 22,
      "Depth": 18,
@@ -14197,16 +14293,16 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Lucky Pelican Diner",
+      "Name": "Lantana Park Grill",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "lantana_park_biz05",
+     "Key": "lantana_park_biz06",
      "Name": "Lantana Park Taqueria",
      "Kind": "Restaurant",
-     "X": 3473.0,
+     "X": 3525.0,
      "Z": -102.0,
      "Width": 18,
      "Depth": 16,
@@ -14235,267 +14331,11 @@
      }
     },
     {
-     "Key": "lantana_park_biz06",
-     "Name": "Castillo Service Station",
-     "Kind": "GasStation",
-     "X": 3508.0,
-     "Z": -95.0,
-     "Width": 36,
-     "Depth": 30,
-     "Height": 6,
-     "RotationY": 0,
-     "Capacity": 12,
-     "OpenMinute": 0,
-     "CloseMinute": 0,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 972,
-      "LotAreaSqm": 2160,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 147000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "gas_station",
-      "Name": "Castillo Service Station",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
      "Key": "lantana_park_biz07",
-     "Name": "Lantana Park Food Mart",
-     "Kind": "Shop",
-     "X": 3323.0,
-     "Z": -64.0,
-     "Width": 18,
-     "Depth": 16,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 10,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 44100000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "corner_store",
-      "Name": "Lantana Park Food Mart",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "lantana_park_biz08",
-     "Name": "Anchor Anchor Seafood",
-     "Kind": "Restaurant",
-     "X": 3354.0,
-     "Z": -61.0,
-     "Width": 28,
-     "Depth": 22,
-     "Height": 6,
-     "RotationY": 0,
-     "Capacity": 90,
-     "OpenMinute": 420,
-     "CloseMinute": 1380,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 554,
-      "LotAreaSqm": 1232,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 94500000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "seafood_restaurant",
-      "Name": "Anchor Anchor Seafood",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "lantana_park_biz09",
-     "Name": "Levee Thread Boutique",
-     "Kind": "Shop",
-     "X": 3384.0,
-     "Z": -63.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 54600000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "Levee Thread Boutique",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "lantana_park_biz10",
-     "Name": "Richard Family Foods",
-     "Kind": "Shop",
-     "X": 3430.0,
-     "Z": -49.5,
-     "Width": 60,
-     "Depth": 45,
-     "Height": 8,
-     "RotationY": 0,
-     "Capacity": 200,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 2430,
-      "LotAreaSqm": 5400,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 399000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "supermarket",
-      "Name": "Richard Family Foods",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "lantana_park_biz11",
-     "Name": "Driftwood Fade Barbers",
-     "Kind": "Shop",
-     "X": 3475.0,
-     "Z": -65.0,
-     "Width": 14,
-     "Depth": 14,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 8,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 176,
-      "LotAreaSqm": 392,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 27300000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "barbershop",
-      "Name": "Driftwood Fade Barbers",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "lantana_park_biz12",
-     "Name": "Lantana Park Grill",
-     "Kind": "Restaurant",
-     "X": 3501.0,
-     "Z": -63.0,
-     "Width": 22,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 50,
-     "OpenMinute": 420,
-     "CloseMinute": 1380,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 356,
-      "LotAreaSqm": 792,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 50400000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "diner",
-      "Name": "Lantana Park Grill",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "lantana_park_biz13",
-     "Name": "Ibarra Lumber & Hardware",
-     "Kind": "Shop",
-     "X": 3334.0,
-     "Z": 29.0,
-     "Width": 40,
-     "Depth": 30,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 40,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 1080,
-      "LotAreaSqm": 2400,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 168000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "hardware_store",
-      "Name": "Ibarra Lumber & Hardware",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "lantana_park_biz14",
      "Name": "Lantana Park Fuel Stop",
      "Kind": "GasStation",
-     "X": 3380.0,
-     "Z": 29.0,
+     "X": 3332.0,
+     "Z": -55.0,
      "Width": 36,
      "Depth": 30,
      "Height": 6,
@@ -14523,10 +14363,266 @@
      }
     },
     {
-     "Key": "lantana_park_biz15",
-     "Name": "Sunrise Suds Laundromat",
+     "Key": "lantana_park_biz08",
+     "Name": "Copper Rice Mill Market",
      "Kind": "Shop",
-     "X": 3415.0,
+     "X": 3367.0,
+     "Z": -62.0,
+     "Width": 18,
+     "Depth": 16,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 10,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 44100000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "corner_store",
+      "Name": "Copper Rice Mill Market",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz09",
+     "Name": "Anchor Compass Seafood",
+     "Kind": "Restaurant",
+     "X": 3398.0,
+     "Z": -59.0,
+     "Width": 28,
+     "Depth": 22,
+     "Height": 6,
+     "RotationY": 0,
+     "Capacity": 90,
+     "OpenMinute": 420,
+     "CloseMinute": 1380,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 554,
+      "LotAreaSqm": 1232,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 94500000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "seafood_restaurant",
+      "Name": "Anchor Compass Seafood",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz10",
+     "Name": "Whitlock & Daughters Clothiers",
+     "Kind": "Shop",
+     "X": 3428.0,
+     "Z": -61.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 54600000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "Whitlock & Daughters Clothiers",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz11",
+     "Name": "Driftwood Basket Supermarket",
+     "Kind": "Shop",
+     "X": 3474.0,
+     "Z": -47.5,
+     "Width": 60,
+     "Depth": 45,
+     "Height": 8,
+     "RotationY": 0,
+     "Capacity": 200,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 2430,
+      "LotAreaSqm": 5400,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 399000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "supermarket",
+      "Name": "Driftwood Basket Supermarket",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz12",
+     "Name": "Saucier's Barbershop",
+     "Kind": "Shop",
+     "X": 3519.0,
+     "Z": -63.0,
+     "Width": 14,
+     "Depth": 14,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 8,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 176,
+      "LotAreaSqm": 392,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 27300000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "barbershop",
+      "Name": "Saucier's Barbershop",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz13",
+     "Name": "Soileau's Diner",
+     "Kind": "Restaurant",
+     "X": 3325.0,
+     "Z": 23.0,
+     "Width": 22,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 50,
+     "OpenMinute": 420,
+     "CloseMinute": 1380,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 356,
+      "LotAreaSqm": 792,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 50400000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "diner",
+      "Name": "Soileau's Diner",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz14",
+     "Name": "Lejeune Lumber & Hardware",
+     "Kind": "Shop",
+     "X": 3364.0,
+     "Z": 29.0,
+     "Width": 40,
+     "Depth": 30,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 40,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 1080,
+      "LotAreaSqm": 2400,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 168000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "hardware_store",
+      "Name": "Lejeune Lumber & Hardware",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz15",
+     "Name": "Wiltz Service Station",
+     "Kind": "GasStation",
+     "X": 3410.0,
+     "Z": 29.0,
+     "Width": 36,
+     "Depth": 30,
+     "Height": 6,
+     "RotationY": 0,
+     "Capacity": 12,
+     "OpenMinute": 0,
+     "CloseMinute": 0,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 972,
+      "LotAreaSqm": 2160,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 147000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "gas_station",
+      "Name": "Wiltz Service Station",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "lantana_park_biz16",
+     "Name": "Lantana Park Wash & Fold",
+     "Kind": "Shop",
+     "X": 3445.0,
      "Z": 22.0,
      "Width": 18,
      "Depth": 16,
@@ -14549,16 +14645,16 @@
      },
      "Business": {
       "TemplateId": "laundromat",
-      "Name": "Sunrise Suds Laundromat",
+      "Name": "Lantana Park Wash & Fold",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "lantana_park_biz16",
-     "Name": "Lantana Park Strength Club",
+     "Key": "lantana_park_biz17",
+     "Name": "Golden Pelican Fitness",
      "Kind": "Gym",
-     "X": 3447.0,
+     "X": 3477.0,
      "Z": 26.0,
      "Width": 30,
      "Depth": 24,
@@ -14581,16 +14677,16 @@
      },
      "Business": {
       "TemplateId": "gym",
-      "Name": "Lantana Park Strength Club",
+      "Name": "Golden Pelican Fitness",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "lantana_park_biz17",
-     "Name": "Tidal Crab Coffee",
+     "Key": "lantana_park_biz18",
+     "Name": "Luong Roasters",
      "Kind": "Restaurant",
-     "X": 3477.0,
+     "X": 3507.0,
      "Z": 21.0,
      "Width": 14,
      "Depth": 14,
@@ -14613,7 +14709,7 @@
      },
      "Business": {
       "TemplateId": "coffee_shop",
-      "Name": "Tidal Crab Coffee",
+      "Name": "Luong Roasters",
       "Owner": "npc",
       "Staff": -1
      }
@@ -14621,41 +14717,10 @@
    ],
    "Blocks": [
     {
-     "KeyPrefix": "lantana_park_ranch0",
-     "Kind": "Residence",
-     "OriginX": 2802.0,
-     "OriginZ": -239.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Shady Oak Cir"
-     ],
-     "Property": {
-      "Kind": "House",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "lantana_park_garden_apartments1",
+     "KeyPrefix": "lantana_park_garden_apartments0",
      "Kind": "ApartmentBuilding",
      "OriginX": 2814.0,
-     "OriginZ": 26.0,
+     "OriginZ": -234.0,
      "Rows": 3,
      "Columns": 3,
      "SpacingX": 60,
@@ -14668,7 +14733,7 @@
      "MaxCapacity": 70,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Indigo Cir"
+      "Hibiscus Pl"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -14678,6 +14743,37 @@
       "Bedrooms": 0,
       "Floors": 3,
       "BaseValueCents": 320000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "lantana_park_ranch1",
+     "Kind": "Residence",
+     "OriginX": 2802.0,
+     "OriginZ": 21.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Balsam Pl"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -14699,7 +14795,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Teal Row"
+      "Anchorage Ave"
      ],
      "Property": {
       "Kind": "House",
@@ -14714,41 +14810,10 @@
      }
     },
     {
-     "KeyPrefix": "lantana_park_ranch3",
-     "Kind": "Residence",
-     "OriginX": 3062.0,
-     "OriginZ": 281.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Verbena Ln"
-     ],
-     "Property": {
-      "Kind": "House",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "lantana_park_garden_apartments4",
+     "KeyPrefix": "lantana_park_garden_apartments3",
      "Kind": "ApartmentBuilding",
-     "OriginX": 3334.0,
-     "OriginZ": -494.0,
+     "OriginX": 3074.0,
+     "OriginZ": 286.0,
      "Rows": 3,
      "Columns": 3,
      "SpacingX": 60,
@@ -14761,7 +14826,7 @@
      "MaxCapacity": 70,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Delta Dr"
+      "Walnut Way"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -14771,6 +14836,37 @@
       "Bedrooms": 0,
       "Floors": 3,
       "BaseValueCents": 320000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "lantana_park_ranch4",
+     "Kind": "Residence",
+     "OriginX": 3322.0,
+     "OriginZ": -499.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Walnut Dr"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -14792,7 +14888,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Camellia Pl"
+      "Maple Ave"
      ],
      "Property": {
       "Kind": "House",
@@ -14823,7 +14919,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Holt Ct"
+      "Jasmine Ct"
      ],
      "Property": {
       "Kind": "House",
@@ -14854,7 +14950,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Mallard Ct"
+      "Sugarberry Ln"
      ],
      "Property": {
       "Kind": "House",
@@ -14885,7 +14981,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Hibiscus Pl"
+      "Palmetto Grove Loop"
      ],
      "Property": {
       "Kind": "House",
@@ -14916,7 +15012,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Balsam Pl"
+      "Vine Loop"
      ],
      "Property": {
       "Kind": "House",
@@ -14947,7 +15043,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Anchorage Ave"
+      "Hollyhock Pl"
      ],
      "Property": {
       "Kind": "House",
@@ -14962,32 +15058,32 @@
      }
     },
     {
-     "KeyPrefix": "lantana_park_ranch11",
-     "Kind": "Residence",
-     "OriginX": 3582.0,
-     "OriginZ": 281.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
+     "KeyPrefix": "lantana_park_garden_apartments11",
+     "Kind": "ApartmentBuilding",
+     "OriginX": 3594.0,
+     "OriginZ": 286.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 40,
+     "Depth": 24,
+     "MinHeight": 9,
+     "MaxHeight": 12,
+     "MinCapacity": 40,
+     "MaxCapacity": 70,
+     "VacancyRate": 0.05,
      "StreetNames": [
-      "Walnut Way"
+      "Meadow Pl"
      ],
      "Property": {
-      "Kind": "House",
+      "Kind": "Apartment",
       "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
+      "FloorAreaSqm": 2400,
+      "LotAreaSqm": 3000,
+      "Bedrooms": 0,
+      "Floors": 3,
+      "BaseValueCents": 320000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -15009,7 +15105,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Walnut Dr"
+      "Bluebonnet Loop"
      ],
      "Property": {
       "Kind": "House",
@@ -15040,7 +15136,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Maple Ave"
+      "Hazel Pl"
      ],
      "Property": {
       "Kind": "House",
@@ -15071,7 +15167,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Jasmine Ct"
+      "Timberline Pl"
      ],
      "Property": {
       "Kind": "House",
@@ -15086,32 +15182,32 @@
      }
     },
     {
-     "KeyPrefix": "lantana_park_garden_apartments15",
-     "Kind": "ApartmentBuilding",
-     "OriginX": 3074.0,
-     "OriginZ": 546.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 40,
-     "Depth": 24,
-     "MinHeight": 9,
-     "MaxHeight": 12,
-     "MinCapacity": 40,
-     "MaxCapacity": 70,
-     "VacancyRate": 0.05,
+     "KeyPrefix": "lantana_park_ranch15",
+     "Kind": "Residence",
+     "OriginX": 3062.0,
+     "OriginZ": 541.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
      "StreetNames": [
-      "Sugarberry Ln"
+      "Ambrose Ct"
      ],
      "Property": {
-      "Kind": "Apartment",
+      "Kind": "House",
       "Zoning": "Residential",
-      "FloorAreaSqm": 2400,
-      "LotAreaSqm": 3000,
-      "Bedrooms": 0,
-      "Floors": 3,
-      "BaseValueCents": 320000000,
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -15133,7 +15229,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Palmetto Grove Loop"
+      "Warbler Trace"
      ],
      "Property": {
       "Kind": "House",
@@ -15307,32 +15403,32 @@
     },
     {
      "Key": "westmarch_commons_biz00",
-     "Name": "Lejeune Motors",
+     "Name": "Ortego Sporting Goods",
      "Kind": "Shop",
-     "X": -3378.0,
-     "Z": 370.0,
-     "Width": 60,
-     "Depth": 40,
-     "Height": 7,
+     "X": -3386.0,
+     "Z": 366.0,
+     "Width": 44,
+     "Depth": 32,
+     "Height": 8,
      "RotationY": 0,
-     "Capacity": 30,
+     "Capacity": 60,
      "OpenMinute": 480,
      "CloseMinute": 1260,
      "Tags": [],
      "Property": {
       "Kind": "Commercial",
       "Zoning": "Commercial",
-      "FloorAreaSqm": 2160,
-      "LotAreaSqm": 4800,
+      "FloorAreaSqm": 1267,
+      "LotAreaSqm": 2816,
       "Bedrooms": 0,
       "Floors": 1,
-      "BaseValueCents": 400000000,
+      "BaseValueCents": 212500000,
       "Variation": 0.12,
       "Owner": "npc"
      },
      "Business": {
-      "TemplateId": "car_dealership",
-      "Name": "Lejeune Motors",
+      "TemplateId": "sporting_goods",
+      "Name": "Ortego Sporting Goods",
       "Owner": "npc",
       "Staff": -1
      }
@@ -15341,7 +15437,7 @@
      "Key": "westmarch_commons_biz01",
      "Name": "Westmarch Commons Pre-Owned",
      "Kind": "Shop",
-     "X": -3310.0,
+     "X": -3326.0,
      "Z": 370.0,
      "Width": 60,
      "Depth": 40,
@@ -15371,7 +15467,39 @@
     },
     {
      "Key": "westmarch_commons_biz02",
-     "Name": "Doucet Motors",
+     "Name": "Gulf Auto Plaza",
+     "Kind": "Shop",
+     "X": -3258.0,
+     "Z": 370.0,
+     "Width": 60,
+     "Depth": 40,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 30,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 2160,
+      "LotAreaSqm": 4800,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 400000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "car_dealership",
+      "Name": "Gulf Auto Plaza",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz03",
+     "Name": "Mouton Motors",
      "Kind": "Shop",
      "X": -3416.0,
      "Z": 418.0,
@@ -15396,14 +15524,14 @@
      },
      "Business": {
       "TemplateId": "car_dealership",
-      "Name": "Doucet Motors",
+      "Name": "Mouton Motors",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "westmarch_commons_biz03",
-     "Name": "Northside Auto Plaza",
+     "Key": "westmarch_commons_biz04",
+     "Name": "Pham Motors",
      "Kind": "Shop",
      "X": -3348.0,
      "Z": 418.0,
@@ -15428,14 +15556,14 @@
      },
      "Business": {
       "TemplateId": "car_dealership",
-      "Name": "Northside Auto Plaza",
+      "Name": "Pham Motors",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "westmarch_commons_biz04",
-     "Name": "Westmarch Commons Fresh Market",
+     "Key": "westmarch_commons_biz05",
+     "Name": "Villarreal Family Foods",
      "Kind": "Shop",
      "X": -3280.0,
      "Z": 420.5,
@@ -15460,14 +15588,14 @@
      },
      "Business": {
       "TemplateId": "supermarket",
-      "Name": "Westmarch Commons Fresh Market",
+      "Name": "Villarreal Family Foods",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "westmarch_commons_biz05",
-     "Name": "The Cane Closet",
+     "Key": "westmarch_commons_biz06",
+     "Name": "Comeaux & Daughters Clothiers",
      "Kind": "Shop",
      "X": -3234.0,
      "Z": 407.0,
@@ -15492,14 +15620,14 @@
      },
      "Business": {
       "TemplateId": "clothing_boutique",
-      "Name": "The Cane Closet",
+      "Name": "Comeaux & Daughters Clothiers",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "westmarch_commons_biz06",
-     "Name": "Crescent Thread Boutique",
+     "Key": "westmarch_commons_biz07",
+     "Name": "Tran & Daughters Clothiers",
      "Kind": "Shop",
      "X": -3178.0,
      "Z": -37.0,
@@ -15524,13 +15652,13 @@
      },
      "Business": {
       "TemplateId": "clothing_boutique",
-      "Name": "Crescent Thread Boutique",
+      "Name": "Tran & Daughters Clothiers",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "westmarch_commons_biz07",
+     "Key": "westmarch_commons_biz08",
      "Name": "Westmarch Commons Coffee House",
      "Kind": "Restaurant",
      "X": -3155.0,
@@ -15562,8 +15690,8 @@
      }
     },
     {
-     "Key": "westmarch_commons_biz08",
-     "Name": "Heron Lighthouse Diner",
+     "Key": "westmarch_commons_biz09",
+     "Name": "Golden Firefly Diner",
      "Kind": "Restaurant",
      "X": -3129.0,
      "Z": -37.0,
@@ -15588,14 +15716,14 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Heron Lighthouse Diner",
+      "Name": "Golden Firefly Diner",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "westmarch_commons_biz09",
-     "Name": "Villarreal Boxing Gym",
+     "Key": "westmarch_commons_biz10",
+     "Name": "Soileau Boxing Gym",
      "Kind": "Gym",
      "X": -3095.0,
      "Z": -34.0,
@@ -15620,305 +15748,17 @@
      },
      "Business": {
       "TemplateId": "gym",
-      "Name": "Villarreal Boxing Gym",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz10",
-     "Name": "Comeaux Lumber & Hardware",
-     "Kind": "Shop",
-     "X": -3052.0,
-     "Z": -31.0,
-     "Width": 40,
-     "Depth": 30,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 40,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 1080,
-      "LotAreaSqm": 2400,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 200000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "hardware_store",
-      "Name": "Comeaux Lumber & Hardware",
+      "Name": "Soileau Boxing Gym",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "westmarch_commons_biz11",
-     "Name": "Gulf Shrimp Boat Gas",
-     "Kind": "GasStation",
-     "X": -3006.0,
-     "Z": -31.0,
-     "Width": 36,
-     "Depth": 30,
-     "Height": 6,
-     "RotationY": 0,
-     "Capacity": 12,
-     "OpenMinute": 0,
-     "CloseMinute": 0,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 972,
-      "LotAreaSqm": 2160,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 175000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "gas_station",
-      "Name": "Gulf Shrimp Boat Gas",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz12",
-     "Name": "Pelican Credit Union - Westmarch Commons",
-     "Kind": "Office",
-     "X": -2968.0,
-     "Z": -36.0,
-     "Width": 24,
-     "Depth": 20,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 40,
-     "OpenMinute": 480,
-     "CloseMinute": 1140,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 432,
-      "LotAreaSqm": 960,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 162500000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "bank_branch",
-      "Name": "Pelican Credit Union - Westmarch Commons",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz13",
-     "Name": "Jolivette Auto Repair",
-     "Kind": "Garage",
-     "X": -3170.0,
-     "Z": 4.0,
-     "Width": 32,
-     "Depth": 24,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 10,
-     "OpenMinute": 480,
-     "CloseMinute": 1080,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 691,
-      "LotAreaSqm": 1536,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 90000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "auto_garage",
-      "Name": "Jolivette Auto Repair",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz14",
-     "Name": "Red Cross Pharmacy",
-     "Kind": "Shop",
-     "X": -3134.0,
-     "Z": 2.0,
-     "Width": 24,
-     "Depth": 20,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 25,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 432,
-      "LotAreaSqm": 960,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 112500000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "pharmacy",
-      "Name": "Red Cross Pharmacy",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz15",
-     "Name": "Kingsley Auto Repair",
-     "Kind": "Garage",
-     "X": -3098.0,
-     "Z": 4.0,
-     "Width": 32,
-     "Depth": 24,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 10,
-     "OpenMinute": 480,
-     "CloseMinute": 1080,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 691,
-      "LotAreaSqm": 1536,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 90000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "auto_garage",
-      "Name": "Kingsley Auto Repair",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz16",
-     "Name": "Northside Basket Supermarket",
-     "Kind": "Shop",
-     "X": -3044.0,
-     "Z": 14.5,
-     "Width": 60,
-     "Depth": 45,
-     "Height": 8,
-     "RotationY": 0,
-     "Capacity": 200,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 2430,
-      "LotAreaSqm": 5400,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 475000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "supermarket",
-      "Name": "Northside Basket Supermarket",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz17",
-     "Name": "Prejean's Barbershop",
-     "Kind": "Shop",
-     "X": -2999.0,
-     "Z": -1.0,
-     "Width": 14,
-     "Depth": 14,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 8,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 176,
-      "LotAreaSqm": 392,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 32500000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "barbershop",
-      "Name": "Prejean's Barbershop",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz18",
-     "Name": "Kingsley's Diner",
-     "Kind": "Restaurant",
-     "X": -2973.0,
-     "Z": 1.0,
-     "Width": 22,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 50,
-     "OpenMinute": 420,
-     "CloseMinute": 1380,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 356,
-      "LotAreaSqm": 792,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 60000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "diner",
-      "Name": "Kingsley's Diner",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "westmarch_commons_biz19",
      "Name": "Westmarch Commons Hardware",
      "Kind": "Shop",
-     "X": -3166.0,
-     "Z": 60.0,
+     "X": -3052.0,
+     "Z": -31.0,
      "Width": 40,
      "Depth": 30,
      "Height": 7,
@@ -15946,7 +15786,295 @@
      }
     },
     {
+     "Key": "westmarch_commons_biz12",
+     "Name": "Northside Pelican Gas",
+     "Kind": "GasStation",
+     "X": -3006.0,
+     "Z": -31.0,
+     "Width": 36,
+     "Depth": 30,
+     "Height": 6,
+     "RotationY": 0,
+     "Capacity": 12,
+     "OpenMinute": 0,
+     "CloseMinute": 0,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 972,
+      "LotAreaSqm": 2160,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 175000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "gas_station",
+      "Name": "Northside Pelican Gas",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz13",
+     "Name": "Gulf Tidewater Bank - Westmarch Commons",
+     "Kind": "Office",
+     "X": -2968.0,
+     "Z": -36.0,
+     "Width": 24,
+     "Depth": 20,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 40,
+     "OpenMinute": 480,
+     "CloseMinute": 1140,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 432,
+      "LotAreaSqm": 960,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 162500000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "bank_branch",
+      "Name": "Gulf Tidewater Bank - Westmarch Commons",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz14",
+     "Name": "Copper Gator Garage",
+     "Kind": "Garage",
+     "X": -3170.0,
+     "Z": 4.0,
+     "Width": 32,
+     "Depth": 24,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 10,
+     "OpenMinute": 480,
+     "CloseMinute": 1080,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 691,
+      "LotAreaSqm": 1536,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 90000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "auto_garage",
+      "Name": "Copper Gator Garage",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz15",
+     "Name": "Westmarch Commons Pharmacy",
+     "Kind": "Shop",
+     "X": -3134.0,
+     "Z": 2.0,
+     "Width": 24,
+     "Depth": 20,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 25,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 432,
+      "LotAreaSqm": 960,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 112500000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "pharmacy",
+      "Name": "Westmarch Commons Pharmacy",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz16",
+     "Name": "Boudreaux Auto Repair",
+     "Kind": "Garage",
+     "X": -3098.0,
+     "Z": 4.0,
+     "Width": 32,
+     "Depth": 24,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 10,
+     "OpenMinute": 480,
+     "CloseMinute": 1080,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 691,
+      "LotAreaSqm": 1536,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 90000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "auto_garage",
+      "Name": "Boudreaux Auto Repair",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz17",
+     "Name": "Okafor Family Foods",
+     "Kind": "Shop",
+     "X": -3044.0,
+     "Z": 14.5,
+     "Width": 60,
+     "Depth": 45,
+     "Height": 8,
+     "RotationY": 0,
+     "Capacity": 200,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 2430,
+      "LotAreaSqm": 5400,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 475000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "supermarket",
+      "Name": "Okafor Family Foods",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz18",
+     "Name": "Palmetto Fade Barbers",
+     "Kind": "Shop",
+     "X": -2999.0,
+     "Z": -1.0,
+     "Width": 14,
+     "Depth": 14,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 8,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 176,
+      "LotAreaSqm": 392,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 32500000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "barbershop",
+      "Name": "Palmetto Fade Barbers",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz19",
+     "Name": "Westmarch Commons Grill",
+     "Kind": "Restaurant",
+     "X": -2973.0,
+     "Z": 1.0,
+     "Width": 22,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 50,
+     "OpenMinute": 420,
+     "CloseMinute": 1380,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 356,
+      "LotAreaSqm": 792,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 60000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "diner",
+      "Name": "Westmarch Commons Grill",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
      "Key": "westmarch_commons_biz20",
+     "Name": "Gulf Tool House",
+     "Kind": "Shop",
+     "X": -3166.0,
+     "Z": 60.0,
+     "Width": 40,
+     "Depth": 30,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 40,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 1080,
+      "LotAreaSqm": 2400,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 200000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "hardware_store",
+      "Name": "Gulf Tool House",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "westmarch_commons_biz21",
      "Name": "Westmarch Commons Fuel Stop",
      "Kind": "GasStation",
      "X": -3120.0,
@@ -15978,8 +16106,8 @@
      }
     },
     {
-     "Key": "westmarch_commons_biz21",
-     "Name": "Palmetto Suds Laundromat",
+     "Key": "westmarch_commons_biz22",
+     "Name": "Sonnier Coin Laundry",
      "Kind": "Shop",
      "X": -3085.0,
      "Z": 53.0,
@@ -16004,14 +16132,14 @@
      },
      "Business": {
       "TemplateId": "laundromat",
-      "Name": "Palmetto Suds Laundromat",
+      "Name": "Sonnier Coin Laundry",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "westmarch_commons_biz22",
-     "Name": "Garza Boxing Gym",
+     "Key": "westmarch_commons_biz23",
+     "Name": "Marsh Heron Fitness",
      "Kind": "Gym",
      "X": -3053.0,
      "Z": 57.0,
@@ -16036,7 +16164,7 @@
      },
      "Business": {
       "TemplateId": "gym",
-      "Name": "Garza Boxing Gym",
+      "Name": "Marsh Heron Fitness",
       "Owner": "npc",
       "Staff": -1
      }
@@ -16044,32 +16172,32 @@
    ],
    "Blocks": [
     {
-     "KeyPrefix": "westmarch_commons_subdivision0",
-     "Kind": "Residence",
-     "OriginX": -3177.0,
-     "OriginZ": 222.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 32,
-     "SpacingZ": 42,
-     "Width": 18,
-     "Depth": 16,
-     "MinHeight": 6,
-     "MaxHeight": 8,
-     "MinCapacity": 3,
-     "MaxCapacity": 6,
+     "KeyPrefix": "westmarch_commons_garden_apartments0",
+     "Kind": "ApartmentBuilding",
+     "OriginX": -3166.0,
+     "OriginZ": 226.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 40,
+     "Depth": 24,
+     "MinHeight": 9,
+     "MaxHeight": 12,
+     "MinCapacity": 40,
+     "MaxCapacity": 70,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Poplar Rd"
+      "Fernwood Trace"
      ],
      "Property": {
-      "Kind": "House",
+      "Kind": "Apartment",
       "Zoning": "Residential",
-      "FloorAreaSqm": 210,
-      "LotAreaSqm": 750,
-      "Bedrooms": 4,
-      "Floors": 2,
-      "BaseValueCents": 33000000,
+      "FloorAreaSqm": 2400,
+      "LotAreaSqm": 3000,
+      "Bedrooms": 0,
+      "Floors": 3,
+      "BaseValueCents": 320000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -16091,7 +16219,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Tallow Ave"
+      "Sandpiper Way"
      ],
      "Property": {
       "Kind": "House",
@@ -16122,7 +16250,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Live Oak Trace"
+      "Reed Pl"
      ],
      "Property": {
       "Kind": "House",
@@ -16137,32 +16265,32 @@
      }
     },
     {
-     "KeyPrefix": "westmarch_commons_subdivision3",
-     "Kind": "Residence",
-     "OriginX": -3437.0,
-     "OriginZ": -298.0,
-     "Rows": 5,
-     "Columns": 7,
-     "SpacingX": 32,
-     "SpacingZ": 42,
-     "Width": 18,
-     "Depth": 16,
-     "MinHeight": 6,
-     "MaxHeight": 8,
-     "MinCapacity": 3,
-     "MaxCapacity": 6,
+     "KeyPrefix": "westmarch_commons_garden_apartments3",
+     "Kind": "ApartmentBuilding",
+     "OriginX": -3426.0,
+     "OriginZ": -294.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 40,
+     "Depth": 24,
+     "MinHeight": 9,
+     "MaxHeight": 12,
+     "MinCapacity": 40,
+     "MaxCapacity": 70,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Lakeshore St"
+      "Jasmine Trace"
      ],
      "Property": {
-      "Kind": "House",
+      "Kind": "Apartment",
       "Zoning": "Residential",
-      "FloorAreaSqm": 210,
-      "LotAreaSqm": 750,
-      "Bedrooms": 4,
-      "Floors": 2,
-      "BaseValueCents": 33000000,
+      "FloorAreaSqm": 2400,
+      "LotAreaSqm": 3000,
+      "Bedrooms": 0,
+      "Floors": 3,
+      "BaseValueCents": 320000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -16184,7 +16312,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Glenwood St"
+      "Yaupon Row"
      ],
      "Property": {
       "Kind": "House",
@@ -16215,7 +16343,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Clearwater Cir"
+      "Palmetto Grove Ln"
      ],
      "Property": {
       "Kind": "House",
@@ -16230,72 +16358,10 @@
      }
     },
     {
-     "KeyPrefix": "westmarch_commons_garden_apartments6",
-     "Kind": "ApartmentBuilding",
-     "OriginX": -3166.0,
-     "OriginZ": 486.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 40,
-     "Depth": 24,
-     "MinHeight": 9,
-     "MaxHeight": 12,
-     "MinCapacity": 40,
-     "MaxCapacity": 70,
-     "VacancyRate": 0.05,
-     "StreetNames": [
-      "Sandpiper Way"
-     ],
-     "Property": {
-      "Kind": "Apartment",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 2400,
-      "LotAreaSqm": 3000,
-      "Bedrooms": 0,
-      "Floors": 3,
-      "BaseValueCents": 320000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "westmarch_commons_garden_apartments7",
-     "Kind": "ApartmentBuilding",
-     "OriginX": -2906.0,
-     "OriginZ": -34.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 40,
-     "Depth": 24,
-     "MinHeight": 9,
-     "MaxHeight": 12,
-     "MinCapacity": 40,
-     "MaxCapacity": 70,
-     "VacancyRate": 0.05,
-     "StreetNames": [
-      "Reed Pl"
-     ],
-     "Property": {
-      "Kind": "Apartment",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 2400,
-      "LotAreaSqm": 3000,
-      "Bedrooms": 0,
-      "Floors": 3,
-      "BaseValueCents": 320000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "westmarch_commons_subdivision8",
+     "KeyPrefix": "westmarch_commons_subdivision6",
      "Kind": "Residence",
-     "OriginX": -2917.0,
-     "OriginZ": 222.0,
+     "OriginX": -3177.0,
+     "OriginZ": 482.0,
      "Rows": 5,
      "Columns": 7,
      "SpacingX": 32,
@@ -16308,7 +16374,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Jasmine Trace"
+      "Sycamore Ct"
      ],
      "Property": {
       "Kind": "House",
@@ -16318,6 +16384,68 @@
       "Bedrooms": 4,
       "Floors": 2,
       "BaseValueCents": 33000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "westmarch_commons_subdivision7",
+     "Kind": "Residence",
+     "OriginX": -2917.0,
+     "OriginZ": -38.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 32,
+     "SpacingZ": 42,
+     "Width": 18,
+     "Depth": 16,
+     "MinHeight": 6,
+     "MaxHeight": 8,
+     "MinCapacity": 3,
+     "MaxCapacity": 6,
+     "VacancyRate": 0.05,
+     "StreetNames": [
+      "Galvez Ct"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 210,
+      "LotAreaSqm": 750,
+      "Bedrooms": 4,
+      "Floors": 2,
+      "BaseValueCents": 33000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "westmarch_commons_garden_apartments8",
+     "Kind": "ApartmentBuilding",
+     "OriginX": -2906.0,
+     "OriginZ": 226.0,
+     "Rows": 3,
+     "Columns": 3,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 40,
+     "Depth": 24,
+     "MinHeight": 9,
+     "MaxHeight": 12,
+     "MinCapacity": 40,
+     "MaxCapacity": 70,
+     "VacancyRate": 0.05,
+     "StreetNames": [
+      "Quail Trace"
+     ],
+     "Property": {
+      "Kind": "Apartment",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 2400,
+      "LotAreaSqm": 3000,
+      "Bedrooms": 0,
+      "Floors": 3,
+      "BaseValueCents": 320000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -16339,7 +16467,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Yaupon Row"
+      "Primrose Dr"
      ],
      "Property": {
       "Kind": "House",
@@ -16354,32 +16482,32 @@
      }
     },
     {
-     "KeyPrefix": "westmarch_commons_garden_apartments10",
-     "Kind": "ApartmentBuilding",
-     "OriginX": -3686.0,
-     "OriginZ": 486.0,
-     "Rows": 3,
-     "Columns": 3,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 40,
-     "Depth": 24,
-     "MinHeight": 9,
-     "MaxHeight": 12,
-     "MinCapacity": 40,
-     "MaxCapacity": 70,
+     "KeyPrefix": "westmarch_commons_subdivision10",
+     "Kind": "Residence",
+     "OriginX": -3697.0,
+     "OriginZ": 482.0,
+     "Rows": 5,
+     "Columns": 7,
+     "SpacingX": 32,
+     "SpacingZ": 42,
+     "Width": 18,
+     "Depth": 16,
+     "MinHeight": 6,
+     "MaxHeight": 8,
+     "MinCapacity": 3,
+     "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Palmetto Grove Ln"
+      "Sassafras Ln"
      ],
      "Property": {
-      "Kind": "Apartment",
+      "Kind": "House",
       "Zoning": "Residential",
-      "FloorAreaSqm": 2400,
-      "LotAreaSqm": 3000,
-      "Bedrooms": 0,
-      "Floors": 3,
-      "BaseValueCents": 320000000,
+      "FloorAreaSqm": 210,
+      "LotAreaSqm": 750,
+      "Bedrooms": 4,
+      "Floors": 2,
+      "BaseValueCents": 33000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -16401,7 +16529,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Sycamore Ct"
+      "Esplanade Cir"
      ],
      "Property": {
       "Kind": "House",
@@ -16432,7 +16560,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Galvez Ct"
+      "Yaupon St"
      ],
      "Property": {
       "Kind": "House",
@@ -16463,7 +16591,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Dogwood Cir"
+      "Meadow Ct"
      ],
      "Property": {
       "Kind": "House",
@@ -16494,7 +16622,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Quail Trace"
+      "Spruce Loop"
      ],
      "Property": {
       "Kind": "House",
@@ -16525,7 +16653,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Hollyhock Pl"
+      "Shady Oak St"
      ],
      "Property": {
       "Kind": "House",
@@ -16556,7 +16684,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Primrose Dr"
+      "Palmetto Grove Row"
      ],
      "Property": {
       "Kind": "House",
@@ -16801,7 +16929,7 @@
     },
     {
      "Key": "coquina_key_biz00",
-     "Name": "Navarro's Oyster Bar",
+     "Name": "Quintero's Oyster Bar",
      "Kind": "Restaurant",
      "X": 4698.0,
      "Z": -2607.0,
@@ -16826,14 +16954,14 @@
      },
      "Business": {
       "TemplateId": "seafood_restaurant",
-      "Name": "Navarro's Oyster Bar",
+      "Name": "Quintero's Oyster Bar",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz01",
-     "Name": "Istre's Oyster Bar",
+     "Name": "Cypress Heron Seafood",
      "Kind": "Restaurant",
      "X": 4734.0,
      "Z": -2607.0,
@@ -16858,14 +16986,14 @@
      },
      "Business": {
       "TemplateId": "seafood_restaurant",
-      "Name": "Istre's Oyster Bar",
+      "Name": "Cypress Heron Seafood",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz02",
-     "Name": "Guidry's Oyster Bar",
+     "Name": "Sunrise Wharf Seafood",
      "Kind": "Restaurant",
      "X": 4770.0,
      "Z": -2607.0,
@@ -16890,14 +17018,14 @@
      },
      "Business": {
       "TemplateId": "seafood_restaurant",
-      "Name": "Guidry's Oyster Bar",
+      "Name": "Sunrise Wharf Seafood",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz03",
-     "Name": "Coquina Key Coffee House",
+     "Name": "Rusty Buoy Coffee",
      "Kind": "Restaurant",
      "X": 4521.0,
      "Z": -2543.0,
@@ -16922,14 +17050,14 @@
      },
      "Business": {
       "TemplateId": "coffee_shop",
-      "Name": "Coquina Key Coffee House",
+      "Name": "Rusty Buoy Coffee",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz04",
-     "Name": "The Crescent Lantern",
+     "Name": "Tran's Tavern",
      "Kind": "Nightlife",
      "X": 4545.0,
      "Z": -2540.0,
@@ -16954,14 +17082,14 @@
      },
      "Business": {
       "TemplateId": "neighborhood_bar",
-      "Name": "The Crescent Lantern",
+      "Name": "Tran's Tavern",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz05",
-     "Name": "Boudreaux's Tavern",
+     "Name": "Delgado's Tavern",
      "Kind": "Nightlife",
      "X": 4571.0,
      "Z": -2540.0,
@@ -16986,14 +17114,14 @@
      },
      "Business": {
       "TemplateId": "neighborhood_bar",
-      "Name": "Boudreaux's Tavern",
+      "Name": "Delgado's Tavern",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz06",
-     "Name": "Coquina Key After Dark",
+     "Name": "The Brass Room",
      "Kind": "Nightlife",
      "X": 4605.0,
      "Z": -2535.0,
@@ -17018,14 +17146,14 @@
      },
      "Business": {
       "TemplateId": "nightclub",
-      "Name": "Coquina Key After Dark",
+      "Name": "The Brass Room",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz07",
-     "Name": "The Redfish Closet",
+     "Name": "Garza & Daughters Clothiers",
      "Kind": "Shop",
      "X": 4638.0,
      "Z": -2541.0,
@@ -17050,48 +17178,16 @@
      },
      "Business": {
       "TemplateId": "clothing_boutique",
-      "Name": "The Redfish Closet",
+      "Name": "Garza & Daughters Clothiers",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz08",
-     "Name": "Coquina Key Food Mart",
-     "Kind": "Shop",
-     "X": 4663.0,
-     "Z": -2542.0,
-     "Width": 18,
-     "Depth": 16,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 10,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 54599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "corner_store",
-      "Name": "Coquina Key Food Mart",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz09",
      "Name": "Luong Grocery",
      "Kind": "Shop",
-     "X": 4689.0,
+     "X": 4663.0,
      "Z": -2542.0,
      "Width": 18,
      "Depth": 16,
@@ -17120,8 +17216,40 @@
      }
     },
     {
+     "Key": "coquina_key_biz09",
+     "Name": "Pham Corner Market",
+     "Kind": "Shop",
+     "X": 4689.0,
+     "Z": -2542.0,
+     "Width": 18,
+     "Depth": 16,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 10,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 54599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "corner_store",
+      "Name": "Pham Corner Market",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
      "Key": "coquina_key_biz10",
-     "Name": "Driftwood Firefly Gas",
+     "Name": "Coquina Key Fuel Stop",
      "Kind": "GasStation",
      "X": 4724.0,
      "Z": -2535.0,
@@ -17146,14 +17274,14 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Driftwood Firefly Gas",
+      "Name": "Coquina Key Fuel Stop",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "coquina_key_biz11",
-     "Name": "Luong's Diner",
+     "Name": "Coquina Key Grill",
      "Kind": "Restaurant",
      "X": 4761.0,
      "Z": -2541.0,
@@ -17178,7 +17306,7 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Luong's Diner",
+      "Name": "Coquina Key Grill",
       "Owner": "npc",
       "Staff": -1
      }
@@ -17217,233 +17345,9 @@
     },
     {
      "Key": "coquina_key_biz13",
-     "Name": "The Pelican Closet",
-     "Kind": "Shop",
-     "X": 4548.0,
-     "Z": -2477.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 67599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "The Pelican Closet",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz14",
-     "Name": "The Heron Closet",
-     "Kind": "Shop",
-     "X": 4572.0,
-     "Z": -2477.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 67599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "The Heron Closet",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz15",
-     "Name": "Carrizales & Daughters Clothiers",
-     "Kind": "Shop",
-     "X": 4596.0,
-     "Z": -2477.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 67599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "Carrizales & Daughters Clothiers",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz16",
-     "Name": "Marsh Thread Boutique",
-     "Kind": "Shop",
-     "X": 4620.0,
-     "Z": -2477.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 67599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "Marsh Thread Boutique",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz17",
-     "Name": "Navarro & Daughters Clothiers",
-     "Kind": "Shop",
-     "X": 4644.0,
-     "Z": -2477.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 67599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "Navarro & Daughters Clothiers",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz18",
-     "Name": "Lucky Thread Boutique",
-     "Kind": "Shop",
-     "X": 4668.0,
-     "Z": -2477.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 67599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "Lucky Thread Boutique",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz19",
-     "Name": "Trahan & Daughters Clothiers",
-     "Kind": "Shop",
-     "X": 4692.0,
-     "Z": -2477.0,
-     "Width": 16,
-     "Depth": 18,
-     "Height": 5,
-     "RotationY": 0,
-     "Capacity": 15,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 259,
-      "LotAreaSqm": 576,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 67599999,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "clothing_boutique",
-      "Name": "Trahan & Daughters Clothiers",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "coquina_key_biz20",
      "Name": "The Egret Closet",
      "Kind": "Shop",
-     "X": 4716.0,
+     "X": 4548.0,
      "Z": -2477.0,
      "Width": 16,
      "Depth": 18,
@@ -17472,10 +17376,106 @@
      }
     },
     {
-     "Key": "coquina_key_biz21",
+     "Key": "coquina_key_biz14",
+     "Name": "Delgado & Daughters Clothiers",
+     "Kind": "Shop",
+     "X": 4572.0,
+     "Z": -2477.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 67599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "Delgado & Daughters Clothiers",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "coquina_key_biz15",
+     "Name": "The Wharf Closet",
+     "Kind": "Shop",
+     "X": 4596.0,
+     "Z": -2477.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 67599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "The Wharf Closet",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "coquina_key_biz16",
+     "Name": "Dupuis & Daughters Clothiers",
+     "Kind": "Shop",
+     "X": 4620.0,
+     "Z": -2477.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 67599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "Dupuis & Daughters Clothiers",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "coquina_key_biz17",
      "Name": "The Oyster Closet",
      "Kind": "Shop",
-     "X": 4740.0,
+     "X": 4644.0,
      "Z": -2477.0,
      "Width": 16,
      "Depth": 18,
@@ -17502,6 +17502,134 @@
       "Owner": "npc",
       "Staff": -1
      }
+    },
+    {
+     "Key": "coquina_key_biz18",
+     "Name": "Ibarra & Daughters Clothiers",
+     "Kind": "Shop",
+     "X": 4668.0,
+     "Z": -2477.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 67599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "Ibarra & Daughters Clothiers",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "coquina_key_biz19",
+     "Name": "The Gator Closet",
+     "Kind": "Shop",
+     "X": 4692.0,
+     "Z": -2477.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 67599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "The Gator Closet",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "coquina_key_biz20",
+     "Name": "Vasquez & Daughters Clothiers",
+     "Kind": "Shop",
+     "X": 4716.0,
+     "Z": -2477.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 67599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "Vasquez & Daughters Clothiers",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "coquina_key_biz21",
+     "Name": "Old Thread Boutique",
+     "Kind": "Shop",
+     "X": 4740.0,
+     "Z": -2477.0,
+     "Width": 16,
+     "Depth": 18,
+     "Height": 5,
+     "RotationY": 0,
+     "Capacity": 15,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 259,
+      "LotAreaSqm": 576,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 67599999,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "clothing_boutique",
+      "Name": "Old Thread Boutique",
+      "Owner": "npc",
+      "Staff": -1
+     }
     }
    ],
    "Blocks": [
@@ -17522,7 +17650,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Juniper Way"
+      "Sandpiper Cir"
      ],
      "Property": {
       "Kind": "House",
@@ -17553,7 +17681,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Pampas Ave"
+      "Brazos Dr"
      ],
      "Property": {
       "Kind": "House",
@@ -17584,7 +17712,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Sabine Dr"
+      "Jasmine Row"
      ],
      "Property": {
       "Kind": "House",
@@ -17615,7 +17743,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Saffron St"
+      "Meadow Way"
      ],
      "Property": {
       "Kind": "House",
@@ -17646,7 +17774,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Camellia Row"
+      "Carrollton St"
      ],
      "Property": {
       "Kind": "House",
@@ -17661,32 +17789,32 @@
      }
     },
     {
-     "KeyPrefix": "coquina_key_beach_house5",
-     "Kind": "Residence",
-     "OriginX": 4521.0,
-     "OriginZ": -2178.0,
-     "Rows": 5,
-     "Columns": 8,
-     "SpacingX": 34,
-     "SpacingZ": 46,
-     "Width": 14,
-     "Depth": 16,
-     "MinHeight": 7,
-     "MaxHeight": 9,
-     "MinCapacity": 2,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.12,
+     "KeyPrefix": "coquina_key_midrise5",
+     "Kind": "ApartmentBuilding",
+     "OriginX": 4534.0,
+     "OriginZ": -2168.0,
+     "Rows": 4,
+     "Columns": 4,
+     "SpacingX": 60,
+     "SpacingZ": 60,
+     "Width": 40,
+     "Depth": 36,
+     "MinHeight": 18,
+     "MaxHeight": 30,
+     "MinCapacity": 90,
+     "MaxCapacity": 160,
+     "VacancyRate": 0.04,
      "StreetNames": [
-      "Primrose Ln"
+      "Laurel Ln"
      ],
      "Property": {
-      "Kind": "House",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 170,
-      "LotAreaSqm": 600,
-      "Bedrooms": 3,
-      "Floors": 2,
-      "BaseValueCents": 52000000,
+      "Kind": "Apartment",
+      "Zoning": "MixedUse",
+      "FloorAreaSqm": 6200,
+      "LotAreaSqm": 2200,
+      "Bedrooms": 0,
+      "Floors": 7,
+      "BaseValueCents": 1100000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -17708,7 +17836,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Sandpiper Cir"
+      "Glenwood Way"
      ],
      "Property": {
       "Kind": "House",
@@ -17739,7 +17867,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Brazos Dr"
+      "Delta St"
      ],
      "Property": {
       "Kind": "House",
@@ -17770,7 +17898,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Jasmine Row"
+      "Vine Way"
      ],
      "Property": {
       "Kind": "House",
@@ -17801,7 +17929,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Meadow Way"
+      "Quail Pl"
      ],
      "Property": {
       "Kind": "House",
@@ -17832,7 +17960,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Carrollton St"
+      "Thistle Cir"
      ],
      "Property": {
       "Kind": "House",
@@ -17863,7 +17991,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Laurel Ln"
+      "Vine Ct"
      ],
      "Property": {
       "Kind": "House",
@@ -17894,7 +18022,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Glenwood Way"
+      "Bolivar Ave"
      ],
      "Property": {
       "Kind": "House",
@@ -17925,7 +18053,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Delta St"
+      "Periwinkle Row"
      ],
      "Property": {
       "Kind": "House",
@@ -17956,7 +18084,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Vine Way"
+      "Poplar Ave"
      ],
      "Property": {
       "Kind": "House",
@@ -17971,32 +18099,32 @@
      }
     },
     {
-     "KeyPrefix": "coquina_key_midrise15",
-     "Kind": "ApartmentBuilding",
-     "OriginX": 4234.0,
-     "OriginZ": -1868.0,
-     "Rows": 4,
-     "Columns": 4,
-     "SpacingX": 60,
-     "SpacingZ": 60,
-     "Width": 40,
-     "Depth": 36,
-     "MinHeight": 18,
-     "MaxHeight": 30,
-     "MinCapacity": 90,
-     "MaxCapacity": 160,
-     "VacancyRate": 0.04,
+     "KeyPrefix": "coquina_key_beach_house15",
+     "Kind": "Residence",
+     "OriginX": 4221.0,
+     "OriginZ": -1878.0,
+     "Rows": 5,
+     "Columns": 8,
+     "SpacingX": 34,
+     "SpacingZ": 46,
+     "Width": 14,
+     "Depth": 16,
+     "MinHeight": 7,
+     "MaxHeight": 9,
+     "MinCapacity": 2,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.12,
      "StreetNames": [
-      "Quail Pl"
+      "Ashland Ln"
      ],
      "Property": {
-      "Kind": "Apartment",
-      "Zoning": "MixedUse",
-      "FloorAreaSqm": 6200,
-      "LotAreaSqm": 2200,
-      "Bedrooms": 0,
-      "Floors": 7,
-      "BaseValueCents": 1100000000,
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 170,
+      "LotAreaSqm": 600,
+      "Bedrooms": 3,
+      "Floors": 2,
+      "BaseValueCents": 52000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -18018,7 +18146,7 @@
      "MaxCapacity": 160,
      "VacancyRate": 0.04,
      "StreetNames": [
-      "Thistle Cir"
+      "Hackberry Trace"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -18049,7 +18177,7 @@
      "MaxCapacity": 5,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Vine Ct"
+      "Briar Way"
      ],
      "Property": {
       "Kind": "House",
@@ -18194,7 +18322,7 @@
     },
     {
      "Key": "bitterwater_marsh_biz00",
-     "Name": "Pitre Corner Market",
+     "Name": "Carrizales Corner Market",
      "Kind": "Shop",
      "X": -893.0,
      "Z": -2378.0,
@@ -18219,14 +18347,14 @@
      },
      "Business": {
       "TemplateId": "corner_store",
-      "Name": "Pitre Corner Market",
+      "Name": "Carrizales Corner Market",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "bitterwater_marsh_biz01",
-     "Name": "Pelican Mullet Gas",
+     "Name": "Sandbar Mockingbird Gas",
      "Kind": "GasStation",
      "X": -858.0,
      "Z": -2371.0,
@@ -18251,14 +18379,14 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Pelican Mullet Gas",
+      "Name": "Sandbar Mockingbird Gas",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "bitterwater_marsh_biz02",
-     "Name": "Pelican Marlin Seafood",
+     "Name": "Bitterwater Marsh Boil House",
      "Kind": "Restaurant",
      "X": -1122.0,
      "Z": -2277.0,
@@ -18283,14 +18411,14 @@
      },
      "Business": {
       "TemplateId": "seafood_restaurant",
-      "Name": "Pelican Marlin Seafood",
+      "Name": "Bitterwater Marsh Boil House",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "bitterwater_marsh_biz03",
-     "Name": "Falgout's Tavern",
+     "Name": "Navarro's Tavern",
      "Kind": "Nightlife",
      "X": -1091.0,
      "Z": -2278.0,
@@ -18315,7 +18443,7 @@
      },
      "Business": {
       "TemplateId": "neighborhood_bar",
-      "Name": "Falgout's Tavern",
+      "Name": "Navarro's Tavern",
       "Owner": "npc",
       "Staff": -1
      }
@@ -18354,7 +18482,7 @@
     },
     {
      "Key": "bitterwater_marsh_biz05",
-     "Name": "Navarro Lumber & Hardware",
+     "Name": "Sonnier Lumber & Hardware",
      "Kind": "Shop",
      "X": -1024.0,
      "Z": -2273.0,
@@ -18379,7 +18507,7 @@
      },
      "Business": {
       "TemplateId": "hardware_store",
-      "Name": "Navarro Lumber & Hardware",
+      "Name": "Sonnier Lumber & Hardware",
       "Owner": "npc",
       "Staff": -1
      }
@@ -18682,10 +18810,42 @@
     },
     {
      "Key": "tarrow_prairie_biz00",
-     "Name": "Blue Heron Market",
+     "Name": "Gulf Lantern Outdoor Supply",
      "Kind": "Shop",
-     "X": -5057.0,
-     "Z": -1060.0,
+     "X": -5044.0,
+     "Z": -1052.0,
+     "Width": 44,
+     "Depth": 32,
+     "Height": 8,
+     "RotationY": 0,
+     "Capacity": 60,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 1267,
+      "LotAreaSqm": 2816,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 161500000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "sporting_goods",
+      "Name": "Gulf Lantern Outdoor Supply",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "tarrow_prairie_biz01",
+     "Name": "Boudreaux Corner Market",
+     "Kind": "Shop",
+     "X": -5427.0,
+     "Z": -982.0,
      "Width": 18,
      "Depth": 16,
      "Height": 5,
@@ -18707,17 +18867,17 @@
      },
      "Business": {
       "TemplateId": "corner_store",
-      "Name": "Blue Heron Market",
+      "Name": "Boudreaux Corner Market",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "tarrow_prairie_biz01",
-     "Name": "Northside Egret Diner",
+     "Key": "tarrow_prairie_biz02",
+     "Name": "Crescent Lantern Diner",
      "Kind": "Restaurant",
-     "X": -5029.0,
-     "Z": -1059.0,
+     "X": -5399.0,
+     "Z": -981.0,
      "Width": 22,
      "Depth": 18,
      "Height": 5,
@@ -18739,48 +18899,16 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Northside Egret Diner",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "tarrow_prairie_biz02",
-     "Name": "Anchor Mockingbird Gas",
-     "Kind": "GasStation",
-     "X": -5418.0,
-     "Z": -975.0,
-     "Width": 36,
-     "Depth": 30,
-     "Height": 6,
-     "RotationY": 0,
-     "Capacity": 12,
-     "OpenMinute": 0,
-     "CloseMinute": 0,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 972,
-      "LotAreaSqm": 2160,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 133000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "gas_station",
-      "Name": "Anchor Mockingbird Gas",
+      "Name": "Crescent Lantern Diner",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "tarrow_prairie_biz03",
-     "Name": "Tarrow Prairie Fuel Stop",
+     "Name": "Golden Tugboat Gas",
      "Kind": "GasStation",
-     "X": -5374.0,
+     "X": -5362.0,
      "Z": -975.0,
      "Width": 36,
      "Depth": 30,
@@ -18803,144 +18931,16 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Tarrow Prairie Fuel Stop",
+      "Name": "Golden Tugboat Gas",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "tarrow_prairie_biz04",
-     "Name": "Golden Tugboat Garage",
-     "Kind": "Garage",
-     "X": -5332.0,
-     "Z": -978.0,
-     "Width": 32,
-     "Depth": 24,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 10,
-     "OpenMinute": 480,
-     "CloseMinute": 1080,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 691,
-      "LotAreaSqm": 1536,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 68400000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "auto_garage",
-      "Name": "Golden Tugboat Garage",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "tarrow_prairie_biz05",
-     "Name": "Driftwood Tool House",
-     "Kind": "Shop",
-     "X": -5288.0,
-     "Z": -975.0,
-     "Width": 40,
-     "Depth": 30,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 40,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 1080,
-      "LotAreaSqm": 2400,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 152000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "hardware_store",
-      "Name": "Driftwood Tool House",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "tarrow_prairie_biz06",
-     "Name": "Tarrow Prairie Icehouse",
-     "Kind": "Nightlife",
-     "X": -5251.0,
-     "Z": -980.0,
-     "Width": 18,
-     "Depth": 20,
-     "Height": 6,
-     "RotationY": 0,
-     "Capacity": 60,
-     "OpenMinute": 1080,
-     "CloseMinute": 180,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 324,
-      "LotAreaSqm": 720,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 49400000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "neighborhood_bar",
-      "Name": "Tarrow Prairie Icehouse",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "tarrow_prairie_biz07",
-     "Name": "Rusty Tool House",
-     "Kind": "Shop",
-     "X": -5214.0,
-     "Z": -975.0,
-     "Width": 40,
-     "Depth": 30,
-     "Height": 7,
-     "RotationY": 0,
-     "Capacity": 40,
-     "OpenMinute": 480,
-     "CloseMinute": 1260,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 1080,
-      "LotAreaSqm": 2400,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 152000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "hardware_store",
-      "Name": "Rusty Tool House",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "tarrow_prairie_biz08",
-     "Name": "Copper Lighthouse Gas",
+     "Name": "Trahan Service Station",
      "Kind": "GasStation",
-     "X": -5168.0,
+     "X": -5318.0,
      "Z": -975.0,
      "Width": 36,
      "Depth": 30,
@@ -18963,16 +18963,16 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Copper Lighthouse Gas",
+      "Name": "Trahan Service Station",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "tarrow_prairie_biz09",
+     "Key": "tarrow_prairie_biz05",
      "Name": "Tarrow Prairie Tire & Lube",
      "Kind": "Garage",
-     "X": -5126.0,
+     "X": -5276.0,
      "Z": -978.0,
      "Width": 32,
      "Depth": 24,
@@ -19001,10 +19001,170 @@
      }
     },
     {
-     "Key": "tarrow_prairie_biz10",
-     "Name": "Saucier Grocery",
+     "Key": "tarrow_prairie_biz06",
+     "Name": "Dang Lumber & Hardware",
      "Kind": "Shop",
-     "X": -5093.0,
+     "X": -5232.0,
+     "Z": -975.0,
+     "Width": 40,
+     "Depth": 30,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 40,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 1080,
+      "LotAreaSqm": 2400,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 152000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "hardware_store",
+      "Name": "Dang Lumber & Hardware",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "tarrow_prairie_biz07",
+     "Name": "Tarrow Prairie Icehouse",
+     "Kind": "Nightlife",
+     "X": -5195.0,
+     "Z": -980.0,
+     "Width": 18,
+     "Depth": 20,
+     "Height": 6,
+     "RotationY": 0,
+     "Capacity": 60,
+     "OpenMinute": 1080,
+     "CloseMinute": 180,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 324,
+      "LotAreaSqm": 720,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 49400000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "neighborhood_bar",
+      "Name": "Tarrow Prairie Icehouse",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "tarrow_prairie_biz08",
+     "Name": "Saucier Lumber & Hardware",
+     "Kind": "Shop",
+     "X": -5158.0,
+     "Z": -975.0,
+     "Width": 40,
+     "Depth": 30,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 40,
+     "OpenMinute": 480,
+     "CloseMinute": 1260,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 1080,
+      "LotAreaSqm": 2400,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 152000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "hardware_store",
+      "Name": "Saucier Lumber & Hardware",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "tarrow_prairie_biz09",
+     "Name": "Marsh Spoonbill Gas",
+     "Kind": "GasStation",
+     "X": -5112.0,
+     "Z": -975.0,
+     "Width": 36,
+     "Depth": 30,
+     "Height": 6,
+     "RotationY": 0,
+     "Capacity": 12,
+     "OpenMinute": 0,
+     "CloseMinute": 0,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 972,
+      "LotAreaSqm": 2160,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 133000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "gas_station",
+      "Name": "Marsh Spoonbill Gas",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "tarrow_prairie_biz10",
+     "Name": "Carrizales Auto Repair",
+     "Kind": "Garage",
+     "X": -5070.0,
+     "Z": -978.0,
+     "Width": 32,
+     "Depth": 24,
+     "Height": 7,
+     "RotationY": 0,
+     "Capacity": 10,
+     "OpenMinute": 480,
+     "CloseMinute": 1080,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 691,
+      "LotAreaSqm": 1536,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 68400000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "auto_garage",
+      "Name": "Carrizales Auto Repair",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
+     "Key": "tarrow_prairie_biz11",
+     "Name": "Tarrow Prairie Food Mart",
+     "Kind": "Shop",
+     "X": -5037.0,
      "Z": -982.0,
      "Width": 18,
      "Depth": 16,
@@ -19027,17 +19187,17 @@
      },
      "Business": {
       "TemplateId": "corner_store",
-      "Name": "Saucier Grocery",
+      "Name": "Tarrow Prairie Food Mart",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "tarrow_prairie_biz11",
-     "Name": "Tarrow Prairie Grill",
+     "Key": "tarrow_prairie_biz12",
+     "Name": "Levee Compass Diner",
      "Kind": "Restaurant",
-     "X": -5065.0,
-     "Z": -981.0,
+     "X": -5425.0,
+     "Z": -943.0,
      "Width": 22,
      "Depth": 18,
      "Height": 5,
@@ -19059,16 +19219,16 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Tarrow Prairie Grill",
+      "Name": "Levee Compass Diner",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
-     "Key": "tarrow_prairie_biz12",
-     "Name": "Robichaux Lumber & Hardware",
+     "Key": "tarrow_prairie_biz13",
+     "Name": "Tarrow Prairie Hardware",
      "Kind": "Shop",
-     "X": -5416.0,
+     "X": -5386.0,
      "Z": -937.0,
      "Width": 40,
      "Depth": 30,
@@ -19091,7 +19251,7 @@
      },
      "Business": {
       "TemplateId": "hardware_store",
-      "Name": "Robichaux Lumber & Hardware",
+      "Name": "Tarrow Prairie Hardware",
       "Owner": "npc",
       "Staff": -1
      }
@@ -19103,161 +19263,6 @@
      "Kind": "Residence",
      "OriginX": -5428.0,
      "OriginZ": -779.0,
-     "Rows": 2,
-     "Columns": 2,
-     "SpacingX": 160,
-     "SpacingZ": 180,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 5,
-     "MaxHeight": 7,
-     "MinCapacity": 3,
-     "MaxCapacity": 6,
-     "VacancyRate": 0.06,
-     "StreetNames": [
-      "Hazel Ct"
-     ],
-     "Property": {
-      "Kind": "House",
-      "Zoning": "Agricultural",
-      "FloorAreaSqm": 160,
-      "LotAreaSqm": 60000,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 38000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "tarrow_prairie_farms1",
-     "Kind": "Factory",
-     "OriginX": -4966.0,
-     "OriginZ": -1221.0,
-     "Rows": 1,
-     "Columns": 1,
-     "SpacingX": 240,
-     "SpacingZ": 220,
-     "Width": 40,
-     "Depth": 30,
-     "MinHeight": 6,
-     "MaxHeight": 10,
-     "MinCapacity": 4,
-     "MaxCapacity": 14,
-     "VacancyRate": 0.05,
-     "StreetNames": [
-      "Poplar Row"
-     ],
-     "Property": {
-      "Kind": "Land",
-      "Zoning": "Agricultural",
-      "FloorAreaSqm": 900,
-      "LotAreaSqm": 120000,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 65000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "tarrow_prairie_farmstead2",
-     "Kind": "Residence",
-     "OriginX": -4978.0,
-     "OriginZ": -779.0,
-     "Rows": 2,
-     "Columns": 2,
-     "SpacingX": 160,
-     "SpacingZ": 180,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 5,
-     "MaxHeight": 7,
-     "MinCapacity": 3,
-     "MaxCapacity": 6,
-     "VacancyRate": 0.06,
-     "StreetNames": [
-      "Arbor Ave"
-     ],
-     "Property": {
-      "Kind": "House",
-      "Zoning": "Agricultural",
-      "FloorAreaSqm": 160,
-      "LotAreaSqm": 60000,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 38000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "tarrow_prairie_farms3",
-     "Kind": "Factory",
-     "OriginX": -5866.0,
-     "OriginZ": -1221.0,
-     "Rows": 1,
-     "Columns": 1,
-     "SpacingX": 240,
-     "SpacingZ": 220,
-     "Width": 40,
-     "Depth": 30,
-     "MinHeight": 6,
-     "MaxHeight": 10,
-     "MinCapacity": 4,
-     "MaxCapacity": 14,
-     "VacancyRate": 0.05,
-     "StreetNames": [
-      "Birch Cir"
-     ],
-     "Property": {
-      "Kind": "Land",
-      "Zoning": "Agricultural",
-      "FloorAreaSqm": 900,
-      "LotAreaSqm": 120000,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 65000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "tarrow_prairie_ranch4",
-     "Kind": "Residence",
-     "OriginX": -5878.0,
-     "OriginZ": -779.0,
-     "Rows": 10,
-     "Columns": 14,
-     "SpacingX": 30,
-     "SpacingZ": 40,
-     "Width": 16,
-     "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
-     "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
-     "StreetNames": [
-      "Dogwood Ct"
-     ],
-     "Property": {
-      "Kind": "House",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
-      "Bedrooms": 3,
-      "Floors": 1,
-      "BaseValueCents": 24000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     }
-    },
-    {
-     "KeyPrefix": "tarrow_prairie_farmstead5",
-     "Kind": "Residence",
-     "OriginX": -5428.0,
-     "OriginZ": -1679.0,
      "Rows": 2,
      "Columns": 2,
      "SpacingX": 160,
@@ -19285,10 +19290,103 @@
      }
     },
     {
-     "KeyPrefix": "tarrow_prairie_farmstead6",
+     "KeyPrefix": "tarrow_prairie_ranch1",
      "Kind": "Residence",
-     "OriginX": -5428.0,
-     "OriginZ": -329.0,
+     "OriginX": -4978.0,
+     "OriginZ": -1229.0,
+     "Rows": 10,
+     "Columns": 14,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Saffron Way"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "tarrow_prairie_farms2",
+     "Kind": "Factory",
+     "OriginX": -4966.0,
+     "OriginZ": -771.0,
+     "Rows": 1,
+     "Columns": 1,
+     "SpacingX": 240,
+     "SpacingZ": 220,
+     "Width": 40,
+     "Depth": 30,
+     "MinHeight": 6,
+     "MaxHeight": 10,
+     "MinCapacity": 4,
+     "MaxCapacity": 14,
+     "VacancyRate": 0.05,
+     "StreetNames": [
+      "Delta Row"
+     ],
+     "Property": {
+      "Kind": "Land",
+      "Zoning": "Agricultural",
+      "FloorAreaSqm": 900,
+      "LotAreaSqm": 120000,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 65000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "tarrow_prairie_farms3",
+     "Kind": "Factory",
+     "OriginX": -5866.0,
+     "OriginZ": -1221.0,
+     "Rows": 1,
+     "Columns": 1,
+     "SpacingX": 240,
+     "SpacingZ": 220,
+     "Width": 40,
+     "Depth": 30,
+     "MinHeight": 6,
+     "MaxHeight": 10,
+     "MinCapacity": 4,
+     "MaxCapacity": 14,
+     "VacancyRate": 0.05,
+     "StreetNames": [
+      "Sabine Rd"
+     ],
+     "Property": {
+      "Kind": "Land",
+      "Zoning": "Agricultural",
+      "FloorAreaSqm": 900,
+      "LotAreaSqm": 120000,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 65000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "tarrow_prairie_farmstead4",
+     "Kind": "Residence",
+     "OriginX": -5878.0,
+     "OriginZ": -779.0,
      "Rows": 2,
      "Columns": 2,
      "SpacingX": 160,
@@ -19301,7 +19399,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Saffron Way"
+      "Chenier Trace"
      ],
      "Property": {
       "Kind": "House",
@@ -19316,9 +19414,9 @@
      }
     },
     {
-     "KeyPrefix": "tarrow_prairie_farmstead7",
+     "KeyPrefix": "tarrow_prairie_farmstead5",
      "Kind": "Residence",
-     "OriginX": -4978.0,
+     "OriginX": -5428.0,
      "OriginZ": -1679.0,
      "Rows": 2,
      "Columns": 2,
@@ -19332,7 +19430,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Delta Row"
+      "Periwinkle Loop"
      ],
      "Property": {
       "Kind": "House",
@@ -19342,6 +19440,68 @@
       "Bedrooms": 3,
       "Floors": 1,
       "BaseValueCents": 38000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "tarrow_prairie_farms6",
+     "Kind": "Factory",
+     "OriginX": -5416.0,
+     "OriginZ": -321.0,
+     "Rows": 1,
+     "Columns": 1,
+     "SpacingX": 240,
+     "SpacingZ": 220,
+     "Width": 40,
+     "Depth": 30,
+     "MinHeight": 6,
+     "MaxHeight": 10,
+     "MinCapacity": 4,
+     "MaxCapacity": 14,
+     "VacancyRate": 0.05,
+     "StreetNames": [
+      "Brook Trace"
+     ],
+     "Property": {
+      "Kind": "Land",
+      "Zoning": "Agricultural",
+      "FloorAreaSqm": 900,
+      "LotAreaSqm": 120000,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 65000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     }
+    },
+    {
+     "KeyPrefix": "tarrow_prairie_ranch7",
+     "Kind": "Residence",
+     "OriginX": -4978.0,
+     "OriginZ": -1679.0,
+     "Rows": 10,
+     "Columns": 14,
+     "SpacingX": 30,
+     "SpacingZ": 40,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 4.5,
+     "MaxHeight": 6,
+     "MinCapacity": 3,
+     "MaxCapacity": 5,
+     "VacancyRate": 0.04,
+     "StreetNames": [
+      "Teal Rd"
+     ],
+     "Property": {
+      "Kind": "House",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 150,
+      "LotAreaSqm": 700,
+      "Bedrooms": 3,
+      "Floors": 1,
+      "BaseValueCents": 24000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -19363,7 +19523,7 @@
      "MaxCapacity": 6,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Sabine Rd"
+      "Sassafras Rd"
      ],
      "Property": {
       "Kind": "House",
@@ -19378,63 +19538,63 @@
      }
     },
     {
-     "KeyPrefix": "tarrow_prairie_farms9",
-     "Kind": "Factory",
-     "OriginX": -4516.0,
-     "OriginZ": -1221.0,
-     "Rows": 1,
-     "Columns": 1,
-     "SpacingX": 240,
-     "SpacingZ": 220,
-     "Width": 40,
-     "Depth": 30,
-     "MinHeight": 6,
-     "MaxHeight": 10,
-     "MinCapacity": 4,
-     "MaxCapacity": 14,
-     "VacancyRate": 0.05,
+     "KeyPrefix": "tarrow_prairie_farmstead9",
+     "Kind": "Residence",
+     "OriginX": -4528.0,
+     "OriginZ": -1229.0,
+     "Rows": 2,
+     "Columns": 2,
+     "SpacingX": 160,
+     "SpacingZ": 180,
+     "Width": 16,
+     "Depth": 14,
+     "MinHeight": 5,
+     "MaxHeight": 7,
+     "MinCapacity": 3,
+     "MaxCapacity": 6,
+     "VacancyRate": 0.06,
      "StreetNames": [
-      "Chenier Trace"
+      "Nutmeg Ave"
      ],
      "Property": {
-      "Kind": "Land",
+      "Kind": "House",
       "Zoning": "Agricultural",
-      "FloorAreaSqm": 900,
-      "LotAreaSqm": 120000,
-      "Bedrooms": 0,
+      "FloorAreaSqm": 160,
+      "LotAreaSqm": 60000,
+      "Bedrooms": 3,
       "Floors": 1,
-      "BaseValueCents": 65000000,
+      "BaseValueCents": 38000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
     },
     {
-     "KeyPrefix": "tarrow_prairie_ranch10",
+     "KeyPrefix": "tarrow_prairie_farmstead10",
      "Kind": "Residence",
      "OriginX": -4528.0,
      "OriginZ": -779.0,
-     "Rows": 10,
-     "Columns": 14,
-     "SpacingX": 30,
-     "SpacingZ": 40,
+     "Rows": 2,
+     "Columns": 2,
+     "SpacingX": 160,
+     "SpacingZ": 180,
      "Width": 16,
      "Depth": 14,
-     "MinHeight": 4.5,
-     "MaxHeight": 6,
+     "MinHeight": 5,
+     "MaxHeight": 7,
      "MinCapacity": 3,
-     "MaxCapacity": 5,
-     "VacancyRate": 0.04,
+     "MaxCapacity": 6,
+     "VacancyRate": 0.06,
      "StreetNames": [
-      "Periwinkle Loop"
+      "Marigold Dr"
      ],
      "Property": {
       "Kind": "House",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 150,
-      "LotAreaSqm": 700,
+      "Zoning": "Agricultural",
+      "FloorAreaSqm": 160,
+      "LotAreaSqm": 60000,
       "Bedrooms": 3,
       "Floors": 1,
-      "BaseValueCents": 24000000,
+      "BaseValueCents": 38000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -19456,7 +19616,7 @@
      "MaxCapacity": 14,
      "VacancyRate": 0.05,
      "StreetNames": [
-      "Brook Trace"
+      "Persimmon Ct"
      ],
      "Property": {
       "Kind": "Land",
@@ -19621,7 +19781,7 @@
     },
     {
      "Key": "kessler_field_biz00",
-     "Name": "Twin Gator Gas",
+     "Name": "Anchor Pelican Gas",
      "Kind": "GasStation",
      "X": -4372.0,
      "Z": 2829.0,
@@ -19646,14 +19806,14 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Twin Gator Gas",
+      "Name": "Anchor Pelican Gas",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "kessler_field_biz01",
-     "Name": "Pelican Buoy Gas",
+     "Name": "Lucky Lighthouse Gas",
      "Kind": "GasStation",
      "X": -4328.0,
      "Z": 2829.0,
@@ -19678,14 +19838,14 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Pelican Buoy Gas",
+      "Name": "Lucky Lighthouse Gas",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "kessler_field_biz02",
-     "Name": "Southern Lighthouse Diner",
+     "Name": "Kingsley's Diner",
      "Kind": "Restaurant",
      "X": -4291.0,
      "Z": 2823.0,
@@ -19710,14 +19870,14 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Southern Lighthouse Diner",
+      "Name": "Kingsley's Diner",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "kessler_field_biz03",
-     "Name": "Northside Tugboat Coffee",
+     "Name": "Chau Roasters",
      "Kind": "Restaurant",
      "X": -4265.0,
      "Z": 2821.0,
@@ -19742,48 +19902,16 @@
      },
      "Business": {
       "TemplateId": "coffee_shop",
-      "Name": "Northside Tugboat Coffee",
+      "Name": "Chau Roasters",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "kessler_field_biz04",
-     "Name": "Driftwood Freight Depot",
-     "Kind": "Warehouse",
-     "X": -4446.0,
-     "Z": 2887.0,
-     "Width": 80,
-     "Depth": 50,
-     "Height": 11,
-     "RotationY": 0,
-     "Capacity": 120,
-     "OpenMinute": 360,
-     "CloseMinute": 1320,
-     "Tags": [],
-     "Property": {
-      "Kind": "Commercial",
-      "Zoning": "Commercial",
-      "FloorAreaSqm": 3600,
-      "LotAreaSqm": 8000,
-      "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 420000000,
-      "Variation": 0.12,
-      "Owner": "npc"
-     },
-     "Business": {
-      "TemplateId": "logistics_depot",
-      "Name": "Driftwood Freight Depot",
-      "Owner": "npc",
-      "Staff": -1
-     }
-    },
-    {
-     "Key": "kessler_field_biz05",
      "Name": "Kessler Field Distribution Center",
      "Kind": "Warehouse",
-     "X": -4358.0,
+     "X": -4446.0,
      "Z": 2887.0,
      "Width": 80,
      "Depth": 50,
@@ -19812,8 +19940,40 @@
      }
     },
     {
+     "Key": "kessler_field_biz05",
+     "Name": "Luong Logistics",
+     "Kind": "Warehouse",
+     "X": -4358.0,
+     "Z": 2887.0,
+     "Width": 80,
+     "Depth": 50,
+     "Height": 11,
+     "RotationY": 0,
+     "Capacity": 120,
+     "OpenMinute": 360,
+     "CloseMinute": 1320,
+     "Tags": [],
+     "Property": {
+      "Kind": "Commercial",
+      "Zoning": "Commercial",
+      "FloorAreaSqm": 3600,
+      "LotAreaSqm": 8000,
+      "Bedrooms": 0,
+      "Floors": 1,
+      "BaseValueCents": 420000000,
+      "Variation": 0.12,
+      "Owner": "npc"
+     },
+     "Business": {
+      "TemplateId": "logistics_depot",
+      "Name": "Luong Logistics",
+      "Owner": "npc",
+      "Staff": -1
+     }
+    },
+    {
      "Key": "kessler_field_biz06",
-     "Name": "Babineaux Auto Repair",
+     "Name": "Wiltz Auto Repair",
      "Kind": "Garage",
      "X": -4294.0,
      "Z": 2874.0,
@@ -19838,7 +19998,7 @@
      },
      "Business": {
       "TemplateId": "auto_garage",
-      "Name": "Babineaux Auto Repair",
+      "Name": "Wiltz Auto Repair",
       "Owner": "npc",
       "Staff": -1
      }
@@ -19877,7 +20037,7 @@
     },
     {
      "Key": "kessler_field_biz08",
-     "Name": "Marsh Anchor Diner",
+     "Name": "Kessler Field Grill",
      "Kind": "Restaurant",
      "X": -4407.0,
      "Z": 2929.0,
@@ -19902,14 +20062,14 @@
      },
      "Business": {
       "TemplateId": "diner",
-      "Name": "Marsh Anchor Diner",
+      "Name": "Kessler Field Grill",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "kessler_field_biz09",
-     "Name": "Brass Freight Depot",
+     "Name": "Mouton Logistics",
      "Kind": "Warehouse",
      "X": -4348.0,
      "Z": 2945.0,
@@ -19934,14 +20094,14 @@
      },
      "Business": {
       "TemplateId": "logistics_depot",
-      "Name": "Brass Freight Depot",
+      "Name": "Mouton Logistics",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "kessler_field_biz10",
-     "Name": "Salt Wharf Garage",
+     "Name": "Harbor Wharf Garage",
      "Kind": "Garage",
      "X": -4284.0,
      "Z": 2932.0,
@@ -19966,14 +20126,14 @@
      },
      "Business": {
       "TemplateId": "auto_garage",
-      "Name": "Salt Wharf Garage",
+      "Name": "Harbor Wharf Garage",
       "Owner": "npc",
       "Staff": -1
      }
     },
     {
      "Key": "kessler_field_biz11",
-     "Name": "Pelican Wharf Gas",
+     "Name": "Kessler Field Fuel Stop",
      "Kind": "GasStation",
      "X": -4242.0,
      "Z": 2935.0,
@@ -19998,7 +20158,7 @@
      },
      "Business": {
       "TemplateId": "gas_station",
-      "Name": "Pelican Wharf Gas",
+      "Name": "Kessler Field Fuel Stop",
       "Owner": "npc",
       "Staff": -1
      }
@@ -20022,7 +20182,7 @@
      "MaxCapacity": 70,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Seagrass Cir"
+      "Verbena St"
      ],
      "Property": {
       "Kind": "Warehouse",
@@ -20053,7 +20213,7 @@
      "MaxCapacity": 12,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Laurel Row"
+      "Live Oak Ln"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -20084,7 +20244,7 @@
      "MaxCapacity": 70,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Crescent Row"
+      "Hibiscus Trace"
      ],
      "Property": {
       "Kind": "Warehouse",
@@ -20099,32 +20259,32 @@
      }
     },
     {
-     "KeyPrefix": "kessler_field_fourplex3",
-     "Kind": "ApartmentBuilding",
-     "OriginX": -4777.0,
-     "OriginZ": 2824.0,
-     "Rows": 6,
-     "Columns": 7,
-     "SpacingX": 36,
-     "SpacingZ": 40,
-     "Width": 18,
-     "Depth": 20,
-     "MinHeight": 7,
-     "MaxHeight": 9,
-     "MinCapacity": 8,
-     "MaxCapacity": 12,
-     "VacancyRate": 0.06,
+     "KeyPrefix": "kessler_field_warehouses3",
+     "Kind": "Warehouse",
+     "OriginX": -4754.0,
+     "OriginZ": 2836.0,
+     "Rows": 3,
+     "Columns": 2,
+     "SpacingX": 110,
+     "SpacingZ": 80,
+     "Width": 64,
+     "Depth": 44,
+     "MinHeight": 9,
+     "MaxHeight": 13,
+     "MinCapacity": 20,
+     "MaxCapacity": 70,
+     "VacancyRate": 0.12,
      "StreetNames": [
-      "Willow Row"
+      "Pinehurst Pl"
      ],
      "Property": {
-      "Kind": "Apartment",
-      "Zoning": "Residential",
-      "FloorAreaSqm": 420,
-      "LotAreaSqm": 700,
+      "Kind": "Warehouse",
+      "Zoning": "Industrial",
+      "FloorAreaSqm": 2600,
+      "LotAreaSqm": 5400,
       "Bedrooms": 0,
-      "Floors": 2,
-      "BaseValueCents": 52000000,
+      "Floors": 1,
+      "BaseValueCents": 140000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -20146,7 +20306,7 @@
      "MaxCapacity": 12,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Verbena St"
+      "Sumac St"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -20177,7 +20337,7 @@
      "MaxCapacity": 70,
      "VacancyRate": 0.12,
      "StreetNames": [
-      "Live Oak Ln"
+      "Periwinkle Rd"
      ],
      "Property": {
       "Kind": "Warehouse",
@@ -20208,7 +20368,7 @@
      "MaxCapacity": 12,
      "VacancyRate": 0.06,
      "StreetNames": [
-      "Hibiscus Trace"
+      "Beacon Loop"
      ],
      "Property": {
       "Kind": "Apartment",
@@ -20223,32 +20383,32 @@
      }
     },
     {
-     "KeyPrefix": "kessler_field_warehouses7",
-     "Kind": "Warehouse",
-     "OriginX": -4154.0,
-     "OriginZ": 3136.0,
-     "Rows": 3,
-     "Columns": 2,
-     "SpacingX": 110,
-     "SpacingZ": 80,
-     "Width": 64,
-     "Depth": 44,
-     "MinHeight": 9,
-     "MaxHeight": 13,
-     "MinCapacity": 20,
-     "MaxCapacity": 70,
-     "VacancyRate": 0.12,
+     "KeyPrefix": "kessler_field_fourplex7",
+     "Kind": "ApartmentBuilding",
+     "OriginX": -4177.0,
+     "OriginZ": 3124.0,
+     "Rows": 6,
+     "Columns": 7,
+     "SpacingX": 36,
+     "SpacingZ": 40,
+     "Width": 18,
+     "Depth": 20,
+     "MinHeight": 7,
+     "MaxHeight": 9,
+     "MinCapacity": 8,
+     "MaxCapacity": 12,
+     "VacancyRate": 0.06,
      "StreetNames": [
-      "Pinehurst Pl"
+      "Sequoia Ave"
      ],
      "Property": {
-      "Kind": "Warehouse",
-      "Zoning": "Industrial",
-      "FloorAreaSqm": 2600,
-      "LotAreaSqm": 5400,
+      "Kind": "Apartment",
+      "Zoning": "Residential",
+      "FloorAreaSqm": 420,
+      "LotAreaSqm": 700,
       "Bedrooms": 0,
-      "Floors": 1,
-      "BaseValueCents": 140000000,
+      "Floors": 2,
+      "BaseValueCents": 52000000,
       "Variation": 0.12,
       "Owner": "npc"
      }
@@ -21050,7 +21210,7 @@
    ]
   },
   {
-   "Name": "Egret Trace",
+   "Name": "Lotus Ave",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21061,7 +21221,7 @@
    ]
   },
   {
-   "Name": "Sandpiper Trace",
+   "Name": "Crestview Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21072,7 +21232,7 @@
    ]
   },
   {
-   "Name": "Pinehurst St",
+   "Name": "Myrtle Trace",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21094,7 +21254,7 @@
    ]
   },
   {
-   "Name": "Osprey Ct",
+   "Name": "Pinehurst St",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21105,7 +21265,7 @@
    ]
   },
   {
-   "Name": "Hawthorne Cir",
+   "Name": "Wisteria Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21116,7 +21276,7 @@
    ]
   },
   {
-   "Name": "Sandpiper Loop",
+   "Name": "Osprey Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21127,29 +21287,29 @@
    ]
   },
   {
+   "Name": "Hawthorne Cir",
+   "Width": 10,
+   "Kind": "street",
+   "Points": [
+    -2280,
+    120,
+    -2280,
+    1680
+   ]
+  },
+  {
+   "Name": "Sandpiper Loop",
+   "Width": 10,
+   "Kind": "street",
+   "Points": [
+    -2020,
+    120,
+    -2020,
+    1680
+   ]
+  },
+  {
    "Name": "Camellia Way",
-   "Width": 10,
-   "Kind": "street",
-   "Points": [
-    -2280,
-    120,
-    -2280,
-    1680
-   ]
-  },
-  {
-   "Name": "Driftwood Row",
-   "Width": 10,
-   "Kind": "street",
-   "Points": [
-    -2020,
-    120,
-    -2020,
-    1680
-   ]
-  },
-  {
-   "Name": "Crestview Dr",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21171,29 +21331,29 @@
    ]
   },
   {
+   "Name": "Crestview Dr",
+   "Width": 10,
+   "Kind": "street",
+   "Points": [
+    -1240,
+    120,
+    -1240,
+    1680
+   ]
+  },
+  {
+   "Name": "Sequoia Pl",
+   "Width": 10,
+   "Kind": "street",
+   "Points": [
+    -980,
+    120,
+    -980,
+    1680
+   ]
+  },
+  {
    "Name": "Sugarberry St",
-   "Width": 10,
-   "Kind": "street",
-   "Points": [
-    -1240,
-    120,
-    -1240,
-    1680
-   ]
-  },
-  {
-   "Name": "Nutmeg Dr",
-   "Width": 10,
-   "Kind": "street",
-   "Points": [
-    -980,
-    120,
-    -980,
-    1680
-   ]
-  },
-  {
-   "Name": "Laurel Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21578,7 +21738,7 @@
    ]
   },
   {
-   "Name": "Thistle Ct",
+   "Name": "Audubon Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21589,7 +21749,7 @@
    ]
   },
   {
-   "Name": "Audubon Rd",
+   "Name": "Ivy Way",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21600,7 +21760,7 @@
    ]
   },
   {
-   "Name": "Ivy Way",
+   "Name": "Pelham Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21622,7 +21782,7 @@
    ]
   },
   {
-   "Name": "Belmont Pl",
+   "Name": "Reed Ave",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21633,7 +21793,7 @@
    ]
   },
   {
-   "Name": "Reed Ave",
+   "Name": "Audubon Pl",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21644,7 +21804,7 @@
    ]
   },
   {
-   "Name": "Audubon Pl",
+   "Name": "Reed St",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21655,29 +21815,29 @@
    ]
   },
   {
-   "Name": "Reed St",
-   "Width": 10,
-   "Kind": "street",
-   "Points": [
-    2450,
-    850,
-    2450,
-    2350
-   ]
-  },
-  {
    "Name": "Osprey Way",
    "Width": 10,
    "Kind": "street",
    "Points": [
-    2700,
+    2450,
     850,
-    2700,
+    2450,
     2350
    ]
   },
   {
    "Name": "Azalea Ct",
+   "Width": 10,
+   "Kind": "street",
+   "Points": [
+    2700,
+    850,
+    2700,
+    2350
+   ]
+  },
+  {
+   "Name": "Pinehurst Way",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21699,24 +21859,13 @@
    ]
   },
   {
-   "Name": "Crestview Way",
-   "Width": 10,
-   "Kind": "street",
-   "Points": [
-    3450,
-    850,
-    3450,
-    2350
-   ]
-  },
-  {
    "Name": "Egret Pl",
    "Width": 10,
    "Kind": "street",
    "Points": [
-    3700,
+    3450,
     850,
-    3700,
+    3450,
     2350
    ]
   },
@@ -21725,6 +21874,17 @@
    "Width": 10,
    "Kind": "street",
    "Points": [
+    3700,
+    850,
+    3700,
+    2350
+   ]
+  },
+  {
+   "Name": "Iberia Ln",
+   "Width": 10,
+   "Kind": "street",
+   "Points": [
     3950,
     850,
     3950,
@@ -21732,7 +21892,7 @@
    ]
   },
   {
-   "Name": "Sassafras Row",
+   "Name": "Crescent Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21743,7 +21903,7 @@
    ]
   },
   {
-   "Name": "Vine Row",
+   "Name": "Pinehurst Ave",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21754,7 +21914,7 @@
    ]
   },
   {
-   "Name": "Zinnia Dr",
+   "Name": "Verbena Pl",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21776,7 +21936,7 @@
    ]
   },
   {
-   "Name": "Ambrose Pl",
+   "Name": "Sassafras Row",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21787,7 +21947,7 @@
    ]
   },
   {
-   "Name": "Fernwood Trace",
+   "Name": "Glenwood Loop",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21798,7 +21958,7 @@
    ]
   },
   {
-   "Name": "Crestview Trace",
+   "Name": "Shady Oak Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21809,7 +21969,7 @@
    ]
   },
   {
-   "Name": "Yaupon Trace",
+   "Name": "Indigo Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21820,7 +21980,7 @@
    ]
   },
   {
-   "Name": "Crescent Cir",
+   "Name": "Teal Row",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21831,7 +21991,7 @@
    ]
   },
   {
-   "Name": "Pinehurst Ave",
+   "Name": "Verbena Ln",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21853,7 +22013,7 @@
    ]
   },
   {
-   "Name": "Crestview Ct",
+   "Name": "Camellia Pl",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21864,7 +22024,7 @@
    ]
   },
   {
-   "Name": "Gardenia Loop",
+   "Name": "Holt Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21875,7 +22035,7 @@
    ]
   },
   {
-   "Name": "Glenwood Loop",
+   "Name": "Mallard Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21886,7 +22046,7 @@
    ]
   },
   {
-   "Name": "Wren Dr",
+   "Name": "Dogwood Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21897,7 +22057,7 @@
    ]
   },
   {
-   "Name": "Crestview Loop",
+   "Name": "Zinnia Loop",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21908,7 +22068,7 @@
    ]
   },
   {
-   "Name": "Ashland Dr",
+   "Name": "Dauphine Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21930,7 +22090,7 @@
    ]
   },
   {
-   "Name": "Myrtle Ct",
+   "Name": "Dunmore Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21941,7 +22101,7 @@
    ]
   },
   {
-   "Name": "Chenier Dr",
+   "Name": "Primrose Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21952,7 +22112,7 @@
    ]
   },
   {
-   "Name": "Iberia Trace",
+   "Name": "Mallard Pl",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21963,7 +22123,7 @@
    ]
   },
   {
-   "Name": "Maple Loop",
+   "Name": "Juniper Dr",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21974,7 +22134,7 @@
    ]
   },
   {
-   "Name": "Dauphine Rd",
+   "Name": "Poplar Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -21985,7 +22145,7 @@
    ]
   },
   {
-   "Name": "Beacon St",
+   "Name": "Tallow Ave",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22007,7 +22167,7 @@
    ]
   },
   {
-   "Name": "Primrose Rd",
+   "Name": "Lakeshore St",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22018,7 +22178,7 @@
    ]
   },
   {
-   "Name": "Mallard Pl",
+   "Name": "Glenwood St",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22029,7 +22189,7 @@
    ]
   },
   {
-   "Name": "Juniper Dr",
+   "Name": "Clearwater Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22040,7 +22200,7 @@
    ]
   },
   {
-   "Name": "Esplanade Dr",
+   "Name": "Tallow Row",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22051,7 +22211,7 @@
    ]
   },
   {
-   "Name": "Sweetgum Trace",
+   "Name": "Bayberry Trace",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22062,7 +22222,7 @@
    ]
   },
   {
-   "Name": "Mistletoe Rd",
+   "Name": "Thistle Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22084,7 +22244,7 @@
    ]
   },
   {
-   "Name": "Larkspur Cir",
+   "Name": "Sassafras Ave",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22095,7 +22255,7 @@
    ]
   },
   {
-   "Name": "Yaupon Cir",
+   "Name": "Heron Ln",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22106,7 +22266,7 @@
    ]
   },
   {
-   "Name": "Beacon Way",
+   "Name": "Sparrow St",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22117,7 +22277,7 @@
    ]
   },
   {
-   "Name": "Mimosa Row",
+   "Name": "Orchid Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22128,7 +22288,7 @@
    ]
   },
   {
-   "Name": "Bayberry Trace",
+   "Name": "Juniper Way",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22139,7 +22299,7 @@
    ]
   },
   {
-   "Name": "Persimmon Ave",
+   "Name": "Pampas Ave",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22161,7 +22321,7 @@
    ]
   },
   {
-   "Name": "Heron Ln",
+   "Name": "Saffron St",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22172,7 +22332,7 @@
    ]
   },
   {
-   "Name": "Sparrow St",
+   "Name": "Camellia Row",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22183,7 +22343,7 @@
    ]
   },
   {
-   "Name": "Orchid Ct",
+   "Name": "Primrose Ln",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22194,7 +22354,7 @@
    ]
   },
   {
-   "Name": "Plover Ln",
+   "Name": "Cedar Loop",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22205,7 +22365,7 @@
    ]
   },
   {
-   "Name": "Belmont Ct",
+   "Name": "Primrose Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22227,7 +22387,7 @@
    ]
   },
   {
-   "Name": "Gardenia Dr",
+   "Name": "Chestnut St",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22304,7 +22464,7 @@
    ]
   },
   {
-   "Name": "Teal Dr",
+   "Name": "Calcasieu Way",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22315,7 +22475,7 @@
    ]
   },
   {
-   "Name": "Reed Cir",
+   "Name": "Camellia Dr",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22337,7 +22497,7 @@
    ]
   },
   {
-   "Name": "Ashland Cir",
+   "Name": "Beacon Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22348,7 +22508,7 @@
    ]
   },
   {
-   "Name": "Live Oak Dr",
+   "Name": "Pelham Way",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22359,7 +22519,7 @@
    ]
   },
   {
-   "Name": "Calcasieu Way",
+   "Name": "Hazel Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22370,7 +22530,7 @@
    ]
   },
   {
-   "Name": "Camellia Dr",
+   "Name": "Poplar Row",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22392,7 +22552,7 @@
    ]
   },
   {
-   "Name": "Beacon Rd",
+   "Name": "Birch Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22403,7 +22563,7 @@
    ]
   },
   {
-   "Name": "Pelham Way",
+   "Name": "Dogwood Ct",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22414,7 +22574,7 @@
    ]
   },
   {
-   "Name": "Iberia Cir",
+   "Name": "Myrtle Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22425,7 +22585,7 @@
    ]
   },
   {
-   "Name": "Delta Trace",
+   "Name": "Orchid Ave",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22447,7 +22607,7 @@
    ]
   },
   {
-   "Name": "Hollyhock Loop",
+   "Name": "Birch Rd",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22458,7 +22618,7 @@
    ]
   },
   {
-   "Name": "Myrtle Cir",
+   "Name": "Verbena Loop",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22469,7 +22629,7 @@
    ]
   },
   {
-   "Name": "Orchid Ave",
+   "Name": "Yucca Way",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22480,7 +22640,7 @@
    ]
   },
   {
-   "Name": "Seagrass Ln",
+   "Name": "Seagrass Cir",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22502,7 +22662,7 @@
    ]
   },
   {
-   "Name": "Verbena Loop",
+   "Name": "Crescent Row",
    "Width": 10,
    "Kind": "street",
    "Points": [
@@ -22513,7 +22673,7 @@
    ]
   },
   {
-   "Name": "Yucca Way",
+   "Name": "Willow Row",
    "Width": 10,
    "Kind": "street",
    "Points": [

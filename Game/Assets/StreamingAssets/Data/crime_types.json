@@ -232,5 +232,23 @@
     "BaseFineCents": 500000,
     "BaseJailDays": 0,
     "ReportLikelihood": 0.7
+  },
+  {
+    "Id": "unlawful_discharge",
+    "DisplayName": "Unlawful Discharge of a Firearm",
+    "Category": "Violent",
+    "Severity": 3,
+    "BaseFineCents": 250000,
+    "BaseJailDays": 10,
+    "ReportLikelihood": 0.9
+  },
+  {
+    "Id": "unlicensed_firearm",
+    "DisplayName": "Carrying a Firearm Without a Permit",
+    "Category": "Violent",
+    "Severity": 3,
+    "BaseFineCents": 200000,
+    "BaseJailDays": 5,
+    "ReportLikelihood": 0.5
   }
 ]

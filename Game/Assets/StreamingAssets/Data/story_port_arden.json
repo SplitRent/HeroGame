@@ -12,7 +12,9 @@
     "business.buy",
     "business.start",
     "vehicle.buy",
-    "finance.loan"
+    "finance.loan",
+    "weapons.buy",
+    "civic.firearm_permit"
   ],
   "Cast": [
     {

@@ -472,5 +472,31 @@
       "retail"
     ],
     "LootTag": "vehicle"
+  },
+  {
+    "Id": "sporting_goods",
+    "DisplayName": "Sporting Goods & Outfitters",
+    "PlaceKind": "Shop",
+    "BaseCustomersPerHour": 9,
+    "AverageTicketCents": 7800,
+    "CostOfGoodsRatio": 0.58,
+    "StaffRequired": 4,
+    "HourlyWageCents": 1650,
+    "OpenMinute": 540,
+    "CloseMinute": 1200,
+    "PriceElasticity": 1.1,
+    "WeatherSensitivity": 0.2,
+    "NightlifeFactor": 0.0,
+    "DailyFixedCostCents": 16000,
+    "PurchasePriceCents": 72000000,
+    "InventoryDays": 20,
+    "Tags": [
+      "retail",
+      "outdoors",
+      "firearms"
+    ],
+    "FootTrafficSensitivity": 0.9,
+    "OperatingExpenseRatio": 0.15,
+    "LootTag": "sporting"
   }
 ]

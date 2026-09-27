@@ -95,6 +95,24 @@ namespace HeroGame.Core.Simulation
                 }
             }
             var incidents = ChargeableIncidents(c);
+            // A firearm carried without a permit is its own offence, found at the search.
+            if (!_w.Combat.HasLicense(c, CombatService.FirearmPermit))
+                foreach (var weapon in _w.Content.Weapons)
+                {
+                    if (!string.IsNullOrEmpty(weapon.RequiresLicense) && CombatService.Count(c, weapon.ItemId) > 0)
+                    {
+                        var carrying = new CrimeIncident
+                        {
+                            Id = _w.Ids.Next(EntityKind.CrimeIncident), CrimeTypeId = "unlicensed_firearm", Perpetrator = c.CharacterId, OccurredAt = _w.Clock.Now,
+                            ReportedToPolice = true, ReportedAt = _w.Clock.Now, Position = c.LastPosition,
+                        };
+                        S.Incidents.Add(carrying);
+                        S.Evidence.Add(new EvidenceItem { Kind = EvidenceKind.PoliceObservation, Incident = carrying.Id, Suspect = c.CharacterId, Confidence = 1f, CollectedAt = _w.Clock.Now, Note = "Found at search" });
+                        incidents.Add(carrying);
+                        c.Inventory.RemoveAll(s => s.ItemId == weapon.ItemId || s.ItemId == weapon.AmmoItemId);
+                        break;
+                    }
+                }
             if (resisted)
             {
                 var evading = new CrimeIncident

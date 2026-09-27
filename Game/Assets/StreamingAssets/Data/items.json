@@ -328,5 +328,83 @@
     "LootTags": [
       "warehouse"
     ]
+  },
+  {
+    "Id": "baseball_bat",
+    "DisplayName": "Aluminium baseball bat",
+    "Category": "weapons",
+    "ValueCents": 4500,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "residence_high",
+      "sporting"
+    ]
+  },
+  {
+    "Id": "folding_knife",
+    "DisplayName": "Folding utility knife",
+    "Category": "weapons",
+    "ValueCents": 3000,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "hardware",
+      "vehicle"
+    ]
+  },
+  {
+    "Id": "pepper_spray",
+    "DisplayName": "Pepper spray canister",
+    "Category": "weapons",
+    "ValueCents": 1500,
+    "Legal": true,
+    "LootTags": [
+      "residence_low",
+      "residence_high",
+      "pickpocket",
+      "vehicle"
+    ]
+  },
+  {
+    "Id": "stun_pistol",
+    "DisplayName": "Arc stun pistol",
+    "Category": "weapons",
+    "ValueCents": 42000,
+    "Legal": true,
+    "LootTags": [
+      "sporting"
+    ]
+  },
+  {
+    "Id": "stun_cartridge",
+    "DisplayName": "Stun pistol cartridge",
+    "Category": "ammunition",
+    "ValueCents": 3500,
+    "Legal": true,
+    "LootTags": [
+      "sporting"
+    ]
+  },
+  {
+    "Id": "compact_pistol",
+    "DisplayName": "Tidewater Arms C9 compact pistol",
+    "Category": "weapons",
+    "ValueCents": 52000,
+    "Legal": true,
+    "LootTags": [
+      "residence_high",
+      "sporting"
+    ]
+  },
+  {
+    "Id": "ammo_9mm",
+    "DisplayName": "9mm cartridges",
+    "Category": "ammunition",
+    "ValueCents": 60,
+    "Legal": true,
+    "LootTags": [
+      "sporting"
+    ]
   }
 ]

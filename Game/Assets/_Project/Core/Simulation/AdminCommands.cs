@@ -66,6 +66,15 @@ namespace HeroGame.Core.Simulation
             Add("ordinance", "ordinance ID enact|repeal ('ordinance' lists them)", Ordinance);
             Add("business", "business nearest|NAME [days N] — inspect or fast-forward a business", Business);
             Add("props", "props [RADIUS] | props break — street furniture near you", Props);
+            Add("give", "give ITEM [N] — put items in your inventory ('give' lists items; weapons come with ammunition)", Give);
+            Add("permit", "permit — issue yourself a firearm permit (skips the fee and background check)", c =>
+            {
+                if (c.Actor == null) return "No character.";
+                c.Actor.Licenses.RemoveAll(l => l.Kind == CombatService.FirearmPermit);
+                c.Actor.Licenses.Add(new Characters.License { Kind = CombatService.FirearmPermit, IssuedDay = _w.Today, ExpiresDay = _w.Today + 365 * CombatService.PermitYears });
+                _w.Dirty.Mark(SaveChunks.CharacterPrefix + c.Actor.CharacterId);
+                return "Firearm permit issued.";
+            });
         }
 
         public IEnumerable<string> Names => _commands.Keys;
@@ -210,6 +219,30 @@ namespace HeroGame.Core.Simulation
         }
 
         // ------------------------------------------------------------------ economy and ownership
+
+        private string Give(Context c)
+        {
+            if (c.Actor == null) return "No character.";
+            if (c.Args.Length == 0)
+            {
+                var ids = new List<string>();
+                foreach (var i in _w.Content.Items) ids.Add(i.Id);
+                return "Items: " + string.Join(", ", ids);
+            }
+            var item = _w.Content.FindItem(c.Args[0]);
+            if (item == null) return "Unknown item '" + c.Args[0] + "'.";
+            var n = Math.Max(1, Math.Min(999, c.Int(1, 1)));
+            c.Actor.Inventory.Add(new Characters.InventoryStack { ItemId = item.Id, Quantity = n });
+            var extra = "";
+            foreach (var w in _w.Content.Weapons)
+                if (w.ItemId == item.Id && w.UsesAmmo)
+                {
+                    c.Actor.Inventory.Add(new Characters.InventoryStack { ItemId = w.AmmoItemId, Quantity = Math.Max(1, w.AmmoPackSize) });
+                    extra = " and " + Math.Max(1, w.AmmoPackSize) + " rounds";
+                }
+            _w.Dirty.Mark(SaveChunks.CharacterPrefix + c.Actor.CharacterId);
+            return "Gave " + n + " × " + item.DisplayName + extra + ".";
+        }
 
         private string Money(Context c)
         {

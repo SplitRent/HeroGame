@@ -31,6 +31,7 @@ namespace HeroGame.Runtime.Online
                     if (AvatarPrefab == null) continue;
                     var go = Instantiate(AvatarPrefab, p.Position.ToVector3(), Quaternion.Euler(0, p.Heading, 0), transform);
                     go.name = p.Name;
+                    go.AddComponent<RemotePlayerTag>().CharacterId = p.CharacterId;
                     entry = (go, p.Position.ToVector3(), p.Heading);
                 }
                 _players[p.CharacterId] = (entry.go, p.Position.ToVector3(), p.Heading);

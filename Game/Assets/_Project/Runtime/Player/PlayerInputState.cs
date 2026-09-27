@@ -38,6 +38,10 @@ namespace HeroGame.Runtime.Player
         public int PowerSlotPressed;
         /// <summary>Held to charge the selected power (Q / gamepad right bumper+trigger); release fires.</summary>
         public bool PowerHeld;
+        /// <summary>Attack with the equipped weapon (left mouse / gamepad right shoulder, outside build mode).</summary>
+        public bool AttackPressed;
+        /// <summary>Cycle weapons, fists first (X / gamepad D-pad down).</summary>
+        public bool NextWeaponPressed;
     }
 
     /// <summary>Source of player intent. Implemented by the Input System adapter, AI test drivers and replay.</summary>

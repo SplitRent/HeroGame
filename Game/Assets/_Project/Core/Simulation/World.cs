@@ -169,6 +169,8 @@ namespace HeroGame.Core.Simulation
         public readonly EmergencyDispatch Dispatch;
         /// <summary>Executes power uses against the world (effects, collateral, witnesses, crimes).</summary>
         public readonly PowerService PowerUse;
+        /// <summary>Fights and weapons (not saved: cooldowns, stuns and self-defence windows are short-lived).</summary>
+        public readonly CombatService Combat;
         /// <summary>Budget, ordinances, opinion, officeholders and elections (persisted in the civic chunk).</summary>
         public CivicState Civic = new CivicState();
         /// <summary>Active and recent local disasters (persisted in the civic chunk).</summary>
@@ -243,6 +245,7 @@ namespace HeroGame.Core.Simulation
             Calendar = new CalendarService(this);
             Radio = new RadioService(this);
             Destructibles = new DestructionService(this);
+            Combat = new CombatService(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
@@ -265,6 +268,21 @@ namespace HeroGame.Core.Simulation
                 Businesses[r.Business.Id] = r.Business;
                 BusinessOps.OnRegistered(r.Business);
                 Dirty.Mark(SaveChunks.Businesses);
+            }
+            if (r.Items != null)
+                foreach (var g in r.Items)
+                    if (Characters.TryGetValue(g.Character, out var owner) && g.Quantity > 0)
+                    {
+                        var stack = owner.Inventory.Find(s => s.ItemId == g.ItemId && !s.Stolen && !s.Instance.IsValid);
+                        if (stack != null) stack.Quantity += g.Quantity;
+                        else owner.Inventory.Add(new InventoryStack { ItemId = g.ItemId, Quantity = g.Quantity });
+                        Dirty.Mark(SaveChunks.CharacterPrefix + owner.CharacterId);
+                    }
+            if (r.License?.License != null && Characters.TryGetValue(r.License.Character, out var holder))
+            {
+                holder.Licenses.RemoveAll(l => l.Kind == r.License.License.Kind);
+                holder.Licenses.Add(r.License.License);
+                Dirty.Mark(SaveChunks.CharacterPrefix + holder.CharacterId);
             }
         }
 
