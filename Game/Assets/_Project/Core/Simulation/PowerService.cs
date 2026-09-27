@@ -376,6 +376,9 @@ namespace HeroGame.Core.Simulation
                     victim = v.id;
                 }
             }
+            // Under the registration ordinance, any conspicuous public use by an unregistered person is itself an offence.
+            if (crime == null && plan.Conspicuous && outcome.Witnesses > 0 && _w.Government.RegistrationRequired && !_w.Government.IsRegistered(c.CharacterId))
+                crime = "unregistered_anomalous_activity";
             if (crime != null)
             {
                 if (victimNpc != null) observers.Add(new Observer { Id = victimNpc.Id, Distance = 3f, Visibility = 1f, Civic = 0.8f });

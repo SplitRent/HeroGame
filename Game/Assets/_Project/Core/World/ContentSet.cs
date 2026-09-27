@@ -29,6 +29,9 @@ namespace HeroGame.Core.World
         public List<FurnitureDefinition> Furniture = new List<FurnitureDefinition>();
         public List<BusinessRequirement> BusinessRequirements = new List<BusinessRequirement>();
         public List<ItemDefinition> Items = new List<ItemDefinition>();
+        public List<Civic.OrdinanceDefinition> Ordinances = new List<Civic.OrdinanceDefinition>();
+        public List<Civic.CalendarEvent> CalendarEvents = new List<Civic.CalendarEvent>();
+        public List<Social.RippleTemplate> RippleTemplates = new List<Social.RippleTemplate>();
 
         public ItemDefinition FindItem(string id)
         {

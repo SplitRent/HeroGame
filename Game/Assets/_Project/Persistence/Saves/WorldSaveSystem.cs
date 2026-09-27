@@ -81,7 +81,8 @@ namespace HeroGame.Persistence.Saves
 
             // Meta and transactional state are always written together: they must agree on time and journal sequence.
             var dirty = new HashSet<string>(world.Dirty.Chunks) { SaveChunks.Meta, SaveChunks.Transactional };
-            if (full || previous == null) foreach (var c in SaveChunks.WorldChunks) dirty.Add(c);
+            foreach (var c in SaveChunks.WorldChunks)
+                if (full || previous == null || !previous.ChunkGenerations.ContainsKey(c)) dirty.Add(c); // new chunk kinds after an upgrade
             if (world.Story != null && (full || previous == null || !previous.ChunkGenerations.ContainsKey(SaveChunks.Story))) dirty.Add(SaveChunks.Story);
             foreach (var id in world.Characters.Keys)
             {
@@ -173,6 +174,14 @@ namespace HeroGame.Persistence.Saves
                 world.Story = ReadChunk<Core.Story.StoryState>(manifest, SaveChunks.Story);
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Emergency))
                 world.Emergency = ReadChunk<Core.Emergency.EmergencyState>(manifest, SaveChunks.Emergency);
+            if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Civic))
+            {
+                var civic = ReadChunk<CivicChunk>(manifest, SaveChunks.Civic);
+                world.Civic = civic.Civic ?? new Core.Civic.CivicState();
+                world.Disasters = civic.Disasters ?? new Core.Civic.DisasterState();
+            }
+            if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Social))
+                world.Ripple = ReadChunk<Core.Social.RippleState>(manifest, SaveChunks.Social) ?? new Core.Social.RippleState();
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Justice))
                 world.RestoreJustice(ReadChunk<Core.Crime.JusticeState>(manifest, SaveChunks.Justice));
 
@@ -261,6 +270,10 @@ namespace HeroGame.Persistence.Saves
                     return world.Emergency;
                 case SaveChunks.Story:
                     return world.Story ?? new Core.Story.StoryState();
+                case SaveChunks.Civic:
+                    return new CivicChunk { Civic = world.Civic, Disasters = world.Disasters };
+                case SaveChunks.Social:
+                    return world.Ripple;
                 case SaveChunks.Vehicles:
                     var vehicles = new VehiclesChunk();
                     vehicles.Vehicles.AddRange(world.Vehicles.All);

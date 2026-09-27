@@ -118,6 +118,11 @@ namespace HeroGame.Core.Building
         /// Converts a property to a business use (GDD §21: warehouse → nightclub). Requires ownership, zoning, a
         /// layout that satisfies the template, and a permit fee. Returns the new business on success.
         /// </summary>
+        /// <summary>City ordinances scale permit fees (e.g. fast-tracked port redevelopment).</summary>
+        public float PermitFeeMultiplier = 1f;
+
+        public long PermitFee(BusinessRequirement req) => (long)Math.Round(req.PermitFeeCents * (double)Math.Max(0f, PermitFeeMultiplier));
+
         public OpResult ChangeOfUse(PropertyRecord property, BuildingLayout layout, BusinessTemplate template, EntityId owner, EntityId ownerAccount,
             EntityId treasuryAccount, GameDateTime now, string idempotencyKey)
         {
@@ -132,7 +137,7 @@ namespace HeroGame.Core.Building
                 Initiator = owner,
                 Timestamp = now,
                 Description = "Change-of-use permit: " + template.DisplayName,
-                Money = LedgerTransaction.Transfer(ownerAccount, treasuryAccount, new Money(req.PermitFeeCents), TransactionReason.Fee, "Permit " + template.Id),
+                Money = LedgerTransaction.Transfer(ownerAccount, treasuryAccount, new Money(PermitFee(req)), TransactionReason.Fee, "Permit " + template.Id),
             });
         }
 

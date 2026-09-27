@@ -71,6 +71,27 @@ namespace HeroGame.Core.Property
             return list;
         }
 
+        /// <summary>Rent stabilization cap on annual increases for sitting tenants (percent; 0 = uncapped). Set by city ordinance.</summary>
+        public float MaxAnnualIncreasePercent;
+
+        /// <summary>Changes a sitting tenant's rent from the next due date. Under rent stabilization raises are capped and yearly.</summary>
+        public OpResult ChangeRent(PropertyRecord property, EntityId owner, Money monthlyRent, long today)
+        {
+            if (!_ownership.IsOwnedBy(property.Id, owner)) return OpResult.Fail("Only the owner can change the rent.");
+            var t = property.Tenancy;
+            if (t == null) return OpResult.Fail("There is no sitting tenant.");
+            if (monthlyRent.Cents <= 0) return OpResult.Fail("Rent must be positive.");
+            if (monthlyRent.Cents > t.MonthlyRentCents && MaxAnnualIncreasePercent > 0f)
+            {
+                if (today - Math.Max(t.StartDay, t.LastRentChangeDay) < 365) return OpResult.Fail("Rent stabilization allows one increase a year.");
+                var cap = (long)Math.Floor(t.MonthlyRentCents * (1.0 + MaxAnnualIncreasePercent / 100.0));
+                if (monthlyRent.Cents > cap) return OpResult.Fail("Rent stabilization caps this increase at " + new Money(cap) + ".");
+            }
+            t.MonthlyRentCents = monthlyRent.Cents;
+            t.LastRentChangeDay = today;
+            return OpResult.Ok();
+        }
+
         public OpResult ListForRent(PropertyRecord property, EntityId owner, Money monthlyRent)
         {
             if (!_ownership.IsOwnedBy(property.Id, owner)) return OpResult.Fail("Only the owner can list a rental.");

@@ -170,6 +170,7 @@ namespace HeroGame.Networking.Server
 
         public World World => _world;
         public ModerationService Moderation => _moderation;
+        public long UnixNow => _unixNow();
         public GameServerOptions Options => _o;
         public int Port { get; private set; }
         private long NowMs => _clock.ElapsedMilliseconds;

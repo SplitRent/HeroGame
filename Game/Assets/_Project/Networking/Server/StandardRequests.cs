@@ -107,6 +107,49 @@ namespace HeroGame.Networking.Server
             r.Register("justice.plea", ctx => RequestContext.From(ctx.World.Courts.AcceptPlea(ctx.Me)));
             r.Register("justice.surrender", ctx => RequestContext.From(ctx.World.Courts.TurnSelfIn(ctx.Me)));
 
+            r.Register("ripple.post", ctx =>
+            {
+                if (ctx.Server.Moderation.IsMuted(ctx.AccountId, ctx.Server.UnixNow)) return RequestContext.Fail("You are muted.");
+                var result = ctx.World.Feed.Post(ctx.Me, ctx.Connection.Ticket?.DisplayName ?? "", ctx.Str("text", Core.Simulation.RippleService.MaxPostLength), out var post);
+                if (!result.Success) return RequestContext.Fail(result.Error);
+                return RequestContext.Ok(new Dictionary<string, string> { ["id"] = post.Id.ToString(CultureInfo.InvariantCulture) });
+            });
+            r.Register("ripple.like", ctx => RequestContext.From(ctx.World.Feed.Like(ctx.Me, ctx.Long("post", 1))));
+            r.Register("ripple.follow", ctx => RequestContext.From(ctx.World.Feed.Follow(ctx.Me, ctx.Id("account"), ctx.OptStr("follow", "true") != "false")));
+            r.Register("ripple.feed", ctx =>
+            {
+                var posts = ctx.World.Feed.Feed(ctx.Me.CharacterId, (int)ctx.Long("count", 1, 50), ctx.OptStr("tag", ""));
+                var data = new Dictionary<string, string> { ["count"] = posts.Count.ToString(CultureInfo.InvariantCulture) };
+                for (var i = 0; i < posts.Count; i++)
+                {
+                    var p = posts[i];
+                    data["post" + i] = p.Id.ToString(CultureInfo.InvariantCulture) + "|" + p.Author + "|" + Clean(p.AuthorName) + "|" + p.Likes.ToString(CultureInfo.InvariantCulture) +
+                                       "|" + p.At.TotalSeconds.ToString(CultureInfo.InvariantCulture) + "|" + Clean(p.Text);
+                }
+                return RequestContext.Ok(data);
+            });
+
+            r.Register("civic.register_powers", ctx => RequestContext.From(ctx.World.Government.RegisterPowers(ctx.Me)));
+            r.Register("civic.ballot", ctx => RequestContext.From(ctx.World.Government.CastBallot(ctx.Me, ctx.Str("election", 96), ctx.Id("candidate"))));
+            r.Register("civic.file", ctx =>
+            {
+                if (!Enum.TryParse(ctx.Str("office", 16), out Core.Civic.Office office)) return RequestContext.Fail("Unknown office.");
+                var cityHall = CityHall(ctx.World);
+                if (cityHall != null && !ctx.Near(cityHall.Position, BuildingReach)) return RequestContext.Fail("File in person at City Hall.");
+                return RequestContext.From(ctx.World.Government.FileCandidacy(ctx.Me, office, ctx.OptStr("district", ""), ctx.OptStr("slate", ""), ctx.Connection.Ticket?.DisplayName ?? "Candidate", ctx.Key));
+            });
+            r.Register("civic.donate", ctx => RequestContext.From(ctx.World.Government.Donate(ctx.Me, ctx.Str("election", 96), ctx.Id("candidate"), new Money(ctx.Long("amount", 1)), ctx.Key)));
+            r.Register("civic.campaign", ctx => RequestContext.From(ctx.World.Government.SpendCampaign(ctx.Me, ctx.Str("election", 96), new Money(ctx.Long("amount", 1, 100000000)), ctx.Key)));
+            r.Register("civic.propose", ctx => RequestContext.From(ctx.World.Government.Propose(ctx.Me.CharacterId, ctx.Str("ordinance", 64), ctx.OptStr("repeal", "false") == "true")));
+            r.Register("civic.council_vote", ctx => RequestContext.From(ctx.World.Government.CastCouncilVote(ctx.Me, ctx.Str("ordinance", 64), ctx.OptStr("aye", "true") != "false")));
+            r.Register("civic.budget", ctx =>
+            {
+                var shares = new Dictionary<Core.Civic.Department, float>();
+                foreach (Core.Civic.Department d in Enum.GetValues(typeof(Core.Civic.Department)))
+                    if (ctx.Request.Args.ContainsKey(d.ToString())) shares[d] = ctx.Float(d.ToString(), 0f, 1f);
+                return RequestContext.From(ctx.World.Government.SetBudget(ctx.Me, shares, ctx.Float("rate", 0.5f, 1.2f)));
+            });
+
             r.Register("admin.kick", ctx => Moderate(ctx, ModerationActionKind.Kick));
             r.Register("admin.ban", ctx => Moderate(ctx, ModerationActionKind.Ban));
             r.Register("admin.unban", ctx => Moderate(ctx, ModerationActionKind.Unban));
@@ -174,6 +217,16 @@ namespace HeroGame.Networking.Server
                 ["impulse"] = outcome.Plan.Impulse.ToString("0", CultureInfo.InvariantCulture),
                 ["message"] = outcome.Message.Length > 400 ? outcome.Message.Substring(0, 400) : outcome.Message,
             });
+        }
+
+        private static string Clean(string s) => (s ?? "").Replace('|', '/').Replace('\n', ' ');
+
+        private static Core.World.Place CityHall(World w)
+        {
+            Core.World.Place best = null;
+            foreach (var p in w.Geography.Places)
+                if (p.Kind == Core.World.PlaceKind.Government && (best == null || p.Id.CompareTo(best.Id) < 0)) best = p;
+            return best;
         }
 
         private static Response WithBusiness(RequestContext ctx, Func<Core.Business.BusinessRecord, OpResult> action)

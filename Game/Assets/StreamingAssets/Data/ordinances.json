@@ -1,0 +1,88 @@
+[
+  {
+    "Id": "anomaly_registration",
+    "Title": "Anomalous Abilities Registration Ordinance",
+    "Description": "People with anomalous abilities must register with the city. Unregistered public use becomes an offence.",
+    "Issue": "registration",
+    "Stance": 1,
+    "Effects": {
+      "RegistrationRequired": 1
+    }
+  },
+  {
+    "Id": "flood_control_bond",
+    "Title": "Bayou Flood Control Bond",
+    "Description": "Borrow to raise levees and widen drainage on the east side.",
+    "Issue": "flood_control",
+    "Stance": 1,
+    "Effects": {
+      "PublicWorksBonusPercent": 40,
+      "FloodRiskReductionPerYear": 0.06
+    }
+  },
+  {
+    "Id": "property_tax_relief",
+    "Title": "Post-Isadora Property Tax Relief",
+    "Description": "Lower the property tax rate for three years.",
+    "Issue": "taxes",
+    "Stance": -1,
+    "Effects": {
+      "PropertyTaxRate": 0.016
+    }
+  },
+  {
+    "Id": "sales_tax_increase",
+    "Title": "Public Safety Sales Tax",
+    "Description": "Raise the city sales tax to fund police and fire.",
+    "Issue": "taxes",
+    "Stance": 1,
+    "Effects": {
+      "SalesTaxRate": 0.0875,
+      "PoliceBonusPercent": 15,
+      "FireBonusPercent": 10
+    }
+  },
+  {
+    "Id": "rent_stabilization",
+    "Title": "Neighbourhood Rent Stabilization",
+    "Description": "Cap annual rent increases in residential districts.",
+    "Issue": "development",
+    "Stance": -1,
+    "Effects": {
+      "RentIncreaseCapPercent": 4
+    }
+  },
+  {
+    "Id": "policing_reform",
+    "Title": "Community Policing Reform",
+    "Description": "Civilian oversight and de-escalation training; slower but more trusted responses.",
+    "Issue": "policing",
+    "Stance": -1,
+    "Effects": {
+      "PoliceTrustDriftPerMonth": 0.02,
+      "PoliceResponseMultiplier": 0.9
+    }
+  },
+  {
+    "Id": "youth_curfew",
+    "Title": "Youth Curfew",
+    "Description": "Minors off the streets between 23:00 and 05:00.",
+    "Issue": "policing",
+    "Stance": 1,
+    "Effects": {
+      "CurfewStartHour": 23,
+      "CurfewEndHour": 5
+    }
+  },
+  {
+    "Id": "port_expansion",
+    "Title": "Port Expansion and Channelside Redevelopment",
+    "Description": "Fast-track permits for development along the ship canal.",
+    "Issue": "development",
+    "Stance": 1,
+    "Effects": {
+      "PermitFeePercent": -30,
+      "ChannelsideFootTrafficBonus": 0.15
+    }
+  }
+]

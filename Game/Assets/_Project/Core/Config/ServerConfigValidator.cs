@@ -44,6 +44,8 @@ namespace HeroGame.Core.Config
             g.CrimeSeverityMultiplier = Clamp(report, "Gameplay.CrimeSeverityMultiplier", g.CrimeSeverityMultiplier, 0.25f, 4f);
             g.PoliceResponseMultiplier = Clamp(report, "Gameplay.PoliceResponseMultiplier", g.PoliceResponseMultiplier, 0.25f, 4f);
             g.SentenceScale = Clamp(report, "Gameplay.SentenceScale", g.SentenceScale, 0.01f, 1f);
+            g.ElectionIntervalDays = ClampInt(report, "Gameplay.ElectionIntervalDays", g.ElectionIntervalDays, 30, 3650);
+            g.DisasterFrequencyMultiplier = Clamp(report, "Gameplay.DisasterFrequencyMultiplier", g.DisasterFrequencyMultiplier, 0f, 5f);
             g.NpcDensity = Clamp(report, "Gameplay.NpcDensity", g.NpcDensity, 0.1f, 2f);
             g.TrafficDensity = Clamp(report, "Gameplay.TrafficDensity", g.TrafficDensity, 0.1f, 2f);
             g.RealMinutesPerGameDay = Clamp(report, "Gameplay.RealMinutesPerGameDay", g.RealMinutesPerGameDay, 10f, 1440f);

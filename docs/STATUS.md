@@ -7,7 +7,7 @@ Rules: a label is raised only with evidence. "Evidence" column names the test, m
 yet (no editor in the development environment); Unity scripts are verified by compiling against Unity reference
 assemblies only.
 
-_Last updated: Phases 15–17 (story framework, teen chapter, time jump)._
+_Last updated: Phases 19–20 (government, elections, Ripple social feed, city calendar, disasters)._
 
 ## Foundation
 | System | Status | Evidence / notes |
@@ -76,6 +76,16 @@ _Last updated: Phases 15–17 (story framework, teen chapter, time jump)._
 | Fire growth, suppression, spread, building loss | TESTED | `Fire_IsFoughtAndPutOut_Deterministically`, `Fire_WithNoEnginesAvailable_BurnsTheBuildingDown` |
 | EMS transport, hospital stay, billing via health cover, medical debt, permadeath rule | TESTED | `DownedPlayer_*`, `UninsuredBrokePatient_*`, `Permadeath_*` |
 | Background city calls at realistic rates | TESTED | `BackgroundCalls_ComeInAtRealisticRates_AndAreAnswered` |
+| Municipal budget (household taxes in, department funding out) → units on duty, police response, flood defences, trust | TESTED | `MonthlyBudget_MovesRealMoney_AndCutsTakeUnitsOffDuty` |
+| Ordinances with typed effects (tax rates, permit fees, rent stabilization, curfew, registration), enact/repeal, restored on load | TESTED | `Ordinances_ChangeRates_AndRepealRestoresThem`, `RentStabilization_CapsRaisesForSittingTenants`, `CivicAndSocialState_SurviveSaveAndLoad` |
+| Council agenda & votes (NPC members lean by slate + district opinion; player members vote) | TESTED | `Council_VotesOnProposals_AndTheOutcomeTakesEffect`, `PlayerCouncilMember_VoteIsCounted` |
+| District opinion on five issues, moved by real events | FUNCTIONAL | `NewCity_HasABudget_*`; event shocks exercised by simulation, not asserted per event |
+| Elections (NPC electorate, turnout, polls, filing fee, campaign accounts, donations, ads, ballots, officeholder change) | TESTED | `Election_PlayerFilesCampaignsAndVotes_AndTheWinnerTakesOffice`, `Elections_AreDeterministic`, `PlayerElectionsDisabled_BlocksCandidacy` |
+| Anomalous-abilities registration ordinance → unregistered public use is a crime | TESTED | `RegistrationOrdinance_MakesUnregisteredPublicUseACrime` |
+| Ripple social platform (NPC posts from real history, player posts, likes, follows, feed ranking, trending, NPC engagement) | TESTED | `Ripple_NpcsPostAboutRealEvents`, `Ripple_PlayersPostLikeFollowAndReadAFeed` |
+| City calendar (dated events shifting demand by place kind, announcements) | TESTED | `Calendar_EventsSpanTheirDates_AndShiftDemand` |
+| Local disasters: chemical incident (district closure), flash flood (damage), blackout (outage hours), heat wave (EMS calls, demand) | TESTED | `ChemicalIncident_ClosesTheDistrictsBusinesses_AndIsCalledIn`, `FlashFlood_DamagesPropertyOnlyInItsDistrict`, `Blackout_AccruesOutageHoursForItsDistrict` |
+| Youth curfew enforcement on individual minors | PLANNED | the ordinance exists and costs police trust in poorer districts; no per-NPC enforcement yet |
 
 ## Story Mode
 | System | Status | Evidence / notes |
@@ -109,6 +119,7 @@ _Last updated: Phases 15–17 (story framework, teen chapter, time jump)._
 | Anti-cheat: movement validation, proximity, rate limits, malformed frames | TESTED | `Movement_*`, `CrimeRequests_RequireBeingThere_*`, `Floods_AndMalformedFrames_*` |
 | Request router onto core services, idempotent retries | TESTED | `Requests_RunAsTheConnectionsCharacter_*`, `BuildOps_SurviveTheWireEncoding` |
 | Moderation over the network (kick/ban/mute/grant, audit log, persistence) | TESTED | `Moderation_OnlyPermittedAccountsCanKick_*` |
+| Ripple & civic requests (post/feed/like/follow, ballot/file/donate/campaign/propose/vote/budget/register) | TESTED | `RippleAndCivicRequests_PostReadAndRegister_AndMutedPlayersCannotPost` |
 | Accounts (PBKDF2, lockout, sessions) | TESTED | `Accounts_ValidateInput_HashPasswords_AndLockAfterRepeatedFailures` |
 | Server directory (registration, heartbeat, listing, tickets) | TESTED | `Servers_RegisterUnderAnAccount_*`, `Stores_PersistAtomically` |
 | Master HTTP API + full-stack join | TESTED | `FullStack_LoginOverHttp_TicketFromMaster_JoinTheGameServer`; CI smoke test |
@@ -141,6 +152,7 @@ _Last updated: Phases 15–17 (story framework, teen chapter, time jump)._
 | Crime interactables (shelves, register, break-in, fence, chop shop), police desk, custody | IN DEVELOPMENT | compiles; greybox builder places them |
 | Emergency unit & fire presentation, player vitals (fall damage, downed → hospital) | IN DEVELOPMENT | compiles |
 | Power controller (select/charge/aim, motion effects, knockback, VFX placeholder) | IN DEVELOPMENT | compiles |
+| City Hall panel (budget, council, elections, registration), Ripple phone app | IN DEVELOPMENT | compiles; IMGUI placeholders; greybox builder places a City Hall counter |
 | Greybox world builder (editor) | IN DEVELOPMENT | compiles; generates scene from layout data |
 | Model import rules (UCX, LODs, textures) | IN DEVELOPMENT | compiles |
 
@@ -155,7 +167,5 @@ _Last updated: Phases 15–17 (story framework, teen chapter, time jump)._
 | MCP command surface | FUNCTIONAL | `mcp_commands.run`; exercised via CLI |
 
 ## Not started (PLANNED)
-Vehicles & traffic · building/construction mode · interiors · police/fire/EMS AI · combat & weapons · networking &
-dedicated server · master server & accounts service · elections & government · phone · social media · radio & audio ·
-dialogue · cutscenes & Story Mode content · animation set · character creator 3D preview · destruction · Addressables
-cell content · HLOD · full city.
+Combat & weapons · radio & audio · phone UI (beyond prototype apps) · animation set · character creator 3D preview ·
+destruction · Addressables cell content · HLOD · full city · Story Mode Part Two acts II–IV.

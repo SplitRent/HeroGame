@@ -12,6 +12,8 @@ namespace HeroGame.Core.Business
         public long Day;
         public DayOfWeek DayOfWeek;
         public float FootTraffic;
+        /// <summary>Calendar events and conditions: demand × (1 + adjustment). 0 = an ordinary day.</summary>
+        public float DemandAdjustment;
         /// <summary>0 = clear, 1 = severe weather all day.</summary>
         public float BadWeather;
         /// <summary>Hours without electricity today (storms, blackouts).</summary>
@@ -91,7 +93,7 @@ namespace HeroGame.Core.Business
             var adFactor = 1.0 + Math.Min(0.35, Math.Sqrt(b.AdvertisingCents / 100.0) * 0.012);
             var footTraffic = 1f + (ctx.FootTraffic - 1f) * t.FootTrafficSensitivity;
             var demand = t.BaseCustomersPerHour * hours * footTraffic * reputationFactor * priceFactor * weatherFactor
-                         * weekendFactor * adFactor * (0.6 + 0.4 * ctx.CycleIndex);
+                         * weekendFactor * adFactor * (0.6 + 0.4 * ctx.CycleIndex) * Math.Max(0.1, 1.0 + ctx.DemandAdjustment);
 
             // Capacity limits: staff and stock.
             var staffRatio = t.StaffRequired <= 0 ? 1.0 : Math.Min(1.0, b.Staff / (double)t.StaffRequired);

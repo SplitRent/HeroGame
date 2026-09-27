@@ -1,0 +1,113 @@
+[
+  {
+    "Id": "new_year",
+    "Name": "New Year's Day",
+    "Month": 1,
+    "Day": 1,
+    "Days": 1,
+    "Demand": {
+      "Nightlife": 1.6,
+      "Restaurant": 1.1,
+      "Shop": 0.7
+    },
+    "Announcement": "Happy New Year, Port Arden."
+  },
+  {
+    "Id": "mardi_bayou",
+    "Name": "Bayou Carnival",
+    "Month": 2,
+    "Day": 20,
+    "Days": 3,
+    "Demand": {
+      "Nightlife": 1.5,
+      "Restaurant": 1.4,
+      "Shop": 1.1
+    },
+    "Announcement": "Bayou Carnival parades roll through Harbor Row this weekend."
+  },
+  {
+    "Id": "hurricane_season",
+    "Name": "Hurricane season opens",
+    "Month": 6,
+    "Day": 1,
+    "Days": 1,
+    "Demand": {
+      "Shop": 1.3
+    },
+    "Announcement": "Hurricane season starts today. Check your supplies and your insurance."
+  },
+  {
+    "Id": "independence_day",
+    "Name": "Independence Day",
+    "Month": 7,
+    "Day": 4,
+    "Days": 1,
+    "Demand": {
+      "Restaurant": 1.3,
+      "Shop": 1.2,
+      "Nightlife": 1.3
+    },
+    "Announcement": "Fireworks over the ship canal at nine."
+  },
+  {
+    "Id": "back_to_school",
+    "Name": "Back to school",
+    "Month": 8,
+    "Day": 15,
+    "Days": 5,
+    "Demand": {
+      "Shop": 1.35
+    },
+    "Announcement": "Eastwater High opens for the new year."
+  },
+  {
+    "Id": "founders_day",
+    "Name": "Founders' Day",
+    "Month": 10,
+    "Day": 14,
+    "Days": 1,
+    "Demand": {
+      "Restaurant": 1.25,
+      "Shop": 1.1,
+      "Nightlife": 1.2
+    },
+    "Announcement": "Port Arden turns another year older. Founders' Square festival from noon."
+  },
+  {
+    "Id": "homecoming",
+    "Name": "Pelicans Homecoming",
+    "Month": 10,
+    "Day": 24,
+    "Days": 1,
+    "Demand": {
+      "Restaurant": 1.3,
+      "Nightlife": 1.2
+    },
+    "Announcement": "Homecoming night at Eastwater High."
+  },
+  {
+    "Id": "thanksgiving",
+    "Name": "Thanksgiving",
+    "Month": 11,
+    "Day": 26,
+    "Days": 1,
+    "Demand": {
+      "Shop": 1.5,
+      "Restaurant": 0.8,
+      "Nightlife": 0.6
+    },
+    "Announcement": "Tidewater Mercado is open until noon."
+  },
+  {
+    "Id": "winter_holidays",
+    "Name": "Winter holidays",
+    "Month": 12,
+    "Day": 20,
+    "Days": 12,
+    "Demand": {
+      "Shop": 1.45,
+      "Restaurant": 1.15
+    },
+    "Announcement": "Holiday lights are up along Tidewater Avenue."
+  }
+]

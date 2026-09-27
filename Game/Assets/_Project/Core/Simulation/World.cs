@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HeroGame.Core.Building;
 using HeroGame.Core.Business;
 using HeroGame.Core.Characters;
+using HeroGame.Core.Civic;
 using HeroGame.Core.Config;
 using HeroGame.Core.Crime;
 using HeroGame.Core.Economy;
@@ -82,6 +83,10 @@ namespace HeroGame.Core.Simulation
         public const string Environment = "environment";
         public const string History = "history";
         public const string Vehicles = "vehicles";
+        /// <summary>City government, elections and disasters.</summary>
+        public const string Civic = "civic";
+        /// <summary>Ripple posts and follows.</summary>
+        public const string Social = "social";
         public const string CharacterPrefix = "character/";
         /// <summary>NPCs are saved in fixed-size shards by id so large populations serialize in parallel.</summary>
         public const string PopulationShardPrefix = "population/";
@@ -89,7 +94,7 @@ namespace HeroGame.Core.Simulation
 
         public static string PopulationShard(int index) => PopulationShardPrefix + index;
         public static int ShardOf(EntityId npc) => (int)((npc.Sequence - 1) / NpcsPerShard);
-        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice, Emergency };
+        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice, Emergency, Civic, Social };
     }
 
     /// <summary>
@@ -157,6 +162,15 @@ namespace HeroGame.Core.Simulation
         public readonly EmergencyDispatch Dispatch;
         /// <summary>Executes power uses against the world (effects, collateral, witnesses, crimes).</summary>
         public readonly PowerService PowerUse;
+        /// <summary>Budget, ordinances, opinion, officeholders and elections (persisted in the civic chunk).</summary>
+        public CivicState Civic = new CivicState();
+        /// <summary>Active and recent local disasters (persisted in the civic chunk).</summary>
+        public DisasterState Disasters = new DisasterState();
+        /// <summary>Ripple posts and follows (persisted in the social chunk).</summary>
+        public RippleState Ripple = new RippleState();
+        public readonly CivicService Government;
+        public readonly RippleService Feed;
+        public readonly CalendarService Calendar;
         /// <summary>Bumped when the set of NPC-hireable workplaces changes (player takes over staffing, etc.).</summary>
         public int WorkplaceVersion;
 
@@ -213,6 +227,9 @@ namespace HeroGame.Core.Simulation
             Courts = new JusticeService(this);
             Dispatch = new EmergencyDispatch(this);
             PowerUse = new PowerService(this);
+            Government = new CivicService(this);
+            Feed = new RippleService(this);
+            Calendar = new CalendarService(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
@@ -258,6 +275,7 @@ namespace HeroGame.Core.Simulation
                 Ledger.Open(Accounts.HospitalAccount, Accounts.Hospital, LedgerAccountKind.Organization, EmergencyDispatch.HospitalName);
             }
             Dispatch.EnsureUnits();
+            Government.OnLoaded();
             var a = Accounts;
             if (!a.Insurer.IsValid) a.Insurer = Ids.Next(EntityKind.Organization);
             if (!a.InsurerAccount.IsValid || !Ledger.Exists(a.InsurerAccount))

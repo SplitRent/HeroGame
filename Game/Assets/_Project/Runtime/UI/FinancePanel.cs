@@ -14,7 +14,7 @@ namespace HeroGame.Runtime.UI
     /// </summary>
     public sealed class FinancePanel : MonoBehaviour
     {
-        private enum Tab { Bank, Loans, Insurance, Businesses }
+        private enum Tab { Bank, Loans, Insurance, Businesses, Ripple }
 
         private IPlayerInputSource _input;
         private bool _open;
@@ -24,6 +24,7 @@ namespace HeroGame.Runtime.UI
         private string _deductible = "1000";
         private string _status = "";
         private Vector2 _scroll;
+        private readonly RippleApp _ripple = new RippleApp();
 
         private void Update()
         {
@@ -51,6 +52,9 @@ namespace HeroGame.Runtime.UI
 
             switch (_tab)
             {
+                case Tab.Ripple:
+                    _ripple.Draw(session);
+                    break;
                 case Tab.Bank:
                 {
                     var savings = fin.SavingsOf(me);

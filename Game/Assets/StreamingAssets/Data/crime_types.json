@@ -226,7 +226,7 @@
   },
   {
     "Id": "unregistered_anomalous_activity",
-    "DisplayName": "Reckless Anomalous Activity",
+    "DisplayName": "Unregistered Anomalous Activity",
     "Category": "Anomalous",
     "Severity": 3,
     "BaseFineCents": 500000,

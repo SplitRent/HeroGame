@@ -33,6 +33,9 @@ namespace HeroGame.Persistence.Content
         public const string BusinessRequirements = "business_requirements.json";
         public const string Items = "items.json";
         public const string Story = "story_port_arden.json";
+        public const string Ordinances = "ordinances.json";
+        public const string CalendarEvents = "calendar_events.json";
+        public const string RippleTemplates = "ripple_templates.json";
 
         /// <summary>Story Mode content (not needed by player servers).</summary>
         public static Core.Story.StoryDefinition LoadStory(string dataDirectory, string file = Story) => Read<Core.Story.StoryDefinition>(dataDirectory, file);
@@ -205,6 +208,9 @@ namespace HeroGame.Persistence.Content
                 Furniture = Read<List<Core.Building.FurnitureDefinition>>(dataDirectory, Furniture),
                 BusinessRequirements = Read<List<Core.Building.BusinessRequirement>>(dataDirectory, BusinessRequirements),
                 Items = Read<List<ItemDefinition>>(dataDirectory, Items),
+                Ordinances = Read<List<Core.Civic.OrdinanceDefinition>>(dataDirectory, Ordinances),
+                CalendarEvents = Read<List<Core.Civic.CalendarEvent>>(dataDirectory, CalendarEvents),
+                RippleTemplates = Read<List<Core.Social.RippleTemplate>>(dataDirectory, RippleTemplates),
             };
             return set;
         }
@@ -234,7 +240,15 @@ namespace HeroGame.Persistence.Content
         public static readonly string[] RequiredCrimes =
         {
             "shoplifting", "pickpocketing", "burglary_residential", "burglary_commercial", "store_robbery", "vehicle_theft",
-            "assault", "powered_assault", "vandalism", "evading_police", "assaulting_officer",
+            "assault", "powered_assault", "vandalism", "evading_police", "assaulting_officer", "unregistered_anomalous_activity",
+        };
+
+        /// <summary>Ordinance effect keys the civic service understands; anything else is a typo.</summary>
+        public static readonly string[] OrdinanceEffects =
+        {
+            "RegistrationRequired", "PublicWorksBonusPercent", "FloodRiskReductionPerYear", "PropertyTaxRate", "SalesTaxRate", "PoliceBonusPercent",
+            "FireBonusPercent", "RentIncreaseCapPercent", "PoliceTrustDriftPerMonth", "PoliceResponseMultiplier", "CurfewStartHour", "CurfewEndHour",
+            "PermitFeePercent", "ChannelsideFootTrafficBonus",
         };
 
         /// <summary>Cross-reference validation: catches broken ids before they reach a live server.</summary>
@@ -340,6 +354,51 @@ namespace HeroGame.Persistence.Content
                 if (!itemIds.Contains(required)) r.Error("items", "Missing required item " + required + ".");
             foreach (var crime in RequiredCrimes)
                 if (c.FindCrime(crime) == null) r.Error("crime_types", "Missing required crime type " + crime + ".");
+
+            // Civic content: ordinances must target a known issue with known effects; events must name real place kinds.
+            var ordinanceIds = new HashSet<string>();
+            foreach (var o in c.Ordinances)
+            {
+                var path = "ordinances." + o.Id;
+                if (string.IsNullOrEmpty(o.Id) || !ordinanceIds.Add(o.Id)) r.Error(path, "Missing or duplicate id.");
+                if (System.Array.IndexOf(Core.Civic.Issues.All, o.Issue) < 0) r.Error(path, "Unknown issue " + o.Issue);
+                if (o.Stance != 1 && o.Stance != -1) r.Error(path, "Stance must be 1 or -1.");
+                if (o.Effects.Count == 0) r.Error(path, "An ordinance must do something.");
+                foreach (var kv in o.Effects)
+                    if (System.Array.IndexOf(OrdinanceEffects, kv.Key) < 0) r.Error(path, "Unknown effect " + kv.Key);
+                if (o.Effects.TryGetValue("PropertyTaxRate", out var ptr) && (ptr < 0 || ptr > 0.1)) r.Error(path, "PropertyTaxRate out of range.");
+                if (o.Effects.TryGetValue("SalesTaxRate", out var str) && (str < 0 || str > 0.3)) r.Error(path, "SalesTaxRate out of range.");
+                if (o.Effects.ContainsKey("CurfewStartHour") != o.Effects.ContainsKey("CurfewEndHour")) r.Error(path, "Curfews need a start and an end hour.");
+            }
+            if (!ordinanceIds.Contains("anomaly_registration")) r.Error("ordinances", "The registration ordinance (anomaly_registration) is required by the story and the power rules.");
+            var eventIds = new HashSet<string>();
+            foreach (var e in c.CalendarEvents)
+            {
+                var path = "calendar_events." + e.Id;
+                if (string.IsNullOrEmpty(e.Id) || !eventIds.Add(e.Id)) r.Error(path, "Missing or duplicate id.");
+                if (e.Month < 1 || e.Month > 12 || e.Day < 1 || e.Day > System.DateTime.DaysInMonth(2031, e.Month)) r.Error(path, "Invalid date.");
+                if (e.Days < 1 || e.Days > 31) r.Error(path, "Days must be 1..31.");
+                foreach (var kv in e.Demand)
+                {
+                    if (!System.Enum.TryParse(kv.Key, out Core.World.PlaceKind _)) r.Error(path, "Unknown place kind " + kv.Key);
+                    if (kv.Value <= 0f || kv.Value > 3f) r.Error(path, "Demand multiplier out of range for " + kv.Key);
+                }
+            }
+            var rippleTopics = new HashSet<string>();
+            foreach (var t in c.RippleTemplates)
+            {
+                rippleTopics.Add(t.Topic);
+                if (t.Lines.Count == 0) r.Error("ripple_templates." + t.Topic, "No lines.");
+                if (!string.IsNullOrEmpty(t.Tag) && !t.Tag.StartsWith("#", System.StringComparison.Ordinal)) r.Error("ripple_templates." + t.Topic, "Tags start with #.");
+                foreach (var line in t.Lines)
+                    if (line.Length > 200) r.Error("ripple_templates." + t.Topic, "Line too long for a post: " + line);
+            }
+            foreach (Core.World.HistoryCategory cat in System.Enum.GetValues(typeof(Core.World.HistoryCategory)))
+            {
+                if (cat == Core.World.HistoryCategory.Server) continue;
+                var topic = Core.Simulation.RippleService.TopicOf(cat);
+                if (!rippleTopics.Contains(topic)) r.Error("ripple_templates", "No templates for topic '" + topic + "'.");
+            }
 
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)

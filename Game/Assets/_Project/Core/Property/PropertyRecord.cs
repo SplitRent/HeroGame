@@ -46,6 +46,8 @@ namespace HeroGame.Core.Property
         public long NextRentDueSecond;
         public long StartDay;
         public int MissedPayments;
+        /// <summary>Day the rent last changed (lease start or a raise); rent stabilization allows one capped raise a year.</summary>
+        public long LastRentChangeDay;
     }
 
     /// <summary>A rentable unit inside a multi-unit building (apartments).</summary>

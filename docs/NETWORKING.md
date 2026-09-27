@@ -45,7 +45,9 @@ Messages: `Hello/Welcome/Reject`, `Ping/Pong`, `PlayerState` (client → server,
 Request ops (see `StandardRequests`): `me.status`, `property.buy|mortgage|repair`, `build.commit`,
 `business.buy|start|price|wage|ads|hire|fire|withdraw|invest|restock`, `finance.transfer|savings|loan|repay`,
 `insurance.buy|claim`, `character.mask`, `crime.shoplift|rob|burgle|steal_vehicle|pickpocket|fence`,
-`justice.bail|fines|attorney|plea|surrender`, `admin.kick|ban|unban|mute|unmute|grant|role`.
+`justice.bail|fines|attorney|plea|surrender`, `power.use`, `ripple.post|feed|like|follow` (posting is refused while
+muted; the author name comes from the signed ticket), `civic.register_powers|ballot|file|donate|campaign|propose|council_vote|budget`
+(filing requires standing at City Hall), `admin.kick|ban|unban|mute|unmute|grant|role`.
 
 ## Running
 

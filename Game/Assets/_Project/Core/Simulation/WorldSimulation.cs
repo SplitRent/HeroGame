@@ -92,6 +92,7 @@ namespace HeroGame.Core.Simulation
             _world.Wanted.Tick(t, null);
             _world.Dispatch.AdvanceTo(t);
             _world.PowerUse.Recover();
+            _world.Calendar.ProcessHour(t);
             var storm = _world.Weather.State.ActiveSystem;
             if (storm != null && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane)
             {
@@ -151,9 +152,10 @@ namespace HeroGame.Core.Simulation
                     Day = day,
                     DayOfWeek = date.DayOfWeek,
                     FootTraffic = district != null ? district.FootTraffic : 1f,
+                    DemandAdjustment = place != null ? _world.Calendar.DemandMultiplier(place.Kind, date) - 1f : 0f,
                     BadWeather = badWeather,
-                    PowerOutageHours = c.DayOutageHours,
-                    ForcedClosure = effects.EmergencyDeclared && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane,
+                    PowerOutageHours = Math.Min(24f, c.DayOutageHours + _world.Calendar.OutageHoursToday(district)),
+                    ForcedClosure = effects.EmergencyDeclared && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane || _world.Calendar.ClosedToday(district),
                     CycleIndex = _world.Macro.CycleIndex,
                     PriceLevel = _world.Macro.PriceLevel,
                     RevenueMultiplier = _world.Config.Economy.BusinessRevenueMultiplier,
@@ -212,6 +214,10 @@ namespace HeroGame.Core.Simulation
                 if (npc.Powers != null) PowerProgression.AdvanceDay(npc.Powers, day + 1);
 
             _world.Phone.DailyMessages(day);
+            _world.Government.ProcessDay(day);
+            _world.Feed.ProcessDay(day);
+            _world.Calendar.ProcessDay(day);
+            _world.Calendar.AnnounceDay(day + 1);
 
             if (_world.Macro.InRecession && _world.Macro.DaysInCurrentPhase == 1)
                 _world.History.Record(day, HistoryCategory.Economy, 4, "Economists warn " + _world.Config.Identity.CityName + " has entered a recession");

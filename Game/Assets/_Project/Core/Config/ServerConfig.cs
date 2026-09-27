@@ -82,6 +82,10 @@ namespace HeroGame.Core.Config
         public bool PlayerElections = false;
         /// <summary>Served game days per guideline sentence day (0.1 → a 30-day sentence is served in 3 game days).</summary>
         public float SentenceScale = 0.1f;
+        /// <summary>Game days between city elections (and the length of a term).</summary>
+        public int ElectionIntervalDays = 180;
+        /// <summary>Scales how often city disasters (flash floods, chemical incidents, heat waves, blackouts) strike. 0 disables.</summary>
+        public float DisasterFrequencyMultiplier = 1f;
     }
 
     [Serializable]

@@ -317,6 +317,14 @@ namespace HeroGame.Editor
                     desk.AddComponent<BoxCollider>().isTrigger = true;
                     desk.AddComponent<PoliceDesk>().Place = marker;
                 }
+                if (p.Kind == PlaceKind.Government)
+                {
+                    var counter = new GameObject("City Hall Counter");
+                    counter.transform.SetParent(go.transform);
+                    counter.transform.position = front + Vector3.up;
+                    counter.AddComponent<BoxCollider>().isTrigger = true;
+                    counter.AddComponent<Runtime.Civic.CityHallDesk>().Place = marker;
+                }
                 if (p.Kind == PlaceKind.Dock || p.Kind == PlaceKind.Garage)
                 {
                     // Placeholder underworld contacts (ASSET_TRACKER): a fence at the docks, a chop shop behind garages.

@@ -188,8 +188,9 @@ namespace HeroGame.Core.Simulation
                 LastSimulatedDay = _w.Today,
             };
             var money = new LedgerTransaction { Reason = TransactionReason.Fee, Memo = "Opening " + name };
-            money.Add(owner.CheckingAccount, -(capital.Cents + req.PermitFeeCents));
-            money.Add(_w.Accounts.Treasury, req.PermitFeeCents);
+            var permitFee = _w.Construction.PermitFee(req);
+            money.Add(owner.CheckingAccount, -(capital.Cents + permitFee));
+            money.Add(_w.Accounts.Treasury, permitFee);
             if (capital.Cents > 0) money.Add(business.Account, capital.Cents);
             var tx = new WorldTransaction
             {

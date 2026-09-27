@@ -321,6 +321,29 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void RippleAndCivicRequests_PostReadAndRegister_AndMutedPlayersCannotPost()
+        {
+            _moderation.AssignRole("", "acc-admin2", "admin", bootstrap: true);
+            var admin = Join("acc-admin2", "Admin");
+            var a = Join("acc-r", "Rae");
+            var posted = Call(a, "ripple.post", new Dictionary<string, string> { ["text"] = "First night in the city #hello" });
+            Assert.IsTrue(posted.Success, posted.Error);
+            var feed = Call(a, "ripple.feed", new Dictionary<string, string> { ["count"] = "5" });
+            Assert.IsTrue(feed.Success, feed.Error);
+            StringAssert.Contains("|Rae|", feed.Data["post0"], "the display name comes from the signed ticket");
+            Assert.IsTrue(Call(admin, "ripple.like", new Dictionary<string, string> { ["post"] = posted.Data["id"] }).Success);
+
+            Assert.IsFalse(Call(a, "civic.register_powers").Success, "nothing to register");
+            Assert.IsFalse(Call(a, "civic.budget", new Dictionary<string, string> { ["Police"] = "1", ["rate"] = "0.9" }).Success, "not the mayor");
+            Assert.IsFalse(Call(a, "civic.file", new Dictionary<string, string> { ["office"] = "Mayor" }).Success, "player elections are off by default");
+
+            Assert.IsTrue(Call(admin, "admin.mute", new Dictionary<string, string> { ["account"] = "acc-r", ["reason"] = "spam", ["minutes"] = "10" }).Success);
+            var muted = Call(a, "ripple.post", new Dictionary<string, string> { ["text"] = "still here" });
+            Assert.IsFalse(muted.Success);
+            StringAssert.Contains("muted", muted.Error);
+        }
+
+        [Test]
         public void BuildOps_SurviveTheWireEncoding()
         {
             var op = new Core.Building.BuildOp { Kind = Core.Building.BuildOpKind.AddRoom, RoomType = Core.Building.RoomType.Bar, Floor = 1, Polygon = { 2, 2, 27.25f, 2, 27.25f, 47, 2, 47 } };

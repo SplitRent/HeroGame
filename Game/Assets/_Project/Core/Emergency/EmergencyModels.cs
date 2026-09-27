@@ -95,8 +95,10 @@ namespace HeroGame.Core.Emergency
         public long DepartSecond;
         public long ArriveSecond;
         public int CallsAnswered;
+        /// <summary>Not staffed this month (budget cuts, GDD §24). Off-duty units finish their current call but take no new ones.</summary>
+        public bool OffDuty;
 
-        public bool Free => Status == UnitStatus.Available || Status == UnitStatus.Returning;
+        public bool Free => !OffDuty && (Status == UnitStatus.Available || Status == UnitStatus.Returning);
 
         /// <summary>Where the unit is at <paramref name="second"/> (linear between trip ends; the runtime follows the road route).</summary>
         public WorldPosition PositionAt(long second)

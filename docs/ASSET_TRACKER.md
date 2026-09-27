@@ -14,6 +14,10 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Build mode UI | IMGUI side panel in `BuildModeController`; greybox cube walls/furniture from `LayoutRenderer` | Runtime/Building | UI Toolkit build palette + catalog prefabs | PLACEHOLDER |
 | Business office / bank & insurance apps | IMGUI `BusinessPanel`, `FinancePanel` | Runtime/UI | phone apps + office screen (Phases 23–24) | PLACEHOLDER |
 | Police desk / court UI | IMGUI `JusticePanel` | Runtime/UI | UI Toolkit screens (Phase 24) | PLACEHOLDER |
+| City Hall UI (budget, council, elections, registration) | IMGUI `CivicPanel`; invisible counter trigger (`CityHallDesk`) | Runtime/UI, Runtime/Civic | UI Toolkit civic screens, City Hall interior with clerk NPC | PLACEHOLDER |
+| Ripple social app | IMGUI `RippleApp` tab inside the phone panel; no avatars or images | Runtime/UI | phone UI app with profile pictures and media (Phase 23) | PLACEHOLDER |
+| NPC Ripple posts | template lines (`ripple_templates.json`) filled from history records | Data | larger, district-voiced line sets; writer pass | FIRST PASS |
+| Calendar events, ordinances | original data (`calendar_events.json`, `ordinances.json`) | Data | expand with writers; no real-world political parties or officials | FIRST PASS |
 | Story dialogue box, objective HUD, cutscenes | IMGUI `StoryPresenter`; cutscenes are camera cuts with subtitles | Runtime/Story | UI Toolkit dialogue UI, Timeline cutscenes, voice and animation | PLACEHOLDER |
 | Story cast appearance | generic NPC capsules | — | authored character models for the cast (Rosa, Pilar, Lupe, Dee, Mai, Rafa, Coach, Abernathy…) | PLACEHOLDER |
 | Police car / fire engine / ambulance | tinted boxes with a point-light bar (`*_Greybox.prefab`) | Generated/ | modelled service vehicles with livery, sirens | PLACEHOLDER |

@@ -1,0 +1,74 @@
+[
+  {
+    "Topic": "crime",
+    "Tag": "#PortArden",
+    "Lines": [
+      "Heard sirens all over {district}. Anyone know what happened?",
+      "Again? That's the third time this month in {district}.",
+      "Stay safe out there, {district}. {headline}."
+    ]
+  },
+  {
+    "Topic": "anomaly",
+    "Tag": "#ArdenAnomaly",
+    "Lines": [
+      "I KNOW what I saw in {district}. Nobody believes me.",
+      "Okay who else saw that in {district} tonight??",
+      "{headline}. This city is not normal anymore."
+    ]
+  },
+  {
+    "Topic": "weather",
+    "Tag": "#Tidewatch",
+    "Lines": [
+      "{weather} again. The bayou's going to be over Magnolia by dinner.",
+      "Power's flickering in {district}. Stocking up on candles.",
+      "Hurricane season in Port Arden: you either laugh or you cry."
+    ]
+  },
+  {
+    "Topic": "business",
+    "Tag": "#ShopLocal",
+    "Lines": [
+      "New spot opened in {district} and honestly? Not bad.",
+      "{headline}. Rooting for them.",
+      "Prices at the Mercado are wild this week."
+    ]
+  },
+  {
+    "Topic": "economy",
+    "Tag": "#PortArden",
+    "Lines": [
+      "{headline}. Who's this actually for?",
+      "Rent went up again. Love that for me.",
+      "Every other lot in {district} has a crane on it now."
+    ]
+  },
+  {
+    "Topic": "politics",
+    "Tag": "#ArdenVotes",
+    "Lines": [
+      "{headline}. Vote like your street depends on it. It does.",
+      "Can't believe the council is even debating this.",
+      "Early voting at the community center until seven."
+    ]
+  },
+  {
+    "Topic": "events",
+    "Tag": "#ArdenLife",
+    "Lines": [
+      "{headline}! See y'all there.",
+      "Best day of the year in Port Arden, don't @ me.",
+      "Traffic on Tidewater is a parking lot. {headline}."
+    ]
+  },
+  {
+    "Topic": "people",
+    "Tag": "#Eastwater",
+    "Lines": [
+      "{headline}. This neighbourhood takes care of its own.",
+      "Thinking about {district} today.",
+      "{headline}. Wild."
+    ]
+  }
+]
