@@ -1,0 +1,139 @@
+using System;
+using System.IO;
+using HeroGame.Core.Characters;
+using HeroGame.Core.Economy;
+using HeroGame.Core.Foundation;
+using HeroGame.Core.Simulation;
+using HeroGame.Core.World;
+using HeroGame.Persistence.Content;
+using HeroGame.Persistence.Saves;
+using HeroGame.Persistence.Storage;
+using UnityEngine;
+
+namespace HeroGame.Runtime.Bootstrap
+{
+    public enum SessionMode
+    {
+        /// <summary>Single-player canonical world, saved to story slots.</summary>
+        Story,
+        /// <summary>Local listen-server world (development / private play). Dedicated servers use the headless host.</summary>
+        LocalServer,
+    }
+
+    /// <summary>
+    /// One running world on this machine: owns the <see cref="World"/>, its simulation, save
+    /// system and journal. Pure C# (no MonoBehaviour) so its lifetime is explicit;
+    /// <see cref="GameBootstrap"/> ticks it.
+    /// </summary>
+    public sealed class GameSession : IDisposable
+    {
+        public readonly SessionMode Mode;
+        public readonly World World;
+        public readonly WorldSimulation Simulation;
+        public readonly WorldSaveSystem Saves;
+        public ServerCharacter LocalCharacter { get; private set; }
+
+        private readonly FileTransactionJournal _journal;
+        private float _autosaveTimer;
+
+        public float AutosaveIntervalSeconds = 300f;
+        public event Action<SaveResult> Saved;
+
+        private GameSession(SessionMode mode, World world, WorldSaveSystem saves, FileTransactionJournal journal)
+        {
+            Mode = mode;
+            World = world;
+            Saves = saves;
+            _journal = journal;
+            Simulation = new WorldSimulation(world);
+        }
+
+        public static string DataDirectory => Path.Combine(Application.streamingAssetsPath, "Data");
+
+        public static string SaveRoot => Path.Combine(Application.persistentDataPath, "Saves");
+
+        /// <summary>Opens (or creates) a world in <paramref name="saveDirectory"/>.</summary>
+        public static GameSession OpenOrCreate(SessionMode mode, string serverId, string saveDirectory, ContentSet content)
+        {
+            var saves = new WorldSaveSystem(saveDirectory);
+            var journal = saves.OpenJournal();
+            World world;
+            if (saves.Exists)
+            {
+                var load = saves.Load(content, journal);
+                foreach (var m in load.Report.Messages) Debug.LogWarning("[Save] " + m);
+                if (load.Report.HasErrors)
+                {
+                    journal.Dispose();
+                    throw new InvalidDataException("Save failed integrity checks: " + load.Report);
+                }
+                if (load.JournalEntriesReplayed > 0) Debug.Log("[Save] Recovered " + load.JournalEntriesReplayed + " transaction(s) from the journal.");
+                world = load.World;
+            }
+            else
+            {
+                var config = ContentLoader.LoadServerConfig(Path.Combine(DataDirectory, ContentLoader.DefaultServerConfig));
+                world = WorldGenerator.Create(serverId, config, content, journal);
+                saves.Save(world, full: true);
+            }
+            return new GameSession(mode, world, saves, journal);
+        }
+
+        /// <summary>Finds or creates this server's version of the local account's character.</summary>
+        public ServerCharacter EnsureCharacter(AccountProfile account, Vector3 spawn)
+        {
+            foreach (var c in World.Characters.Values)
+            {
+                if (c.AccountId != account.AccountId) continue;
+                LocalCharacter = c;
+                return c;
+            }
+            LocalCharacter = World.CreateCharacter(account, spawn.ToWorld());
+            return LocalCharacter;
+        }
+
+        public void Tick(float realDeltaSeconds)
+        {
+            World.Clock.AdvanceReal(realDeltaSeconds);
+            Simulation.Update();
+            World.Events.Flush();
+            _autosaveTimer += realDeltaSeconds;
+            if (_autosaveTimer >= AutosaveIntervalSeconds)
+            {
+                _autosaveTimer = 0f;
+                Save();
+            }
+        }
+
+        public SaveResult Save()
+        {
+            var result = Saves.Save(World);
+            Saves.CompactJournal(World, _journal);
+            Saved?.Invoke(result);
+            return result;
+        }
+
+        /// <summary>Player-facing purchase with an idempotency key, the way network requests will call it.</summary>
+        public OpResult BuyProperty(EntityId property)
+        {
+            if (LocalCharacter == null) return OpResult.Fail("No character.");
+            var key = "buy:" + LocalCharacter.CharacterId + ":" + property + ":" + World.Clock.Now.TotalSeconds;
+            return World.Properties.Purchase(property, LocalCharacter.CharacterId, LocalCharacter.CheckingAccount,
+                SellerAccountFor(property), World.Accounts.Treasury, World.Clock.Now, key);
+        }
+
+        private EntityId SellerAccountFor(EntityId property)
+        {
+            var owner = World.Ownership.OwnerOf(property);
+            if (!owner.IsValid) return World.Accounts.Treasury;
+            foreach (var c in World.Characters.Values) if (c.CharacterId == owner) return c.CheckingAccount;
+            foreach (var a in World.Ledger.Accounts) if (a.Owner == owner && a.Kind != LedgerAccountKind.External) return a.Id;
+            return World.Accounts.Treasury;
+        }
+
+        public void Dispose()
+        {
+            _journal?.Dispose();
+        }
+    }
+}

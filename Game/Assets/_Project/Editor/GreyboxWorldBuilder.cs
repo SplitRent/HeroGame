@@ -1,0 +1,395 @@
+using System.Collections.Generic;
+using System.IO;
+using HeroGame.Core.Foundation;
+using HeroGame.Core.World;
+using HeroGame.Persistence.Content;
+using HeroGame.Runtime.Bootstrap;
+using HeroGame.Runtime.DevTools;
+using HeroGame.Runtime.Interaction;
+using HeroGame.Runtime.Player;
+using HeroGame.Runtime.Population;
+using HeroGame.Runtime.Presentation;
+using HeroGame.Runtime.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace HeroGame.Editor
+{
+    /// <summary>
+    /// Builds the playable greybox vertical slice directly from the same layout data the simulation
+    /// uses (StreamingAssets/Data/layout_vertical_slice.json): roads, parcels, landmark buildings,
+    /// place markers, for-sale signs, the player rig and all runtime systems. Re-run after editing the
+    /// layout; the scene is generated, never hand-edited. Greybox materials are tracked placeholders.
+    /// </summary>
+    public static class GreyboxWorldBuilder
+    {
+        public const string SceneFolder = "Assets/_Project/Scenes";
+        public const string GreyboxScene = SceneFolder + "/VerticalSlice_Greybox.unity";
+        public const string MenuScene = SceneFolder + "/MainMenu.unity";
+        public const string GeneratedFolder = "Assets/_Project/Generated";
+
+        [MenuItem("HeroGame/Build Greybox Vertical Slice", priority = 1)]
+        public static void BuildGreybox()
+        {
+            var dataDir = Path.Combine(Application.streamingAssetsPath, "Data");
+            var content = ContentLoader.Load(dataDir);
+            Directory.CreateDirectory(SceneFolder);
+            Directory.CreateDirectory(GeneratedFolder);
+
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            var materials = new MaterialLibrary();
+
+            var root = new GameObject("World");
+            BuildGround(root.transform, materials);
+            BuildRoads(root.transform, content.Layout, materials);
+            var places = BuildPlaces(root.transform, content.Layout, materials);
+
+            var systems = new GameObject("Systems");
+            var bootstrap = systems.AddComponent<GameBootstrap>();
+            var spawn = new GameObject("PlayerSpawn").transform;
+            spawn.position = new Vector3(-200f, 0.1f, 40f); // Tidewater Avenue, outside Lupe's Corner Market
+            bootstrap.PlayerSpawn = spawn;
+
+            var (player, camera) = BuildPlayer(spawn.position);
+            var lights = BuildLighting();
+            var dayNight = systems.AddComponent<DayNightCycle>();
+            dayNight.Sun = lights.sun;
+            dayNight.Moon = lights.moon;
+            if (IsHdrp())
+            {
+                // HDRP uses physical light units (lux) with exposure handled by the volume stack.
+                dayNight.MaxSunIntensity = 100000f;
+                dayNight.MoonIntensity = 0.3f;
+            }
+            var weather = systems.AddComponent<WeatherPresenter>();
+            weather.Rain = BuildRain(camera.transform);
+
+            var populationGo = new GameObject("Population");
+            var population = populationGo.AddComponent<NpcPopulationPresenter>();
+            population.AvatarPrefab = BuildNpcPrefab(materials);
+            population.Observer = player.transform;
+
+            var hud = systems.AddComponent<PrototypeHud>();
+            hud.Interactor = player.GetComponent<PlayerInteractor>();
+            var console = systems.AddComponent<DevConsole>();
+            console.Player = player.transform;
+            var inspector = systems.AddComponent<WorldInspectorOverlay>();
+            inspector.Player = player.transform;
+            inspector.Population = population;
+
+            var streamer = systems.AddComponent<WorldStreamer>();
+            streamer.Focus = player.transform;
+
+            EditorSceneManager.SaveScene(scene, GreyboxScene);
+            AddToBuildSettings(GreyboxScene);
+            Debug.Log("[Greybox] Built " + places + " places from layout '" + content.Layout.Id + "' → " + GreyboxScene);
+        }
+
+        [MenuItem("HeroGame/Build Main Menu Scene", priority = 2)]
+        public static void BuildMenu()
+        {
+            Directory.CreateDirectory(SceneFolder);
+            Directory.CreateDirectory(GeneratedFolder);
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            var cam = new GameObject("Main Camera", typeof(Camera)) { tag = "MainCamera" };
+            cam.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
+            cam.GetComponent<Camera>().backgroundColor = new Color(0.03f, 0.05f, 0.08f);
+
+            var panelPath = GeneratedFolder + "/FrontEndPanelSettings.asset";
+            var panel = AssetDatabase.LoadAssetAtPath<PanelSettings>(panelPath);
+            if (panel == null)
+            {
+                panel = ScriptableObject.CreateInstance<PanelSettings>();
+                panel.scaleMode = PanelScaleMode.ScaleWithScreenSize;
+                panel.referenceResolution = new Vector2Int(1920, 1080);
+                AssetDatabase.CreateAsset(panel, panelPath);
+            }
+            var ui = new GameObject("FrontEnd");
+            var doc = ui.AddComponent<UIDocument>();
+            doc.panelSettings = panel;
+            doc.visualTreeAsset = Resources.Load<VisualTreeAsset>("UI/MainMenu");
+            var menu = ui.AddComponent<MainMenuController>();
+            menu.PanelSettings = panel;
+
+            EditorSceneManager.SaveScene(scene, MenuScene);
+            AddToBuildSettings(MenuScene, first: true);
+            Debug.Log("[Greybox] Built " + MenuScene);
+        }
+
+        private static void BuildGround(Transform parent, MaterialLibrary m)
+        {
+            var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            ground.name = "Ground";
+            ground.transform.SetParent(parent);
+            ground.transform.position = new Vector3(270f, 0f, -250f);
+            ground.transform.localScale = new Vector3(160f, 1f, 130f);
+            ground.GetComponent<Renderer>().sharedMaterial = m.Get("ground", new Color(0.33f, 0.36f, 0.27f));
+            GameObjectUtility.SetStaticEditorFlags(ground, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic);
+
+            var canal = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            canal.name = "Arden Ship Canal (water placeholder)";
+            canal.transform.SetParent(parent);
+            canal.transform.position = new Vector3(300f, -0.4f, -830f);
+            canal.transform.localScale = new Vector3(1600f, 1f, 90f);
+            canal.GetComponent<Renderer>().sharedMaterial = m.Get("water", new Color(0.12f, 0.22f, 0.26f));
+        }
+
+        private static void BuildRoads(Transform parent, WorldLayout layout, MaterialLibrary m)
+        {
+            var roads = new GameObject("Roads").transform;
+            roads.SetParent(parent);
+            foreach (var road in layout.Roads)
+            {
+                for (var i = 0; i + 3 < road.Points.Count; i += 2)
+                {
+                    var a = new Vector3(road.Points[i], 0.02f, road.Points[i + 1]);
+                    var b = new Vector3(road.Points[i + 2], 0.02f, road.Points[i + 3]);
+                    var seg = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    seg.name = road.Name;
+                    seg.transform.SetParent(roads);
+                    seg.transform.position = (a + b) * 0.5f;
+                    seg.transform.rotation = Quaternion.LookRotation(b - a);
+                    seg.transform.localScale = new Vector3(road.Width, 0.04f, Vector3.Distance(a, b) + road.Width);
+                    var color = road.Kind == "avenue" ? new Color(0.2f, 0.2f, 0.21f) : road.Kind == "bridge" ? new Color(0.35f, 0.35f, 0.36f) : new Color(0.25f, 0.25f, 0.26f);
+                    seg.GetComponent<Renderer>().sharedMaterial = m.Get("road_" + road.Kind, color);
+                    GameObjectUtility.SetStaticEditorFlags(seg, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic);
+
+                    // Sidewalks on both sides so pedestrians have somewhere to be.
+                    foreach (var side in new[] { -1f, 1f })
+                    {
+                        var walk = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        walk.name = road.Name + " sidewalk";
+                        walk.transform.SetParent(seg.transform, false);
+                        walk.transform.localPosition = new Vector3(side * (0.5f + 1.5f / road.Width), 1.5f, 0f);
+                        walk.transform.localScale = new Vector3(3f / road.Width, 4f, 1f);
+                        walk.GetComponent<Renderer>().sharedMaterial = m.Get("sidewalk", new Color(0.55f, 0.55f, 0.52f));
+                    }
+                }
+            }
+        }
+
+        private static int BuildPlaces(Transform parent, WorldLayout layout, MaterialLibrary m)
+        {
+            // Expand exactly as the simulation does so names/positions match the persistent places.
+            var geography = new Geography();
+            var expanded = LayoutExpander.Expand(layout, 0, new IdAllocator(), geography);
+            var buildings = new GameObject("Places").transform;
+            buildings.SetParent(parent);
+            foreach (var e in expanded)
+            {
+                var p = e.Place;
+                var go = new GameObject(p.Name);
+                go.transform.SetParent(buildings);
+                go.transform.position = new Vector3(p.Position.X, 0f, p.Position.Z);
+                go.transform.rotation = Quaternion.Euler(0f, e.RotationY, 0f);
+                var marker = go.AddComponent<PlaceMarker>();
+                marker.PlaceName = p.Name;
+                marker.Kind = p.Kind;
+
+                if (e.Height > 0.1f && p.Kind != PlaceKind.Vacant)
+                {
+                    var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    body.name = "Greybox";
+                    body.transform.SetParent(go.transform, false);
+                    body.transform.localPosition = new Vector3(0f, e.Height * 0.5f, 0f);
+                    body.transform.localScale = new Vector3(e.Width, e.Height, e.Depth);
+                    body.GetComponent<Renderer>().sharedMaterial = m.Get("kind_" + p.Kind, ColorFor(p.Kind));
+                    GameObjectUtility.SetStaticEditorFlags(body, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic | StaticEditorFlags.OccluderStatic);
+                }
+                else
+                {
+                    var lot = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    lot.name = "Lot";
+                    lot.transform.SetParent(go.transform, false);
+                    lot.transform.localPosition = new Vector3(0f, 0.03f, 0f);
+                    lot.transform.localScale = new Vector3(e.Width, 0.06f, e.Depth);
+                    lot.GetComponent<Renderer>().sharedMaterial = m.Get("lot_" + p.Kind, p.Kind == PlaceKind.Park ? new Color(0.25f, 0.45f, 0.2f) : new Color(0.42f, 0.38f, 0.3f));
+                }
+
+                // Front-facing interaction points: the entrance faces the nearest road (−Z by convention of the layout).
+                var front = go.transform.position + go.transform.rotation * new Vector3(0f, 0f, -(e.Depth * 0.5f + 1.2f));
+                if (e.Property != null || p.Kind == PlaceKind.Vacant || p.Kind == PlaceKind.Residence || p.Kind == PlaceKind.Warehouse)
+                {
+                    var sign = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    sign.name = "Property Sign";
+                    sign.transform.SetParent(go.transform);
+                    sign.transform.position = front + go.transform.rotation * new Vector3(e.Width * 0.3f, 0.8f, 0f);
+                    sign.transform.localScale = new Vector3(0.8f, 1.6f, 0.1f);
+                    sign.GetComponent<Renderer>().sharedMaterial = m.Get("sign", new Color(0.9f, 0.75f, 0.2f));
+                    var s = sign.AddComponent<PropertyForSaleSign>();
+                    s.Place = marker;
+                }
+                if (e.Business != null)
+                {
+                    var counter = new GameObject("Counter");
+                    counter.transform.SetParent(go.transform);
+                    counter.transform.position = front + Vector3.up;
+                    var col = counter.AddComponent<BoxCollider>();
+                    col.isTrigger = true;
+                    col.size = new Vector3(2f, 2f, 1f);
+                    var c = counter.AddComponent<BusinessCounter>();
+                    c.Place = marker;
+                }
+            }
+            return expanded.Count;
+        }
+
+        private static (GameObject player, Camera camera) BuildPlayer(Vector3 spawn)
+        {
+            var player = new GameObject("Player");
+            player.transform.position = spawn;
+            var cc = player.AddComponent<CharacterController>();
+            cc.height = 1.8f;
+            cc.radius = 0.32f;
+            cc.center = new Vector3(0f, 0.9f, 0f);
+            cc.stepOffset = 0.35f;
+            cc.slopeLimit = 50f;
+            var body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            body.name = "Body (placeholder)";
+            Object.DestroyImmediate(body.GetComponent<Collider>());
+            body.transform.SetParent(player.transform, false);
+            body.transform.localPosition = new Vector3(0f, 0.9f, 0f);
+            body.transform.localScale = new Vector3(0.64f, 0.9f, 0.64f);
+
+            var motor = player.AddComponent<PlayerMotor>();
+            player.AddComponent<PlayerAnimatorBridge>();
+            var interactor = player.AddComponent<PlayerInteractor>();
+
+            var camGo = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener)) { tag = "MainCamera" };
+            var cam = camGo.GetComponent<Camera>();
+            cam.nearClipPlane = 0.1f;
+            cam.farClipPlane = 3000f;
+            camGo.transform.position = spawn + new Vector3(0f, 2.5f, -4f);
+            var orbit = camGo.AddComponent<ThirdPersonCamera>();
+            orbit.Target = player.transform;
+            orbit.CollisionMask = ~0;
+            motor.CameraTransform = camGo.transform;
+            interactor.ViewOrigin = camGo.transform;
+            return (player, cam);
+        }
+
+        private static (Light sun, Light moon) BuildLighting()
+        {
+            var sunGo = new GameObject("Sun", typeof(Light));
+            var sun = sunGo.GetComponent<Light>();
+            sun.type = LightType.Directional;
+            sun.shadows = LightShadows.Soft;
+            var moonGo = new GameObject("Moon", typeof(Light));
+            var moon = moonGo.GetComponent<Light>();
+            moon.type = LightType.Directional;
+            moon.color = new Color(0.6f, 0.7f, 1f);
+            moon.shadows = LightShadows.None;
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
+            RenderSettings.ambientSkyColor = new Color(0.45f, 0.5f, 0.58f);
+            RenderSettings.ambientEquatorColor = new Color(0.35f, 0.36f, 0.34f);
+            RenderSettings.ambientGroundColor = new Color(0.2f, 0.19f, 0.16f);
+            return (sun, moon);
+        }
+
+        private static ParticleSystem BuildRain(Transform follow)
+        {
+            var go = new GameObject("Rain");
+            go.transform.SetParent(follow, false);
+            go.transform.localPosition = new Vector3(0f, 12f, 6f);
+            var ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.startSpeed = 18f;
+            main.startLifetime = 1.2f;
+            main.startSize = 0.03f;
+            main.maxParticles = 12000;
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3(40f, 1f, 40f);
+            shape.rotation = new Vector3(90f, 0f, 0f);
+            var emission = ps.emission;
+            emission.rateOverTime = 0f;
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.renderMode = ParticleSystemRenderMode.Stretch;
+            renderer.lengthScale = 6f;
+            ps.Stop();
+            return ps;
+        }
+
+        private static NpcAvatar BuildNpcPrefab(MaterialLibrary m)
+        {
+            var go = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            go.name = "NPC Avatar (placeholder)";
+            go.transform.localScale = new Vector3(0.6f, 0.9f, 0.6f);
+            go.GetComponent<Renderer>().sharedMaterial = m.Get("npc", new Color(0.7f, 0.6f, 0.5f));
+            var avatar = go.AddComponent<NpcAvatar>();
+            var path = GeneratedFolder + "/NpcAvatar_Placeholder.prefab";
+            var prefab = PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+            return prefab.GetComponent<NpcAvatar>();
+        }
+
+        private static Color ColorFor(PlaceKind kind)
+        {
+            switch (kind)
+            {
+                case PlaceKind.Residence: return new Color(0.72f, 0.66f, 0.56f);
+                case PlaceKind.ApartmentBuilding: return new Color(0.62f, 0.5f, 0.42f);
+                case PlaceKind.Shop: return new Color(0.35f, 0.55f, 0.7f);
+                case PlaceKind.Restaurant: return new Color(0.75f, 0.45f, 0.3f);
+                case PlaceKind.Nightlife: return new Color(0.45f, 0.3f, 0.6f);
+                case PlaceKind.Office: return new Color(0.55f, 0.6f, 0.65f);
+                case PlaceKind.Warehouse: return new Color(0.5f, 0.5f, 0.48f);
+                case PlaceKind.Factory: return new Color(0.45f, 0.42f, 0.38f);
+                case PlaceKind.School: return new Color(0.7f, 0.5f, 0.35f);
+                case PlaceKind.Hospital: return new Color(0.9f, 0.9f, 0.92f);
+                case PlaceKind.PoliceStation: return new Color(0.2f, 0.3f, 0.55f);
+                case PlaceKind.FireStation: return new Color(0.7f, 0.2f, 0.2f);
+                case PlaceKind.Church: return new Color(0.85f, 0.82f, 0.75f);
+                case PlaceKind.Government: return new Color(0.6f, 0.62f, 0.55f);
+                case PlaceKind.GasStation: return new Color(0.8f, 0.8f, 0.3f);
+                case PlaceKind.Garage: return new Color(0.4f, 0.45f, 0.5f);
+                case PlaceKind.Gym: return new Color(0.3f, 0.6f, 0.45f);
+                case PlaceKind.Dock: return new Color(0.4f, 0.35f, 0.3f);
+                default: return new Color(0.6f, 0.6f, 0.6f);
+            }
+        }
+
+        private static bool IsHdrp()
+        {
+            var pipeline = UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline;
+            return pipeline != null && pipeline.GetType().Name.Contains("HDRenderPipeline");
+        }
+
+        private static void AddToBuildSettings(string path, bool first = false)
+        {
+            var scenes = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
+            scenes.RemoveAll(s => s.path == path);
+            var entry = new EditorBuildSettingsScene(path, true);
+            if (first) scenes.Insert(0, entry);
+            else scenes.Add(entry);
+            EditorBuildSettings.scenes = scenes.ToArray();
+        }
+
+        /// <summary>Creates/reuses flat-colour placeholder materials for whichever render pipeline is active.</summary>
+        private sealed class MaterialLibrary
+        {
+            private readonly Dictionary<string, Material> _cache = new Dictionary<string, Material>();
+
+            public Material Get(string key, Color color)
+            {
+                if (_cache.TryGetValue(key, out var m)) return m;
+                var path = GeneratedFolder + "/M_Greybox_" + key + ".mat";
+                m = AssetDatabase.LoadAssetAtPath<Material>(path);
+                if (m == null)
+                {
+                    var shader = Shader.Find("HDRP/Lit") ?? Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard");
+                    m = new Material(shader);
+                    AssetDatabase.CreateAsset(m, path);
+                }
+                if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", color);
+                if (m.HasProperty("_Color")) m.SetColor("_Color", color);
+                EditorUtility.SetDirty(m);
+                _cache[key] = m;
+                return m;
+            }
+        }
+    }
+}

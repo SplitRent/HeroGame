@@ -1,0 +1,1025 @@
+[
+  {
+    "Id": "kinetic_strength",
+    "InternalName": "Kinetic strength",
+    "Components": [
+      {
+        "Domain": "Force",
+        "Verb": "Enhance",
+        "Delivery": "Self",
+        "Element": "Kinetic",
+        "Magnitude": 0.6,
+        "Range": 0,
+        "Precision": 0.4,
+        "Efficiency": 0.6
+      }
+    ],
+    "AllowedElements": [
+      "Kinetic"
+    ],
+    "TypicalLimitations": [
+      "Stamina",
+      "PhysicalStrain",
+      "MassLimit"
+    ],
+    "Evolutions": [
+      {
+        "Id": "leap",
+        "Description": "Store force in the legs for long jumps",
+        "RequiredExperience": 80,
+        "Requires": ""
+      },
+      {
+        "Id": "shockwave_stomp",
+        "Description": "Release a ground shockwave",
+        "RequiredExperience": 220,
+        "Requires": ""
+      },
+      {
+        "Id": "vehicle_lift",
+        "Description": "Lift and throw vehicles",
+        "RequiredExperience": 400,
+        "Requires": ""
+      },
+      {
+        "Id": "concussive_clap",
+        "Description": "Directed concussive blast",
+        "RequiredExperience": 650,
+        "Requires": "shockwave_stomp"
+      }
+    ],
+    "Symptoms": [
+      "crushed_door_handle",
+      "cracked_phone_screen",
+      "bent_railing",
+      "torn_steering_wheel"
+    ]
+  },
+  {
+    "Id": "hypervelocity",
+    "InternalName": "Hypervelocity",
+    "Components": [
+      {
+        "Domain": "Movement",
+        "Verb": "Enhance",
+        "Delivery": "Self",
+        "Element": "Kinetic",
+        "Magnitude": 0.6,
+        "Range": 0,
+        "Precision": 0.35,
+        "Efficiency": 0.45
+      },
+      {
+        "Domain": "Perception",
+        "Verb": "Enhance",
+        "Delivery": "Self",
+        "Element": "None",
+        "Magnitude": 0.3,
+        "Range": 0,
+        "Precision": 0.5,
+        "Efficiency": 0.6
+      }
+    ],
+    "AllowedElements": [
+      "Kinetic"
+    ],
+    "TypicalLimitations": [
+      "Stamina",
+      "PhysicalStrain",
+      "Concentration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "wall_run",
+        "Description": "Run along walls using momentum",
+        "RequiredExperience": 150,
+        "Requires": ""
+      },
+      {
+        "Id": "water_run",
+        "Description": "Cross water at speed",
+        "RequiredExperience": 350,
+        "Requires": "wall_run"
+      },
+      {
+        "Id": "vortex",
+        "Description": "Create a speed vortex",
+        "RequiredExperience": 700,
+        "Requires": "water_run"
+      }
+    ],
+    "Symptoms": [
+      "everyone_seems_slow",
+      "shoes_worn_through",
+      "blur_in_reflection",
+      "caught_falling_cup"
+    ]
+  },
+  {
+    "Id": "flight",
+    "InternalName": "Unassisted flight",
+    "Components": [
+      {
+        "Domain": "Movement",
+        "Verb": "Traverse",
+        "Delivery": "Self",
+        "Element": "None",
+        "Magnitude": 0.5,
+        "Range": 0,
+        "Precision": 0.35,
+        "Efficiency": 0.4
+      }
+    ],
+    "AllowedElements": [
+      "None"
+    ],
+    "TypicalLimitations": [
+      "Stamina",
+      "Concentration",
+      "Duration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "hover_stability",
+        "Description": "Stable hover",
+        "RequiredExperience": 120,
+        "Requires": ""
+      },
+      {
+        "Id": "high_speed_flight",
+        "Description": "High speed flight",
+        "RequiredExperience": 380,
+        "Requires": "hover_stability"
+      },
+      {
+        "Id": "carry_passenger",
+        "Description": "Carry another person",
+        "RequiredExperience": 520,
+        "Requires": "hover_stability"
+      }
+    ],
+    "Symptoms": [
+      "woke_up_floating",
+      "feet_leave_ground_when_startled",
+      "no_weight_on_scale"
+    ]
+  },
+  {
+    "Id": "telekinesis",
+    "InternalName": "Telekinesis",
+    "Components": [
+      {
+        "Domain": "Force",
+        "Verb": "Manipulate",
+        "Delivery": "Remote",
+        "Element": "Kinetic",
+        "Magnitude": 0.45,
+        "Range": 25,
+        "Precision": 0.35,
+        "Efficiency": 0.45
+      }
+    ],
+    "AllowedElements": [
+      "Kinetic"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "MassLimit",
+      "LineOfSight"
+    ],
+    "Evolutions": [
+      {
+        "Id": "multi_object",
+        "Description": "Hold several objects",
+        "RequiredExperience": 180,
+        "Requires": ""
+      },
+      {
+        "Id": "tk_shield",
+        "Description": "Catch projectiles mid-air",
+        "RequiredExperience": 360,
+        "Requires": "multi_object"
+      },
+      {
+        "Id": "tk_flight",
+        "Description": "Lift yourself",
+        "RequiredExperience": 620,
+        "Requires": "tk_shield"
+      }
+    ],
+    "Symptoms": [
+      "objects_rattle_when_angry",
+      "cup_slides_toward_hand",
+      "door_slams_on_its_own"
+    ]
+  },
+  {
+    "Id": "blink",
+    "InternalName": "Short-range teleportation",
+    "Components": [
+      {
+        "Domain": "Space",
+        "Verb": "Traverse",
+        "Delivery": "Self",
+        "Element": "Spatial",
+        "Magnitude": 0.4,
+        "Range": 30,
+        "Precision": 0.3,
+        "Efficiency": 0.35
+      }
+    ],
+    "AllowedElements": [
+      "Spatial"
+    ],
+    "TypicalLimitations": [
+      "Cooldown",
+      "LineOfSight",
+      "Instability"
+    ],
+    "Evolutions": [
+      {
+        "Id": "blind_blink",
+        "Description": "Blink to remembered places",
+        "RequiredExperience": 300,
+        "Requires": ""
+      },
+      {
+        "Id": "tag_along",
+        "Description": "Take someone with you",
+        "RequiredExperience": 550,
+        "Requires": ""
+      },
+      {
+        "Id": "chain_blink",
+        "Description": "Blink repeatedly",
+        "RequiredExperience": 800,
+        "Requires": "blind_blink"
+      }
+    ],
+    "Symptoms": [
+      "lost_seconds",
+      "found_self_in_next_room",
+      "phone_shows_wrong_location"
+    ]
+  },
+  {
+    "Id": "energy_projection",
+    "InternalName": "Energy projection",
+    "Components": [
+      {
+        "Domain": "Energy",
+        "Verb": "Project",
+        "Delivery": "Beam",
+        "Element": "None",
+        "Magnitude": 0.55,
+        "Range": 40,
+        "Precision": 0.4,
+        "Efficiency": 0.45
+      }
+    ],
+    "AllowedElements": [
+      "Electric",
+      "Fire",
+      "Cold",
+      "Light"
+    ],
+    "TypicalLimitations": [
+      "Stamina",
+      "Cooldown",
+      "EnvironmentRequirement"
+    ],
+    "Evolutions": [
+      {
+        "Id": "charged_shot",
+        "Description": "Charge a stronger blast",
+        "RequiredExperience": 160,
+        "Requires": ""
+      },
+      {
+        "Id": "area_burst",
+        "Description": "Release in all directions",
+        "RequiredExperience": 380,
+        "Requires": ""
+      },
+      {
+        "Id": "sustained_beam",
+        "Description": "Sustained beam",
+        "RequiredExperience": 600,
+        "Requires": "charged_shot"
+      }
+    ],
+    "Symptoms": [
+      "streetlights_flicker",
+      "static_shocks",
+      "phone_battery_drains",
+      "hands_glow_in_dark"
+    ]
+  },
+  {
+    "Id": "gravity_well",
+    "InternalName": "Gravity manipulation",
+    "Components": [
+      {
+        "Domain": "Gravity",
+        "Verb": "Manipulate",
+        "Delivery": "Area",
+        "Element": "Gravitic",
+        "Magnitude": 0.45,
+        "Range": 20,
+        "Precision": 0.3,
+        "Efficiency": 0.4
+      }
+    ],
+    "AllowedElements": [
+      "Gravitic"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "Instability",
+      "Stamina"
+    ],
+    "Evolutions": [
+      {
+        "Id": "float_objects",
+        "Description": "Nullify weight in an area",
+        "RequiredExperience": 140,
+        "Requires": ""
+      },
+      {
+        "Id": "crush_field",
+        "Description": "Increase gravity to pin targets",
+        "RequiredExperience": 360,
+        "Requires": ""
+      },
+      {
+        "Id": "gravity_walk",
+        "Description": "Walk on walls",
+        "RequiredExperience": 520,
+        "Requires": "float_objects"
+      }
+    ],
+    "Symptoms": [
+      "dust_settles_wrong",
+      "objects_heavier_near_you",
+      "water_flows_uphill"
+    ]
+  },
+  {
+    "Id": "regeneration",
+    "InternalName": "Accelerated healing",
+    "Components": [
+      {
+        "Domain": "Biology",
+        "Verb": "Enhance",
+        "Delivery": "Self",
+        "Element": "Biological",
+        "Magnitude": 0.5,
+        "Range": 0,
+        "Precision": 0.6,
+        "Efficiency": 0.5
+      }
+    ],
+    "AllowedElements": [
+      "Biological"
+    ],
+    "TypicalLimitations": [
+      "Stamina",
+      "Duration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "pain_suppression",
+        "Description": "Ignore pain",
+        "RequiredExperience": 150,
+        "Requires": ""
+      },
+      {
+        "Id": "toxin_immunity",
+        "Description": "Immunity to toxins",
+        "RequiredExperience": 400,
+        "Requires": ""
+      }
+    ],
+    "Symptoms": [
+      "cuts_heal_overnight",
+      "old_scar_gone",
+      "broken_bone_feels_fine"
+    ]
+  },
+  {
+    "Id": "durability",
+    "InternalName": "Enhanced durability",
+    "Components": [
+      {
+        "Domain": "Defense",
+        "Verb": "Enhance",
+        "Delivery": "Self",
+        "Element": "Kinetic",
+        "Magnitude": 0.55,
+        "Range": 0,
+        "Precision": 0.6,
+        "Efficiency": 0.6
+      }
+    ],
+    "AllowedElements": [
+      "Kinetic"
+    ],
+    "TypicalLimitations": [
+      "PhysicalStrain",
+      "Stamina"
+    ],
+    "Evolutions": [
+      {
+        "Id": "impact_brace",
+        "Description": "Brace for vehicle impacts",
+        "RequiredExperience": 200,
+        "Requires": ""
+      },
+      {
+        "Id": "unstoppable",
+        "Description": "Charge through walls",
+        "RequiredExperience": 500,
+        "Requires": "impact_brace"
+      }
+    ],
+    "Symptoms": [
+      "didnt_feel_the_fall",
+      "needle_bent_at_clinic",
+      "car_door_dented_by_elbow"
+    ]
+  },
+  {
+    "Id": "force_field",
+    "InternalName": "Force field projection",
+    "Components": [
+      {
+        "Domain": "Defense",
+        "Verb": "Shield",
+        "Delivery": "Field",
+        "Element": "Kinetic",
+        "Magnitude": 0.45,
+        "Range": 4,
+        "Precision": 0.45,
+        "Efficiency": 0.4
+      }
+    ],
+    "AllowedElements": [
+      "Kinetic",
+      "Light"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "Stamina",
+      "Duration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "bubble_others",
+        "Description": "Shield someone else",
+        "RequiredExperience": 200,
+        "Requires": ""
+      },
+      {
+        "Id": "repulse",
+        "Description": "Push outward",
+        "RequiredExperience": 380,
+        "Requires": ""
+      },
+      {
+        "Id": "platform",
+        "Description": "Create platforms",
+        "RequiredExperience": 560,
+        "Requires": "bubble_others"
+      }
+    ],
+    "Symptoms": [
+      "rain_does_not_touch_you",
+      "dropped_glass_bounced",
+      "faint_shimmer_in_mirror"
+    ]
+  },
+  {
+    "Id": "light_bending",
+    "InternalName": "Light bending (invisibility)",
+    "Components": [
+      {
+        "Domain": "Energy",
+        "Verb": "Manipulate",
+        "Delivery": "Self",
+        "Element": "Light",
+        "Magnitude": 0.4,
+        "Range": 0,
+        "Precision": 0.4,
+        "Efficiency": 0.4
+      }
+    ],
+    "AllowedElements": [
+      "Light"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "EnvironmentRequirement",
+      "Duration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "partial_fade",
+        "Description": "Stay faded while moving",
+        "RequiredExperience": 200,
+        "Requires": ""
+      },
+      {
+        "Id": "cloak_other",
+        "Description": "Hide someone else",
+        "RequiredExperience": 500,
+        "Requires": "partial_fade"
+      },
+      {
+        "Id": "flash",
+        "Description": "Blinding flash",
+        "RequiredExperience": 380,
+        "Requires": ""
+      }
+    ],
+    "Symptoms": [
+      "reflection_missing",
+      "camera_does_not_focus",
+      "people_bump_into_you"
+    ]
+  },
+  {
+    "Id": "density_shift",
+    "InternalName": "Density manipulation",
+    "Components": [
+      {
+        "Domain": "Matter",
+        "Verb": "Transform",
+        "Delivery": "Self",
+        "Element": "None",
+        "Magnitude": 0.45,
+        "Range": 0,
+        "Precision": 0.35,
+        "Efficiency": 0.35
+      }
+    ],
+    "AllowedElements": [
+      "None"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "PhysicalStrain",
+      "Instability"
+    ],
+    "Evolutions": [
+      {
+        "Id": "phase_walls",
+        "Description": "Pass through thin walls",
+        "RequiredExperience": 350,
+        "Requires": ""
+      },
+      {
+        "Id": "dense_strike",
+        "Description": "Heavy strikes",
+        "RequiredExperience": 250,
+        "Requires": ""
+      },
+      {
+        "Id": "phase_object",
+        "Description": "Phase held objects",
+        "RequiredExperience": 650,
+        "Requires": "phase_walls"
+      }
+    ],
+    "Symptoms": [
+      "sank_into_mattress",
+      "hand_passed_through_door",
+      "floorboards_creak_under_you"
+    ]
+  },
+  {
+    "Id": "shapeshift",
+    "InternalName": "Biological mimicry",
+    "Components": [
+      {
+        "Domain": "Biology",
+        "Verb": "Transform",
+        "Delivery": "Self",
+        "Element": "Biological",
+        "Magnitude": 0.4,
+        "Range": 0,
+        "Precision": 0.3,
+        "Efficiency": 0.35
+      }
+    ],
+    "AllowedElements": [
+      "Biological"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "Duration",
+      "Instability"
+    ],
+    "Evolutions": [
+      {
+        "Id": "face_copy",
+        "Description": "Copy a face",
+        "RequiredExperience": 300,
+        "Requires": ""
+      },
+      {
+        "Id": "voice_copy",
+        "Description": "Copy a voice",
+        "RequiredExperience": 450,
+        "Requires": ""
+      },
+      {
+        "Id": "full_mimic",
+        "Description": "Full body mimicry",
+        "RequiredExperience": 800,
+        "Requires": "face_copy"
+      }
+    ],
+    "Symptoms": [
+      "face_looks_different_in_photos",
+      "hair_color_shifts",
+      "fingerprints_dont_scan"
+    ]
+  },
+  {
+    "Id": "duplication",
+    "InternalName": "Self duplication",
+    "Components": [
+      {
+        "Domain": "Biology",
+        "Verb": "Duplicate",
+        "Delivery": "Self",
+        "Element": "Biological",
+        "Magnitude": 0.4,
+        "Range": 0,
+        "Precision": 0.3,
+        "Efficiency": 0.3
+      }
+    ],
+    "AllowedElements": [
+      "Biological"
+    ],
+    "TypicalLimitations": [
+      "Stamina",
+      "Concentration",
+      "Duration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "second_duplicate",
+        "Description": "Maintain two duplicates",
+        "RequiredExperience": 400,
+        "Requires": ""
+      },
+      {
+        "Id": "shared_senses",
+        "Description": "See through duplicates",
+        "RequiredExperience": 600,
+        "Requires": ""
+      }
+    ],
+    "Symptoms": [
+      "neighbor_saw_you_twice",
+      "double_memory_of_morning",
+      "exhausted_for_no_reason"
+    ]
+  },
+  {
+    "Id": "chronoperception",
+    "InternalName": "Accelerated time perception",
+    "Components": [
+      {
+        "Domain": "Time",
+        "Verb": "Sense",
+        "Delivery": "Self",
+        "Element": "Temporal",
+        "Magnitude": 0.4,
+        "Range": 0,
+        "Precision": 0.5,
+        "Efficiency": 0.45
+      }
+    ],
+    "AllowedElements": [
+      "Temporal"
+    ],
+    "TypicalLimitations": [
+      "Stamina",
+      "Concentration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "predictive_step",
+        "Description": "Anticipate attacks",
+        "RequiredExperience": 300,
+        "Requires": ""
+      },
+      {
+        "Id": "deep_focus",
+        "Description": "Longer slow-time",
+        "RequiredExperience": 600,
+        "Requires": "predictive_step"
+      }
+    ],
+    "Symptoms": [
+      "clocks_tick_slowly",
+      "read_a_page_in_a_second",
+      "hear_individual_raindrops"
+    ]
+  },
+  {
+    "Id": "local_time_dilation",
+    "InternalName": "Localized time dilation",
+    "Components": [
+      {
+        "Domain": "Time",
+        "Verb": "Warp",
+        "Delivery": "Field",
+        "Element": "Temporal",
+        "Magnitude": 0.4,
+        "Range": 8,
+        "Precision": 0.25,
+        "Efficiency": 0.25
+      }
+    ],
+    "AllowedElements": [
+      "Temporal"
+    ],
+    "TypicalLimitations": [
+      "Instability",
+      "Stamina",
+      "Cooldown"
+    ],
+    "Evolutions": [
+      {
+        "Id": "stasis",
+        "Description": "Freeze a small object in time",
+        "RequiredExperience": 500,
+        "Requires": ""
+      },
+      {
+        "Id": "rewind_object",
+        "Description": "Rewind an object's damage",
+        "RequiredExperience": 900,
+        "Requires": "stasis"
+      }
+    ],
+    "Symptoms": [
+      "watch_runs_backwards",
+      "coffee_stays_hot_all_day",
+      "fly_hangs_in_air"
+    ]
+  },
+  {
+    "Id": "portal",
+    "InternalName": "Spatial portals",
+    "Components": [
+      {
+        "Domain": "Space",
+        "Verb": "Warp",
+        "Delivery": "Field",
+        "Element": "Spatial",
+        "Magnitude": 0.4,
+        "Range": 40,
+        "Precision": 0.25,
+        "Efficiency": 0.25
+      }
+    ],
+    "AllowedElements": [
+      "Spatial"
+    ],
+    "TypicalLimitations": [
+      "Instability",
+      "Concentration",
+      "Cooldown"
+    ],
+    "Evolutions": [
+      {
+        "Id": "stable_portal",
+        "Description": "Hold a portal open",
+        "RequiredExperience": 450,
+        "Requires": ""
+      },
+      {
+        "Id": "portal_redirect",
+        "Description": "Redirect projectiles",
+        "RequiredExperience": 700,
+        "Requires": "stable_portal"
+      }
+    ],
+    "Symptoms": [
+      "draft_from_nowhere",
+      "sand_in_shoes_far_from_beach",
+      "hear_distant_traffic_indoors"
+    ]
+  },
+  {
+    "Id": "power_mimicry",
+    "InternalName": "Ability mimicry",
+    "Components": [
+      {
+        "Domain": "Manipulation",
+        "Verb": "Copy",
+        "Delivery": "Touch",
+        "Element": "None",
+        "Magnitude": 0.35,
+        "Range": 0,
+        "Precision": 0.3,
+        "Efficiency": 0.3
+      }
+    ],
+    "AllowedElements": [
+      "None"
+    ],
+    "TypicalLimitations": [
+      "Duration",
+      "Instability",
+      "Stamina"
+    ],
+    "Evolutions": [
+      {
+        "Id": "hold_copy",
+        "Description": "Hold a copied ability longer",
+        "RequiredExperience": 500,
+        "Requires": ""
+      }
+    ],
+    "Symptoms": [
+      "briefly_strong_after_handshake",
+      "nosebleed_after_crowd",
+      "dreams_that_arent_yours"
+    ]
+  },
+  {
+    "Id": "construct_creation",
+    "InternalName": "Hard-light constructs",
+    "Components": [
+      {
+        "Domain": "Creation",
+        "Verb": "Generate",
+        "Delivery": "Area",
+        "Element": "Light",
+        "Magnitude": 0.4,
+        "Range": 15,
+        "Precision": 0.35,
+        "Efficiency": 0.3
+      }
+    ],
+    "AllowedElements": [
+      "Light"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "Stamina",
+      "Duration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "complex_constructs",
+        "Description": "Moving constructs",
+        "RequiredExperience": 450,
+        "Requires": ""
+      },
+      {
+        "Id": "construct_bridge",
+        "Description": "Large structures",
+        "RequiredExperience": 650,
+        "Requires": "complex_constructs"
+      }
+    ],
+    "Symptoms": [
+      "shapes_linger_in_air",
+      "sketches_glow",
+      "glass_hums"
+    ]
+  },
+  {
+    "Id": "pyrokinesis",
+    "InternalName": "Heat manipulation",
+    "Components": [
+      {
+        "Domain": "Environment",
+        "Verb": "Manipulate",
+        "Delivery": "Remote",
+        "Element": "Fire",
+        "Magnitude": 0.45,
+        "Range": 20,
+        "Precision": 0.35,
+        "Efficiency": 0.4
+      }
+    ],
+    "AllowedElements": [
+      "Fire"
+    ],
+    "TypicalLimitations": [
+      "EnvironmentRequirement",
+      "Concentration",
+      "PhysicalStrain"
+    ],
+    "Evolutions": [
+      {
+        "Id": "extinguish",
+        "Description": "Draw heat out of fires",
+        "RequiredExperience": 200,
+        "Requires": ""
+      },
+      {
+        "Id": "heat_shield",
+        "Description": "Heat mirage barrier",
+        "RequiredExperience": 420,
+        "Requires": ""
+      }
+    ],
+    "Symptoms": [
+      "stove_flares_when_near",
+      "sheets_scorched",
+      "fever_without_illness"
+    ]
+  },
+  {
+    "Id": "momentum_redirect",
+    "InternalName": "Momentum redirection",
+    "Components": [
+      {
+        "Domain": "Force",
+        "Verb": "Absorb",
+        "Delivery": "Touch",
+        "Element": "Kinetic",
+        "Magnitude": 0.5,
+        "Range": 0,
+        "Precision": 0.4,
+        "Efficiency": 0.5
+      }
+    ],
+    "AllowedElements": [
+      "Kinetic"
+    ],
+    "TypicalLimitations": [
+      "Concentration",
+      "PhysicalStrain"
+    ],
+    "Evolutions": [
+      {
+        "Id": "return_force",
+        "Description": "Return absorbed impacts",
+        "RequiredExperience": 250,
+        "Requires": ""
+      },
+      {
+        "Id": "vehicle_stop",
+        "Description": "Stop a moving car",
+        "RequiredExperience": 550,
+        "Requires": "return_force"
+      }
+    ],
+    "Symptoms": [
+      "caught_ball_without_sting",
+      "fall_felt_soft",
+      "door_swung_back_hard"
+    ]
+  },
+  {
+    "Id": "enhanced_senses",
+    "InternalName": "Enhanced senses",
+    "Components": [
+      {
+        "Domain": "Perception",
+        "Verb": "Sense",
+        "Delivery": "Self",
+        "Element": "Psychic",
+        "Magnitude": 0.5,
+        "Range": 0,
+        "Precision": 0.55,
+        "Efficiency": 0.6
+      }
+    ],
+    "AllowedElements": [
+      "Psychic"
+    ],
+    "TypicalLimitations": [
+      "Concentration"
+    ],
+    "Evolutions": [
+      {
+        "Id": "track_scent",
+        "Description": "Track by scent",
+        "RequiredExperience": 150,
+        "Requires": ""
+      },
+      {
+        "Id": "hear_heartbeats",
+        "Description": "Hear heartbeats (lie detection)",
+        "RequiredExperience": 380,
+        "Requires": ""
+      }
+    ],
+    "Symptoms": [
+      "hear_neighbors_talking",
+      "smell_rain_hours_early",
+      "headaches_in_crowds"
+    ]
+  }
+]

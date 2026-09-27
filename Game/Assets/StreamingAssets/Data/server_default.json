@@ -1,0 +1,81 @@
+{
+  "SchemaVersion": 1,
+  "Identity": {
+    "ServerName": "Port Arden - Development",
+    "Description": "Canonical rules. Local development server.",
+    "CityName": "Port Arden",
+    "CitySlogan": "Built on the Tide",
+    "PrimaryColorHex": "#1B4F72",
+    "SecondaryColorHex": "#F0B429",
+    "GovernmentName": "City of Port Arden",
+    "PoliceDepartmentName": "Port Arden Police Department",
+    "FireDepartmentName": "Port Arden Fire Rescue",
+    "HospitalNames": ["Arden General Hospital", "St. Brigid Medical Center"],
+    "SchoolNames": ["Eastwater High School", "Pinecrest Hollow High School", "Coquina Key Academy"],
+    "UniversityNames": ["Tarrow State University", "Arden Institute of Technology"],
+    "SportsTeams": [
+      { "Sport": "Football", "Name": "Port Arden Surge", "Mascot": "Rip the Riptide", "PrimaryColorHex": "#0E6BA8" },
+      { "Sport": "Baseball", "Name": "Port Arden Riggers", "Mascot": "Boomer the Crane", "PrimaryColorHex": "#C1440E" },
+      { "Sport": "Basketball", "Name": "Port Arden Swelter", "Mascot": "Heatwave", "PrimaryColorHex": "#E3A008" },
+      { "Sport": "Soccer", "Name": "Longshore FC", "Mascot": "Anchor", "PrimaryColorHex": "#1F7A4D" }
+    ],
+    "NewsOrganizations": ["Channel 9 Gulfwatch", "The Arden Ledger", "KTDW Tidewater Radio"],
+    "Region": "NA-South",
+    "WorldSeed": 20260927
+  },
+  "Gameplay": {
+    "MaxPlayers": 64,
+    "PvpEnabled": true,
+    "RoleplayServer": false,
+    "CrimeSeverityMultiplier": 1.0,
+    "PoliceResponseMultiplier": 1.0,
+    "NpcDensity": 1.0,
+    "TrafficDensity": 1.0,
+    "DynamicWeather": true,
+    "FixedWeather": "",
+    "RealMinutesPerGameDay": 48,
+    "DeathRule": "Hospital",
+    "RespawnDelaySeconds": 20,
+    "InjuriesEnabled": true,
+    "VehiclePersistence": true,
+    "PropertyPersistence": true,
+    "PlayerElections": false
+  },
+  "Economy": {
+    "Difficulty": 1.0,
+    "IncomeTaxRate": 0.12,
+    "SalesTaxRate": 0.0825,
+    "PropertyTaxAnnualRate": 0.021,
+    "BusinessTaxRate": 0.09,
+    "PropertyTransferTaxRate": 0.01,
+    "VehicleRegistrationFeeCents": 7500,
+    "PropertyPriceMultiplier": 1.0,
+    "BusinessPriceMultiplier": 1.0,
+    "WageMultiplier": 1.0,
+    "BusinessRevenueMultiplier": 1.0,
+    "CrimePayoutMultiplier": 1.0,
+    "StartingCashCents": 250000,
+    "LoanBaseAnnualRate": 0.069
+  },
+  "Powers": {
+    "PowersEnabled": true,
+    "AnomalyFrequencyMultiplier": 1.0,
+    "ManifestationMultiplier": 1.0,
+    "MultiplePowerMultiplier": 1.0,
+    "MaxPowersPerCharacter": 3
+  },
+  "Community": {
+    "OwnerAccountId": "",
+    "Administrators": [],
+    "Moderators": [],
+    "WhitelistEnabled": false,
+    "Whitelist": [],
+    "Blacklist": [],
+    "PasswordProtected": false,
+    "AgeRating": "M",
+    "VoiceChatEnabled": true,
+    "ProximityVoice": true,
+    "ChatRules": ["Be respectful out of character.", "No exploiting bugs; report them.", "No real-world hate speech."],
+    "Announcements": ["Welcome to Port Arden."]
+  }
+}

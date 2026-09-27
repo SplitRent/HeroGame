@@ -1,0 +1,17 @@
+<Project>
+  <!--
+    Shared settings for the headless (.NET) builds of the engine-agnostic assemblies.
+    LangVersion is pinned to 9.0 and the target to netstandard2.1 so everything that compiles
+    here also compiles inside Unity 6 (C# 9, .NET Standard 2.1 profile).
+  -->
+  <PropertyGroup>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>CS1591</WarningsNotAsErrors>
+    <Deterministic>true</Deterministic>
+    <GameAssets>$(MSBuildThisFileDirectory)../Game/Assets/_Project</GameAssets>
+    <GameData>$(MSBuildThisFileDirectory)../Game/Assets/StreamingAssets/Data</GameData>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroGame.Core", "HeroGame.Core\HeroGame.Core.csproj", "{FE071C0C-A333-40E5-B8A1-33B5D72C3C75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroGame.Persistence", "HeroGame.Persistence\HeroGame.Persistence.csproj", "{CFEE5F20-DC03-4574-BECE-023DB7C56BC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroGame.Tests", "HeroGame.Tests\HeroGame.Tests.csproj", "{F78BCD68-5666-4594-94C0-856643AD84BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroGame.WorldHost", "HeroGame.WorldHost\HeroGame.WorldHost.csproj", "{7E99B3B2-E377-4DBB-880A-75164FEED0CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE071C0C-A333-40E5-B8A1-33B5D72C3C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE071C0C-A333-40E5-B8A1-33B5D72C3C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE071C0C-A333-40E5-B8A1-33B5D72C3C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE071C0C-A333-40E5-B8A1-33B5D72C3C75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFEE5F20-DC03-4574-BECE-023DB7C56BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFEE5F20-DC03-4574-BECE-023DB7C56BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFEE5F20-DC03-4574-BECE-023DB7C56BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFEE5F20-DC03-4574-BECE-023DB7C56BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78BCD68-5666-4594-94C0-856643AD84BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78BCD68-5666-4594-94C0-856643AD84BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78BCD68-5666-4594-94C0-856643AD84BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78BCD68-5666-4594-94C0-856643AD84BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E99B3B2-E377-4DBB-880A-75164FEED0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E99B3B2-E377-4DBB-880A-75164FEED0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E99B3B2-E377-4DBB-880A-75164FEED0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E99B3B2-E377-4DBB-880A-75164FEED0CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

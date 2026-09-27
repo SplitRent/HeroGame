@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Compile-only verification of the Unity-dependent scripts (Runtime + Editor) without a Unity
+    install, against Unity reference assemblies from NuGet (UnityEngine 2021.3 modules, UnityEditor
+    2021.1). This catches syntax/type errors and use of APIs that do not exist; it does NOT prove
+    runtime behaviour, and packages (Input System, HDRP) are excluded — Runtime.Input is not checked.
+    Unity 6 remains the target: code avoids APIs newer than 2021.3 so this check stays meaningful.
+
+      dotnet build                                   editor configuration (UNITY_EDITOR)
+      dotnet build -p:UnityEditorBuild=false         player configuration (Runtime only)
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <UnityEditorBuild Condition="'$(UnityEditorBuild)' == ''">true</UnityEditorBuild>
+    <!-- No UNITY_20xx_OR_NEWER defines: the UnityEditor reference is 2021.1, so version-gated code is skipped here. -->
+    <DefineConstants>UNITY_STANDALONE</DefineConstants>
+    <DefineConstants Condition="'$(UnityEditorBuild)' == 'true'">$(DefineConstants);UNITY_EDITOR;DEVELOPMENT_BUILD</DefineConstants>
+    <!-- Unity reference assemblies target an older framework profile; conflicts are expected and harmless here. -->
+    <NoWarn>$(NoWarn);MSB3277;NU1701;CS0436</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(GameAssets)/Runtime/**/*.cs" />
+    <Compile Include="$(GameAssets)/Editor/**/*.cs" Condition="'$(UnityEditorBuild)' == 'true'" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" GeneratePathProperty="true" ExcludeAssets="all" />
+    <PackageReference Include="Unity3D.SDK" Version="2021.1.14.1" GeneratePathProperty="true" ExcludeAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="$(PkgUnityEngine_Modules)/lib/netstandard2.0/*.dll" />
+    <Reference Include="$(PkgUnity3D_SDK)/lib/UnityEditor.dll" Condition="'$(UnityEditorBuild)' == 'true'" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HeroGame.Core/HeroGame.Core.csproj" />
+    <ProjectReference Include="../HeroGame.Persistence/HeroGame.Persistence.csproj" />
+  </ItemGroup>
+</Project>

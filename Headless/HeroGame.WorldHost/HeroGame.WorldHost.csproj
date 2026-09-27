@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Headless world host: runs the authoritative simulation without Unity. Phase-0 prototype of the
+    dedicated world service (TDD §8): create/load worlds, offline catch-up, inspection, benchmarks.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>herogame-world</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HeroGame.Core/HeroGame.Core.csproj" />
+    <ProjectReference Include="../HeroGame.Persistence/HeroGame.Persistence.csproj" />
+  </ItemGroup>
+</Project>

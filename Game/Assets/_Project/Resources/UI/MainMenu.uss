@@ -1,0 +1,126 @@
+/* Front-end style. Colours are the canonical Port Arden palette (deep harbour blue, sodium amber). */
+.hg-root {
+    flex-grow: 1;
+    flex-direction: row;
+    background-color: rgb(8, 14, 22);
+}
+
+.hg-backdrop {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(27, 79, 114, 0.18);
+}
+
+.hg-left {
+    width: 34%;
+    min-width: 360px;
+    padding: 64px 48px 32px 72px;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-right-width: 1px;
+    border-right-color: rgba(240, 180, 41, 0.35);
+}
+
+.hg-title {
+    font-size: 54px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+    letter-spacing: 6px;
+}
+
+.hg-city {
+    font-size: 16px;
+    color: rgb(240, 180, 41);
+    letter-spacing: 10px;
+    margin-top: 4px;
+}
+
+.hg-menu {
+    margin-top: 48px;
+    flex-grow: 1;
+}
+
+.hg-menu-button {
+    height: 52px;
+    margin: 4px 0;
+    padding-left: 18px;
+    -unity-text-align: middle-left;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: rgb(220, 224, 228);
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 0;
+    border-left-width: 3px;
+    border-left-color: rgba(240, 180, 41, 0);
+    transition-duration: 0.12s;
+}
+
+.hg-menu-button:hover, .hg-menu-button:focus {
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-left-color: rgb(240, 180, 41);
+    padding-left: 26px;
+}
+
+.hg-menu-button--accent {
+    color: rgb(240, 180, 41);
+}
+
+.hg-footer {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.hg-panel {
+    flex-grow: 1;
+    padding: 64px 72px;
+}
+
+.hg-panel-title {
+    font-size: 30px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+}
+
+.hg-row {
+    flex-direction: row;
+    align-items: center;
+    margin: 4px 0;
+}
+
+.hg-server {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 14px;
+    margin: 3px 0;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-left-width: 3px;
+    border-left-color: rgba(27, 79, 114, 1);
+}
+
+.hg-server:hover {
+    background-color: rgba(255, 255, 255, 0.09);
+    border-left-color: rgb(240, 180, 41);
+}
+
+.hg-server-name {
+    font-size: 17px;
+    color: rgb(240, 240, 240);
+    -unity-font-style: bold;
+}
+
+.hg-server-meta {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.hg-muted {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.hg-field {
+    margin: 6px 0;
+    max-width: 560px;
+}

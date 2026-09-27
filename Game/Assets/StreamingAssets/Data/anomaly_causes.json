@@ -1,0 +1,292 @@
+[
+  {
+    "Id": "refinery_resonance",
+    "Description": "A pressure vessel at a chemical plant vented a column of shimmering vapour that hung over the canal.",
+    "Domains": [
+      {
+        "Domain": "Force",
+        "Weight": 1.0
+      },
+      {
+        "Domain": "Matter",
+        "Weight": 0.7
+      },
+      {
+        "Domain": "Energy",
+        "Weight": 0.6
+      },
+      {
+        "Domain": "Environment",
+        "Weight": 0.5
+      }
+    ],
+    "Elements": [
+      "Fire",
+      "Kinetic"
+    ],
+    "Phenomena": [
+      "shimmering_vapour",
+      "pressure_wave",
+      "metal_singing"
+    ],
+    "DistrictTypes": [
+      "Industrial",
+      "Port"
+    ],
+    "Weight": 1.4,
+    "MinIntensity": 0.3,
+    "MaxIntensity": 0.95
+  },
+  {
+    "Id": "canal_lightning",
+    "Description": "Lightning struck the ship canal repeatedly in the same spot, leaving the water glowing for minutes.",
+    "Domains": [
+      {
+        "Domain": "Energy",
+        "Weight": 1.0
+      },
+      {
+        "Domain": "Movement",
+        "Weight": 0.6
+      },
+      {
+        "Domain": "Perception",
+        "Weight": 0.3
+      }
+    ],
+    "Elements": [
+      "Electric",
+      "Light"
+    ],
+    "Phenomena": [
+      "glowing_water",
+      "repeated_lightning",
+      "static_storm"
+    ],
+    "DistrictTypes": [
+      "Industrial",
+      "Port",
+      "Coastal"
+    ],
+    "Weight": 1.1,
+    "MinIntensity": 0.3,
+    "MaxIntensity": 0.9
+  },
+  {
+    "Id": "bayou_fog_bloom",
+    "Description": "A dense green-tinged fog rolled out of the bayou and settled over the neighborhood overnight.",
+    "Domains": [
+      {
+        "Domain": "Biology",
+        "Weight": 1.0
+      },
+      {
+        "Domain": "Perception",
+        "Weight": 0.7
+      },
+      {
+        "Domain": "Transformation",
+        "Weight": 0.5
+      }
+    ],
+    "Elements": [
+      "Biological",
+      "Psychic"
+    ],
+    "Phenomena": [
+      "green_fog",
+      "birds_silent",
+      "plants_bloom_overnight"
+    ],
+    "DistrictTypes": [
+      "InnerCity",
+      "Suburban",
+      "LowIncome",
+      "Rural"
+    ],
+    "Weight": 1.2,
+    "MinIntensity": 0.2,
+    "MaxIntensity": 0.8
+  },
+  {
+    "Id": "transformer_surge",
+    "Description": "A substation surge blacked out several blocks while the sky above flickered with coloured light.",
+    "Domains": [
+      {
+        "Domain": "Energy",
+        "Weight": 0.9
+      },
+      {
+        "Domain": "Space",
+        "Weight": 0.35
+      },
+      {
+        "Domain": "Movement",
+        "Weight": 0.4
+      }
+    ],
+    "Elements": [
+      "Electric",
+      "Light"
+    ],
+    "Phenomena": [
+      "aurora_column",
+      "blackout",
+      "phones_reboot"
+    ],
+    "DistrictTypes": [
+      "Downtown",
+      "InnerCity",
+      "Wealthy",
+      "Suburban"
+    ],
+    "Weight": 1.0,
+    "MinIntensity": 0.25,
+    "MaxIntensity": 0.85
+  },
+  {
+    "Id": "tidal_aurora",
+    "Description": "An impossible aurora appeared over the Gulf at low tide; tide gauges recorded water rising uphill.",
+    "Domains": [
+      {
+        "Domain": "Gravity",
+        "Weight": 1.0
+      },
+      {
+        "Domain": "Time",
+        "Weight": 0.45
+      },
+      {
+        "Domain": "Space",
+        "Weight": 0.5
+      }
+    ],
+    "Elements": [
+      "Gravitic",
+      "Temporal",
+      "Spatial"
+    ],
+    "Phenomena": [
+      "aurora_over_water",
+      "reverse_tide",
+      "clocks_disagree"
+    ],
+    "DistrictTypes": [
+      "Coastal",
+      "Port"
+    ],
+    "Weight": 0.5,
+    "MinIntensity": 0.4,
+    "MaxIntensity": 1.0
+  },
+  {
+    "Id": "storm_eye_event",
+    "Description": "Inside a passing storm cell the wind stopped dead and debris hung motionless in the air.",
+    "Domains": [
+      {
+        "Domain": "Gravity",
+        "Weight": 0.7
+      },
+      {
+        "Domain": "Environment",
+        "Weight": 0.8
+      },
+      {
+        "Domain": "Movement",
+        "Weight": 0.6
+      },
+      {
+        "Domain": "Time",
+        "Weight": 0.2
+      }
+    ],
+    "Elements": [
+      "Gravitic",
+      "Cold",
+      "Electric"
+    ],
+    "Phenomena": [
+      "hanging_debris",
+      "silent_wind",
+      "pressure_drop"
+    ],
+    "DistrictTypes": [],
+    "Weight": 0.6,
+    "MinIntensity": 0.3,
+    "MaxIntensity": 0.95
+  },
+  {
+    "Id": "clinic_isotope_leak",
+    "Description": "A medical imaging suite reported an unexplained radiation spike that no instrument could locate.",
+    "Domains": [
+      {
+        "Domain": "Biology",
+        "Weight": 0.9
+      },
+      {
+        "Domain": "Energy",
+        "Weight": 0.5
+      },
+      {
+        "Domain": "Defense",
+        "Weight": 0.6
+      }
+    ],
+    "Elements": [
+      "Biological",
+      "Light"
+    ],
+    "Phenomena": [
+      "instrument_failure",
+      "warm_air",
+      "nausea_reports"
+    ],
+    "DistrictTypes": [
+      "Downtown",
+      "InnerCity",
+      "Suburban"
+    ],
+    "Weight": 0.6,
+    "MinIntensity": 0.2,
+    "MaxIntensity": 0.75
+  },
+  {
+    "Id": "underpass_pressure_event",
+    "Description": "Traffic cameras in an underpass recorded cars sliding sideways as if the road had tilted.",
+    "Domains": [
+      {
+        "Domain": "Force",
+        "Weight": 0.7
+      },
+      {
+        "Domain": "Gravity",
+        "Weight": 0.6
+      },
+      {
+        "Domain": "Space",
+        "Weight": 0.4
+      },
+      {
+        "Domain": "Movement",
+        "Weight": 0.5
+      }
+    ],
+    "Elements": [
+      "Kinetic",
+      "Gravitic"
+    ],
+    "Phenomena": [
+      "road_tilt",
+      "ears_pop",
+      "car_alarms_chain"
+    ],
+    "DistrictTypes": [
+      "Downtown",
+      "InnerCity",
+      "Industrial"
+    ],
+    "Weight": 0.8,
+    "MinIntensity": 0.25,
+    "MaxIntensity": 0.9
+  }
+]

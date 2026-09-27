@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>HeroGame.Persistence</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(GameAssets)/Persistence/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Same major version as com.unity.nuget.newtonsoft-json 3.2.x (Newtonsoft 13.0.x). -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HeroGame.Core/HeroGame.Core.csproj" />
+  </ItemGroup>
+</Project>
