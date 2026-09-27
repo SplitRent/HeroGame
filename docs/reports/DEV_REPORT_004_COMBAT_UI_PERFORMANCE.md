@@ -41,7 +41,7 @@
 | Save right after a daily step (blocked), 50k NPCs | 140–300 ms | **138–180 ms** | ≤ 16 ms ⚠ |
 | Server tick, 64 clients over TLS (with world deltas and player views) | p99 11.6 ms | **p99 8.8 ms** | 33 ms ✓ |
 | Population director, metro | 1.5–1.7 ms | 1.5–1.7 ms | ≤ 2 ms ✓ |
-| Population director, dense 9.3k stress layout | 2.6–3.2 ms | 2.6–3.2 ms | ≤ 2 ms ⚠ |
+| Population director, dense 9.3k stress layout | 2.6–3.2 ms | **1.6–1.7 ms** | ≤ 2 ms ✓ |
 
 The save after a daily step costs about 1.1× the daily step itself. Both happen once per game day, which is about
 every 48 real minutes by default.

@@ -38,7 +38,7 @@ namespace HeroGame.Core.Population
         public readonly PopulationDirectorSettings Settings;
 
         private readonly List<MaterializationRequest> _scratch = new List<MaterializationRequest>();
-        private readonly HashSet<EntityId> _candidates = new HashSet<EntityId>();
+        private readonly List<EntityId> _candidates = new List<EntityId>();
 
         public PopulationDirector(PopulationRegistry population, Geography geography, ScheduleResolver schedules, PopulationDirectorSettings settings = null)
         {
@@ -57,13 +57,16 @@ namespace HeroGame.Core.Population
         public void Invalidate(EntityId npc) => _index.Invalidate(npc);
 
         /// <summary>Returns NPCs that should be materialised, nearest first, respecting budgets.</summary>
+        private long[] _keys = new long[256];
+        private MaterializationRequest[] _items = new MaterializationRequest[256];
+
         public List<MaterializationRequest> Evaluate(IReadOnlyList<WorldPosition> observers, GameDateTime now)
         {
             _index.Update(now);
             LastSchedulesResolved = _index.ResolvesLastUpdate;
             _scratch.Clear();
             _candidates.Clear();
-            for (var i = 0; i < observers.Count; i++) _index.Candidates(observers[i], Settings.NearbyRadius, _candidates);
+            _index.Candidates(observers, Settings.NearbyRadius, _candidates);
             LastCandidates = _candidates.Count;
 
             foreach (var id in _candidates)
@@ -81,18 +84,27 @@ namespace HeroGame.Core.Population
                 });
             }
 
-            // HashSet order is not meaningful; sort for deterministic output.
-            _scratch.Sort((a, b) =>
+            // HashSet order is not meaningful: sort by (distance, id) for deterministic output. Both are packed into one
+            // unique integer key (distance in millimetres, then the NPC's sequence), so a primitive sort does it.
+            var n = _scratch.Count;
+            if (_keys.Length < n)
             {
-                var c = a.DistanceToObserver.CompareTo(b.DistanceToObserver);
-                return c != 0 ? c : a.Npc.CompareTo(b.Npc);
-            });
+                _keys = new long[Math.Max(n, _keys.Length * 2)];
+                _items = new MaterializationRequest[_keys.Length];
+            }
+            for (var i = 0; i < n; i++)
+            {
+                var r = _scratch[i];
+                _keys[i] = ((long)Math.Min(int.MaxValue, (int)(r.DistanceToObserver * 1000f)) << 32) | (long)(r.Npc.Sequence & 0xFFFFFFFFUL);
+                _items[i] = r;
+            }
+            Array.Sort(_keys, _items, 0, n);
 
             var result = new List<MaterializationRequest>();
             int full = 0, nearby = 0;
-            foreach (var r in _scratch)
+            for (var i = 0; i < n; i++)
             {
-                var req = r;
+                var req = _items[i];
                 if (req.Tier == SimulationTier.Full && full >= Settings.MaxFull) req.Tier = SimulationTier.Nearby;
                 if (req.Tier == SimulationTier.Full) full++;
                 else if (nearby < Settings.MaxNearby) nearby++;

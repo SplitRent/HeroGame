@@ -118,6 +118,30 @@ namespace HeroGame.Core.Population
             foreach (var id in _commuters) results.Add(id);
         }
 
+        private readonly HashSet<long> _cellScratch = new HashSet<long>();
+
+        /// <summary>
+        /// Everyone in the grid cells within <paramref name="radius"/> of any observer, plus commuters. Cells are
+        /// collected first (a person is in exactly one cell), so overlapping observers cost nothing extra and no
+        /// per-person de-duplication is needed.
+        /// </summary>
+        public void Candidates(IReadOnlyList<WorldPosition> observers, float radius, List<EntityId> results)
+        {
+            _cellScratch.Clear();
+            foreach (var center in observers)
+            {
+                int x0 = Coord(center.X - radius), x1 = Coord(center.X + radius);
+                int z0 = Coord(center.Z - radius), z1 = Coord(center.Z + radius);
+                for (var x = x0; x <= x1; x++)
+                for (var z = z0; z <= z1; z++)
+                    _cellScratch.Add(Key(x, z));
+            }
+            foreach (var key in _cellScratch)
+                if (_grid.TryGetValue(key, out var cell))
+                    results.AddRange(cell);
+            results.AddRange(_commuters);
+        }
+
         /// <summary>NPCs whose current (non-commuting) activity is at <paramref name="place"/>, in id order.</summary>
         public void AtPlace(Place place, List<EntityId> results)
         {
