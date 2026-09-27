@@ -73,6 +73,18 @@ namespace HeroGame.Persistence.Saves
         public List<NpcRecord> Npcs = new List<NpcRecord>();
     }
 
+    public sealed class LayoutShardChunk
+    {
+        public int Shard;
+        public List<PropertyLayout> Layouts = new List<PropertyLayout>();
+    }
+
+    public sealed class PropertyLayout
+    {
+        public HeroGame.Core.Foundation.EntityId Property;
+        public HeroGame.Core.Building.BuildingLayout Layout;
+    }
+
     public sealed class PropertiesChunk
     {
         public List<PropertyRecord> Properties = new List<PropertyRecord>();

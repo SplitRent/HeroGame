@@ -96,6 +96,11 @@ namespace HeroGame.Core.Simulation
 
         public static string PopulationShard(int index) => PopulationShardPrefix + index;
         public static int ShardOf(EntityId npc) => (int)((npc.Sequence - 1) / NpcsPerShard);
+        /// <summary>Building layouts, sharded by property so one build rewrites a sixteenth of them.</summary>
+        public const string LayoutShardPrefix = "layouts/";
+        public const int LayoutShards = 16;
+        public static string LayoutShard(int index) => LayoutShardPrefix + index;
+        public static int LayoutShardOf(EntityId property) => (int)(property.Sequence % LayoutShards);
         public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice, Emergency, Civic, Social, Destruction };
     }
 

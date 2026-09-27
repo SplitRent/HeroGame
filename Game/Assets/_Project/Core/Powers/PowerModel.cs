@@ -192,6 +192,13 @@ namespace HeroGame.Core.Powers
         public int SuccessfulUses;
         public int FailedUses;
         public List<string> UnlockedEvolutions = new List<string>();
+
+        public PowerProgress Copy()
+        {
+            var c = (PowerProgress)MemberwiseClone();
+            c.UnlockedEvolutions = new List<string>(UnlockedEvolutions);
+            return c;
+        }
     }
 
     [Serializable]
@@ -209,6 +216,14 @@ namespace HeroGame.Core.Powers
         public EntityId SourceEvent;
         /// <summary>Game second before which the power cannot be used again.</summary>
         public long CooldownUntilSecond;
+
+        /// <summary>Copy for save snapshots; the definition is fixed once generated and is shared.</summary>
+        public PowerInstance Copy()
+        {
+            var c = (PowerInstance)MemberwiseClone();
+            c.Progress = Progress?.Copy();
+            return c;
+        }
     }
 
     /// <summary>A timed effect on the user (speed, flight, shield, disguise, time dilation).</summary>
@@ -218,6 +233,8 @@ namespace HeroGame.Core.Powers
         public EffectKind Kind;
         public float Amount;
         public long UntilSecond;
+
+        public ActivePowerEffect Copy() => (ActivePowerEffect)MemberwiseClone();
     }
 
     /// <summary>Everything supernatural about one character on one server.</summary>
@@ -233,6 +250,16 @@ namespace HeroGame.Core.Powers
         public List<ActivePowerEffect> Active = new List<ActivePowerEffect>();
         /// <summary>Last day a public display made the news (one story per day per person).</summary>
         public long LastNewsDay = -1;
+
+        public CharacterPowers SnapshotCopy()
+        {
+            var c = (CharacterPowers)MemberwiseClone();
+            c.Powers = new List<PowerInstance>(Powers.Count);
+            foreach (var p in Powers) c.Powers.Add(p.Copy());
+            c.Active = new List<ActivePowerEffect>(Active.Count);
+            foreach (var e in Active) c.Active.Add(e.Copy());
+            return c;
+        }
 
         public ActivePowerEffect ActiveOf(EffectKind kind, long nowSecond)
         {

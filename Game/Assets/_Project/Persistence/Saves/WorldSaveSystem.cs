@@ -108,6 +108,7 @@ namespace HeroGame.Persistence.Saves
             catch
             {
                 _forceFullSave |= pending.Recovering;
+                lock (_retry) _retry.UnionWith(pending.Dirty); // e.g. layout shards, whose change tracking already moved on
                 throw;
             }
             world.Dirty.Clear();
@@ -162,6 +163,8 @@ namespace HeroGame.Persistence.Saves
             public bool Recovering;
             public HashSet<string> Dirty;
             public List<KeyValuePair<string, string>> Chunks;
+            /// <summary>Detached payloads (population shards of NPC snapshot copies) serialized by Commit, off the simulation thread.</summary>
+            public List<KeyValuePair<string, object>> Deferred;
             public SaveResult Result;
             public System.Diagnostics.Stopwatch Watch;
         }
@@ -210,13 +213,65 @@ namespace HeroGame.Persistence.Saves
             if (dirty.Contains(SaveChunks.Population))
                 foreach (var shard in ShardsOf(world)) dirty.Add(SaveChunks.PopulationShard(shard));
 
+            // Building layouts are copy-on-write, so a shard needs rewriting only when one of its layouts was replaced
+            // since the last save (or it has never been written).
+            for (var s = 0; s < SaveChunks.LayoutShards; s++)
+                if (full || previous == null || !previous.ChunkGenerations.ContainsKey(SaveChunks.LayoutShard(s))) dirty.Add(SaveChunks.LayoutShard(s));
+            foreach (var p in world.Properties.All)
+            {
+                _savedLayouts.TryGetValue(p.Id, out var saved);
+                if (!ReferenceEquals(saved, p.Layout)) dirty.Add(SaveChunks.LayoutShard(SaveChunks.LayoutShardOf(p.Id)));
+            }
+
             // Build payloads on the calling thread (they reference live objects, which nothing mutates while this runs),
-            // and serialize them in parallel. After this point nothing refers to live world objects.
+            // and serialize them in parallel. The population, by far the largest part, is instead copied into detached
+            // snapshot records (a fraction of the cost of serializing it) and serialized by Commit, which a background
+            // save runs on another thread. After this point nothing refers to live world objects.
             var jobs = new List<KeyValuePair<string, object>>();
+            var deferred = new List<KeyValuePair<string, object>>();
+            var shards = new Dictionary<int, PopulationShardChunk>();
+            var layoutShards = new Dictionary<int, LayoutShardChunk>();
             foreach (var chunk in dirty)
             {
+                if (chunk.StartsWith(SaveChunks.LayoutShardPrefix, StringComparison.Ordinal))
+                {
+                    var index = int.Parse(chunk.Substring(SaveChunks.LayoutShardPrefix.Length), System.Globalization.CultureInfo.InvariantCulture);
+                    var shard = new LayoutShardChunk { Shard = index };
+                    layoutShards[index] = shard;
+                    deferred.Add(new KeyValuePair<string, object>(chunk, shard));
+                    continue;
+                }
+                if (chunk.StartsWith(SaveChunks.PopulationShardPrefix, StringComparison.Ordinal))
+                {
+                    var index = int.Parse(chunk.Substring(SaveChunks.PopulationShardPrefix.Length), System.Globalization.CultureInfo.InvariantCulture);
+                    var shard = new PopulationShardChunk { Shard = index };
+                    shards[index] = shard;
+                    deferred.Add(new KeyValuePair<string, object>(chunk, shard));
+                    continue;
+                }
                 var payload = BuildChunk(world, chunk);
-                if (payload != null) jobs.Add(new KeyValuePair<string, object>(chunk, payload));
+                // The population index is built from detached household copies, so it can be serialized later too.
+                if (payload != null) (chunk == SaveChunks.Population ? deferred : jobs).Add(new KeyValuePair<string, object>(chunk, payload));
+            }
+            if (shards.Count > 0)
+                foreach (var n in world.Population.Ordered)
+                    if (shards.TryGetValue(SaveChunks.ShardOf(n.Id), out var target)) target.Npcs.Add(n.SnapshotCopy());
+            if (layoutShards.Count > 0)
+            {
+                var ordered = new List<Core.Property.PropertyRecord>(world.Properties.All);
+                ordered.Sort((a, b) => a.Id.CompareTo(b.Id));
+                foreach (var p in ordered)
+                {
+                    if (!layoutShards.TryGetValue(SaveChunks.LayoutShardOf(p.Id), out var target)) continue;
+                    // Immutable once assigned (copy-on-write), so Commit may serialize it on another thread.
+                    if (p.Layout != null) target.Layouts.Add(new PropertyLayout { Property = p.Id, Layout = p.Layout });
+                    _savedLayouts[p.Id] = p.Layout;
+                }
+            }
+            foreach (var d in deferred)
+            {
+                manifest.ChunkGenerations[d.Key] = manifest.Generation;
+                result.ChunksWritten++;
             }
             var json = new string[jobs.Count];
             System.Threading.Tasks.Parallel.For(0, jobs.Count, i => json[i] = JsonSetup.Serialize(jobs[i].Value));
@@ -238,13 +293,24 @@ namespace HeroGame.Persistence.Saves
             result.ChunksSkipped = manifest.ChunkGenerations.Count - result.ChunksWritten;
             manifest.JournalSequence = world.Transactions.LastSequence;
             result.SnapshotMilliseconds = watch.Elapsed.TotalMilliseconds;
-            return new PendingSave { Manifest = manifest, Previous = previous, Recovering = recovering, Dirty = dirty, Chunks = chunks, Result = result, Watch = watch };
+            return new PendingSave { Manifest = manifest, Previous = previous, Recovering = recovering, Dirty = dirty, Chunks = chunks, Deferred = deferred, Result = result, Watch = watch };
         }
 
         private void Commit(PendingSave p)
         {
             var write = System.Diagnostics.Stopwatch.StartNew();
             var generation = p.Manifest.Generation;
+            if (p.Deferred.Count > 0)
+            {
+                var json = new string[p.Deferred.Count];
+                System.Threading.Tasks.Parallel.For(0, json.Length, i => json[i] = JsonSetup.Serialize(p.Deferred[i].Value));
+                for (var i = 0; i < json.Length; i++)
+                {
+                    p.Chunks.Add(new KeyValuePair<string, string>(p.Deferred[i].Key, json[i]));
+                    p.Result.Bytes += json[i].Length;
+                }
+                p.Deferred.Clear();
+            }
             System.Threading.Tasks.Parallel.For(0, p.Chunks.Count, i => AtomicFile.WriteAllText(ChunkPath(p.Chunks[i].Key, generation), p.Chunks[i].Value));
             BeforeCommit?.Invoke(p.Manifest);
             if (p.Previous != null && !p.Recovering) AtomicFile.WriteAllText(Path.Combine(_directory, PreviousManifestFile), JsonSetup.Serialize(p.Previous, true));
@@ -292,6 +358,8 @@ namespace HeroGame.Persistence.Saves
         }
 
         private volatile bool _forceFullSave;
+        /// <summary>The layout object each property had when its shard was last written (owning thread only).</summary>
+        private readonly Dictionary<EntityId, Core.Building.BuildingLayout> _savedLayouts = new Dictionary<EntityId, Core.Building.BuildingLayout>();
 
         private LoadResult LoadFrom(SaveManifest manifest, ContentSet content, FileTransactionJournal journal)
         {
@@ -331,6 +399,20 @@ namespace HeroGame.Persistence.Saves
                 foreach (var n in shard.Npcs) world.Population.Add(n);
 
             foreach (var p in ReadChunk<PropertiesChunk>(manifest, SaveChunks.Properties).Properties) world.Properties.Add(p);
+            // Layout shards (saves before them kept layouts inline in the properties chunk, which still loads).
+            var layoutKeys = new List<string>();
+            foreach (var key in manifest.ChunkGenerations.Keys)
+                if (key.StartsWith(SaveChunks.LayoutShardPrefix, StringComparison.Ordinal)) layoutKeys.Add(key);
+            var layouts = new LayoutShardChunk[layoutKeys.Count];
+            System.Threading.Tasks.Parallel.For(0, layouts.Length, i => layouts[i] = ReadChunk<LayoutShardChunk>(manifest, layoutKeys[i]));
+            foreach (var shard in layouts)
+                foreach (var l in shard.Layouts)
+                {
+                    var property = world.Properties.Get(l.Property);
+                    if (property != null) property.Layout = l.Layout;
+                }
+            _savedLayouts.Clear();
+            foreach (var p in world.Properties.All) _savedLayouts[p.Id] = p.Layout;
             foreach (var b in ReadChunk<BusinessesChunk>(manifest, SaveChunks.Businesses).Businesses) world.Businesses[b.Id] = b;
 
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Story))
@@ -418,13 +500,18 @@ namespace HeroGame.Persistence.Saves
                     return t;
                 case SaveChunks.Population:
                     var pop = new PopulationChunk();
-                    pop.Households.AddRange(world.Population.Households);
+                    foreach (var household in world.Population.Households) pop.Households.Add(household.SnapshotCopy());
                     pop.Households.Sort((a, b) => a.Id.CompareTo(b.Id));
                     pop.Shards.AddRange(ShardsOf(world));
                     return pop;
                 case SaveChunks.Properties:
                     var props = new PropertiesChunk();
-                    props.Properties.AddRange(world.Properties.All);
+                    foreach (var p in world.Properties.All)
+                    {
+                        var copy = p.ShallowCopy();
+                        copy.Layout = null; // saved in the layout shards
+                        props.Properties.Add(copy);
+                    }
                     props.Properties.Sort((a, b) => a.Id.CompareTo(b.Id));
                     return props;
                 case SaveChunks.Businesses:
@@ -463,13 +550,6 @@ namespace HeroGame.Persistence.Saves
                     h.Recent.AddRange(world.History.Recent);
                     return h;
                 default:
-                    if (chunk.StartsWith(SaveChunks.PopulationShardPrefix, StringComparison.Ordinal))
-                    {
-                        var index = int.Parse(chunk.Substring(SaveChunks.PopulationShardPrefix.Length), System.Globalization.CultureInfo.InvariantCulture);
-                        var shard = new PopulationShardChunk { Shard = index };
-                        foreach (var n in world.Population.Ordered) if (SaveChunks.ShardOf(n.Id) == index) shard.Npcs.Add(n);
-                        return shard;
-                    }
                     if (chunk.StartsWith(SaveChunks.CharacterPrefix, StringComparison.Ordinal)
                         && EntityId.TryParse(chunk.Substring(SaveChunks.CharacterPrefix.Length), out var cid)
                         && world.Characters.TryGetValue(cid, out var character))

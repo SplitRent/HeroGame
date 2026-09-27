@@ -104,6 +104,8 @@ namespace HeroGame.Core.Population
         /// <summary>0 (strangers) .. 1 (know each other intimately).</summary>
         public float Familiarity;
         public long SinceDay;
+
+        public Relationship Copy() => (Relationship)MemberwiseClone();
     }
 
     [Flags]
@@ -138,8 +140,11 @@ namespace HeroGame.Core.Population
         public long LastSeenDay;
         public MemoryFlags Flags;
         public string LastTopic = "";
+
+        public CharacterMemory Copy() => (CharacterMemory)MemberwiseClone();
     }
 
+    /// <summary>One line of a person's life story. Immutable once recorded (save snapshots share instances).</summary>
     [Serializable]
     public sealed class LifeEvent
     {
@@ -214,6 +219,26 @@ namespace HeroGame.Core.Population
 
         public string FullName => FirstName + " " + LastName;
 
+        /// <summary>
+        /// A copy that shares nothing mutable with this record, so a save can serialize it on another thread while the
+        /// simulation keeps changing the original. Far cheaper than serializing: plain fields are copied in one block and
+        /// only the small nested collections are duplicated. Immutable parts (life events, power definitions) are shared.
+        /// Any new mutable reference field must be copied here (SaveSnapshotTests checks this).
+        /// </summary>
+        public NpcRecord SnapshotCopy()
+        {
+            var c = (NpcRecord)MemberwiseClone();
+            c.Interests = new List<string>(Interests);
+            c.FavoritePlaces = new List<EntityId>(FavoritePlaces);
+            c.Relationships = new List<Relationship>(Relationships.Count);
+            foreach (var r in Relationships) c.Relationships.Add(r.Copy());
+            c.Memories = new List<CharacterMemory>(Memories.Count);
+            foreach (var m in Memories) c.Memories.Add(m.Copy());
+            c.History = new List<LifeEvent>(History);
+            c.Powers = Powers?.SnapshotCopy();
+            return c;
+        }
+
         public int AgeYears(long currentDay) => (int)((currentDay - BirthDay) / 365.25);
 
         public Relationship FindRelationship(EntityId other)
@@ -274,6 +299,14 @@ namespace HeroGame.Core.Population
     [Serializable]
     public sealed class Household
     {
+        /// <summary>A copy sharing nothing mutable, for serializing a save off the simulation thread.</summary>
+        public Household SnapshotCopy()
+        {
+            var c = (Household)MemberwiseClone();
+            c.Members = new List<EntityId>(Members);
+            return c;
+        }
+
         public EntityId Id;
         public string Surname = "";
         public EntityId Home;

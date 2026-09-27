@@ -72,6 +72,9 @@ namespace HeroGame.Core.Property
     [Serializable]
     public sealed class PropertyRecord
     {
+        /// <summary>A member-wise copy (nested objects shared) for building save payloads on the owning thread.</summary>
+        public PropertyRecord ShallowCopy() => (PropertyRecord)MemberwiseClone();
+
         public EntityId Id;
         public string Address = "";
         public PropertyKind Kind;
@@ -98,7 +101,11 @@ namespace HeroGame.Core.Property
         public bool HasSafe;
         public bool UtilitiesConnected = true;
         public Tenancy Tenancy;
-        /// <summary>Walls, rooms, openings and furniture (the building system). Null until generated/edited.</summary>
+        /// <summary>
+        /// Walls, rooms, openings and furniture (the building system). Null until generated/edited. Copy-on-write: an edit
+        /// replaces the whole layout with a new object and never mutates the current one, which lets saves detect changed
+        /// layouts by reference and serialize them off the simulation thread.
+        /// </summary>
         public BuildingLayout Layout;
         public List<RentalUnit> Units = new List<RentalUnit>();
         /// <summary>Unpaid property tax. Long arrears lead to a tax sale.</summary>
