@@ -27,7 +27,7 @@ namespace HeroGame.Runtime.DevTools
 
         public DevCommands()
         {
-            Add("help", "List commands", (s, a) => Help());
+            Add("help", "List commands", (s, a) => Help() + Admin(s).Execute("help", s.LocalCharacter, new WorldPosition()));
             Add("time", "time +H | time HH:MM — advance the world clock (simulation catches up)", Time);
             Add("days", "days N — advance N days", (s, a) => { s.Simulation.AdvanceDays(Int(a, 0, 1)); return "Now " + s.World.Clock.Now; });
             Add("weather", "weather Clear|Thunderstorm|Hurricane|... | weather dynamic", Weather);
@@ -54,6 +54,20 @@ namespace HeroGame.Runtime.DevTools
 
         public IEnumerable<string> Names => _commands.Keys;
 
+        private AdminCommands _admin;
+        private World _adminWorld;
+
+        /// <summary>World commands shared with the dedicated server and the admin.cmd request (spawn, events, politics…).</summary>
+        private AdminCommands Admin(GameSession s)
+        {
+            if (_admin == null || _adminWorld != s.World)
+            {
+                _admin = new AdminCommands(s.World, s.Simulation);
+                _adminWorld = s.World;
+            }
+            return _admin;
+        }
+
         private static string Give(GameSession s, string[] a)
         {
             if (s.LocalCharacter == null) return "No character.";
@@ -76,7 +90,13 @@ namespace HeroGame.Runtime.DevTools
             if (string.IsNullOrWhiteSpace(line)) return "";
             if (!ServiceRegistry.TryGet<GameSession>(out var session)) return "No active session.";
             var parts = line.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (!_commands.TryGetValue(parts[0], out var cmd)) return "Unknown command '" + parts[0] + "'. Try help.";
+            if (!_commands.TryGetValue(parts[0], out var cmd))
+            {
+                var admin = Admin(session);
+                if (!admin.Has(parts[0])) return "Unknown command '" + parts[0] + "'. Try help.";
+                var at = PlayerPosition != null ? PlayerPosition().ToWorld() : new WorldPosition();
+                return admin.Execute(line, session.LocalCharacter, at, "dev-console");
+            }
             var args = new string[parts.Length - 1];
             Array.Copy(parts, 1, args, 0, args.Length);
             try

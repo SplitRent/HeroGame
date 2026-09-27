@@ -241,6 +241,8 @@ namespace HeroGame.Networking.Server
 
         public World World => _world;
         public ModerationService Moderation => _moderation;
+        /// <summary>World admin commands, when the host provides them (dedicated server); null disables admin.cmd.</summary>
+        public AdminCommands Admin { get; set; }
         public long UnixNow => _unixNow();
         public GameServerOptions Options => _o;
         public int Port { get; private set; }

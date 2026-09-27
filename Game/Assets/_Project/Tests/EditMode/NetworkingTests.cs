@@ -511,6 +511,21 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void AdminCommands_RequireWorldAdmin_AndAreAudited()
+        {
+            _server.Admin = new AdminCommands(_world, new WorldSimulation(_world));
+            _moderation.AssignRole("", "acc-wa", "admin", bootstrap: true);
+            var player = Join("acc-np", "Nobody");
+            var denied = Call(player, "admin.cmd", new Dictionary<string, string> { ["line"] = "money 1000000" });
+            Assert.IsFalse(denied.Success, "players cannot run world commands");
+            var admin = Join("acc-wa", "Ada");
+            var ok = Call(admin, "admin.cmd", new Dictionary<string, string> { ["line"] = "status" });
+            Assert.IsTrue(ok.Success, ok.Error);
+            StringAssert.Contains("Ledger balanced", ok.Data["output"]);
+            Assert.IsTrue(_moderation.History.Any(h => h.Kind == ModerationActionKind.AdminCommand && h.ActorAccountId == "acc-wa" && h.Reason == "status"));
+        }
+
+        [Test]
         public void BuildOps_SurviveTheWireEncoding()
         {
             var op = new Core.Building.BuildOp { Kind = Core.Building.BuildOpKind.AddRoom, RoomType = Core.Building.RoomType.Bar, Floor = 1, Polygon = { 2, 2, 27.25f, 2, 27.25f, 47, 2, 47 } };

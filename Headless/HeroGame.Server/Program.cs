@@ -121,6 +121,7 @@ namespace HeroGame.Server
             var fingerprint = options.Certificate != null ? Networking.Security.TlsPinning.Fingerprint(options.Certificate) : null;
             Console.WriteLine(fingerprint != null ? "TLS on; certificate fingerprint " + fingerprint : "TLS OFF (--no-tls): game traffic is not encrypted.");
             using var server = new GameServer(options, world, moderation);
+            server.Admin = new AdminCommands(world, sim);
             server.Log += line => Console.WriteLine("[" + DateTime.UtcNow.ToString("HH:mm:ss") + "] " + line);
             server.Start();
 
@@ -218,7 +219,18 @@ namespace HeroGame.Server
             {
                 case "help":
                     Console.WriteLine("status | save | ticket ACCOUNT NAME | op ACCOUNT ROLE | kick ACCOUNT | say TEXT | stop");
+                    Console.WriteLine("admin COMMAND…  (world commands; 'admin help')   as ACCOUNT COMMAND…  (act as an online player)");
                     break;
+                case "admin":
+                    Console.WriteLine(server.Admin.Execute(line.Substring(5).Trim(), null, new Core.Foundation.WorldPosition(-200f, 0f, 40f), "console"));
+                    break;
+                case "as" when parts.Length == 3:
+                {
+                    var player = server.FindByAccount(parts[1]);
+                    if (player == null) { Console.WriteLine("Not online: " + parts[1]); break; }
+                    Console.WriteLine(server.Admin.Execute(parts[2], player.Character, player.Position, "console"));
+                    break;
+                }
                 case "status":
                     Console.WriteLine(world.Clock.Now + " · " + server.Players.Count + " online · " + world.Population.Count + " residents · ledger "
                                       + (world.Ledger.VerifyInvariant(out _) ? "balanced" : "BROKEN"));

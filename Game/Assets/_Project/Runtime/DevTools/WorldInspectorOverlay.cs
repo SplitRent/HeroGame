@@ -71,9 +71,27 @@ namespace HeroGame.Runtime.DevTools
                 sb.AppendLine("Wanted " + (wanted == null ? "none" : wanted.Phase + " L" + wanted.Level));
                 foreach (var p in c.Powers.Powers) sb.AppendLine("Power " + p.Definition.Describe() + " — " + p.Stage + " xp " + p.Progress.Experience.ToString("0"));
             }
+            // Active events: calendar, disasters, emergencies, manhunts, elections, broken street furniture.
+            foreach (var ev in w.Calendar.ActiveOn(w.Clock.Now)) sb.AppendLine("EVENT " + ev.Name);
+            foreach (var d in w.Disasters.Active) sb.AppendLine("DISASTER " + d.Headline);
+            var open = 0;
+            foreach (var i in w.Emergency.Incidents) if (i.Open) open++;
+            var busy = 0;
+            foreach (var u in w.Emergency.Units) if (!u.Free) busy++;
+            sb.AppendLine("Emergency " + open + " open · units busy " + busy + "/" + w.Emergency.Units.Count + " · manhunts " + w.Wanted.Snapshot().Count +
+                          " · elections " + w.Civic.Elections.Count + " · broken props " + CountBroken(w));
+            var online = Online.NetworkSession.Current;
+            sb.AppendLine("NETWORK " + (online == null ? "offline" : online.State + (string.IsNullOrEmpty(online.Status) ? "" : " · " + online.Status)));
             var recent = w.History.Recent;
             for (var i = System.Math.Max(0, recent.Count - 4); i < recent.Count; i++) sb.AppendLine("• " + recent[i].Headline);
             return sb.ToString();
+        }
+
+        private static int CountBroken(Core.Simulation.World w)
+        {
+            var n = 0;
+            foreach (var p in w.Destructibles.All) if (p.State != Core.World.PropState.Intact) n++;
+            return n;
         }
 
         private string DescribeNearestNpc(GameSession session)

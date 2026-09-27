@@ -95,6 +95,8 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | Procedural placeholder audio (music loops per track, sirens, engines, rain, wind, thunder, 5 ambience beds, UI, power charge/impact, voice babble) | TESTED | `EverySound_IsFinite_Audible_AndUnclipped`, `Music_IsDeterministicPerTrack_*`, `Sirens_SoundLikeTheirService`, `Babble_*` |
 | Soundscape mixing from world state (district bed, day/night, weather, indoor muffling, crowds, sirens of units on real calls) | TESTED | `Soundscape_FollowsTheWorld` |
 | Audio director, vehicle engines, radio playback (procedural music/host voice), dialogue/UI/phone/power sounds | IN DEVELOPMENT | compiles; not run in Unity |
+| Admin/debug commands shared by dev console, server console (`admin`, `as ACCOUNT`) and `admin.cmd` (WorldAdmin, audited): spawn NPCs/vehicles, events, weather, time, money, ownership, powers, anomalies, police, elections, ordinances, businesses, props, status | TESTED | `AdminCommandTests` (4), `AdminCommands_RequireWorldAdmin_AndAreAudited` |
+| World inspector: active events, emergencies, manhunts, elections, broken props, network state | IN DEVELOPMENT | compiles (F3 overlay) |
 | Youth curfew enforcement on individual minors | PLANNED | the ordinance exists and costs police trust in poorer districts; no per-NPC enforcement yet |
 
 ## Story Mode

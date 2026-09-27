@@ -190,6 +190,19 @@ namespace HeroGame.Networking.Server
             r.Register("admin.mute", ctx => Moderate(ctx, ModerationActionKind.Mute));
             r.Register("admin.unmute", ctx => Moderate(ctx, ModerationActionKind.Unmute));
             r.Register("admin.grant", AdminGrant);
+            r.Register("admin.cmd", ctx =>
+            {
+                if (ctx.Server.Admin == null) return RequestContext.Fail("Admin commands are not available on this server.");
+                var line = ctx.Str("line", 200);
+                var action = new ModerationAction
+                {
+                    Kind = ModerationActionKind.AdminCommand, ActorAccountId = ctx.AccountId, Reason = line,
+                    RealTimeUnixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds(), GameTime = ctx.World.Clock.Now,
+                };
+                if (!ctx.Server.Moderation.Perform(action)) return RequestContext.Fail("Not permitted.");
+                var output = ctx.Server.Admin.Execute(line, ctx.Me, ctx.Connection.Position, ctx.Connection.Ticket?.DisplayName ?? ctx.AccountId);
+                return RequestContext.Ok(new Dictionary<string, string> { ["output"] = output.Length > 4000 ? output.Substring(0, 4000) : output });
+            });
             r.Register("admin.role", ctx =>
             {
                 var ok = ctx.Server.Moderation.AssignRole(ctx.AccountId, ctx.Str("account", 64), ctx.Str("role", 32));

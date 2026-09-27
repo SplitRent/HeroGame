@@ -59,6 +59,8 @@ namespace HeroGame.Core.Servers
         MoneyGrant,
         PropertyTransfer,
         Teleport,
+        /// <summary>A world debug/admin command (spawn, weather, events…); requires WorldAdmin and is always logged.</summary>
+        AdminCommand,
     }
 
     [Serializable]
