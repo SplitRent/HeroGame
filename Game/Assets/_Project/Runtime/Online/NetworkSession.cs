@@ -34,6 +34,23 @@ namespace HeroGame.Runtime.Online
 
         public static NetworkSession Current { get; private set; }
 
+        /// <summary>
+        /// The server's shared world state while connected (broken props, fires, ownership, sale signs, rebuilt
+        /// buildings), or null offline. Presenters prefer it over the local presentation world.
+        /// </summary>
+        public static HeroGame.Networking.Client.ReplicatedWorld Replica =>
+            Current != null && Current._client != null && Current._client.State == ClientState.Connected && Current._client.World.Ready ? Current._client.World : null;
+
+        /// <summary>Asks the server for a rebuilt building's layout once; it arrives through <see cref="Replica"/>.</summary>
+        public void FetchLayout(EntityId property)
+        {
+            if (_client == null || _client.State != ClientState.Connected || !_layoutRequests.Add(property)) return;
+            _ = _client.Request("property.layout", new Dictionary<string, string> { ["property"] = property.ToString() })
+                .ContinueWith(_ => _layoutRequests.Remove(property), TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private readonly HashSet<EntityId> _layoutRequests = new HashSet<EntityId>();
+
         private void Awake() => Current = this;
 
         /// <summary>Signs in and joins <paramref name="serverId"/>. Errors end up in <see cref="Status"/>.</summary>
@@ -88,6 +105,9 @@ namespace HeroGame.Runtime.Online
         private void OnWelcome(Welcome w)
         {
             Status = "Connected to " + w.ServerName;
+            if (ServiceRegistry.TryGet<GameSession>(out var local) && !string.IsNullOrEmpty(w.LayoutId) && w.LayoutId != local.World.Content.Layout.Id)
+                Debug.LogWarning("[Online] The server runs the '" + w.LayoutId + "' city but this client shows '" + local.World.Content.Layout.Id +
+                                 "'. Buildings and props will not line up; set GameBootstrap.LayoutFile to match.");
             if (LocalPlayer != null && w.Position.X * w.Position.X + w.Position.Z * w.Position.Z > 1f) Warp(w.Position.ToVector3());
             // Follow the server's clock so day/night, weather and NPC schedules line up.
             if (ServiceRegistry.TryGet<GameSession>(out var session))

@@ -21,26 +21,37 @@ namespace HeroGame.Runtime.Emergency
             if (Observer == null || FirePrefab == null || !ServiceRegistry.TryGet<GameSession>(out var session)) return;
             _stale.Clear();
             _stale.AddRange(_fires.Keys);
-            foreach (var i in session.World.Emergency.Incidents)
+            var replica = Online.NetworkSession.Replica;
+            if (replica != null)
             {
-                if (i.Kind != EmergencyKind.Fire || !i.Open || i.FireIntensity <= 0f) continue;
-                var pos = new Vector3(i.Position.X, 0f, i.Position.Z);
-                if ((pos - Observer.position).sqrMagnitude > Radius * Radius) continue;
-                _stale.Remove(i.Id);
-                if (!_fires.TryGetValue(i.Id, out var ps))
-                {
-                    ps = Instantiate(FirePrefab, pos + Vector3.up * 2f, Quaternion.identity, transform);
-                    _fires[i.Id] = ps;
-                }
-                var emission = ps.emission;
-                emission.rateOverTimeMultiplier = 20f + 180f * i.FireIntensity;
-                ps.transform.localScale = Vector3.one * (1f + 3f * i.FireIntensity);
+                // Online: the server's fires, not the local presentation world's.
+                foreach (var f in replica.Fires) Show(f.Incident, f.Position, f.Intensity);
+            }
+            else
+            {
+                foreach (var i in session.World.Emergency.Incidents)
+                    if (i.Kind == EmergencyKind.Fire && i.Open && i.FireIntensity > 0f) Show(i.Id, i.Position, i.FireIntensity);
             }
             foreach (var id in _stale)
             {
                 Destroy(_fires[id].gameObject);
                 _fires.Remove(id);
             }
+        }
+
+        private void Show(EntityId id, WorldPosition at, float intensity)
+        {
+            var pos = new Vector3(at.X, 0f, at.Z);
+            if ((pos - Observer.position).sqrMagnitude > Radius * Radius) return;
+            _stale.Remove(id);
+            if (!_fires.TryGetValue(id, out var ps))
+            {
+                ps = Instantiate(FirePrefab, pos + Vector3.up * 2f, Quaternion.identity, transform);
+                _fires[id] = ps;
+            }
+            var emission = ps.emission;
+            emission.rateOverTimeMultiplier = 20f + 180f * intensity;
+            ps.transform.localScale = Vector3.one * (1f + 3f * intensity);
         }
     }
 }

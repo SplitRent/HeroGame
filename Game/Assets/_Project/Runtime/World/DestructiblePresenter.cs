@@ -30,6 +30,7 @@ namespace HeroGame.Runtime.WorldProps
             if (cam == null) return;
             var c = cam.transform.position;
             var service = session.World.Destructibles;
+            var replica = Online.NetworkSession.Replica; // online: the server decides what is broken
             service.Query(new Core.Foundation.WorldPosition(c.x, 0f, c.z), ShowRadius, _query);
             foreach (var p in _query)
             {
@@ -39,8 +40,9 @@ namespace HeroGame.Runtime.WorldProps
                     _live[p.Id] = go;
                     _shown[p.Id] = PropState.Intact;
                 }
-                if (_shown[p.Id] != p.State) Apply(go, p, _shown[p.Id]);
-                _shown[p.Id] = p.State;
+                var state = replica != null ? (PropState)replica.PropState(p.Id) : p.State;
+                if (_shown[p.Id] != state) Apply(go, p, state, _shown[p.Id]);
+                _shown[p.Id] = state;
             }
             _remove.Clear();
             foreach (var kv in _live)
@@ -123,9 +125,9 @@ namespace HeroGame.Runtime.WorldProps
             return root;
         }
 
-        private void Apply(GameObject go, PropInstance p, PropState was)
+        private void Apply(GameObject go, PropInstance p, PropState state, PropState was)
         {
-            switch (p.State)
+            switch (state)
             {
                 case PropState.Intact:
                     go.transform.rotation = Quaternion.Euler(0f, p.Yaw, 0f);

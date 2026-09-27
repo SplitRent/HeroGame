@@ -511,6 +511,95 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void WorldChanges_ReachEveryone_LateJoinersGetTheFullState_AndRebuiltBuildingsCanBeFetched()
+        {
+            var a = Join("acc-rep-a", "Ana");
+            Until(() => a.World.Ready);
+            var me = _server.Players.Single();
+
+            // Street furniture knocked down, a fire, a building bought by a player and one put up for sale.
+            var prop = _world.Destructibles.All.First(p => p.Kind == "street_light");
+            _world.Destructibles.Damage(prop, 10f, "test");
+            var fire = _world.Dispatch.Report(Core.Emergency.EmergencyKind.Fire, prop.Position, 1, "test", severity: 0.6f);
+            var home = _world.Properties.All.OrderBy(p => p.Id).First(p => p.ForSale && p.Kind != Core.Property.PropertyKind.Land);
+            Assert.IsTrue(_world.AdminGrant(me.Character.CheckingAccount, new Money(home.ListingPriceCents + 10000000), "admin", "test funds").Success);
+            var bought = Call(a, "property.buy", new Dictionary<string, string> { ["property"] = home.Id.ToString() });
+            Assert.IsTrue(bought.Success, bought.Error);
+            var listed = _world.Properties.All.OrderBy(p => p.Id).First(p => !p.ForSale && p.Id != home.Id && !_world.Characters.ContainsKey(_world.Ownership.OwnerOf(p.Id)));
+            listed.ForSale = true;
+            listed.ListingPriceCents = 25000000;
+
+            Until(() => a.World.PropState(prop.Id) == (byte)Core.World.PropState.Destroyed && a.World.Fires.Any(f => f.Incident == fire.Id) &&
+                        a.World.Property(home.Id).PlayerOwner == me.Character.CharacterId && a.World.Property(listed.Id).ForSale);
+            Assert.IsFalse(a.World.Property(home.Id).ForSale, "sold: the sign comes down");
+            Assert.AreEqual(25000000, a.World.Property(listed.Id).ListingPriceCents);
+
+            // A rebuild bumps the layout version; the client fetches the new layout on demand.
+            var rebuilt = home.Layout.Clone();
+            rebuilt.Furniture.Add(new Core.Building.PlacedFurniture { Id = rebuilt.NextId++, CatalogId = "structural_column", X = 4f, Z = 4f });
+            home.Layout = rebuilt;
+            Until(() => a.World.NeedsLayout(home.Id));
+            Assert.IsNull(a.World.Layout(home.Id));
+            var fetched = Call(a, "property.layout", new Dictionary<string, string> { ["property"] = home.Id.ToString() });
+            Assert.IsTrue(fetched.Success, fetched.Error);
+            Until(() => a.World.Layout(home.Id) != null);
+            Assert.AreEqual(rebuilt.Furniture.Count, a.World.Layout(home.Id).Furniture.Count);
+            Assert.IsFalse(a.World.NeedsLayout(home.Id));
+
+            // Someone arriving later gets all of it at once.
+            var b = Join("acc-rep-b", "Ben");
+            Until(() => b.World.Ready);
+            Assert.AreEqual((byte)Core.World.PropState.Destroyed, b.World.PropState(prop.Id));
+            Assert.IsTrue(b.World.Fires.Any(f => f.Incident == fire.Id));
+            Assert.AreEqual(me.Character.CharacterId, b.World.Property(home.Id).PlayerOwner);
+            Assert.AreEqual(1, b.World.Property(home.Id).LayoutVersion);
+            Assert.IsTrue(b.World.NeedsLayout(home.Id));
+
+            // Things going back to normal are replicated too: the fire is put out, the listing withdrawn, the light repaired.
+            fire.FireIntensity = 0f;
+            listed.ForSale = false;
+            prop.State = Core.World.PropState.Intact;
+            Until(() => a.World.FireCount == 0 && b.World.FireCount == 0 && !b.World.Property(listed.Id).ForSale && b.World.PropState(prop.Id) == 0);
+            Assert.IsFalse(b.World.Properties.Any(p => p.Property == listed.Id), "defaults are not kept");
+
+            // Quiet worlds cost nothing: with no changes, publishing produces an empty delta.
+            _server.BroadcastWorldChanges();
+            Assert.IsTrue(_server.Replicator.Publish().IsEmpty);
+        }
+
+        [Test]
+        public void WorldDeltas_RoundTrip_AndHostileCountsAreRejected()
+        {
+            var d = new WorldDelta { Full = true };
+            d.Props.Add(new PropChange { Id = 7, State = 2 });
+            d.Fires.Add(new FireChange { Incident = new EntityId(99), Position = new WorldPosition(1, 0, 2), Intensity = 0.5f });
+            d.Properties.Add(new PropertyChange { Property = new EntityId(5), ForSale = true, ListingPriceCents = 123, Damage = 3, LayoutVersion = 2 });
+            var bytes = Wire.Frame(d);
+            var back = (WorldDelta)Wire.ReadFrame(new MemoryStream(bytes));
+            Assert.IsTrue(back.Full);
+            Assert.AreEqual(7, back.Props[0].Id);
+            Assert.AreEqual(0.5f, back.Fires[0].Intensity);
+            Assert.AreEqual(123, back.Properties[0].ListingPriceCents);
+
+            // A full-size split stays under the frame limit.
+            var big = new WorldDelta();
+            for (var i = 0; i < 5000; i++) big.Props.Add(new PropChange { Id = i, State = 1 });
+            for (var i = 0; i < 3000; i++) big.Properties.Add(new PropertyChange { Property = new EntityId((ulong)i + 1), ForSale = true, LayoutVersion = 1 });
+            for (var i = 0; i < 600; i++) big.Fires.Add(new FireChange { Incident = new EntityId((ulong)i + 1), Intensity = 1f });
+            var parts = Networking.Server.WorldReplicator.Split(big);
+            Assert.Greater(parts.Count, 2);
+            foreach (var part in parts) Assert.LessOrEqual(Wire.Frame(part).Length, Wire.MaxFrameBytes + 4);
+            Assert.AreEqual(5000, parts.Sum(p => p.Props.Count));
+
+            var hostile = (byte[])bytes.Clone();
+            // The prop count follows the length, the message type and the Full flag.
+            BitConverter.GetBytes(int.MaxValue).CopyTo(hostile, 7);
+            Assert.Throws<ProtocolException>(() => Wire.ReadFrame(new MemoryStream(hostile)));
+            BitConverter.GetBytes(-1).CopyTo(hostile, 7);
+            Assert.Throws<ProtocolException>(() => Wire.ReadFrame(new MemoryStream(hostile)));
+        }
+
+        [Test]
         public void AdminCommands_RequireWorldAdmin_AndAreAudited()
         {
             _server.Admin = new AdminCommands(_world, new WorldSimulation(_world));

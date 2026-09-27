@@ -37,6 +37,8 @@ namespace HeroGame.Networking.Server
         public float SnapshotRadius = 400f;
         /// <summary>Nearest players replicated per snapshot (interest management; farther players are not sent).</summary>
         public int SnapshotMaxPlayers = 32;
+        /// <summary>How often world changes (props, fires, ownership, buildings) are diffed and sent.</summary>
+        public int WorldDeltaIntervalMs = 500;
         public float LocalChatRadius = 60f;
         public WorldPosition Spawn;
         /// <summary>When set, every connection is TLS 1.2+ with this certificate (it must carry its private key).</summary>
@@ -95,6 +97,8 @@ namespace HeroGame.Networking.Server
         public int Violations;
         /// <summary>Server-side disguise state (never taken from the client).</summary>
         public bool MaskOn;
+        /// <summary>Has the full world state; from then on it receives world deltas.</summary>
+        public bool HasWorld;
         public volatile bool Closed;
         public string CloseReason = "";
         private long _bytesSent;
@@ -236,10 +240,14 @@ namespace HeroGame.Networking.Server
             _moderation = moderation ?? new ModerationService();
             _unixNow = unixNow ?? (() => DateTimeOffset.UtcNow.ToUnixTimeSeconds());
             StandardRequests.Register(Router);
+            Replicator = new WorldReplicator(world);
+            Router.Register("property.layout", SendLayout);
             _world.Phone.MessageReceived += OnPhoneMessage;
         }
 
         public World World => _world;
+        public WorldReplicator Replicator { get; }
+        private long _lastWorldDeltaMs = long.MinValue / 2;
         public ModerationService Moderation => _moderation;
         /// <summary>World admin commands, when the host provides them (dedicated server); null disables admin.cmd.</summary>
         public AdminCommands Admin { get; set; }
@@ -441,7 +449,12 @@ namespace HeroGame.Networking.Server
                 TimeScale = _world.Clock.TimeScale,
                 Position = c.Position,
                 CashCents = _world.Ledger.BalanceOf(c.Character.CheckingAccount).Cents,
+                LayoutId = _world.Content.Layout.Id,
             });
+            // Bring everyone else up to date first, so the joiner's full state and later deltas line up.
+            BroadcastWorldChanges();
+            foreach (var part in Replicator.FullState()) c.Send(part);
+            c.HasWorld = true;
             Log?.Invoke(ticket.DisplayName + " (" + ticket.AccountId + ") joined from " + c.RemoteAddress);
             PlayerJoined?.Invoke(c);
         }
@@ -549,6 +562,32 @@ namespace HeroGame.Networking.Server
                 if (p.Character == to) p.Send(new Notice { Category = (byte)m.Category, From = m.FromName, Text = m.Body });
         }
 
+        /// <summary>
+        /// Diffs the shared world against what clients last saw and sends the changes to every player who has the full
+        /// state. Called by <see cref="BroadcastSnapshots"/> every <see cref="GameServerOptions.WorldDeltaIntervalMs"/>.
+        /// </summary>
+        public void BroadcastWorldChanges()
+        {
+            _lastWorldDeltaMs = NowMs;
+            var delta = Replicator.Publish();
+            if (delta.IsEmpty) return;
+            var parts = WorldReplicator.Split(delta);
+            foreach (var c in Players)
+                if (c.HasWorld)
+                    foreach (var part in parts) c.Send(part);
+        }
+
+        /// <summary>property.layout: sends the building's current layout as a LayoutData message.</summary>
+        private Response SendLayout(RequestContext ctx)
+        {
+            var property = ctx.World.Properties.Get(ctx.Id("property"));
+            if (property == null || property.Layout == null) return RequestContext.Fail("No such building.");
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(property.Layout);
+            if (System.Text.Encoding.UTF8.GetByteCount(json) > Wire.MaxLongStringBytes) return RequestContext.Fail("That building is too large to send.");
+            ctx.Connection.Send(new LayoutData { Property = property.Id, Version = Replicator.LayoutVersionOf(property.Id), Json = json });
+            return RequestContext.Ok(new Dictionary<string, string> { ["version"] = Replicator.LayoutVersionOf(property.Id).ToString(System.Globalization.CultureInfo.InvariantCulture) });
+        }
+
         /// <summary>Sends each player the world state around them. Call at the snapshot rate (≈10 Hz).</summary>
         /// <summary>
         /// Sends each player the world near them. Per-player data (wanted level, name) is looked up once per broadcast,
@@ -556,6 +595,7 @@ namespace HeroGame.Networking.Server
         /// </summary>
         public void BroadcastSnapshots()
         {
+            if (NowMs - _lastWorldDeltaMs >= _o.WorldDeltaIntervalMs) BroadcastWorldChanges();
             var players = Players;
             var n = players.Count;
             var weather = _world.Weather.State.Current;

@@ -44,6 +44,11 @@ namespace HeroGame.Networking.Client
         public event Action<ChatMessage> ChatReceived;
         public event Action<Notice> NoticeReceived;
         public event Action<string> Disconnected;
+        /// <summary>Raised after a world delta has been applied to <see cref="World"/>.</summary>
+        public event Action<WorldDelta> WorldDeltaReceived;
+
+        /// <summary>Shared world state replicated from the server (props, fires, ownership, buildings).</summary>
+        public ReplicatedWorld World { get; } = new ReplicatedWorld();
 
         public bool Encrypted { get; private set; }
 
@@ -144,6 +149,13 @@ namespace HeroGame.Networking.Client
                         break;
                     case Notice notice:
                         NoticeReceived?.Invoke(notice);
+                        break;
+                    case WorldDelta delta:
+                        World.Apply(delta);
+                        WorldDeltaReceived?.Invoke(delta);
+                        break;
+                    case LayoutData layout:
+                        World.Apply(layout);
                         break;
                 }
             }

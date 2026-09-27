@@ -37,10 +37,13 @@ namespace HeroGame.Networking.Protocol
             _writer.Write(p.Z);
         }
 
-        public void String(string s)
+        public void String(string s) => String(s, Wire.MaxStringBytes);
+
+        /// <summary>A string with a caller-chosen limit (up to <see cref="Wire.MaxLongStringBytes"/>) for bulk payloads.</summary>
+        public void String(string s, int maxBytes)
         {
             var bytes = Encoding.UTF8.GetBytes(s ?? "");
-            if (bytes.Length > Wire.MaxStringBytes) throw new ProtocolException("String too long to send.");
+            if (bytes.Length > System.Math.Min(maxBytes, Wire.MaxLongStringBytes)) throw new ProtocolException("String too long to send.");
             _writer.Write((ushort)bytes.Length);
             _writer.Write(bytes);
         }
@@ -168,6 +171,8 @@ namespace HeroGame.Networking.Protocol
         public const int ProtocolVersion = 1;
         public const int MaxFrameBytes = 64 * 1024;
         public const int MaxStringBytes = 4096;
+        /// <summary>Largest single string (building layouts); still bounded by the 64 KiB frame.</summary>
+        public const int MaxLongStringBytes = 60000;
         public const int MaxMapEntries = 24;
 
         public static byte[] Frame(NetMessage message)

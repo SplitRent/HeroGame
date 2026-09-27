@@ -87,6 +87,7 @@ namespace HeroGame.Runtime.Building
             var input = _input.Read();
             if (!_active)
             {
+                if (ShowLayoutWhenIdle && _playerInside) RefreshFromServer();
                 if (_playerInside && input.BuildModePressed) Enter();
                 return;
             }
@@ -114,7 +115,24 @@ namespace HeroGame.Runtime.Building
 
         private void RenderCommitted()
         {
-            if (TryGetProperty(out var session, out var property)) _renderer.Render(property.Layout, session.World.Construction.Validator);
+            if (!TryGetProperty(out var session, out var property)) return;
+            // Online, the server's building wins: someone may have rebuilt it since this client generated its world.
+            var replica = Online.NetworkSession.Replica;
+            var layout = replica?.Layout(property.Id) ?? property.Layout;
+            _renderedLayout = layout;
+            _renderer.Render(layout, session.World.Construction.Validator);
+        }
+
+        private BuildingLayout _renderedLayout;
+
+        /// <summary>Fetches a rebuilt layout from the server when needed and re-renders once it arrives.</summary>
+        private void RefreshFromServer()
+        {
+            var replica = Online.NetworkSession.Replica;
+            if (replica == null || !TryGetProperty(out _, out var property)) return;
+            if (replica.NeedsLayout(property.Id)) Online.NetworkSession.Current?.FetchLayout(property.Id);
+            var current = replica.Layout(property.Id);
+            if (current != null && !ReferenceEquals(current, _renderedLayout)) RenderCommitted();
         }
 
         private void Enter()

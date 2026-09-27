@@ -12,6 +12,8 @@ namespace HeroGame.Networking.Protocol
         Pong = 5,
         PlayerState = 10,
         Snapshot = 11,
+        WorldDelta = 12,
+        LayoutData = 13,
         Request = 20,
         Response = 21,
         ChatSend = 30,
@@ -37,6 +39,8 @@ namespace HeroGame.Networking.Protocol
                 case MessageType.Pong: return new Pong();
                 case MessageType.PlayerState: return new PlayerState();
                 case MessageType.Snapshot: return new Snapshot();
+                case MessageType.WorldDelta: return new WorldDelta();
+                case MessageType.LayoutData: return new LayoutData();
                 case MessageType.Request: return new Request();
                 case MessageType.Response: return new Response();
                 case MessageType.ChatSend: return new ChatSend();
@@ -67,9 +71,11 @@ namespace HeroGame.Networking.Protocol
         public double TimeScale;
         public WorldPosition Position;
         public long CashCents;
+        /// <summary>The server's city layout id; a client presenting a different map must not trust property ids.</summary>
+        public string LayoutId = "";
         public override MessageType Type => MessageType.Welcome;
-        public override void Write(PacketWriter w) { w.Id(CharacterId); w.String(ServerName); w.Long(WorldSecond); w.Double(TimeScale); w.Position(Position); w.Long(CashCents); }
-        public override void Read(PacketReader r) { CharacterId = r.Id(); ServerName = r.String(128); WorldSecond = r.Long(); TimeScale = r.Double(); Position = r.Position(); CashCents = r.Long(); }
+        public override void Write(PacketWriter w) { w.Id(CharacterId); w.String(ServerName); w.Long(WorldSecond); w.Double(TimeScale); w.Position(Position); w.Long(CashCents); w.String(LayoutId); }
+        public override void Read(PacketReader r) { CharacterId = r.Id(); ServerName = r.String(128); WorldSecond = r.Long(); TimeScale = r.Double(); Position = r.Position(); CashCents = r.Long(); LayoutId = r.String(128); }
     }
 
     public sealed class Reject : NetMessage
@@ -242,5 +248,98 @@ namespace HeroGame.Networking.Protocol
         public override MessageType Type => MessageType.Kick;
         public override void Write(PacketWriter w) => w.String(Reason);
         public override void Read(PacketReader r) => Reason = r.String(512);
+    }
+
+    /// <summary>A street prop whose state differs from intact (0 = intact again).</summary>
+    public struct PropChange
+    {
+        public int Id;
+        public byte State;
+    }
+
+    /// <summary>A burning fire (Intensity 0 = out; remove it).</summary>
+    public struct FireChange
+    {
+        public EntityId Incident;
+        public WorldPosition Position;
+        public float Intensity;
+    }
+
+    /// <summary>
+    /// Publicly visible state of a property: a player owner (None when an NPC, the city or a company owns it), whether it
+    /// is for sale, its damage and its building layout version (0 = as generated; higher = rebuilt, fetch with
+    /// property.layout). A property with all defaults is not replicated; sending one with defaults removes it.
+    /// </summary>
+    public struct PropertyChange
+    {
+        public EntityId Property;
+        public EntityId PlayerOwner;
+        public bool ForSale;
+        public long ListingPriceCents;
+        public byte Damage;
+        public int LayoutVersion;
+
+        public bool IsDefault => !PlayerOwner.IsValid && !ForSale && Damage == 0 && LayoutVersion == 0;
+    }
+
+    /// <summary>
+    /// Server → client changes to the shared world that players cause or see (TDD §8): broken street furniture, fires,
+    /// ownership and sale signs, damage and rebuilt buildings. The first message after joining has <see cref="Full"/>
+    /// set: the client replaces its replica. Large states span several messages; only the first is Full.
+    /// </summary>
+    public sealed class WorldDelta : NetMessage
+    {
+        public const int MaxProps = 2000;
+        public const int MaxFires = 256;
+        public const int MaxProperties = 1200; // with MaxProps and MaxFires this stays under the 64 KiB frame
+
+        public bool Full;
+        public List<PropChange> Props = new List<PropChange>();
+        public List<FireChange> Fires = new List<FireChange>();
+        public List<PropertyChange> Properties = new List<PropertyChange>();
+        public override MessageType Type => MessageType.WorldDelta;
+
+        public bool IsEmpty => !Full && Props.Count == 0 && Fires.Count == 0 && Properties.Count == 0;
+
+        public override void Write(PacketWriter w)
+        {
+            if (Props.Count > MaxProps || Fires.Count > MaxFires || Properties.Count > MaxProperties) throw new ProtocolException("World delta too large; split it.");
+            w.Bool(Full);
+            w.Int(Props.Count);
+            foreach (var p in Props) { w.Int(p.Id); w.Byte(p.State); }
+            w.Int(Fires.Count);
+            foreach (var f in Fires) { w.Id(f.Incident); w.Position(f.Position); w.Float(f.Intensity); }
+            w.Int(Properties.Count);
+            foreach (var p in Properties) { w.Id(p.Property); w.Id(p.PlayerOwner); w.Bool(p.ForSale); w.Long(p.ListingPriceCents); w.Byte(p.Damage); w.Int(p.LayoutVersion); }
+        }
+
+        public override void Read(PacketReader r)
+        {
+            Full = r.Bool();
+            var n = r.Int();
+            if (n < 0 || n > MaxProps) throw new ProtocolException("Bad prop count.");
+            Props.Clear();
+            for (var i = 0; i < n; i++) Props.Add(new PropChange { Id = r.Int(), State = r.Byte() });
+            n = r.Int();
+            if (n < 0 || n > MaxFires) throw new ProtocolException("Bad fire count.");
+            Fires.Clear();
+            for (var i = 0; i < n; i++) Fires.Add(new FireChange { Incident = r.Id(), Position = r.Position(), Intensity = r.Float() });
+            n = r.Int();
+            if (n < 0 || n > MaxProperties) throw new ProtocolException("Bad property count.");
+            Properties.Clear();
+            for (var i = 0; i < n; i++)
+                Properties.Add(new PropertyChange { Property = r.Id(), PlayerOwner = r.Id(), ForSale = r.Bool(), ListingPriceCents = r.Long(), Damage = r.Byte(), LayoutVersion = r.Int() });
+        }
+    }
+
+    /// <summary>Server → client: a building layout (JSON of Core.Building.BuildingLayout) in answer to property.layout.</summary>
+    public sealed class LayoutData : NetMessage
+    {
+        public EntityId Property;
+        public int Version;
+        public string Json = "";
+        public override MessageType Type => MessageType.LayoutData;
+        public override void Write(PacketWriter w) { w.Id(Property); w.Int(Version); w.String(Json, Wire.MaxLongStringBytes); }
+        public override void Read(PacketReader r) { Property = r.Id(); Version = r.Int(); Json = r.String(Wire.MaxLongStringBytes); }
     }
 }
