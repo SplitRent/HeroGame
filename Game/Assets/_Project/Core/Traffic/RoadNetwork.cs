@@ -24,6 +24,8 @@ namespace HeroGame.Core.Traffic
         public string Kind = "street";
         public int LanesPerDirection = 1;
         public float SpeedLimitMs = 13.4f;
+        /// <summary>Runtime capacity factor (a dead traffic signal, a closure). 1 = normal. Not persisted: recomputed.</summary>
+        public float CapacityFactor = 1f;
 
         /// <summary>Vehicles per hour per lane at free flow before congestion rises sharply.</summary>
         public float CapacityPerLane => Kind == "avenue" || Kind == "bridge" ? 1800f : Kind == "highway" ? 2000f : 900f;

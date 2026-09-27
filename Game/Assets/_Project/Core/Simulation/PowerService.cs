@@ -85,6 +85,7 @@ namespace HeroGame.Core.Simulation
 
             var intensity = Math.Max(0.05f, Math.Min(1f, float.IsNaN(r.Intensity) ? 0.5f : r.Intensity));
             var hasTarget = TryTargetPosition(r, out var targetPos);
+            _aim = hasTarget ? targetPos : r.Origin;
             var distance = hasTarget ? WorldPosition.DistanceXZ(r.Origin, targetPos) : 0f;
             var preview = PowerEffects.Plan(power, intensity, distance);
             if (NeedsTarget(preview.Kind) && !hasTarget) return PowerOutcome.Refused("No target.");
@@ -273,6 +274,7 @@ namespace HeroGame.Core.Simulation
                 }
             }
             if (!_w.Config.Powers.CollateralDamage) return;
+            _w.Destructibles.DamageInRadius(center, radius, damage * 1.5f, "anomalous blast");
             foreach (var v in _w.Vehicles.All)
             {
                 if (v.LocationKind != VehicleLocationKind.Street) continue;
@@ -306,7 +308,11 @@ namespace HeroGame.Core.Simulation
             return results;
         }
 
-        private bool IsRaining() => _w.Weather.State.Current.Precipitation > 0.5f;
+        /// <summary>Where the current use lands (for local conditions such as a flooded street).</summary>
+        private WorldPosition _aim;
+
+        /// <summary>Rain, or water from a sheared hydrant where the power lands: wet surfaces conduct.</summary>
+        private bool IsRaining() => _w.Weather.State.Current.Precipitation > 0.5f || _w.Destructibles.WetAt(_aim);
 
         private void HurtNpc(NpcRecord npc, float damage)
         {

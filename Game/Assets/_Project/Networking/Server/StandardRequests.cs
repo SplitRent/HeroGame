@@ -131,6 +131,27 @@ namespace HeroGame.Networking.Server
                 return RequestContext.Ok(data);
             });
 
+            r.Register("prop.impact", ctx =>
+            {
+                // A vehicle hit street furniture. Everything but "which prop" comes from the server: where the player is,
+                // which vehicle they are in, and how fast they were going.
+                var w = ctx.World;
+                var prop = w.Destructibles.Get((int)ctx.Long("prop", 1, int.MaxValue));
+                if (prop == null) return RequestContext.Fail("Unknown prop.");
+                if (!ctx.Near(prop.Position, 8f)) return RequestContext.Fail("You are not there.");
+                var vehicle = ctx.Connection.Vehicle.IsValid ? w.Vehicles.Get(ctx.Connection.Vehicle) : null;
+                if (vehicle == null) return RequestContext.Fail("Only vehicles knock things over.");
+                var model = w.Vehicles.Model(vehicle.ModelId);
+                var speed = Math.Max(0f, Math.Min(ctx.Connection.Speed, 75f));
+                var broke = w.Destructibles.Impact(prop, speed, model != null ? model.MassKg : 1400f);
+                // A light pole gives way (the car loses a few m/s); a concrete bollard stops it dead.
+                var kind = w.Destructibles.Kind(prop.Kind);
+                var deltaV = kind != null && kind.Material == "Concrete" ? speed : Math.Min(speed, 4f);
+                if (speed >= 3f) w.Vehicles.ApplyCollision(vehicle, deltaV * (model != null ? model.MassKg : 1400f), frontal: true);
+                w.Dirty.Mark(SaveChunks.Vehicles);
+                return RequestContext.Ok(new Dictionary<string, string> { ["state"] = prop.State.ToString(), ["broke"] = broke ? "true" : "false" });
+            });
+
             r.Register("radio.now", ctx =>
             {
                 var seg = ctx.World.Radio.OnAir(ctx.Str("station", 64), ctx.World.Clock.Now);

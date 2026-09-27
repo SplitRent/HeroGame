@@ -87,6 +87,8 @@ namespace HeroGame.Core.Simulation
         public const string Civic = "civic";
         /// <summary>Ripple posts and follows.</summary>
         public const string Social = "social";
+        /// <summary>Street furniture state and collapsed buildings awaiting reconstruction.</summary>
+        public const string Destruction = "destruction";
         public const string CharacterPrefix = "character/";
         /// <summary>NPCs are saved in fixed-size shards by id so large populations serialize in parallel.</summary>
         public const string PopulationShardPrefix = "population/";
@@ -94,7 +96,7 @@ namespace HeroGame.Core.Simulation
 
         public static string PopulationShard(int index) => PopulationShardPrefix + index;
         public static int ShardOf(EntityId npc) => (int)((npc.Sequence - 1) / NpcsPerShard);
-        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice, Emergency, Civic, Social };
+        public static readonly string[] WorldChunks = { Meta, Transactional, Population, Properties, Businesses, Environment, History, Vehicles, Justice, Emergency, Civic, Social, Destruction };
     }
 
     /// <summary>
@@ -172,6 +174,9 @@ namespace HeroGame.Core.Simulation
         public readonly RippleService Feed;
         public readonly CalendarService Calendar;
         public readonly RadioService Radio;
+        /// <summary>Destructible street furniture and structural events (persisted in the destruction chunk).</summary>
+        public DestructionState Destruction = new DestructionState();
+        public readonly DestructionService Destructibles;
         /// <summary>Bumped when the set of NPC-hireable workplaces changes (player takes over staffing, etc.).</summary>
         public int WorkplaceVersion;
 
@@ -232,6 +237,7 @@ namespace HeroGame.Core.Simulation
             Feed = new RippleService(this);
             Calendar = new CalendarService(this);
             Radio = new RadioService(this);
+            Destructibles = new DestructionService(this);
             Transactions.Applied += RegisterRecords;
 
             Ownership.Transferred += (asset, from, to) => Dirty.Mark(SaveChunks.Transactional);
@@ -280,6 +286,8 @@ namespace HeroGame.Core.Simulation
             }
             Dispatch.EnsureUnits();
             Government.OnLoaded();
+            Destructibles.EnsureGenerated();
+            Destructibles.ApplyTrafficEffects();
             var a = Accounts;
             if (!a.Insurer.IsValid) a.Insurer = Ids.Next(EntityKind.Organization);
             if (!a.InsurerAccount.IsValid || !Ledger.Exists(a.InsurerAccount))

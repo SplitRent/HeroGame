@@ -108,6 +108,9 @@ namespace HeroGame.Core.Property
         /// Sudden damage (storm, fire, vandalism): lowers condition and records the repair bill, which is what
         /// insurance settles against. Severity is the fraction of the structure's condition lost (0..1).
         /// </summary>
+        /// <summary>Raised after any recorded damage (storms, fires, powers, vandalism, floods).</summary>
+        public event Action<PropertyRecord> Damaged;
+
         public void ApplyDamage(PropertyRecord p, float severity)
         {
             severity = Math.Max(0f, Math.Min(p.Condition, severity));
@@ -120,6 +123,7 @@ namespace HeroGame.Core.Property
                 : p.Condition < 0.35f ? DamageState.HeavilyDamaged
                 : p.Condition < 0.7f ? DamageState.Damaged
                 : p.Damage == DamageState.Pristine ? DamageState.Worn : p.Damage;
+            Damaged?.Invoke(p);
         }
 
         public Money RepairQuote(PropertyRecord p, double priceLevel) => new Money((long)Math.Round(p.DamageRepairCents * Math.Max(0.5, priceLevel)));
@@ -139,12 +143,18 @@ namespace HeroGame.Core.Property
                 Money = LedgerTransaction.Transfer(ownerAccount, contractorAccount, cost, TransactionReason.Maintenance, "Repairs " + p.Address),
             });
             if (!result.Success) return result;
-            p.Condition = Math.Min(1f, p.Condition + p.DamageConditionLoss);
+            MarkRepaired(p);
+            return result;
+        }
+
+        /// <summary>Restores the structure after paid repairs or reconstruction.</summary>
+        public void MarkRepaired(PropertyRecord p)
+        {
+            p.Condition = Math.Min(1f, Math.Max(p.Condition + p.DamageConditionLoss, p.Damage == DamageState.Destroyed ? 0.85f : 0f));
             p.DamageConditionLoss = 0f;
             p.DamageRepairCents = 0;
             p.InsuranceClaimedCents = 0;
             p.Damage = p.Condition >= 0.8f ? DamageState.Pristine : DamageState.Worn;
-            return result;
         }
 
         /// <summary>Physical wear: condition decays slowly unless maintained.</summary>

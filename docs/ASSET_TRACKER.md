@@ -24,6 +24,8 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Fire | single orange particle system | `Fire_Placeholder.prefab` | layered fire/smoke VFX Graph | PLACEHOLDER |
 | Power effects | one burst particle system tinted per element | `PowerImpact_Placeholder.prefab` | per-archetype VFX Graph effects, audio, animation | PLACEHOLDER |
 | Crime interaction points, fence & chop-shop contacts, holding cell | invisible trigger boxes placed by `GreyboxWorldBuilder` | Runtime/Crime | authored interiors, NPC fence characters, animations | PLACEHOLDER |
+| Street furniture in scene | Blender kit prefab from `Resources/Props/<Mesh>` when imported, else greybox primitives; traffic signal has no kit mesh yet | `DestructiblePresenter` | kit meshes into Resources/Props; model a traffic signal; destruction states (bent pole, cracked glass) | PLACEHOLDER |
+| Destruction debris & hydrant spray | grey cubes with rigidbodies; one particle cone | `DestructiblePresenter` | fracture meshes, VFX Graph water and dust | PLACEHOLDER |
 | Dev console / inspector | IMGUI | dev builds only | stays IMGUI (developer-only) | OK (not shipped) |
 | Main menu backdrop | flat colour | MainMenu.uss | live city flythrough / key art | PLACEHOLDER |
 | Server list | mock JSON | `server_list_mock.json` | master server query (Phase 9) | PLACEHOLDER |

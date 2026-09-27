@@ -93,6 +93,7 @@ namespace HeroGame.Core.Simulation
             _world.Dispatch.AdvanceTo(t);
             _world.PowerUse.Recover();
             _world.Calendar.ProcessHour(t);
+            _world.Destructibles.ProcessHour(t);
             var storm = _world.Weather.State.ActiveSystem;
             if (storm != null && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane)
             {
@@ -155,7 +156,8 @@ namespace HeroGame.Core.Simulation
                     DemandAdjustment = place != null ? _world.Calendar.DemandMultiplier(place.Kind, date) - 1f : 0f,
                     BadWeather = badWeather,
                     PowerOutageHours = Math.Min(24f, c.DayOutageHours + _world.Calendar.OutageHoursToday(district)),
-                    ForcedClosure = effects.EmergencyDeclared && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane || _world.Calendar.ClosedToday(district),
+                    ForcedClosure = effects.EmergencyDeclared && _world.Weather.State.Current.Kind == Weather.WeatherKind.Hurricane || _world.Calendar.ClosedToday(district)
+                                    || b.Property.IsValid && _world.Destructibles.IsCollapsed(b.Property),
                     CycleIndex = _world.Macro.CycleIndex,
                     PriceLevel = _world.Macro.PriceLevel,
                     RevenueMultiplier = _world.Config.Economy.BusinessRevenueMultiplier,
@@ -217,6 +219,7 @@ namespace HeroGame.Core.Simulation
             _world.Government.ProcessDay(day);
             _world.Feed.ProcessDay(day);
             _world.Calendar.ProcessDay(day);
+            _world.Destructibles.ProcessDay(day);
             _world.Calendar.AnnounceDay(day + 1);
 
             if (_world.Macro.InRecession && _world.Macro.DaysInCurrentPhase == 1)

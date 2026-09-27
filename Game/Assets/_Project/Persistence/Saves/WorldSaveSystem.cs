@@ -320,6 +320,8 @@ namespace HeroGame.Persistence.Saves
                 world.Civic = civic.Civic ?? new Core.Civic.CivicState();
                 world.Disasters = civic.Disasters ?? new Core.Civic.DisasterState();
             }
+            if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Destruction))
+                world.Destruction = ReadChunk<DestructionState>(manifest, SaveChunks.Destruction) ?? new DestructionState();
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Social))
                 world.Ripple = ReadChunk<Core.Social.RippleState>(manifest, SaveChunks.Social) ?? new Core.Social.RippleState();
             if (manifest.ChunkGenerations.ContainsKey(SaveChunks.Justice))
@@ -425,6 +427,8 @@ namespace HeroGame.Persistence.Saves
                     return new CivicChunk { Civic = world.Civic, Disasters = world.Disasters };
                 case SaveChunks.Social:
                     return world.Ripple;
+                case SaveChunks.Destruction:
+                    return world.Destruction;
                 case SaveChunks.Vehicles:
                     var vehicles = new VehiclesChunk();
                     vehicles.Vehicles.AddRange(world.Vehicles.All);

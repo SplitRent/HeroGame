@@ -37,6 +37,7 @@ namespace HeroGame.Persistence.Content
         public const string CalendarEvents = "calendar_events.json";
         public const string RippleTemplates = "ripple_templates.json";
         public const string RadioStations = "radio_stations.json";
+        public const string Destructibles = "destructibles.json";
 
         /// <summary>Story Mode content (not needed by player servers).</summary>
         public static Core.Story.StoryDefinition LoadStory(string dataDirectory, string file = Story) => Read<Core.Story.StoryDefinition>(dataDirectory, file);
@@ -213,6 +214,7 @@ namespace HeroGame.Persistence.Content
                 CalendarEvents = Read<List<Core.Civic.CalendarEvent>>(dataDirectory, CalendarEvents),
                 RippleTemplates = Read<List<Core.Social.RippleTemplate>>(dataDirectory, RippleTemplates),
                 RadioStations = Read<List<Core.Audio.RadioStation>>(dataDirectory, RadioStations),
+                Destructibles = Read<List<DestructibleKind>>(dataDirectory, Destructibles),
             };
             return set;
         }
@@ -425,6 +427,19 @@ namespace HeroGame.Persistence.Content
                     if (rest.IndexOf('{') >= 0) r.Error(path, "Unknown token in host line: " + line);
                 }
             }
+
+            var propIds = new HashSet<string>();
+            foreach (var k in c.Destructibles)
+            {
+                var path = "destructibles." + k.Id;
+                if (string.IsNullOrEmpty(k.Id) || !propIds.Add(k.Id)) r.Error(path, "Missing or duplicate id.");
+                if (k.MaxHealth <= 0f || k.MaxHealth > 20f) r.Error(path, "MaxHealth out of range.");
+                if (k.WindResistance < 0f || k.WindResistance > 1f) r.Error(path, "WindResistance must be 0..1.");
+                if (k.RepairCostCents < 0) r.Error(path, "Negative repair cost.");
+                if (k.Effect != "" && k.Effect != "Darkness" && k.Effect != "SignalOut" && k.Effect != "WaterMain") r.Error(path, "Unknown effect " + k.Effect);
+            }
+            foreach (var required in new[] { "street_light", "traffic_signal", "fire_hydrant" })
+                if (!propIds.Contains(required)) r.Error("destructibles", "Missing required kind " + required + ".");
 
             var placeKeys = new HashSet<string>();
             foreach (var d in c.Layout.Districts)

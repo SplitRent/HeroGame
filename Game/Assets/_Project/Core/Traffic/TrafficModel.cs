@@ -67,7 +67,7 @@ namespace HeroGame.Core.Traffic
         /// <summary>BPR congested travel time: t0 · (1 + 0.15 (v/c)^4), slowed further by weather.</summary>
         public float TravelSeconds(RoadEdge e, GameDateTime t, WeatherEffects weather)
         {
-            var vc = Flow(e, t, weather) / (e.CapacityPerLane * e.LanesPerDirection);
+            var vc = Flow(e, t, weather) / (e.CapacityPerLane * e.LanesPerDirection * Math.Max(0.1f, e.CapacityFactor));
             return e.FreeFlowSeconds * (1f + 0.15f * (float)Math.Pow(vc, 4)) / Math.Max(0.3f, weather.TrafficSpeedMultiplier);
         }
 

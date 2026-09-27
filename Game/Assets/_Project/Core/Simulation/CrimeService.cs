@@ -78,6 +78,8 @@ namespace HeroGame.Core.Simulation
         public List<Observer> ObserversNear(WorldPosition position, float radius, EntityId exclude, float visibility)
         {
             var list = new List<Observer>();
+            // Broken street lights leave a stretch of street dark at night: people there see less.
+            visibility *= _w.Destructibles.LightingAt(position, _w.Clock.Now);
             var ids = new HashSet<EntityId>();
             _w.Director.Index.Update(_w.Clock.Now);
             _w.Director.Index.Candidates(position, radius, ids);

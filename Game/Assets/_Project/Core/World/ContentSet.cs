@@ -33,6 +33,7 @@ namespace HeroGame.Core.World
         public List<Civic.CalendarEvent> CalendarEvents = new List<Civic.CalendarEvent>();
         public List<Social.RippleTemplate> RippleTemplates = new List<Social.RippleTemplate>();
         public List<Audio.RadioStation> RadioStations = new List<Audio.RadioStation>();
+        public List<DestructibleKind> Destructibles = new List<DestructibleKind>();
 
         public ItemDefinition FindItem(string id)
         {

@@ -498,6 +498,19 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void PropImpacts_NeedAVehicle_AndBeingThere()
+        {
+            var a = Join("acc-prop", "Pat");
+            var conn = _server.Players.Single();
+            var near = _world.Destructibles.All.OrderBy(p => Core.Foundation.WorldPosition.DistanceXZ(p.Position, conn.Position)).First();
+            var far = _world.Destructibles.All.OrderByDescending(p => Core.Foundation.WorldPosition.DistanceXZ(p.Position, conn.Position)).First();
+            StringAssert.Contains("not there", Call(a, "prop.impact", new Dictionary<string, string> { ["prop"] = far.Id.ToString() }).Error);
+            conn.Position = near.Position;
+            StringAssert.Contains("vehicles", Call(a, "prop.impact", new Dictionary<string, string> { ["prop"] = near.Id.ToString() }).Error);
+            Assert.AreEqual(Core.World.PropState.Intact, near.State, "a player on foot cannot claim to have flattened anything");
+        }
+
+        [Test]
         public void BuildOps_SurviveTheWireEncoding()
         {
             var op = new Core.Building.BuildOp { Kind = Core.Building.BuildOpKind.AddRoom, RoomType = Core.Building.RoomType.Bar, Floor = 1, Polygon = { 2, 2, 27.25f, 2, 27.25f, 47, 2, 47 } };

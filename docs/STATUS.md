@@ -86,6 +86,12 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 | City calendar (dated events shifting demand by place kind, announcements) | TESTED | `Calendar_EventsSpanTheirDates_AndShiftDemand` |
 | Local disasters: chemical incident (district closure), flash flood (damage), blackout (outage hours), heat wave (EMS calls, demand) | TESTED | `ChemicalIncident_ClosesTheDistrictsBusinesses_AndIsCalledIn`, `FlashFlood_DamagesPropertyOnlyInItsDistrict`, `Blackout_AccruesOutageHoursForItsDistrict` |
 | Radio (4 original stations; real-time running order; news from real history, weather, ads for real businesses weighted by ad spend, host breaks, emergency cut-ins) | TESTED | `EveryStation_FillsTheHourWithContiguousSegments`, `OnAir_IsDeterministic_AcrossWorlds`, `Songs_LastTheirRealLength_*`, `News_ComesFromRealHistory`, `Advertisers_GetAirtime`, `Emergencies_CutIntoEveryStation` |
+| Destructible street furniture (lights, signals, hydrants, benches, shelters, dumpsters, bollards) placed from roads/places; damage states | TESTED | `StreetFurniture_IsPlacedFromRoadsAndPlaces_Deterministically`, `DamageStates_AndTheirConsequences` |
+| Destruction consequences: dark streets cut witness visibility at night, broken hydrants flood (wet) streets, dead signals slow intersections | TESTED | `DamageStates_AndTheirConsequences` |
+| Vehicle impacts (server-validated online), power blasts and hurricane winds break props | TESTED | `VehicleImpacts_*`, `PropImpacts_NeedAVehicle_AndBeingThere`, `HurricaneWinds_*` |
+| Structural collapse: EMS call, leases end with deposits returned, businesses forced shut, debris; city rebuilds non-player buildings after 60 days | TESTED | `BuildingCollapse_*` |
+| Recovery: public-works crews sized by budget repair by priority, paid from the treasury | TESTED | `PublicWorks_RepairsByPriority_*` |
+| Destructible presenter (kit prefab or greybox, tilt when damaged, physics debris, hydrant spray) | IN DEVELOPMENT | compiles; not run in Unity |
 | Youth curfew enforcement on individual minors | PLANNED | the ordinance exists and costs police trust in poorer districts; no per-NPC enforcement yet |
 
 ## Story Mode
@@ -181,4 +187,4 @@ _Last updated: Phases 23–28 (radio, phone apps, security audit, failure testin
 
 ## Not started (PLANNED)
 Combat & weapons · music, SFX and VO assets · UI Toolkit phone skin · animation set · character creator 3D preview ·
-destruction · Addressables cell content · HLOD · full city · Story Mode Part Two acts II–IV.
+Addressables cell content · HLOD · full city · Story Mode Part Two acts II–IV.

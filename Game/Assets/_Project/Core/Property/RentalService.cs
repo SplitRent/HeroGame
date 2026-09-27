@@ -148,6 +148,33 @@ namespace HeroGame.Core.Property
             return result;
         }
 
+        /// <summary>
+        /// The building is gone (collapse): every lease ends and deposits are returned in full — the tenants did nothing
+        /// wrong. Returns the displaced tenants.
+        /// </summary>
+        public List<EntityId> EndLeasesAfterDisaster(PropertyRecord property, GameDateTime now)
+        {
+            var displaced = new List<EntityId>();
+            void End(Tenancy t, int unitId)
+            {
+                if (t == null) return;
+                if (t.DepositCents > 0)
+                    _processor.Execute(new WorldTransaction
+                    {
+                        Source = TransactionSource.Simulation,
+                        Timestamp = now,
+                        Description = "Deposit returned (building lost)",
+                        Money = LedgerTransaction.Transfer(t.LandlordAccount, t.TenantAccount, new Money(t.DepositCents), TransactionReason.Refund, "Deposit " + property.Address),
+                    });
+                displaced.Add(t.Tenant);
+                Clear(property, unitId);
+                Raise(RentalEventKind.MovedOut, property, t.Tenant, t.DepositCents, property.Address + " is uninhabitable; your lease has ended and your deposit was returned.");
+            }
+            End(property.Tenancy, -1);
+            foreach (var u in property.Units) End(u.Tenancy, u.Id);
+            return displaced;
+        }
+
         public OpResult MoveOut(PropertyRecord property, int unitId, EntityId tenant, GameDateTime now)
         {
             var tenancy = unitId >= 0 ? property.Units.Find(u => u.Id == unitId)?.Tenancy : property.Tenancy;

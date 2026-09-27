@@ -313,6 +313,18 @@ the trading day, hazmat calls, phone alerts); blackouts are likelier in storms a
 hours); heat waves occur in hot summers (evening demand shifts, heat-exhaustion EMS calls among older residents). A
 server multiplier (`DisasterFrequencyMultiplier`, 0 disables) scales them.
 
+### 10.4.1 Destruction and recovery
+Street furniture is generated from the road graph (lights every 38 m alternating sides, hydrants every 130 m,
+signals at intersections) and from places (shelters at transit stops, benches in parks, dumpsters behind shops, bollards
+at civic buildings), stored compactly in the `destruction` chunk and indexed in a 32 m grid. Damage comes from vehicle
+impacts (kinetic energy; online, speed and vehicle are the server's own), power blasts and hurricane winds (per-prop,
+per-hour deterministic rolls scaled by wind resistance). Consequences feed existing systems: witness visibility halves
+at night where the lights are out, broken hydrants make the area wet for power/element interactions, and dead signals
+cut the capacity of every road meeting at that intersection (BPR travel time). A property reaching `Destroyed` is a
+structural collapse: EMS call sized by the people inside, leases ended with full deposits, debris damage, businesses
+forced shut. Recovery: public-works crews (10 × Public Works service level) repair by priority and pay contractors from
+the treasury; collapsed buildings not owned by players are rebuilt with a reconstruction grant after 60 days.
+
 ### 10.5 Government, elections, social media and radio
 * **Budget.** Monthly: households' local taxes flow External → Treasury; each department is paid its share
   Treasury → External. Funding relative to need (per resident) becomes a service level that sets the number of police,
