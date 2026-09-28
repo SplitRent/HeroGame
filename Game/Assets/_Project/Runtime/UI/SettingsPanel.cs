@@ -76,7 +76,7 @@ namespace HeroGame.Runtime.UI
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Quality", GUILayout.Width(170));
                     foreach (QualityPreset q in System.Enum.GetValues(typeof(QualityPreset)))
-                        if (GUILayout.Toggle(s.Quality == q, q.ToString(), GUI.skin.button)) s.Quality = q;
+                        if (GUILayout.Toggle(s.Quality == q, q.ToString(), GUI.skin.button) && s.Quality != q) s.ApplyPreset(q);
                     GUILayout.EndHorizontal();
                     s.VSync = GUILayout.Toggle(s.VSync, " VSync");
                     if (!s.VSync) s.TargetFps = Mathf.RoundToInt(Slider("Frame cap", s.TargetFps, GameSettings.MinFps, GameSettings.MaxFps, false));

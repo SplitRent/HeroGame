@@ -4,8 +4,13 @@ using System.Globalization;
 
 namespace HeroGame.Core.Presentation
 {
-    public enum QualityPreset { Low, Medium, High, Ultra }
+    /// <summary>Graphics presets. Custom means the player changed individual options after picking one.</summary>
+    public enum QualityPreset { Low, Medium, High, Ultra, Custom }
     public enum UnitSystem { Imperial, Metric }
+    public enum WindowMode { Fullscreen, Borderless, Windowed }
+    public enum AntiAliasing { Off, Fxaa, Smaa, Taa }
+    public enum TextureQuality { Quarter, Half, Full }
+    public enum ShadowQuality { Off, Low, Medium, High, Ultra }
 
     /// <summary>
     /// Player settings (GDD Phase 24): audio, controls, display and accessibility. Plain data with validation; the
@@ -35,6 +40,36 @@ namespace HeroGame.Core.Presentation
         public float FieldOfView = 70f;
         public float UiScale = 1f;
         public bool ShowFps;
+        public WindowMode Window = WindowMode.Borderless;
+        /// <summary>Output resolution; 0 x 0 = the display's native resolution.</summary>
+        public int ResolutionWidth;
+        public int ResolutionHeight;
+        /// <summary>Exposure compensation in stops (-2 darker .. +2 brighter).</summary>
+        public float Brightness;
+
+        // Graphics (applied by the runtime to the render pipeline; see ApplyPreset for what each preset sets)
+        public AntiAliasing AntiAliasing = AntiAliasing.Taa;
+        public TextureQuality Textures = TextureQuality.Full;
+        public bool AnisotropicFiltering = true;
+        public ShadowQuality Shadows = ShadowQuality.High;
+        /// <summary>How far shadows are drawn, in metres.</summary>
+        public float ShadowDistance = 150f;
+        /// <summary>Multiplier on draw distance (camera far plane).</summary>
+        public float ViewDistance = 1f;
+        /// <summary>Level-of-detail bias: higher keeps detailed models further away.</summary>
+        public float DetailLevel = 1f;
+        public bool AmbientOcclusion = true;
+        public bool ScreenSpaceReflections = true;
+        public bool VolumetricFog = true;
+        public bool ContactShadows = true;
+        public float Bloom = 0.2f;
+        public float FilmGrain;
+        public float Vignette = 0.15f;
+        public bool ChromaticAberration;
+        /// <summary>Grass blades per square metre, relative to the default (0 = no grass).</summary>
+        public float GrassDensity = 1f;
+        /// <summary>How far grass is drawn, in metres.</summary>
+        public float GrassDistance = 70f;
 
         // Accessibility and comfort
         public bool Subtitles = true;
@@ -52,6 +87,65 @@ namespace HeroGame.Core.Presentation
         public const float MinFov = 55f, MaxFov = 100f;
         public const float MinUiScale = 0.75f, MaxUiScale = 2f;
         public const int MinFps = 30, MaxFps = 360;
+        public const float MinShadowDistance = 30f, MaxShadowDistance = 500f;
+        public const float MinViewDistance = 0.4f, MaxViewDistance = 2.5f;
+        public const float MinDetail = 0.4f, MaxDetail = 2.5f;
+        public const float MaxGrassDensity = 2f, MinGrassDistance = 15f, MaxGrassDistance = 150f;
+
+        /// <summary>Sets every graphics option to the preset's values (Custom leaves them as they are).</summary>
+        public GameSettings ApplyPreset(QualityPreset preset)
+        {
+            Quality = preset;
+            switch (preset)
+            {
+                case QualityPreset.Low:
+                    Graphics(AntiAliasing.Fxaa, TextureQuality.Half, false, ShadowQuality.Low, 60f, 0.6f, 0.6f, false, false, false, false, 0.3f, 30f);
+                    break;
+                case QualityPreset.Medium:
+                    Graphics(AntiAliasing.Smaa, TextureQuality.Full, true, ShadowQuality.Medium, 100f, 0.85f, 0.85f, true, false, false, false, 0.6f, 50f);
+                    break;
+                case QualityPreset.High:
+                    Graphics(AntiAliasing.Taa, TextureQuality.Full, true, ShadowQuality.High, 150f, 1f, 1f, true, true, true, true, 1f, 70f);
+                    break;
+                case QualityPreset.Ultra:
+                    Graphics(AntiAliasing.Taa, TextureQuality.Full, true, ShadowQuality.Ultra, 300f, 1.6f, 1.8f, true, true, true, true, 1.5f, 110f);
+                    break;
+            }
+            return this;
+        }
+
+        private void Graphics(AntiAliasing aa, TextureQuality textures, bool aniso, ShadowQuality shadows, float shadowDistance, float view, float detail,
+                              bool ao, bool ssr, bool volumetric, bool contact, float grass, float grassDistance)
+        {
+            AntiAliasing = aa;
+            Textures = textures;
+            AnisotropicFiltering = aniso;
+            Shadows = shadows;
+            ShadowDistance = shadowDistance;
+            ViewDistance = view;
+            DetailLevel = detail;
+            AmbientOcclusion = ao;
+            ScreenSpaceReflections = ssr;
+            VolumetricFog = volumetric;
+            ContactShadows = contact;
+            GrassDensity = grass;
+            GrassDistance = grassDistance;
+        }
+
+        /// <summary>The preset whose values these settings match exactly, or Custom.</summary>
+        public QualityPreset MatchingPreset()
+        {
+            foreach (var p in new[] { QualityPreset.Low, QualityPreset.Medium, QualityPreset.High, QualityPreset.Ultra })
+            {
+                var t = new GameSettings().ApplyPreset(p);
+                if (t.AntiAliasing == AntiAliasing && t.Textures == Textures && t.AnisotropicFiltering == AnisotropicFiltering && t.Shadows == Shadows &&
+                    Math.Abs(t.ShadowDistance - ShadowDistance) < 0.5f && Math.Abs(t.ViewDistance - ViewDistance) < 0.01f && Math.Abs(t.DetailLevel - DetailLevel) < 0.01f &&
+                    t.AmbientOcclusion == AmbientOcclusion && t.ScreenSpaceReflections == ScreenSpaceReflections && t.VolumetricFog == VolumetricFog &&
+                    t.ContactShadows == ContactShadows && Math.Abs(t.GrassDensity - GrassDensity) < 0.01f && Math.Abs(t.GrassDistance - GrassDistance) < 0.5f)
+                    return p;
+            }
+            return QualityPreset.Custom;
+        }
 
         /// <summary>Forces every value into its valid range (NaN becomes the default).</summary>
         public GameSettings Clamp()
@@ -67,6 +161,20 @@ namespace HeroGame.Core.Presentation
             GamepadSensitivity = C(GamepadSensitivity, MinSensitivity, MaxSensitivity, d.GamepadSensitivity);
             if (!Enum.IsDefined(typeof(QualityPreset), Quality)) Quality = d.Quality;
             if (!Enum.IsDefined(typeof(UnitSystem), Units)) Units = d.Units;
+            if (!Enum.IsDefined(typeof(WindowMode), Window)) Window = d.Window;
+            if (!Enum.IsDefined(typeof(AntiAliasing), AntiAliasing)) AntiAliasing = d.AntiAliasing;
+            if (!Enum.IsDefined(typeof(TextureQuality), Textures)) Textures = d.Textures;
+            if (!Enum.IsDefined(typeof(ShadowQuality), Shadows)) Shadows = d.Shadows;
+            if (ResolutionWidth < 640 || ResolutionHeight < 360 || ResolutionWidth > 16384 || ResolutionHeight > 16384) ResolutionWidth = ResolutionHeight = 0;
+            Brightness = C(Brightness, -2f, 2f, d.Brightness);
+            ShadowDistance = C(ShadowDistance, MinShadowDistance, MaxShadowDistance, d.ShadowDistance);
+            ViewDistance = C(ViewDistance, MinViewDistance, MaxViewDistance, d.ViewDistance);
+            DetailLevel = C(DetailLevel, MinDetail, MaxDetail, d.DetailLevel);
+            Bloom = C(Bloom, 0f, 1f, d.Bloom);
+            FilmGrain = C(FilmGrain, 0f, 1f, d.FilmGrain);
+            Vignette = C(Vignette, 0f, 1f, d.Vignette);
+            GrassDensity = C(GrassDensity, 0f, MaxGrassDensity, d.GrassDensity);
+            GrassDistance = C(GrassDistance, MinGrassDistance, MaxGrassDistance, d.GrassDistance);
             TargetFps = TargetFps == 0 ? 0 : Math.Max(MinFps, Math.Min(MaxFps, TargetFps));
             FieldOfView = C(FieldOfView, MinFov, MaxFov, d.FieldOfView);
             UiScale = C(UiScale, MinUiScale, MaxUiScale, d.UiScale);
@@ -164,6 +272,27 @@ namespace HeroGame.Core.Presentation
             F("display.fov", s => s.FieldOfView, (s, v) => s.FieldOfView = v),
             F("display.ui_scale", s => s.UiScale, (s, v) => s.UiScale = v),
             B("display.show_fps", s => s.ShowFps, (s, v) => s.ShowFps = v),
+            E<WindowMode>("display.window", s => s.Window, (s, v) => s.Window = v),
+            I("display.width", s => s.ResolutionWidth, (s, v) => s.ResolutionWidth = v),
+            I("display.height", s => s.ResolutionHeight, (s, v) => s.ResolutionHeight = v),
+            F("display.brightness", s => s.Brightness, (s, v) => s.Brightness = v),
+            E<AntiAliasing>("graphics.antialiasing", s => s.AntiAliasing, (s, v) => s.AntiAliasing = v),
+            E<TextureQuality>("graphics.textures", s => s.Textures, (s, v) => s.Textures = v),
+            B("graphics.anisotropic", s => s.AnisotropicFiltering, (s, v) => s.AnisotropicFiltering = v),
+            E<ShadowQuality>("graphics.shadows", s => s.Shadows, (s, v) => s.Shadows = v),
+            F("graphics.shadow_distance", s => s.ShadowDistance, (s, v) => s.ShadowDistance = v),
+            F("graphics.view_distance", s => s.ViewDistance, (s, v) => s.ViewDistance = v),
+            F("graphics.detail", s => s.DetailLevel, (s, v) => s.DetailLevel = v),
+            B("graphics.ambient_occlusion", s => s.AmbientOcclusion, (s, v) => s.AmbientOcclusion = v),
+            B("graphics.reflections", s => s.ScreenSpaceReflections, (s, v) => s.ScreenSpaceReflections = v),
+            B("graphics.volumetric_fog", s => s.VolumetricFog, (s, v) => s.VolumetricFog = v),
+            B("graphics.contact_shadows", s => s.ContactShadows, (s, v) => s.ContactShadows = v),
+            F("graphics.bloom", s => s.Bloom, (s, v) => s.Bloom = v),
+            F("graphics.film_grain", s => s.FilmGrain, (s, v) => s.FilmGrain = v),
+            F("graphics.vignette", s => s.Vignette, (s, v) => s.Vignette = v),
+            B("graphics.chromatic_aberration", s => s.ChromaticAberration, (s, v) => s.ChromaticAberration = v),
+            F("graphics.grass_density", s => s.GrassDensity, (s, v) => s.GrassDensity = v),
+            F("graphics.grass_distance", s => s.GrassDistance, (s, v) => s.GrassDistance = v),
             B("access.subtitles", s => s.Subtitles, (s, v) => s.Subtitles = v),
             F("access.subtitle_scale", s => s.SubtitleScale, (s, v) => s.SubtitleScale = v),
             F("access.camera_shake", s => s.CameraShake, (s, v) => s.CameraShake = v),

@@ -25,7 +25,10 @@ STUBS = os.path.join(CHECK, "obj", "ShadowTypes.g.cs")
 TYPE = re.compile(r"^    (?:\[[^\n]*\]\s*)?(?:public |internal )?(?:static |sealed |abstract |partial |readonly )*"
                   r"(?:class|struct|enum|interface|delegate [\w<>\[\],. ]+?) (\w+)", re.M)
 USING = re.compile(r"^using ([A-Za-z_][\w.]*);", re.M)
-DUPLICATE = re.compile(r"warning CS0436: The type '(\w+)' in '[^']*ShadowTypes\.g\.cs' conflicts with the imported type '([\w.]+)'")
+# "The type 'X' in '.../ShadowTypes.g.cs' conflicts with the imported type 'X' in 'UnityEngine.CoreModule, ...'":
+# X already exists in the engine or class library, so real code already has to disambiguate it (the regular
+# compile checks cover that) and a stub would only replace the real type.
+DUPLICATE = re.compile(r"warning CS0436: The type '(\w+)' in '[^']*ShadowTypes\.g\.cs' conflicts with the imported type")
 
 
 def sources():
@@ -45,7 +48,7 @@ def write_stubs(names, namespaces, skip):
         for ns in namespaces:
             out.write("namespace %s\n{\n" % ns)
             for n in names:
-                if (ns, n) not in skip:
+                if n not in skip:
                     out.write("    internal sealed class %s { }\n" % n)
             out.write("}\n")
 
@@ -69,7 +72,7 @@ def main():
         for attempt in (1, 2):
             write_stubs(names, namespaces, skip)
             code, log = build()
-            found = {(full.rsplit(".", 1)[0], name) for name, full in DUPLICATE.findall(log)}
+            found = set(DUPLICATE.findall(log)) - skip
             if attempt == 1 and found:
                 skip |= found
                 continue

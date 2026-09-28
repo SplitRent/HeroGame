@@ -64,10 +64,13 @@ namespace HeroGame.Runtime.UI
             AudioVolumes.Set(AudioChannel.Ambience, s.AmbienceVolume);
             AudioVolumes.Set(AudioChannel.Voice, s.VoiceVolume);
             AudioVolumes.Set(AudioChannel.Interface, s.InterfaceVolume);
+            // Unity quality level from the preset (Custom behaves like High); the individual options follow below.
             var levels = QualitySettings.names.Length;
-            if (levels > 0) QualitySettings.SetQualityLevel(Mathf.Clamp(Mathf.RoundToInt((int)s.Quality / 3f * (levels - 1)), 0, levels - 1), true);
+            var tier = s.Quality == QualityPreset.Custom ? (int)QualityPreset.High : (int)s.Quality;
+            if (levels > 0) QualitySettings.SetQualityLevel(Mathf.Clamp(Mathf.RoundToInt(tier / 3f * (levels - 1)), 0, levels - 1), true);
             QualitySettings.vSyncCount = s.VSync ? 1 : 0;
             Application.targetFrameRate = s.VSync ? -1 : s.TargetFps == 0 ? -1 : s.TargetFps;
+            Presentation.GraphicsApplier.Apply(s);
         }
     }
 }

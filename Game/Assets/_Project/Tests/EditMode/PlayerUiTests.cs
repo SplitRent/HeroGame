@@ -20,6 +20,50 @@ namespace HeroGame.Tests
         // ---------------------------------------------------------------- settings
 
         [Test]
+        public void GraphicsPresets_ScaleEveryOption_AndCustomIsDetected()
+        {
+            var low = new GameSettings().ApplyPreset(QualityPreset.Low);
+            var ultra = new GameSettings().ApplyPreset(QualityPreset.Ultra);
+            Assert.Less(low.ShadowDistance, ultra.ShadowDistance);
+            Assert.Less(low.ViewDistance, ultra.ViewDistance);
+            Assert.Less(low.GrassDensity, ultra.GrassDensity);
+            Assert.Less((int)low.Shadows, (int)ultra.Shadows);
+            Assert.IsFalse(low.AmbientOcclusion);
+            Assert.IsTrue(ultra.ScreenSpaceReflections);
+            Assert.AreEqual(QualityPreset.High, new GameSettings().MatchingPreset(), "the defaults are the High preset");
+            foreach (var p in new[] { QualityPreset.Low, QualityPreset.Medium, QualityPreset.High, QualityPreset.Ultra })
+                Assert.AreEqual(p, new GameSettings().ApplyPreset(p).MatchingPreset());
+            var tweaked = new GameSettings().ApplyPreset(QualityPreset.Medium);
+            tweaked.VolumetricFog = true;
+            Assert.AreEqual(QualityPreset.Custom, tweaked.MatchingPreset());
+            var custom = new GameSettings { GrassDensity = 0.3f }.ApplyPreset(QualityPreset.Custom);
+            Assert.AreEqual(0.3f, custom.GrassDensity, "Custom keeps the player's own values");
+
+            // Every graphics option survives the settings file, and nonsense is clamped.
+            var s = new GameSettings().ApplyPreset(QualityPreset.Ultra);
+            s.Window = WindowMode.Windowed;
+            s.ResolutionWidth = 2560;
+            s.ResolutionHeight = 1440;
+            s.Brightness = -0.5f;
+            s.FilmGrain = 0.4f;
+            s.ChromaticAberration = true;
+            var back = GameSettings.FromMap(s.ToMap());
+            Assert.AreEqual(QualityPreset.Ultra, back.Quality);
+            Assert.AreEqual(QualityPreset.Ultra, back.MatchingPreset());
+            Assert.AreEqual(WindowMode.Windowed, back.Window);
+            Assert.AreEqual(2560, back.ResolutionWidth);
+            Assert.AreEqual(-0.5f, back.Brightness);
+            Assert.AreEqual(0.4f, back.FilmGrain);
+            Assert.IsTrue(back.ChromaticAberration);
+            var wild = new GameSettings { ShadowDistance = 1e6f, GrassDensity = -3f, ViewDistance = float.NaN, ResolutionWidth = 12, ResolutionHeight = 5, Shadows = (ShadowQuality)9 }.Clamp();
+            Assert.AreEqual(GameSettings.MaxShadowDistance, wild.ShadowDistance);
+            Assert.AreEqual(0f, wild.GrassDensity);
+            Assert.AreEqual(1f, wild.ViewDistance);
+            Assert.AreEqual(0, wild.ResolutionWidth, "an impossible resolution falls back to native");
+            Assert.AreEqual(ShadowQuality.High, wild.Shadows);
+        }
+
+        [Test]
         public void Settings_RoundTrip_ClampNonsense_AndSurviveDamagedFiles()
         {
             var dir = TestContent.TempDirectory("settings");

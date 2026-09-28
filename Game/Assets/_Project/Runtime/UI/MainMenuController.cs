@@ -220,7 +220,10 @@ namespace HeroGame.Runtime.UI
         private void ShowSettings()
         {
             // The same settings file the in-game pause screen edits (GameSettings via SettingsService).
-            var p = BeginPanel("SETTINGS");
+            var panel = BeginPanel("SETTINGS");
+            var p = new ScrollView();
+            p.style.flexGrow = 1;
+            panel.Add(p);
             var s = SettingsService.Current;
             void Slider01(string label, Func<float> get, Action<float> set)
             {
@@ -239,23 +242,26 @@ namespace HeroGame.Runtime.UI
             Slider01("Master volume", () => s.MasterVolume, v => s.MasterVolume = v);
             Slider01("Music & radio", () => s.MusicVolume, v => s.MusicVolume = v);
             Slider01("Effects", () => s.EffectsVolume, v => s.EffectsVolume = v);
-            var quality = new DropdownField("Quality", new List<string>(Enum.GetNames(typeof(Core.Presentation.QualityPreset))), (int)s.Quality);
-            quality.AddToClassList("hg-field");
-            quality.RegisterValueChangedCallback(e => { s.Quality = (Core.Presentation.QualityPreset)quality.index; SettingsService.Apply(); });
-            p.Add(quality);
-            var fullscreen = new Toggle("Fullscreen") { value = Screen.fullScreen };
-            fullscreen.AddToClassList("hg-field");
-            fullscreen.RegisterValueChangedCallback(e => Screen.fullScreen = e.newValue);
-            p.Add(fullscreen);
-            Check("V-Sync", () => s.VSync, v => s.VSync = v);
             Check("Subtitles", () => s.Subtitles, v => s.Subtitles = v);
             Check("24-hour clock", () => s.Clock24h, v => s.Clock24h = v);
             Check("Metric units", () => s.Units == Core.Presentation.UnitSystem.Metric, v => s.Units = v ? Core.Presentation.UnitSystem.Metric : Core.Presentation.UnitSystem.Imperial);
+            var display = new Label("DISPLAY");
+            display.AddToClassList("hg-panel-title");
+            display.style.fontSize = 20;
+            display.style.marginTop = 18;
+            p.Add(display);
+            GraphicsSettingsPage.Display(p, "hg-field", ShowSettings);
+            var graphics = new Label("GRAPHICS");
+            graphics.AddToClassList("hg-panel-title");
+            graphics.style.fontSize = 20;
+            graphics.style.marginTop = 18;
+            p.Add(graphics);
+            GraphicsSettingsPage.Graphics(p, "hg-field", ShowSettings);
             var save = new Button(() => SettingsService.Commit()) { text = "SAVE" };
             save.AddToClassList("hg-menu-button");
             save.AddToClassList("hg-menu-button--accent");
             p.Add(save);
-            var more = new Label("More options (controls, accessibility, interface scale) are in the pause menu in game.");
+            var more = new Label("Controls and accessibility options are in the pause menu in game.");
             more.AddToClassList("hg-muted");
             p.Add(more);
         }

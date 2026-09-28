@@ -27,7 +27,7 @@ namespace HeroGame.Runtime.UI
         public string MenuScene = "MainMenu";
 
         private enum Screen { None, Pause, Phone }
-        private enum SettingsTab { Audio, Controls, Display, Accessibility }
+        private enum SettingsTab { Audio, Controls, Display, Graphics, Accessibility }
 
         private static GameUi _instance;
         public static bool Active => _instance != null && _instance.isActiveAndEnabled && _instance._ready;
@@ -338,23 +338,13 @@ namespace HeroGame.Runtime.UI
                         content.Add(Text(line, "g-note"));
                     break;
                 case SettingsTab.Display:
-                {
                     content.Add(Text("Display", "g-section"));
-                    var quality = new DropdownField("Quality", new List<string>(Enum.GetNames(typeof(QualityPreset))), (int)s.Quality);
-                    quality.AddToClassList("g-field");
-                    quality.RegisterValueChangedCallback(e => { s.Quality = (QualityPreset)quality.index; SettingsService.Apply(); });
-                    content.Add(quality);
-                    content.Add(Check("VSync", () => s.VSync, v => s.VSync = v));
-                    content.Add(Range("Frame cap (VSync off)", GameSettings.MinFps, GameSettings.MaxFps, () => s.TargetFps, v => s.TargetFps = Mathf.RoundToInt(v)));
-                    content.Add(Range("Field of view", GameSettings.MinFov, GameSettings.MaxFov, () => s.FieldOfView, v => s.FieldOfView = v));
-                    content.Add(Range("Interface scale", GameSettings.MinUiScale, GameSettings.MaxUiScale, () => s.UiScale, v => s.UiScale = v));
-                    content.Add(Check("Show frame rate", () => s.ShowFps, v => s.ShowFps = v));
-                    var fullscreen = new Toggle("Fullscreen") { value = UnityEngine.Screen.fullScreen };
-                    fullscreen.AddToClassList("g-field");
-                    fullscreen.RegisterValueChangedCallback(e => UnityEngine.Screen.fullScreen = e.newValue);
-                    content.Add(fullscreen);
+                    GraphicsSettingsPage.Display(content, "g-field", () => BuildPause(tab));
                     break;
-                }
+                case SettingsTab.Graphics:
+                    content.Add(Text("Graphics", "g-section"));
+                    GraphicsSettingsPage.Graphics(content, "g-field", () => BuildPause(tab));
+                    break;
                 case SettingsTab.Accessibility:
                 {
                     content.Add(Text("Accessibility & comfort", "g-section"));
