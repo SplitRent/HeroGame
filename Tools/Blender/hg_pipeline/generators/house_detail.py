@@ -16,7 +16,8 @@ Coordinates: Blender Z up, metres, the footprint centred on the origin, the fron
 import math
 import random
 
-from mathutils import Vector
+import bmesh
+from mathutils import Matrix, Vector
 
 from .buildings import _Builder
 
@@ -62,9 +63,9 @@ class Wall:
         hexa(b, c, slot)
 
 
-def sloped_roof(b, edge_a, edge_b, ridge_a, ridge_b, th, s, courses=None):
+def sloped_roof(b, edge_a, edge_b, ridge_a, ridge_b, th, s, courses=None, rakes=False, rake_gap=0.0):
     """A roof plane from an eave line (edge_a..edge_b) up to a ridge line: deck slab of thickness th plus stepped
-    shingle courses (each thick at its butt, lapping the next)."""
+    shingle courses (each thick at its butt, lapping the next); ``rakes`` adds trim boards over both slab ends."""
     n = (ridge_a - edge_a).cross(edge_b - edge_a).normalized()
     if n.z < 0:
         n = -n
@@ -90,6 +91,15 @@ def sloped_roof(b, edge_a, edge_b, ridge_a, ridge_b, th, s, courses=None):
             c[ai * 4 + 2] = top(t0, ai, 0.022) + pad
             c[ai * 4 + 3] = top(t1, ai, 0.006) + pad
         hexa(b, c, s["roof"])
+    if rakes:
+        out = (edge_b - edge_a).normalized()
+        for ai, direction in ((0, -out), (1, out)):
+            c = [None] * 8
+            for k, (off, lift) in enumerate(((0.0, -th - 0.1), (0.0, 0.035), (0.03, -th - 0.1), (0.03, 0.035))):
+                for ti in (0, 1):
+                    p = top(ti, ai, lift) + direction * (off + 0.021 + rake_gap)
+                    c[(k // 2) * 4 + (k % 2) * 2 + ti] = p
+            hexa(b, c, s["trim"])
 
 
 def _subtract(intervals, cut0, cut1):
@@ -219,7 +229,10 @@ def garage_door(b, wall, sc, z0, w, h, s):
 
 
 def detailed_house(name, width=11.0, depth=13.0, floors=1, board="M_Board_White", board_color=(0.9, 0.9, 0.87),
-                   roof="M_Roof_Shingle", garage=False, seed=6, collection=None):
+                   roof="M_Roof_Shingle", garage=False, seed=6, collection=None, entry="front", raised=False, chimney=True):
+    """``entry="left"`` puts the door and porch on a gable end and turns the house so that end faces the street
+    (-Y): with ``width`` along the street being the long side before turning, this makes a shotgun house.
+    ``raised`` stands the house on brick piers with a lattice skirt (Gulf Coast flood habit)."""
     rng = random.Random(seed)
     b = _Builder(name)
     s = {
@@ -230,7 +243,7 @@ def detailed_house(name, width=11.0, depth=13.0, floors=1, board="M_Board_White"
         "vent": b.slot("M_Vent_Dark", (0.12, 0.12, 0.12), 0.8),
         "gutter": b.slot("M_Gutter_White", (0.86, 0.86, 0.84), 0.35, 0.3),
         "roof": b.slot(roof, (0.24, 0.22, 0.21), 0.9),
-        "deck": b.slot("M_Roof_Deck", (0.3, 0.26, 0.2), 0.9),
+        "deck": b.slot("M_Soffit_White", (0.88, 0.88, 0.86), 0.6),  # the deck underside is the painted rake/eave soffit
         "slab": b.slot("M_Concrete_Grey", (0.58, 0.58, 0.56), 0.8),
         "brick": b.slot("M_Brick_Red", (0.46, 0.2, 0.14), 0.85),
         "metal": b.slot("M_Metal_Grey", (0.5, 0.52, 0.55), 0.4, 0.8),
@@ -239,8 +252,8 @@ def detailed_house(name, width=11.0, depth=13.0, floors=1, board="M_Board_White"
         "shutter": b.slot("M_Shutter_%02d" % (seed % 100), rng.choice(((0.08, 0.15, 0.1), (0.1, 0.12, 0.18), (0.16, 0.16, 0.16), (0.3, 0.1, 0.08))), 0.55),
         "garage": b.slot("M_Door_Garage", (0.9, 0.9, 0.88), 0.5),
     }
-    base = 0.45
-    wall_h = 2.9
+    base = 0.9 if raised else 0.45
+    wall_h = 2.9 if not raised else 3.2
     z_e = base + floors * wall_h                  # top of the walls (plate)
     x0, x1, y0, y1 = -width / 2, width / 2, -depth / 2, depth / 2
     ym = 0.0
@@ -251,7 +264,28 @@ def detailed_house(name, width=11.0, depth=13.0, floors=1, board="M_Board_White"
     z_r = z_e + pitch
 
     # --- structure: foundation, wall core, gable core -------------------------------------------------------
-    b.box((0, 0, base / 2), (width + 0.1, depth + 0.1, base), s["slab"])
+    if raised:
+        # Brick piers on a grid, a dark void behind a lattice skirt between them.
+        b.box((0, 0, base / 2), (width - 0.44, depth - 0.44, base), s["vent"])
+        for px in [x0 + 0.25 + i * (width - 0.5) / max(1, round(width / 2.4)) for i in range(round(width / 2.4) + 1)]:
+            for py in (y0 + 0.25, y1 - 0.25):
+                b.box((px, py, base / 2), (0.42, 0.42, base), s["brick"])
+        for py in [y0 + 0.25 + i * (depth - 0.5) / max(1, round(depth / 2.4)) for i in range(1, round(depth / 2.4))]:
+            for px in (x0 + 0.25, x1 - 0.25):
+                b.box((px, py, base / 2), (0.42, 0.42, base), s["brick"])
+        for key_, (ax, ay, nx, ny, length) in {"front": (x0, y0, 0, -1, width), "back": (x0, y1, 0, 1, width), "left": (x0, y0, -1, 0, depth), "right": (x1, y0, 1, 0, depth)}.items():
+            for i in range(int(length / 0.09)):
+                t = (i + 0.5) * 0.09
+                cx_ = ax + (t if ny else 0) + nx * 0.18
+                cy_ = ay + (t if nx else 0) + ny * 0.18
+                b.box((cx_, cy_, base / 2 - 0.02), (0.045 if ny else 0.02, 0.02 if ny else 0.045, base - 0.16), s["trim"])
+            # Top and bottom rails frame the lattice.
+            mid = Vector((ax, ay, 0)) + Vector((ny != 0, nx != 0, 0)) * (length / 2) + Vector((nx, ny, 0)) * 0.19
+            for zz in (0.06, base - 0.16):
+                b.box((mid.x, mid.y, zz), (length if ny else 0.04, 0.04 if ny else length, 0.08), s["trim"])
+        b.box((0, 0, base - 0.06), (width + 0.1, depth + 0.1, 0.12), s["trim"])  # sill beam
+    else:
+        b.box((0, 0, base / 2), (width + 0.1, depth + 0.1, base), s["slab"])
     # The wall core sits 12 cm behind the siding plane so window glass, doors and the garage door can be recessed
     # (the siding, casings and jamb liners hide the gap).
     b.box((0, 0, (base + z_e) / 2), (width - 0.24, depth - 0.24, z_e - base), s["board"])
@@ -266,30 +300,36 @@ def detailed_house(name, width=11.0, depth=13.0, floors=1, board="M_Board_White"
     openings = {k_: [] for k_ in walls}
 
     # --- doors and windows ------------------------------------------------------------------------------------
-    front = walls["front"]
-    garage_w = 3.0 if garage else 0.0
-    if garage:
-        openings["front"].append(garage_door(b, front, 0.35 + garage_w / 2 + 0.15, base - 0.3, garage_w, 2.25, s))
-        b.box((x0 + 0.5 + garage_w / 2, y0 - 2.2, 0.04), (garage_w + 0.6, 4.4, 0.08), s["slab"])  # driveway apron
-    living0 = 0.35 + garage_w + (0.6 if garage else 0.0)
-    door_s = living0 + (width - living0) * (0.35 if rng.random() < 0.5 else 0.5)
-    openings["front"].append(panel_door(b, front, door_s, base, 0.95, 2.1, s))
+    ent = walls[entry]
+    garage_w = 3.0 if garage and entry == "front" else 0.0
+    if garage_w:
+        openings[entry].append(garage_door(b, ent, 0.35 + garage_w / 2 + 0.15, base - 0.3, garage_w, 2.25, s))
+        c_ = ent.p(0.5 + garage_w / 2, 0.0, 2.2)
+        b.box((c_.x, c_.y, 0.04), (garage_w + 0.6, 4.4, 0.08), s["slab"])  # driveway apron
+    living0 = 0.35 + garage_w + (0.6 if garage_w else 0.0)
+    span_len = ent.length - living0
+    door_s = living0 + span_len * (0.35 if rng.random() < 0.5 and entry == "front" else 0.5 if entry == "front" else 0.3)
+    openings[entry].append(panel_door(b, ent, door_s, base, 0.95, 2.1, s))
+    tall = 1.35 if not raised else 1.75
     for floor in range(floors):
-        zc = base + floor * wall_h + 1.5
-        n = max(2, int((width - living0) // 2.6))
+        zc = base + floor * wall_h + (1.5 if not raised else 1.6)
+        n = max(2 if entry == "front" else 1, int(span_len // 2.6))
         for i in range(n):
-            sc = living0 + (width - living0) * (i + 0.5) / n
+            sc = living0 + span_len * (i + 0.5) / n if entry == "front" else ent.length * 0.72
             if floor == 0 and abs(sc - door_s) < 1.4:
                 continue
-            if floor > 0 and garage and sc < living0:
+            if floor > 0 and garage_w and sc < living0:
                 continue
-            openings["front"].append(window(b, front, sc, zc, 0.9, 1.35, s))
-        for side in ("left", "right"):
-            for frac in (0.3, 0.72):
-                openings[side].append(window(b, walls[side], depth * frac, zc, 0.85, 1.25, dict(s, shutter=None)))
-        m = max(2, int(width // 3.2))
-        for i in range(m):
-            openings["back"].append(window(b, walls["back"], width * (i + 0.5) / m, zc, 0.85, 1.25, dict(s, shutter=None)))
+            openings[entry].append(window(b, ent, sc, zc, 0.9, tall, s))
+        for key_ in walls:
+            if key_ == entry:
+                continue
+            wall = walls[key_]
+            shutters = entry != "front" and key_ in ("front", "back")  # shotgun: shuttered side windows
+            m = max(2, int(wall.length // 3.2))
+            fr = [0.3, 0.72] if (entry == "front" and key_ in ("left", "right")) else [(i + 0.5) / m for i in range(m)]
+            for f in fr:
+                openings[key_].append(window(b, wall, wall.length * f, zc, 0.85, tall - 0.1, s if shutters else dict(s, shutter=None)))
 
     # --- siding, corner boards, frieze -------------------------------------------------------------------------
     z_soffit = z_e - oh * k - 0.2                  # underside of the boxed eave
@@ -365,65 +405,99 @@ def detailed_house(name, width=11.0, depth=13.0, floors=1, board="M_Board_White"
             b.box((dx, dy, (z_soffit - 0.06) / 2 + 0.1), (0.08, 0.07, z_soffit - 0.26), s["gutter"])      # downspout on the wall
             b.box((dx, dy + side * 0.2, 0.1), (0.08, 0.4, 0.07), s["gutter"])                          # kick-out
     # Rake boards follow the slope at both gable ends; ridge cap along the top.
-    for x in (xa - 0.015, xb + 0.015):
+    for x, outward in ((xa - 0.015, -1), (xb + 0.015, 1)):
         for side in (-1, 1):
             c = [None] * 8
-            for ai, xx in enumerate((x - 0.015, x + 0.015)):
+            shift = outward * (0.006 if side > 0 else 0.0)  # the two slopes' rakes must not share a plane at the peak
+            for ai, xx in enumerate((x - 0.015 + shift, x + 0.015 + shift)):
                 for ti, u in enumerate((0.0, 1.0)):
                     c[ai * 4 + 0 * 2 + ti] = slope_point(side, u, xx, -th - 0.12)
                     c[ai * 4 + 1 * 2 + ti] = slope_point(side, u, xx, 0.04)
             hexa(b, c, s["trim"])
-    b.box((0, ym, z_r + 0.04), (xb - xa + 0.04, 0.34, 0.08), s["roof"])
+    b.box((0, ym, z_r + 0.03), (xb - xa - 0.12, 0.3, 0.06), s["roof"])  # ridge cap, stopping inside the rakes
+    for x, outward in ((xa - 0.015, -1), (xb + 0.015, 1)):
+        b.box((x + outward * 0.012, ym, z_r - 0.02), (0.05, 0.42, 0.2), s["trim"])  # apex block, proud of both rakes
 
     # --- chimney, porch, AC ----------------------------------------------------------------------------------
-    cx, cy = x0 + width * 0.22, y0 + depth * 0.62
-    ch_top = z_r + 1.0
-    b.box((cx, cy, (z_e + ch_top) / 2), (0.9, 0.7, ch_top - z_e), s["brick"])
-    b.box((cx, cy, ch_top + 0.05), (1.05, 0.85, 0.1), s["slab"])
-    b.box((cx, cy, ch_top + 0.25), (0.22, 0.22, 0.3), s["metal"])
+    if chimney:
+        cx, cy = x0 + width * (0.22 if entry == "front" else 0.6), y0 + depth * 0.62
+        ch_top = z_r + 1.0
+        b.box((cx, cy, (z_e + ch_top) / 2), (0.9, 0.7, ch_top - z_e), s["brick"])
+        b.box((cx, cy, ch_top + 0.05), (1.05, 0.85, 0.1), s["slab"])
+        b.box((cx, cy, ch_top + 0.25), (0.22, 0.22, 0.3), s["metal"])
 
-    porch_w, porch_d = 3.2, 1.9
-    pcx = x0 + door_s
-    b.box((pcx, y0 - porch_d / 2, base - 0.08), (porch_w, porch_d, 0.16), s["slab"])
+    porch_w, porch_d = (3.2, 1.9) if entry == "front" else (min(ent.length - 0.4, 4.6), 2.2)
+    pc = door_s if entry == "front" else ent.length / 2
+    W = ent
+
+    def wbox(s0, s1, z0, z1, d0, d1, slot):
+        W.box(b, s0, s1, z0, z1, d0, d1, slot)
+
+    wbox(pc - porch_w / 2, pc + porch_w / 2, base - 0.16, base, 0.0, porch_d, s["slab"])
+    # Foundation under the porch: a brick base on slab houses; piers and lattice skirt on raised houses.
+    ps0, ps1, pd1 = pc - porch_w / 2 + 0.04, pc + porch_w / 2 - 0.04, porch_d - 0.04
+    if not raised:
+        wbox(ps0, ps1, 0.0, base - 0.16, 0.0, pd1, s["brick"])
+    else:
+        wbox(ps0 + 0.2, ps1 - 0.2, 0.0, base - 0.16, 0.0, pd1 - 0.2, s["vent"])  # dark void behind the lattice
+        for ps_ in (ps0 + 0.2, (ps0 + ps1) / 2, ps1 - 0.2):
+            wbox(ps_ - 0.2, ps_ + 0.2, 0.0, base - 0.16, pd1 - 0.4, pd1, s["brick"])
+        for ps_ in (ps0 + 0.2, ps1 - 0.2):
+            wbox(ps_ - 0.2, ps_ + 0.2, 0.0, base - 0.16, 0.0, 0.4, s["brick"])
+        # Lattice: front face between the piers, and both sides.
+        a = ps0 + 0.42
+        while a < ps1 - 0.44:
+            if abs(a - (ps0 + ps1) / 2) > 0.22:
+                wbox(a - 0.0225, a + 0.0225, 0.04, base - 0.2, pd1 - 0.2, pd1 - 0.18, s["trim"])
+            a += 0.09
+        for ps_ in (ps0 + 0.19, ps1 - 0.21):
+            dd = 0.42
+            while dd < pd1 - 0.42:
+                wbox(ps_, ps_ + 0.02, 0.04, base - 0.2, dd - 0.0225, dd + 0.0225, s["trim"])
+                dd += 0.09
     for i, step_h in enumerate((base * 2 / 3, base / 3)):
-        b.box((pcx, y0 - porch_d - 0.15 - i * 0.3, step_h / 2), (1.5, 0.3, step_h), s["slab"])
+        wbox(pc - 0.75, pc + 0.75, 0.0, step_h, porch_d + i * 0.3, porch_d + (i + 1) * 0.3, s["slab"])
     post_h = 2.55
-    post_y = y0 - porch_d + 0.15
-    for px in (pcx - porch_w / 2 + 0.1, pcx + porch_w / 2 - 0.1):
-        b.box((px, post_y, base + 0.1), (0.24, 0.24, 0.2), s["trim"])
-        b.box((px, post_y, base + post_h / 2), (0.14, 0.14, post_h), s["trim"])
-        b.box((px, post_y, base + post_h - 0.05), (0.22, 0.22, 0.1), s["trim"])
+    post_d = porch_d - 0.15
+    posts = (pc - porch_w / 2 + 0.1, pc + porch_w / 2 - 0.1)
+    for ps in posts:
+        wbox(ps - 0.12, ps + 0.12, base, base + 0.2, post_d - 0.12, post_d + 0.12, s["trim"])
+        wbox(ps - 0.07, ps + 0.07, base, base + post_h, post_d - 0.07, post_d + 0.07, s["trim"])
+        wbox(ps - 0.11, ps + 0.11, base + post_h - 0.1, base + post_h, post_d - 0.11, post_d + 0.11, s["trim"])
         # Railing along the porch side, balusters every 11 cm.
-        side_x = px
-        b.box((side_x, (post_y + y0) / 2, base + 0.9), (0.06, abs(y0 - post_y), 0.06), s["trim"])
-        b.box((side_x, (post_y + y0) / 2, base + 0.1), (0.06, abs(y0 - post_y), 0.05), s["trim"])
-        yy = post_y + 0.12
-        while yy < y0 - 0.08:
-            b.box((side_x, yy, base + 0.5), (0.035, 0.035, 0.78), s["trim"])
-            yy += 0.11
-    # Gabled portico over the porch (ridge towards the street); on a one-storey house it ties into the main roof.
+        wbox(ps - 0.03, ps + 0.03, base + 0.87, base + 0.93, 0.0, post_d, s["trim"])
+        wbox(ps - 0.03, ps + 0.03, base + 0.08, base + 0.13, 0.0, post_d, s["trim"])
+        dd = 0.1
+        while dd < post_d - 0.1:
+            wbox(ps - 0.0175, ps + 0.0175, base + 0.13, base + 0.87, dd - 0.0175, dd + 0.0175, s["trim"])
+            dd += 0.11
+    # Gabled portico over the porch (ridge away from the wall); on a one-storey house it ties into the main roof.
     z_beam = base + post_h
-    b.box((pcx, post_y, z_beam + 0.1), (porch_w + 0.1, 0.18, 0.2), s["trim"])
-    for px in (pcx - porch_w / 2 + 0.1, pcx + porch_w / 2 - 0.1):
-        b.box((px, (post_y + y0) / 2 + 0.1, z_beam + 0.1), (0.18, abs(y0 - post_y) + 0.2, 0.2), s["trim"])
+    wbox(pc - porch_w / 2 - 0.05, pc + porch_w / 2 + 0.05, z_beam, z_beam + 0.2, post_d - 0.09, post_d + 0.09, s["trim"])
+    for ps in posts:
+        wbox(ps - 0.09, ps + 0.09, z_beam, z_beam + 0.2, -0.1, post_d, s["trim"])
     rise = 0.95
-    yf, yb = post_y - 0.35, y0 + 0.25
+    df, db = post_d + 0.35, -0.25
     zl = z_beam + 0.22
     for side in (-1, 1):
-        ex = pcx + side * (porch_w / 2 + 0.25)
-        sloped_roof(b, Vector((ex, yf, zl)), Vector((ex, yb, zl)), Vector((pcx, yf, zl + rise)), Vector((pcx, yb, zl + rise)), 0.12, s, 7)
-        # Fascia along the portico eave.
-        b.box((ex + side * 0.015, (yf + yb) / 2, zl - 0.08), (0.03, yb - yf, 0.2), s["trim"])
-    # Pediment: the triangle under the front of the portico roof, trimmed.
-    v = [b.bm.verts.new(p) for p in ((pcx - porch_w / 2 - 0.05, post_y - 0.02, zl), (pcx + porch_w / 2 + 0.05, post_y - 0.02, zl), (pcx, post_y - 0.02, zl + rise - 0.1),
-                                      (pcx - porch_w / 2 - 0.05, post_y + 0.12, zl), (pcx + porch_w / 2 + 0.05, post_y + 0.12, zl), (pcx, post_y + 0.12, zl + rise - 0.1))]
+        es = pc + side * (porch_w / 2 + 0.25)
+        sloped_roof(b, W.p(es, zl, df), W.p(es, zl, db), W.p(pc, zl + rise, df), W.p(pc, zl + rise, db), 0.12, s, 7, rakes=True,
+                    rake_gap=0.006 if side > 0 else 0.0)  # never coplanar where the two rakes overlap at the peak
+        wbox(es - 0.015 + side * 0.015, es + 0.015 + side * 0.015, zl - 0.18, zl + 0.02, db, df, s["trim"])  # fascia
+    wbox(pc - 0.2, pc + 0.2, zl + rise - 0.12, zl + rise + 0.08, df + 0.018, df + 0.07, s["trim"])  # apex block, proud of both rakes
+    # Pediment: the triangle under the front of the portico roof.
+    v = [b.bm.verts.new(tuple(p)) for p in (W.p(pc - porch_w / 2 - 0.05, zl, post_d + 0.02), W.p(pc + porch_w / 2 + 0.05, zl, post_d + 0.02), W.p(pc, zl + rise - 0.1, post_d + 0.02),
+                                           W.p(pc - porch_w / 2 - 0.05, zl, post_d - 0.12), W.p(pc + porch_w / 2 + 0.05, zl, post_d - 0.12), W.p(pc, zl + rise - 0.1, post_d - 0.12))]
     for idx in ((0, 1, 2), (5, 4, 3), (0, 2, 5, 3), (1, 4, 5, 2), (0, 3, 4, 1)):
         f = b.bm.faces.new([v[i] for i in idx])
         f.material_index = s["board"]
-    b.box((pcx, (yf + yb) / 2, zl - 0.03), (porch_w + 0.4, yb - yf, 0.03), s["soffit"])  # porch ceiling
+    wbox(pc - porch_w / 2 - 0.2, pc + porch_w / 2 + 0.2, zl - 0.06, zl - 0.03, db, df, s["soffit"])  # porch ceiling
 
     ac_x = x1 + 0.6
     b.box((ac_x, y0 + depth * 0.5, 0.05), (0.9, 0.9, 0.1), s["slab"])
     b.box((ac_x, y0 + depth * 0.5, 0.45), (0.75, 0.75, 0.7), s["metal"])
     b.box((ac_x, y0 + depth * 0.5, 0.81), (0.55, 0.55, 0.02), s["vent"])
+    if entry == "left":
+        # Turn the house so its entrance gable faces the street (-Y).
+        bmesh.ops.rotate(b.bm, verts=b.bm.verts, cent=(0, 0, 0), matrix=Matrix.Rotation(math.radians(90), 3, "Z"))
     return b.finish(collection)

@@ -3,21 +3,29 @@
   "category": "Buildings",
   "fbx": "SM_House_Shotgun_C.fbx",
   "lods": {
-    "SM_House_Shotgun_C_LOD0": 356,
-    "SM_House_Shotgun_C_LOD1": 160,
-    "SM_House_Shotgun_C_LOD2": 70,
-    "SM_House_Shotgun_C_LOD3": 60
+    "SM_House_Shotgun_C_LOD0": 22120,
+    "SM_House_Shotgun_C_LOD1": 9954,
+    "SM_House_Shotgun_C_LOD2": 4424,
+    "SM_House_Shotgun_C_LOD3": 3688
   },
   "collision_hulls": [
     "UCX_SM_House_Shotgun_C_01"
   ],
   "materials": [
-    "M_Brick_Brown",
-    "M_Door_Painted",
+    "M_Board_Blue",
+    "M_Brick_Red",
+    "M_Concrete_Grey",
+    "M_Door_Garage",
+    "M_Door_Painted_43",
     "M_Glass_Dark",
+    "M_Gutter_White",
+    "M_Lamp_Brass",
+    "M_Metal_Grey",
     "M_Roof_Shingle",
-    "M_Siding_Blue",
-    "M_Trim_White"
+    "M_Shutter_43",
+    "M_Soffit_White",
+    "M_Trim_White",
+    "M_Vent_Dark"
   ],
   "issues": [],
   "tool": "hg_pipeline"

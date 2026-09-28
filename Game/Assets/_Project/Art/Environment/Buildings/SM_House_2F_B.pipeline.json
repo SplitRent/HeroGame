@@ -3,10 +3,10 @@
   "category": "Buildings",
   "fbx": "SM_House_2F_B.fbx",
   "lods": {
-    "SM_House_2F_B_LOD0": 16936,
-    "SM_House_2F_B_LOD1": 7620,
-    "SM_House_2F_B_LOD2": 3386,
-    "SM_House_2F_B_LOD3": 2824
+    "SM_House_2F_B_LOD0": 17032,
+    "SM_House_2F_B_LOD1": 7664,
+    "SM_House_2F_B_LOD2": 3406,
+    "SM_House_2F_B_LOD3": 2840
   },
   "collision_hulls": [
     "UCX_SM_House_2F_B_01"
@@ -21,7 +21,6 @@
     "M_Gutter_White",
     "M_Lamp_Brass",
     "M_Metal_Grey",
-    "M_Roof_Deck",
     "M_Roof_Shingle",
     "M_Shutter_65",
     "M_Soffit_White",

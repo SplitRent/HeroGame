@@ -115,18 +115,18 @@
   },
   {
    "Name": "SM_House_Shotgun_A",
-   "Width": 5.2,
+   "Width": 5.4,
    "Depth": 14,
-   "Height": 6.2,
+   "Height": 5.58,
    "Uses": [
     "Residence"
    ]
   },
   {
    "Name": "SM_House_Shotgun_B",
-   "Width": 5.6,
+   "Width": 5.8,
    "Depth": 15,
-   "Height": 6.2,
+   "Height": 7.01,
    "Uses": [
     "Residence"
    ]
@@ -135,7 +135,7 @@
    "Name": "SM_House_Shotgun_C",
    "Width": 5.0,
    "Depth": 13,
-   "Height": 6.2,
+   "Height": 5.53,
    "Uses": [
     "Residence"
    ]

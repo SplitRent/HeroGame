@@ -217,13 +217,37 @@
    "NormalMap": ""
   },
   {
-   "Name": "M_Door_Painted",
+   "Name": "M_Door_Painted_41",
    "Color": [
-    0.55,
-    0.12,
-    0.1
+    0.16,
+    0.16,
+    0.18
    ],
-   "Roughness": 0.6,
+   "Roughness": 0.45,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Door_Painted_42",
+   "Color": [
+    0.5,
+    0.1,
+    0.08
+   ],
+   "Roughness": 0.45,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Door_Painted_43",
+   "Color": [
+    0.5,
+    0.1,
+    0.08
+   ],
+   "Roughness": 0.45,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -553,18 +577,6 @@
    "NormalMap": ""
   },
   {
-   "Name": "M_Roof_Deck",
-   "Color": [
-    0.3,
-    0.26,
-    0.2
-   ],
-   "Roughness": 0.9,
-   "Metallic": 0.0,
-   "BaseMap": "",
-   "NormalMap": ""
-  },
-  {
    "Name": "M_Roof_Shingle",
    "Color": [
     0.24,
@@ -608,6 +620,42 @@
     0.03
    ],
    "Roughness": 0.9,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Shutter_41",
+   "Color": [
+    0.16,
+    0.16,
+    0.16
+   ],
+   "Roughness": 0.55,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Shutter_42",
+   "Color": [
+    0.08,
+    0.15,
+    0.1
+   ],
+   "Roughness": 0.55,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Shutter_43",
+   "Color": [
+    0.16,
+    0.16,
+    0.16
+   ],
+   "Roughness": 0.55,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -683,42 +731,6 @@
    "Metallic": 0.0,
    "BaseMap": "T_Sidewalk_BC",
    "NormalMap": "T_Sidewalk_N"
-  },
-  {
-   "Name": "M_Siding_Blue",
-   "Color": [
-    0.45,
-    0.6,
-    0.72
-   ],
-   "Roughness": 0.7,
-   "Metallic": 0.0,
-   "BaseMap": "T_Siding_Blue_BC",
-   "NormalMap": "T_Siding_Blue_N"
-  },
-  {
-   "Name": "M_Siding_White",
-   "Color": [
-    0.88,
-    0.88,
-    0.85
-   ],
-   "Roughness": 0.7,
-   "Metallic": 0.0,
-   "BaseMap": "T_Siding_White_BC",
-   "NormalMap": "T_Siding_White_N"
-  },
-  {
-   "Name": "M_Siding_Yellow",
-   "Color": [
-    0.86,
-    0.76,
-    0.42
-   ],
-   "Roughness": 0.7,
-   "Metallic": 0.0,
-   "BaseMap": "T_Siding_Yellow_BC",
-   "NormalMap": "T_Siding_Yellow_N"
   },
   {
    "Name": "M_Soffit_White",
