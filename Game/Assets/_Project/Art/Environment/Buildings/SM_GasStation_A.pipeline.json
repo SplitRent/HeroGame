@@ -3,24 +3,36 @@
   "category": "Buildings",
   "fbx": "SM_GasStation_A.fbx",
   "lods": {
-    "SM_GasStation_A_LOD0": 252,
-    "SM_GasStation_A_LOD1": 112,
-    "SM_GasStation_A_LOD2": 50,
-    "SM_GasStation_A_LOD3": 42
+    "SM_GasStation_A_LOD0": 2088,
+    "SM_GasStation_A_LOD1": 938,
+    "SM_GasStation_A_LOD2": 416,
+    "SM_GasStation_A_LOD3": 348
   },
   "collision_hulls": [
     "UCX_SM_GasStation_A_01"
   ],
   "materials": [
+    "M_Aluminium_Bronze",
     "M_Canopy_Band_71",
     "M_Canopy_White",
     "M_Concrete_Grey",
-    "M_Glass_Dark",
+    "M_Door_Steel",
+    "M_Glass_Shop",
+    "M_Granite_Dark",
+    "M_Hvac_Beige",
+    "M_Interior_Warm",
+    "M_Lamp_Emissive",
+    "M_Metal_Black",
+    "M_Metal_Coping",
     "M_Metal_Grey",
+    "M_Paint_Yellow",
     "M_Pump",
-    "M_Roof_Tar",
+    "M_Roof_Membrane",
+    "M_Rubber",
+    "M_Sidewalk",
+    "M_Stone_Limestone",
     "M_Stucco_White",
-    "M_Trim_White"
+    "M_Vent_Dark"
   ],
   "issues": [],
   "tool": "hg_pipeline"

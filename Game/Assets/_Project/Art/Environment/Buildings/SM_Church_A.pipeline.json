@@ -3,20 +3,34 @@
   "category": "Buildings",
   "fbx": "SM_Church_A.fbx",
   "lods": {
-    "SM_Church_A_LOD0": 458,
-    "SM_Church_A_LOD1": 206,
-    "SM_Church_A_LOD2": 90,
-    "SM_Church_A_LOD3": 78
+    "SM_Church_A_LOD0": 6342,
+    "SM_Church_A_LOD1": 2852,
+    "SM_Church_A_LOD2": 1268,
+    "SM_Church_A_LOD3": 1088
   },
   "collision_hulls": [
     "UCX_SM_Church_A_01"
   ],
   "materials": [
+    "M_Aluminium_Bronze",
     "M_Brick_Red",
+    "M_Concrete_Grey",
+    "M_Door_Steel",
     "M_Door_Wood",
+    "M_Glass_Shop",
     "M_Glass_Stained",
+    "M_Granite_Dark",
+    "M_Hvac_Beige",
+    "M_Interior_Warm",
+    "M_Lamp_Emissive",
+    "M_Metal_Black",
+    "M_Metal_Coping",
+    "M_Metal_Grey",
+    "M_Roof_Membrane",
     "M_Roof_Shingle",
-    "M_Stucco_White"
+    "M_Soffit_White",
+    "M_Stone_Limestone",
+    "M_Vent_Dark"
   ],
   "issues": [],
   "tool": "hg_pipeline"

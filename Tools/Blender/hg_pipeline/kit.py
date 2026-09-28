@@ -13,18 +13,18 @@ import os
 import bpy
 
 from . import export, lod_collision, textures
-from .generators import buildings, house_detail, props
+from .generators import commercial_detail, house_detail, props
 
 # name, category, factory. Names follow conventions (SM_ + PascalCase + variant).
 CATALOG = [
-    ("SM_Storefront_1F_D", "Buildings", lambda n: buildings.storefront_block(n, 20, 18, 1, "stucco_white", (0.55, 0.12, 0.1), seed=14)),
-    ("SM_Storefront_2F_A", "Buildings", lambda n: buildings.storefront_block(n, 16, 14, 2, "brick", (0.12, 0.35, 0.25), seed=11)),
-    ("SM_Storefront_2F_B", "Buildings", lambda n: buildings.storefront_block(n, 12, 14, 2, "stucco_teal", (0.6, 0.18, 0.12), seed=12)),
-    ("SM_Storefront_3F_C", "Buildings", lambda n: buildings.storefront_block(n, 20, 16, 3, "stucco", (0.1, 0.2, 0.45), seed=13)),
-    ("SM_Office_4F_B", "Buildings", lambda n: buildings.office_tower(n, 26, 20, 4, seed=22)),
-    ("SM_Office_8F_A", "Buildings", lambda n: buildings.office_tower(n, 26, 22, 8, seed=21)),
-    ("SM_Office_16F_C", "Buildings", lambda n: buildings.office_tower(n, 30, 30, 16, seed=23)),
-    ("SM_Warehouse_A", "Buildings", lambda n: buildings.warehouse(n, 60, 40, 10, seed=31)),
+    ("SM_Storefront_1F_D", "Buildings", lambda n: commercial_detail.detailed_storefront(n, 20, 18, 1, "stucco_white", (0.55, 0.12, 0.1), seed=14)),
+    ("SM_Storefront_2F_A", "Buildings", lambda n: commercial_detail.detailed_storefront(n, 16, 14, 2, "brick", (0.12, 0.35, 0.25), seed=11)),
+    ("SM_Storefront_2F_B", "Buildings", lambda n: commercial_detail.detailed_storefront(n, 12, 14, 2, "stucco_teal", (0.6, 0.18, 0.12), seed=12)),
+    ("SM_Storefront_3F_C", "Buildings", lambda n: commercial_detail.detailed_storefront(n, 20, 16, 3, "stucco", (0.1, 0.2, 0.45), seed=13)),
+    ("SM_Office_4F_B", "Buildings", lambda n: commercial_detail.detailed_office(n, 26, 20, 4, seed=22)),
+    ("SM_Office_8F_A", "Buildings", lambda n: commercial_detail.detailed_office(n, 26, 22, 8, seed=21)),
+    ("SM_Office_16F_C", "Buildings", lambda n: commercial_detail.detailed_office(n, 30, 30, 16, seed=23)),
+    ("SM_Warehouse_A", "Buildings", lambda n: commercial_detail.detailed_warehouse(n, 60, 40, 10, seed=31)),
     ("SM_House_Shotgun_A", "Buildings", lambda n: house_detail.detailed_house(n, 14, 5.4, 1, "M_Board_White", (0.88, 0.88, 0.85), "M_Roof_Shingle", seed=41, entry="left", raised=True, chimney=False)),
     ("SM_House_Shotgun_B", "Buildings", lambda n: house_detail.detailed_house(n, 15, 5.8, 1, "M_Board_Yellow", (0.87, 0.76, 0.46), "M_Roof_Shingle_Red", seed=42, entry="left", raised=True)),
     ("SM_House_Shotgun_C", "Buildings", lambda n: house_detail.detailed_house(n, 13, 5.2, 1, "M_Board_Blue", (0.5, 0.63, 0.74), "M_Roof_Shingle", seed=43, entry="left", raised=True, chimney=False)),
@@ -33,10 +33,10 @@ CATALOG = [
     ("SM_House_1F_C", "Buildings", lambda n: house_detail.detailed_house(n, 10, 13, 1, "M_Board_Green", (0.52, 0.63, 0.5), "M_Roof_Shingle_Red", seed=63)),
     ("SM_House_2F_A", "Buildings", lambda n: house_detail.detailed_house(n, 10, 12, 2, "M_Board_Yellow", (0.87, 0.76, 0.46), "M_Roof_Shingle", seed=64)),
     ("SM_House_2F_B", "Buildings", lambda n: house_detail.detailed_house(n, 12, 13, 2, "M_Board_Blue", (0.5, 0.63, 0.74), "M_Roof_Shingle", garage=True, seed=65)),
-    ("SM_Apartment_4F_A", "Buildings", lambda n: buildings.apartment_block(n, 40, 26, 4, "brick_brown", seed=51)),
-    ("SM_Apartment_8F_B", "Buildings", lambda n: buildings.apartment_block(n, 30, 30, 8, "brick", seed=52)),
-    ("SM_GasStation_A", "Buildings", lambda n: buildings.gas_station(n, 34, 26, seed=71)),
-    ("SM_Church_A", "Buildings", lambda n: buildings.church(n, 16, 28, seed=81)),
+    ("SM_Apartment_4F_A", "Buildings", lambda n: commercial_detail.detailed_apartment(n, 40, 26, 4, "brick_brown", seed=51)),
+    ("SM_Apartment_8F_B", "Buildings", lambda n: commercial_detail.detailed_apartment(n, 30, 30, 8, "brick", seed=52, walkways=False)),
+    ("SM_GasStation_A", "Buildings", lambda n: commercial_detail.detailed_gas_station(n, 34, 26, seed=71)),
+    ("SM_Church_A", "Buildings", lambda n: commercial_detail.detailed_church(n, 16, 28, seed=81)),
     ("SM_StreetLight_A", "StreetFurniture", lambda n: props.street_light(n)),
     ("SM_Bench_A", "StreetFurniture", lambda n: props.bench(n)),
     ("SM_FireHydrant_A", "StreetFurniture", lambda n: props.fire_hydrant(n)),

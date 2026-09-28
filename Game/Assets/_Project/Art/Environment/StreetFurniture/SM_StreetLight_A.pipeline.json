@@ -3,9 +3,9 @@
   "category": "StreetFurniture",
   "fbx": "SM_StreetLight_A.fbx",
   "lods": {
-    "SM_StreetLight_A_LOD0": 116,
-    "SM_StreetLight_A_LOD1": 58,
-    "SM_StreetLight_A_LOD2": 22
+    "SM_StreetLight_A_LOD0": 444,
+    "SM_StreetLight_A_LOD1": 222,
+    "SM_StreetLight_A_LOD2": 88
   },
   "collision_hulls": [
     "UCX_SM_StreetLight_A_01"
@@ -19,7 +19,7 @@
     {
       "severity": "warning",
       "object": "SM_StreetLight_A_LOD1",
-      "message": "2 n-gons (triangulated on export)"
+      "message": "8 n-gons (triangulated on export)"
     }
   ],
   "tool": "hg_pipeline"

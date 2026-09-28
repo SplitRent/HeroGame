@@ -3,9 +3,9 @@
   "category": "StreetFurniture",
   "fbx": "SM_Bench_A.fbx",
   "lods": {
-    "SM_Bench_A_LOD0": 108,
-    "SM_Bench_A_LOD1": 54,
-    "SM_Bench_A_LOD2": 20
+    "SM_Bench_A_LOD0": 336,
+    "SM_Bench_A_LOD1": 168,
+    "SM_Bench_A_LOD2": 66
   },
   "collision_hulls": [
     "UCX_SM_Bench_A_01"

@@ -290,6 +290,10 @@ SURFACES = {
     "M_Roof_Shingle_Red": (shingles, (0.38, 0.18, 0.14), 2.5),
     "M_Roof_Tar": (gravel_roof, (0.2, 0.2, 0.19), 1.5),
     "M_Door_Wood": (wood, (0.3, 0.19, 0.11), 1.0),
+    # Commercial trim and roofs.
+    "M_Stone_Limestone": (stucco, (0.8, 0.77, 0.69), 0.9),
+    "M_Granite_Dark": (gravel_roof, (0.2, 0.19, 0.19), 0.6),
+    "M_Roof_Membrane": (stucco, (0.72, 0.72, 0.7), 0.7),
     # Paint for modelled lap siding (the boards themselves are geometry).
     "M_Board_White": (painted_board, (0.88, 0.88, 0.85), 0.6),
     "M_Board_Yellow": (painted_board, (0.87, 0.76, 0.46), 0.6),

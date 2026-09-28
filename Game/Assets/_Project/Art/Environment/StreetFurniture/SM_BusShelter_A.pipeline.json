@@ -3,15 +3,16 @@
   "category": "StreetFurniture",
   "fbx": "SM_BusShelter_A.fbx",
   "lods": {
-    "SM_BusShelter_A_LOD0": 108,
-    "SM_BusShelter_A_LOD1": 54,
-    "SM_BusShelter_A_LOD2": 20
+    "SM_BusShelter_A_LOD0": 396,
+    "SM_BusShelter_A_LOD1": 198,
+    "SM_BusShelter_A_LOD2": 78
   },
   "collision_hulls": [
     "UCX_SM_BusShelter_A_01"
   ],
   "materials": [
     "M_Glass_Clear",
+    "M_Lamp_Emissive",
     "M_Metal_Grey",
     "M_Metal_Painted_Dark"
   ],

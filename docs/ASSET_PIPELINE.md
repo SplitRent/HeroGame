@@ -98,6 +98,10 @@ blender -b -P Tools/Blender/cli.py -- kit --art-root Game/Assets/_Project/Art --
 ![Detailed houses](images/blender_house_detail.png)
 *`house_detail.py`: the lap siding, soffits, fascia, gutters, shingle courses, sashes, shutters and railings are geometry, not texture.*
 
+![Commercial kit](images/blender_commercial_detail.png)
+*`commercial_detail.py`: storefront systems, cornices, curtain walls, walkways, docks and canopies are geometry too. Pieces
+never overlap in a shared plane: that renders as black seams in Cycles and z-fights in Unity.*
+
 ## 7. Unity import contract (`ModelImportRules`)
 For assets under `Assets/_Project/Art/`: scale factor 1 with file scale, bake axis conversion, no cameras/lights,
 external materials matched by name, Mikk tangents, no generated colliders; `UCX_*` meshes become convex

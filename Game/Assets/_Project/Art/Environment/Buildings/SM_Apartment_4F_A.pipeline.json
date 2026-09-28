@@ -3,21 +3,32 @@
   "category": "Buildings",
   "fbx": "SM_Apartment_4F_A.fbx",
   "lods": {
-    "SM_Apartment_4F_A_LOD0": 8196,
-    "SM_Apartment_4F_A_LOD1": 3688,
-    "SM_Apartment_4F_A_LOD2": 1638,
-    "SM_Apartment_4F_A_LOD3": 1366
+    "SM_Apartment_4F_A_LOD0": 38664,
+    "SM_Apartment_4F_A_LOD1": 17398,
+    "SM_Apartment_4F_A_LOD2": 7732,
+    "SM_Apartment_4F_A_LOD3": 6444
   },
   "collision_hulls": [
     "UCX_SM_Apartment_4F_A_01"
   ],
   "materials": [
+    "M_Aluminium_Bronze",
     "M_Brick_Brown",
-    "M_Door_Wood",
-    "M_Glass_Dark",
+    "M_Concrete_Grey",
+    "M_Door_Painted_51",
+    "M_Door_Steel",
+    "M_Glass_Shop",
+    "M_Granite_Dark",
+    "M_Hvac_Beige",
+    "M_Interior_Warm",
+    "M_Lamp_Emissive",
+    "M_Metal_Black",
+    "M_Metal_Coping",
     "M_Metal_Grey",
-    "M_Roof_Tar",
-    "M_Trim_White"
+    "M_Metal_Painted_Dark",
+    "M_Roof_Membrane",
+    "M_Stone_Limestone",
+    "M_Vent_Dark"
   ],
   "issues": [],
   "tool": "hg_pipeline"

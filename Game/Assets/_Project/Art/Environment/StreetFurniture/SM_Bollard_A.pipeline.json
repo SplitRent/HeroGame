@@ -3,20 +3,27 @@
   "category": "StreetFurniture",
   "fbx": "SM_Bollard_A.fbx",
   "lods": {
-    "SM_Bollard_A_LOD0": 164,
-    "SM_Bollard_A_LOD1": 82,
-    "SM_Bollard_A_LOD2": 32
+    "SM_Bollard_A_LOD0": 464,
+    "SM_Bollard_A_LOD1": 232,
+    "SM_Bollard_A_LOD2": 92
   },
   "collision_hulls": [
     "UCX_SM_Bollard_A_01"
   ],
   "materials": [
-    "M_Paint_Yellow"
+    "M_Concrete_Grey",
+    "M_Paint_Yellow",
+    "M_Reflective_White"
   ],
   "issues": [
     {
       "severity": "warning",
       "object": "SM_Bollard_A_LOD1",
+      "message": "8 n-gons (triangulated on export)"
+    },
+    {
+      "severity": "warning",
+      "object": "SM_Bollard_A_LOD2",
       "message": "2 n-gons (triangulated on export)"
     }
   ],

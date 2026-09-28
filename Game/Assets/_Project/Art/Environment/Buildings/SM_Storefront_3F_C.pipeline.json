@@ -3,22 +3,33 @@
   "category": "Buildings",
   "fbx": "SM_Storefront_3F_C.fbx",
   "lods": {
-    "SM_Storefront_3F_C_LOD0": 3516,
-    "SM_Storefront_3F_C_LOD1": 1582,
-    "SM_Storefront_3F_C_LOD2": 702,
-    "SM_Storefront_3F_C_LOD3": 586
+    "SM_Storefront_3F_C_LOD0": 9528,
+    "SM_Storefront_3F_C_LOD1": 4286,
+    "SM_Storefront_3F_C_LOD2": 1904,
+    "SM_Storefront_3F_C_LOD3": 1588
   },
   "collision_hulls": [
     "UCX_SM_Storefront_3F_C_01"
   ],
   "materials": [
+    "M_Aluminium_Bronze",
     "M_Awning_13",
-    "M_Door_Wood",
-    "M_Glass_Dark",
+    "M_Concrete_Grey",
+    "M_Door_Steel",
+    "M_Glass_Shop",
+    "M_Granite_Dark",
+    "M_Hvac_Beige",
+    "M_Interior_Warm",
+    "M_Lamp_Emissive",
+    "M_Metal_Black",
+    "M_Metal_Coping",
     "M_Metal_Grey",
-    "M_Roof_Tar",
+    "M_Roof_Membrane",
+    "M_Sign_13",
+    "M_Sign_Letters",
+    "M_Stone_Limestone",
     "M_Stucco_Cream",
-    "M_Trim_White"
+    "M_Vent_Dark"
   ],
   "issues": [],
   "tool": "hg_pipeline"

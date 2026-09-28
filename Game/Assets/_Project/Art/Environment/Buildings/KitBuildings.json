@@ -4,7 +4,7 @@
    "Name": "SM_Storefront_1F_D",
    "Width": 20,
    "Depth": 18,
-   "Height": 5.35,
+   "Height": 5.73,
    "Uses": [
     "Shop",
     "Restaurant",
@@ -18,7 +18,7 @@
    "Name": "SM_Storefront_2F_A",
    "Width": 16,
    "Depth": 14,
-   "Height": 8.75,
+   "Height": 9.13,
    "Uses": [
     "Shop",
     "Restaurant",
@@ -31,7 +31,7 @@
    "Name": "SM_Storefront_2F_B",
    "Width": 12,
    "Depth": 14,
-   "Height": 8.75,
+   "Height": 9.13,
    "Uses": [
     "Shop",
     "Restaurant",
@@ -44,7 +44,7 @@
    "Name": "SM_Storefront_3F_C",
    "Width": 20,
    "Depth": 16,
-   "Height": 12.15,
+   "Height": 12.53,
    "Uses": [
     "Shop",
     "Restaurant",
@@ -58,7 +58,7 @@
    "Name": "SM_Office_4F_B",
    "Width": 26,
    "Depth": 20,
-   "Height": 17.95,
+   "Height": 27.4,
    "Uses": [
     "Office",
     "Hospital",
@@ -73,7 +73,7 @@
    "Name": "SM_Office_8F_A",
    "Width": 26,
    "Depth": 22,
-   "Height": 31.55,
+   "Height": 41.8,
    "Uses": [
     "Office",
     "Hospital",
@@ -88,7 +88,7 @@
    "Name": "SM_Office_16F_C",
    "Width": 30,
    "Depth": 30,
-   "Height": 58.75,
+   "Height": 70.6,
    "Uses": [
     "Office",
     "Hospital",
@@ -104,7 +104,7 @@
    "Name": "SM_Warehouse_A",
    "Width": 60,
    "Depth": 40,
-   "Height": 12.2,
+   "Height": 11.79,
    "Uses": [
     "Warehouse",
     "Factory",
@@ -189,7 +189,7 @@
    "Name": "SM_Apartment_4F_A",
    "Width": 40,
    "Depth": 26,
-   "Height": 14.3,
+   "Height": 13.93,
    "Uses": [
     "ApartmentBuilding"
    ]
@@ -198,7 +198,7 @@
    "Name": "SM_Apartment_8F_B",
    "Width": 30,
    "Depth": 30,
-   "Height": 27.9,
+   "Height": 25.93,
    "Uses": [
     "ApartmentBuilding"
    ]
@@ -207,7 +207,7 @@
    "Name": "SM_GasStation_A",
    "Width": 34,
    "Depth": 26,
-   "Height": 6.2,
+   "Height": 6.3,
    "Uses": [
     "GasStation"
    ]
@@ -216,7 +216,7 @@
    "Name": "SM_Church_A",
    "Width": 16,
    "Depth": 28,
-   "Height": 25.9,
+   "Height": 28.4,
    "Uses": [
     "Church"
    ]
