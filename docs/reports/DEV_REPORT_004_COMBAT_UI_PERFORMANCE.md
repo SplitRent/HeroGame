@@ -82,6 +82,12 @@ every 48 real minutes by default.
   data classes. These are saved with Newtonsoft JSON, not Unity serialization, so the warnings are harmless;
   `Assets/csc.rsp` now silences them.
 
+* The third open compiled cleanly. The Health Check passed everything up to save and load, which reported a
+  failure with a blank detail. The cause was the check itself: it counted residents before simulating three days,
+  and a resident arrived in that time (311 → 312). The check now compares against the world as saved and names
+  exactly what differs if anything does. `HealthCheckSaveAndLoad_RoundTripsExactly` runs the same scenario
+  headlessly.
+
 ## 6. Next steps
 1. Run the Unity Health Check and play the greybox, then fix whatever the first run shows.
 2. Plan copy-on-write NPC state to remove the daily save stall.

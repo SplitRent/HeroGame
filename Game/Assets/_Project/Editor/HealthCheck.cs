@@ -115,12 +115,14 @@ namespace HeroGame.Editor
                 using (var journal = saves.OpenJournal())
                 {
                     var world = WorldGenerator.Create("healthcheck", config, content, journal);
-                    npcs = world.Population.Count;
+                    var residents = world.Population.Count;
                     var generated = watch.ElapsedMilliseconds;
                     watch.Restart();
                     new WorldSimulation(world).AdvanceDays(3);
                     var simulated = watch.ElapsedMilliseconds;
-                    add(Result.Pass, "Simulation", npcs + " residents generated in " + generated + " ms; 3 days simulated in " + simulated + " ms", "");
+                    // The town changes while it runs (births, moves), so compare the load against the world as saved.
+                    npcs = world.Population.Count;
+                    add(Result.Pass, "Simulation", residents + " residents generated in " + generated + " ms; 3 days simulated in " + simulated + " ms", "");
                     watch.Restart();
                     saves.Save(world);
                     money = world.Ledger.BalanceOf(world.Accounts.Treasury).Cents;
@@ -128,9 +130,18 @@ namespace HeroGame.Editor
                 using (var journal = saves.OpenJournal())
                 {
                     var load = saves.Load(content, journal);
-                    var ok = !load.Report.HasErrors && load.World.Population.Count == npcs && load.World.Ledger.BalanceOf(load.World.Accounts.Treasury).Cents == money
-                             && load.World.Ledger.VerifyInvariant(out _);
-                    add(ok ? Result.Pass : Result.Fail, "Save and load", ok ? "round trip identical, books balance (" + watch.ElapsedMilliseconds + " ms)" : load.Report.ToString(),
+                    var problems = new List<string>();
+                    if (load.Report.HasErrors) problems.Add(load.Report.ToString());
+                    if (load.World == null) problems.Add("no world was loaded");
+                    else
+                    {
+                        if (load.World.Population.Count != npcs) problems.Add("residents: saved " + npcs + ", loaded " + load.World.Population.Count);
+                        var treasury = load.World.Ledger.BalanceOf(load.World.Accounts.Treasury).Cents;
+                        if (treasury != money) problems.Add("treasury: saved " + money + " cents, loaded " + treasury);
+                        if (!load.World.Ledger.VerifyInvariant(out var imbalance)) problems.Add("books off by " + imbalance + " cents");
+                    }
+                    var ok = problems.Count == 0;
+                    add(ok ? Result.Pass : Result.Fail, "Save and load", ok ? "round trip identical, books balance (" + watch.ElapsedMilliseconds + " ms)" : string.Join("; ", problems),
                         ok ? "" : "Please send this report.");
                 }
             }

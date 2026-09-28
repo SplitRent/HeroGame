@@ -4,9 +4,14 @@ Labels (GDD §148): **PLANNED · PROTOTYPING · IN DEVELOPMENT · FUNCTIONAL · 
 
 Rules: a label is raised only with evidence. "Evidence" column names the test, measurement or tool that justifies it.
 *Code written but never executed inside Unity* is at most **IN DEVELOPMENT** — there is no editor in the development
-environment; Unity scripts are verified by compiling against Unity reference assemblies only. The project owner has
-opened the project in Unity, but no Health Check report or Console log has confirmed a successful run yet, so no
-Unity row is raised.
+environment; Unity scripts are verified by compiling against Unity reference assemblies only.
+
+**First Unity evidence (2026-09-27, Health Check on Unity 6000.5.1f1, Windows 11).** Every HeroGame assembly
+compiled in the editor. The project is on HDRP, with Both input handling and Linear colour space. The game data and
+story data validated with 0 errors. The simulation generated 311 residents and ran 3 days inside the editor. The
+save/load step failed, and the cause was a Health Check bug: it counted residents before the simulation. It is
+fixed and covered by `HealthCheckSaveAndLoad_RoundTripsExactly`. No scene has been played yet, so the rows under
+*Unity runtime* stay IN DEVELOPMENT.
 
 _Last updated: combat and weapons, performance pass, UI Toolkit interface, online player view, water. See `reports/DEV_REPORT_004_COMBAT_UI_PERFORMANCE.md`._
 
@@ -180,7 +185,7 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 |---|---|---|
 | Bootstrap, session, autosave | IN DEVELOPMENT | compiles vs Unity refs |
 | Third-person motor & camera | IN DEVELOPMENT | compiles; needs play test |
-| Input System adapter | IN DEVELOPMENT | not compile-checked (package not available offline) |
+| Input System adapter | IN DEVELOPMENT | compiled in Unity 6000.5.1f1 (Health Check); not play-tested |
 | Interaction system (doors, buy property, counters) | IN DEVELOPMENT | compiles |
 | NPC presentation (pooled avatars) | IN DEVELOPMENT | compiles |
 | Day/night, weather presentation | IN DEVELOPMENT | compiles |
