@@ -290,18 +290,12 @@ class MakeHumanData:
                     verts = _joint_vertices(info.get(end), groups)
                     if verts:
                         data.joints[key] = verts
-        targets_root = os.path.join(root, "targets")
-
-        def load(name):
-            for ext in (".target.gz", ".target"):
-                p = os.path.join(targets_root, name + ext)
-                if os.path.exists(p):
-                    opener = gzip.open if ext.endswith(".gz") else open
-                    with opener(p, "rt") as f:
-                        return parse_target_text(f.read())
-            return None
-
-        data._target_loader = load
+        # Targets can live in several places depending on the MPFB version and the asset packs installed: the
+        # extension's own data folder, MPFB's user-data folder (asset packs), loose .target(.gz) files or packed .npz.
+        data.data_roots = data_roots(mpfb_dir, root)
+        data.index = TargetIndex(data.data_roots)
+        data._target_loader = data.index.load
+        data.skin_roots = data.data_roots
         return data
 
     def report(self):
@@ -316,6 +310,15 @@ class MakeHumanData:
         missing = sorted(n for n in wanted if self.target(n) is None)
         lines.append("vertices %d, skin faces %d, joints %d, weighted bones %d" % (len(self.vertices), len(self.faces), len(self.joints), len(self.weights)))
         lines.append("targets: %d of %d found" % (len(wanted) - len(missing), len(wanted)) + (" — missing: " + ", ".join(missing[:40]) if missing else ""))
+        index = getattr(self, "index", None)
+        if index is not None:
+            lines.append("target files seen: %d loose, %d packed, in: %s" % (index.loose_count, index.packed_count, "; ".join(index.roots)))
+            if missing:
+                import difflib
+                names = index.names()
+                for n in missing[:12]:
+                    close = difflib.get_close_matches(n, names, n=3, cutoff=0.5)
+                    lines.append("  %s -> closest: %s" % (n, ", ".join(close) if close else "(nothing similar)"))
         joints = [j for _, _, _, (h, t) in HUMANOID for j in (h, t)]
         lost = [j for j in joints if j not in self.joints]
         lines.append("joints: %d of %d found" % (len(joints) - len(lost), len(joints)) + (" — missing: " + ", ".join(lost[:40]) if lost else ""))
@@ -417,6 +420,107 @@ class MakeHumanData:
         if offsets is not None:
             pos = pos + offsets[verts]
         return pos.mean(axis=0)
+
+
+def data_roots(mpfb_dir, main_data):
+    """Every folder that may hold MakeHuman data for this MPFB install (its data folder and its user-data folders)."""
+    roots = [main_data]
+    ext_dir = os.path.dirname(os.path.dirname(os.path.abspath(mpfb_dir.rstrip("/\\"))))  # .../extensions
+    blender_ver = os.path.dirname(ext_dir)
+    candidates = [
+        os.path.join(ext_dir, ".user", "blender_org", "mpfb"),
+        os.path.join(ext_dir, ".user", "user_default", "mpfb"),
+        os.path.join(blender_ver, "config", "mpfb"),
+        os.path.join(blender_ver, "scripts", "mpfb"),
+        os.path.join(os.path.expanduser("~"), "Documents", "makehuman", "v1py3", "data"),
+        os.path.join(os.path.expanduser("~"), "Documents", "makehuman", "v1", "data"),
+    ]
+    user = os.path.join(ext_dir, ".user")
+    if os.path.isdir(user):
+        for repo in sorted(os.listdir(user)):
+            candidates.append(os.path.join(user, repo, "mpfb"))
+    for c in candidates:
+        for d in (c, os.path.join(c, "data")):
+            if os.path.isdir(d) and d not in roots:
+                roots.append(d)
+    return roots
+
+
+class TargetIndex:
+    """All target files under a set of roots, found by relative name ('group/name') or, failing that, by file name."""
+
+    EXTS = (".target.gz", ".target", ".ptarget.gz", ".ptarget")
+
+    def __init__(self, roots):
+        self.roots = [r for r in roots if os.path.isdir(r)]
+        self.by_rel = {}
+        self.by_base = {}
+        self.npz = []
+        for root in self.roots:
+            for dirpath, _, files in os.walk(root):
+                for f in files:
+                    low = f.lower()
+                    path = os.path.join(dirpath, f)
+                    if low.endswith(".npz") and "target" in low:
+                        self.npz.append(path)
+                        continue
+                    ext = next((e for e in self.EXTS if low.endswith(e)), None)
+                    if ext is None:
+                        continue
+                    rel = os.path.relpath(path, root).replace("\\", "/")[: -len(ext)]
+                    if rel.startswith("targets/"):
+                        rel = rel[len("targets/"):]
+                    self.by_rel.setdefault(rel.lower(), path)
+                    self.by_base.setdefault(os.path.basename(rel).lower(), path)
+        self._packed = {}
+        for path in self.npz:
+            try:
+                z = np.load(path, allow_pickle=True)
+                for k in z.files:
+                    if k.endswith(".index"):
+                        name = k[: -len(".index")]
+                        if name.startswith("targets/"):
+                            name = name[len("targets/"):]
+                        self._packed.setdefault(name.lower(), (z, k[: -len(".index")]))
+            except Exception:  # noqa: BLE001 — a file that is not a target pack
+                continue
+
+    @property
+    def loose_count(self):
+        return len(self.by_rel)
+
+    @property
+    def packed_count(self):
+        return len(self._packed)
+
+    def names(self):
+        return sorted(set(self.by_rel) | set(self._packed))
+
+    def load(self, name):
+        key = name.lower()
+        path = self.by_rel.get(key) or self.by_base.get(os.path.basename(key))
+        if path:
+            opener = gzip.open if path.lower().endswith(".gz") else open
+            with opener(path, "rt") as f:
+                return parse_target_text(f.read())
+        packed = self._packed.get(key)
+        if packed is None:
+            base = os.path.basename(key)
+            packed = next((v for k, v in self._packed.items() if os.path.basename(k) == base), None)
+        if packed:
+            z, stem = packed
+            idx = np.asarray(z[stem + ".index"]).astype(np.int64)
+            vec = np.asarray(z[stem + ".vector"], dtype=np.float32).reshape(-1, 3) * 1e-3
+            return idx, vec
+        return None
+
+    def write_inventory(self, path):
+        with open(path, "w", newline="\n") as f:
+            f.write("# MakeHuman targets seen by the HeroGame pipeline\n")
+            for r in self.roots:
+                f.write("# root: %s\n" % r)
+            for n in self.names():
+                f.write(n + "\n")
 
 
 def _joint_vertices(ref, groups):

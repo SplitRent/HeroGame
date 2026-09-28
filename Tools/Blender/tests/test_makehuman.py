@@ -112,6 +112,31 @@ class MakeHumanDataTests(unittest.TestCase):
         self.assertAlmostEqual(float(conv[0, 1]), 0.2, places=5, msg="MakeHuman +Z (front) is Blender +Y")
 
 
+@unittest.skipIf(np is None, "numpy not installed")
+class TargetIndexTests(unittest.TestCase):
+    def test_targets_are_found_loose_in_other_folders_or_packed(self):
+        a = tempfile.mkdtemp(prefix="hg-a-")
+        b = tempfile.mkdtemp(prefix="hg-b-")
+        os.makedirs(os.path.join(a, "targets", "nose"))
+        with gzip.open(os.path.join(a, "targets", "nose", "nose-scale-horiz-incr.target.gz"), "wt") as f:
+            f.write("3 0.1 0.2 0.3\n")
+        os.makedirs(os.path.join(b, "targets", "facial"))
+        with open(os.path.join(b, "targets", "facial", "chin-width-max.target"), "w") as f:
+            f.write("5 1 1 1\n")
+        np.savez(os.path.join(b, "targets.npz"), **{"targets/ears/l-ear-size-big.index": np.array([7, 8]),
+                                                    "targets/ears/l-ear-size-big.vector": np.array([[1000, 0, 0], [0, 2000, 0]], dtype=np.int16)})
+        index = mh.TargetIndex([a, b])
+        self.assertEqual(list(index.load("nose/nose-scale-horiz-incr")[0]), [3])
+        self.assertEqual(list(index.load("chin/chin-width-max")[0]), [5], "same file name in another folder")
+        idx, vec = index.load("ears/l-ear-size-big")
+        self.assertEqual(list(idx), [7, 8])
+        self.assertAlmostEqual(float(vec[1, 1]), 2.0, places=4, msg="packed vectors are in thousandths")
+        self.assertIsNone(index.load("head/head-round"))
+        out = os.path.join(a, "inventory.txt")
+        index.write_inventory(out)
+        self.assertIn("ears/l-ear-size-big", open(out).read())
+
+
 @unittest.skipUnless(HAVE_BPY and np is not None, "bpy not installed")
 class HumanBuildTests(unittest.TestCase):
     def test_body_builds_with_shapes_rig_regions_and_exports(self):

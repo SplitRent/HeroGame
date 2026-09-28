@@ -63,8 +63,8 @@ def main(argv):
         if out is None:
             print("give --art-root or --out")
             return 2
-        root = mh_data.MakeHumanData.find_mpfb_data(args.mpfb) if args.mpfb else os.path.join(args.makehuman_dump, "public", "data", "skins")
-        skin = humans.find_skin_texture(root) if root else None
+        roots = getattr(data, "skin_roots", None) or [os.path.join(args.makehuman_dump, "public", "data", "skins")]
+        skin = next((t for t in (humans.find_skin_texture(r) for r in roots) if t), None)
         print("skin detail from:", skin or "(none: flat tone)")
         manifest = humans.build_and_export(data, out, skin)
         print("SK_Human: %d vertices, %d bones, %d macro shapes, missing targets: %s" % (

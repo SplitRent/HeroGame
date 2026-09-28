@@ -411,6 +411,8 @@ def build_and_export(data, out_dir, skin_texture=None):
         detail.file_format = "PNG"
         detail.save()
     export_fbx(os.path.join(out_dir, "SK_Human.fbx"), [rig])
+    if getattr(data, "index", None) is not None:
+        data.index.write_inventory(os.path.join(out_dir, "MakeHumanTargets.txt"))
     shapes = body["hg_shapes"].split(",")
     manifest = {
         "Mesh": "SK_Human",
