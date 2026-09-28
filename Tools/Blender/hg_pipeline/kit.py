@@ -13,7 +13,7 @@ import os
 import bpy
 
 from . import export, lod_collision, textures
-from .generators import buildings, props
+from .generators import buildings, house_detail, props
 
 # name, category, factory. Names follow conventions (SM_ + PascalCase + variant).
 CATALOG = [
@@ -28,11 +28,11 @@ CATALOG = [
     ("SM_House_Shotgun_A", "Buildings", lambda n: buildings.shotgun_house(n, 5.2, 14, "siding_white", seed=41)),
     ("SM_House_Shotgun_B", "Buildings", lambda n: buildings.shotgun_house(n, 5.6, 15, "siding_yellow", seed=42)),
     ("SM_House_Shotgun_C", "Buildings", lambda n: buildings.shotgun_house(n, 5.0, 13, "siding_blue", seed=43)),
-    ("SM_House_1F_A", "Buildings", lambda n: buildings.suburban_house(n, 12, 14, 1, "siding_white", "M_Roof_Shingle", garage=True, seed=61)),
-    ("SM_House_1F_B", "Buildings", lambda n: buildings.suburban_house(n, 11, 13, 1, "brick", "M_Roof_Shingle", seed=62)),
-    ("SM_House_1F_C", "Buildings", lambda n: buildings.suburban_house(n, 10, 13, 1, "siding_green", "M_Roof_Shingle_Red", seed=63)),
-    ("SM_House_2F_A", "Buildings", lambda n: buildings.suburban_house(n, 10, 12, 2, "siding_yellow", "M_Roof_Shingle", seed=64)),
-    ("SM_House_2F_B", "Buildings", lambda n: buildings.suburban_house(n, 12, 13, 2, "siding_blue", "M_Roof_Shingle", garage=True, seed=65)),
+    ("SM_House_1F_A", "Buildings", lambda n: house_detail.detailed_house(n, 12, 14, 1, "M_Board_White", (0.88, 0.88, 0.85), "M_Roof_Shingle", garage=True, seed=61)),
+    ("SM_House_1F_B", "Buildings", lambda n: house_detail.detailed_house(n, 11, 13, 1, "M_Board_Grey", (0.6, 0.62, 0.62), "M_Roof_Shingle", seed=62)),
+    ("SM_House_1F_C", "Buildings", lambda n: house_detail.detailed_house(n, 10, 13, 1, "M_Board_Green", (0.52, 0.63, 0.5), "M_Roof_Shingle_Red", seed=63)),
+    ("SM_House_2F_A", "Buildings", lambda n: house_detail.detailed_house(n, 10, 12, 2, "M_Board_Yellow", (0.87, 0.76, 0.46), "M_Roof_Shingle", seed=64)),
+    ("SM_House_2F_B", "Buildings", lambda n: house_detail.detailed_house(n, 12, 13, 2, "M_Board_Blue", (0.5, 0.63, 0.74), "M_Roof_Shingle", garage=True, seed=65)),
     ("SM_Apartment_4F_A", "Buildings", lambda n: buildings.apartment_block(n, 40, 26, 4, "brick_brown", seed=51)),
     ("SM_Apartment_8F_B", "Buildings", lambda n: buildings.apartment_block(n, 30, 30, 8, "brick", seed=52)),
     ("SM_GasStation_A", "Buildings", lambda n: buildings.gas_station(n, 34, 26, seed=71)),

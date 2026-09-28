@@ -43,12 +43,13 @@ def _textured(mat, folder):
     mat["hg_textured"] = True
 
 
-def render(out_path, texture_folder, samples=48, resolution=(1600, 900)):
+def render(out_path, texture_folder, samples=48, resolution=(1600, 900), layout=None, camera=None):
+    """Street scene (default) or any ``layout`` [(asset, x, y, rot)] seen from ``camera`` ((location), (target))."""
     kit.reset_scene()
     scene = bpy.context.scene
     factories = {name: factory for name, _, factory in kit.CATALOG}
     counts = {}
-    for name, x, y, rot in LAYOUT:
+    for name, x, y, rot in (layout or LAYOUT):
         counts[name] = counts.get(name, 0) + 1
         obj = factories[name](name if counts[name] == 1 else "%s_%d" % (name, counts[name]))
         obj.location = (x, y, 0)
@@ -93,8 +94,9 @@ def render(out_path, texture_folder, samples=48, resolution=(1600, 900)):
     cam_data = bpy.data.cameras.new("Camera")
     cam_data.lens = 30
     cam = bpy.data.objects.new("Camera", cam_data)
-    cam.location = (-8, -58, 22)
-    direction = Vector((2, 20, 5)) - cam.location
+    location, target = camera or ((-8, -58, 22), (2, 20, 5))
+    cam.location = location
+    direction = Vector(target) - cam.location
     cam.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
     scene.collection.objects.link(cam)
     scene.camera = cam

@@ -3,22 +3,30 @@
   "category": "Buildings",
   "fbx": "SM_House_1F_B.fbx",
   "lods": {
-    "SM_House_1F_B_LOD0": 968,
-    "SM_House_1F_B_LOD1": 434,
-    "SM_House_1F_B_LOD2": 192,
-    "SM_House_1F_B_LOD3": 162
+    "SM_House_1F_B_LOD0": 9760,
+    "SM_House_1F_B_LOD1": 4392,
+    "SM_House_1F_B_LOD2": 1952,
+    "SM_House_1F_B_LOD3": 1628
   },
   "collision_hulls": [
     "UCX_SM_House_1F_B_01"
   ],
   "materials": [
+    "M_Board_Grey",
     "M_Brick_Red",
     "M_Concrete_Grey",
+    "M_Door_Garage",
     "M_Door_Painted_62",
     "M_Glass_Dark",
+    "M_Gutter_White",
+    "M_Lamp_Brass",
+    "M_Metal_Grey",
+    "M_Roof_Deck",
     "M_Roof_Shingle",
     "M_Shutter_62",
-    "M_Trim_White"
+    "M_Soffit_White",
+    "M_Trim_White",
+    "M_Vent_Dark"
   ],
   "issues": [],
   "tool": "hg_pipeline"

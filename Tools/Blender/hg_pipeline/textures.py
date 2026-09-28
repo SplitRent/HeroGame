@@ -118,6 +118,14 @@ def siding(seed, color):
     return colour, height
 
 
+def painted_board(seed, color):
+    """Painted wood for modelled boards (siding, trim): the laps are real geometry, so only grain and paint wear."""
+    x, y = _grid()
+    grain = _noise(seed, 0.5)[:, :1] * np.ones((1, SIZE)) * 0.4 + _noise(seed + 1, 2.0) * 0.3 + _fbm(seed + 2, 60, 2) * 0.3
+    colour = _tint(color, grain, 0.06)
+    return colour, grain * 0.4
+
+
 def corrugated(seed, color, period=0.076):
     x, y = _grid()
     period = _fit(period)
@@ -282,6 +290,12 @@ SURFACES = {
     "M_Roof_Shingle_Red": (shingles, (0.38, 0.18, 0.14), 2.5),
     "M_Roof_Tar": (gravel_roof, (0.2, 0.2, 0.19), 1.5),
     "M_Door_Wood": (wood, (0.3, 0.19, 0.11), 1.0),
+    # Paint for modelled lap siding (the boards themselves are geometry).
+    "M_Board_White": (painted_board, (0.88, 0.88, 0.85), 0.6),
+    "M_Board_Yellow": (painted_board, (0.87, 0.76, 0.46), 0.6),
+    "M_Board_Blue": (painted_board, (0.5, 0.63, 0.74), 0.6),
+    "M_Board_Green": (painted_board, (0.52, 0.63, 0.5), 0.6),
+    "M_Board_Grey": (painted_board, (0.6, 0.62, 0.62), 0.6),
     # Ground surfaces (roads, sidewalks, lawns, lots, water) share the same 2 m tiling so everything lines up.
     "M_Asphalt": (asphalt, (0.2, 0.2, 0.21), 1.5),
     "M_Sidewalk": (sidewalk, (0.6, 0.59, 0.56), 1.8),

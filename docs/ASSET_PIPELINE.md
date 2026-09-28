@@ -95,6 +95,9 @@ blender -b -P Tools/Blender/cli.py -- kit --art-root Game/Assets/_Project/Art --
 ![Procedural kit preview](images/blender_kit_preview.png)
 *Headless Cycles render of the generated kit with its procedural textures. First-pass art, not final.*
 
+![Detailed houses](images/blender_house_detail.png)
+*`house_detail.py`: the lap siding, soffits, fascia, gutters, shingle courses, sashes, shutters and railings are geometry, not texture.*
+
 ## 7. Unity import contract (`ModelImportRules`)
 For assets under `Assets/_Project/Art/`: scale factor 1 with file scale, bake axis conversion, no cameras/lights,
 external materials matched by name, Mikk tangents, no generated colliders; `UCX_*` meshes become convex

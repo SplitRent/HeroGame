@@ -61,6 +61,66 @@
    "NormalMap": ""
   },
   {
+   "Name": "M_Board_Blue",
+   "Color": [
+    0.5,
+    0.63,
+    0.74
+   ],
+   "Roughness": 0.7,
+   "Metallic": 0.0,
+   "BaseMap": "T_Board_Blue_BC",
+   "NormalMap": "T_Board_Blue_N"
+  },
+  {
+   "Name": "M_Board_Green",
+   "Color": [
+    0.52,
+    0.63,
+    0.5
+   ],
+   "Roughness": 0.7,
+   "Metallic": 0.0,
+   "BaseMap": "T_Board_Green_BC",
+   "NormalMap": "T_Board_Green_N"
+  },
+  {
+   "Name": "M_Board_Grey",
+   "Color": [
+    0.6,
+    0.62,
+    0.62
+   ],
+   "Roughness": 0.7,
+   "Metallic": 0.0,
+   "BaseMap": "T_Board_Grey_BC",
+   "NormalMap": "T_Board_Grey_N"
+  },
+  {
+   "Name": "M_Board_White",
+   "Color": [
+    0.88,
+    0.88,
+    0.85
+   ],
+   "Roughness": 0.7,
+   "Metallic": 0.0,
+   "BaseMap": "T_Board_White_BC",
+   "NormalMap": "T_Board_White_N"
+  },
+  {
+   "Name": "M_Board_Yellow",
+   "Color": [
+    0.87,
+    0.76,
+    0.46
+   ],
+   "Roughness": 0.7,
+   "Metallic": 0.0,
+   "BaseMap": "T_Board_Yellow_BC",
+   "NormalMap": "T_Board_Yellow_N"
+  },
+  {
    "Name": "M_Brick_Brown",
    "Color": [
     0.36,
@@ -147,9 +207,9 @@
   {
    "Name": "M_Door_Garage",
    "Color": [
-    0.88,
-    0.88,
-    0.86
+    0.9,
+    0.9,
+    0.88
    ],
    "Roughness": 0.5,
    "Metallic": 0.0,
@@ -171,11 +231,11 @@
   {
    "Name": "M_Door_Painted_61",
    "Color": [
-    0.2,
-    0.2,
-    0.22
+    0.16,
+    0.16,
+    0.18
    ],
-   "Roughness": 0.5,
+   "Roughness": 0.45,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -183,11 +243,11 @@
   {
    "Name": "M_Door_Painted_62",
    "Color": [
-    0.1,
-    0.25,
-    0.35
+    0.08,
+    0.2,
+    0.3
    ],
-   "Roughness": 0.5,
+   "Roughness": 0.45,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -195,11 +255,11 @@
   {
    "Name": "M_Door_Painted_63",
    "Color": [
-    0.2,
-    0.2,
-    0.22
+    0.16,
+    0.16,
+    0.18
    ],
-   "Roughness": 0.5,
+   "Roughness": 0.45,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -207,11 +267,11 @@
   {
    "Name": "M_Door_Painted_64",
    "Color": [
-    0.2,
-    0.2,
-    0.22
+    0.16,
+    0.16,
+    0.18
    ],
-   "Roughness": 0.5,
+   "Roughness": 0.45,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -219,11 +279,11 @@
   {
    "Name": "M_Door_Painted_65",
    "Color": [
-    0.2,
-    0.2,
-    0.22
+    0.16,
+    0.16,
+    0.18
    ],
-   "Roughness": 0.5,
+   "Roughness": 0.45,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -311,6 +371,30 @@
    "Metallic": 0.0,
    "BaseMap": "T_Grass_Lawn_BC",
    "NormalMap": "T_Grass_Lawn_N"
+  },
+  {
+   "Name": "M_Gutter_White",
+   "Color": [
+    0.86,
+    0.86,
+    0.84
+   ],
+   "Roughness": 0.35,
+   "Metallic": 0.3,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Lamp_Brass",
+   "Color": [
+    0.55,
+    0.42,
+    0.2
+   ],
+   "Roughness": 0.35,
+   "Metallic": 0.9,
+   "BaseMap": "",
+   "NormalMap": ""
   },
   {
    "Name": "M_Lamp_Emissive",
@@ -469,6 +553,18 @@
    "NormalMap": ""
   },
   {
+   "Name": "M_Roof_Deck",
+   "Color": [
+    0.3,
+    0.26,
+    0.2
+   ],
+   "Roughness": 0.9,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
    "Name": "M_Roof_Shingle",
    "Color": [
     0.24,
@@ -483,9 +579,9 @@
   {
    "Name": "M_Roof_Shingle_Red",
    "Color": [
-    0.38,
-    0.18,
-    0.14
+    0.24,
+    0.22,
+    0.21
    ],
    "Roughness": 0.9,
    "Metallic": 0.0,
@@ -519,11 +615,11 @@
   {
    "Name": "M_Shutter_61",
    "Color": [
+    0.1,
     0.12,
-    0.14,
-    0.2
+    0.18
    ],
-   "Roughness": 0.6,
+   "Roughness": 0.55,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -531,11 +627,11 @@
   {
    "Name": "M_Shutter_62",
    "Color": [
-    0.1,
-    0.18,
-    0.12
+    0.08,
+    0.15,
+    0.1
    ],
-   "Roughness": 0.6,
+   "Roughness": 0.55,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -543,11 +639,11 @@
   {
    "Name": "M_Shutter_63",
    "Color": [
-    0.35,
-    0.12,
-    0.1
+    0.3,
+    0.1,
+    0.08
    ],
-   "Roughness": 0.6,
+   "Roughness": 0.55,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -555,11 +651,11 @@
   {
    "Name": "M_Shutter_64",
    "Color": [
-    0.1,
-    0.18,
-    0.12
+    0.08,
+    0.15,
+    0.1
    ],
-   "Roughness": 0.6,
+   "Roughness": 0.55,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -567,11 +663,11 @@
   {
    "Name": "M_Shutter_65",
    "Color": [
-    0.2,
-    0.2,
-    0.2
+    0.16,
+    0.16,
+    0.16
    ],
-   "Roughness": 0.6,
+   "Roughness": 0.55,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -601,18 +697,6 @@
    "NormalMap": "T_Siding_Blue_N"
   },
   {
-   "Name": "M_Siding_Green",
-   "Color": [
-    0.5,
-    0.62,
-    0.5
-   ],
-   "Roughness": 0.7,
-   "Metallic": 0.0,
-   "BaseMap": "T_Siding_Green_BC",
-   "NormalMap": "T_Siding_Green_N"
-  },
-  {
    "Name": "M_Siding_White",
    "Color": [
     0.88,
@@ -635,6 +719,18 @@
    "Metallic": 0.0,
    "BaseMap": "T_Siding_Yellow_BC",
    "NormalMap": "T_Siding_Yellow_N"
+  },
+  {
+   "Name": "M_Soffit_White",
+   "Color": [
+    0.88,
+    0.88,
+    0.86
+   ],
+   "Roughness": 0.6,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
   },
   {
    "Name": "M_Stucco_Cream",
@@ -692,6 +788,18 @@
     0.15
    ],
    "Roughness": 0.6,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Vent_Dark",
+   "Color": [
+    0.12,
+    0.12,
+    0.12
+   ],
+   "Roughness": 0.8,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""

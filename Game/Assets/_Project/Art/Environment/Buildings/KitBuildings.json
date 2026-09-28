@@ -144,7 +144,7 @@
    "Name": "SM_House_1F_A",
    "Width": 12,
    "Depth": 14,
-   "Height": 7.19,
+   "Height": 7.75,
    "Uses": [
     "Residence"
    ]
@@ -153,7 +153,7 @@
    "Name": "SM_House_1F_B",
    "Width": 11,
    "Depth": 13,
-   "Height": 7.19,
+   "Height": 7.75,
    "Uses": [
     "Residence"
    ]
@@ -162,7 +162,7 @@
    "Name": "SM_House_1F_C",
    "Width": 10,
    "Depth": 13,
-   "Height": 7.19,
+   "Height": 7.75,
    "Uses": [
     "Residence"
    ]
@@ -171,7 +171,7 @@
    "Name": "SM_House_2F_A",
    "Width": 10,
    "Depth": 12,
-   "Height": 10.09,
+   "Height": 10.65,
    "Uses": [
     "Residence"
    ]
@@ -180,7 +180,7 @@
    "Name": "SM_House_2F_B",
    "Width": 12,
    "Depth": 13,
-   "Height": 10.09,
+   "Height": 10.65,
    "Uses": [
     "Residence"
    ]
