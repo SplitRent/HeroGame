@@ -16,7 +16,7 @@ namespace HeroGame.Runtime.UI
 
     /// <summary>
     /// Front end (GDD §6–7): Continue, Story Mode, Servers, Character, Options, Settings, Exit.
-    /// Built on UI Toolkit; layout in Resources/UI/MainMenu.uxml, style in MainMenu.uss. On first run
+    /// Built on UI Toolkit; layout in Resources/UI/MainMenu.uxml, style in FrontEnd.uss (named apart from the UXML: Resources.Load cannot tell two assets with one name apart). On first run
     /// the player is sent to CREATE YOUR CHARACTER before anything else.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
@@ -40,8 +40,12 @@ namespace HeroGame.Runtime.UI
             var root = _document.rootVisualElement;
             if (root == null) return;
             if (root.childCount == 0 && _document.visualTreeAsset != null) _document.visualTreeAsset.CloneTree(root);
-            var style = Resources.Load<StyleSheet>("UI/MainMenu");
-            if (style != null && !root.styleSheets.Contains(style)) root.styleSheets.Add(style);
+            foreach (var sheet in new[] { "UI/Controls", "UI/FrontEnd" })
+            {
+                var style = Resources.Load<StyleSheet>(sheet);
+                if (style != null && !root.styleSheets.Contains(style)) root.styleSheets.Add(style);
+                else if (style == null) Debug.LogWarning("[UI] Missing style sheet Resources/" + sheet + ".uss");
+            }
 
             _panel = root.Q<VisualElement>("panel");
             root.Q<Label>("title").text = GameInfo.WorkingTitle;

@@ -43,6 +43,7 @@ namespace HeroGame.Runtime.UI
         private float _fpsTime;
         private int _fpsFrames;
         private string _app = "";
+        private VisualElement _corner;
         private string _mapQuery = "";
 
         private void OnEnable()
@@ -56,11 +57,16 @@ namespace HeroGame.Runtime.UI
             _root = _document.rootVisualElement;
             if (_root == null || _document.visualTreeAsset == null) return;
             if (_root.childCount == 0) _document.visualTreeAsset.CloneTree(_root);
-            var style = Resources.Load<StyleSheet>("UI/Game");
-            if (style != null && !_root.styleSheets.Contains(style)) _root.styleSheets.Add(style);
+            foreach (var sheet in new[] { "UI/Controls", "UI/Game" })
+            {
+                var style = Resources.Load<StyleSheet>(sheet);
+                if (style != null && !_root.styleSheets.Contains(style)) _root.styleSheets.Add(style);
+                else if (style == null) Debug.LogWarning("[UI] Missing style sheet Resources/" + sheet + ".uss");
+            }
             _root.pickingMode = PickingMode.Ignore;
 
             _layer = _root.Q<VisualElement>("layer");
+            _corner = _root.Q<VisualElement>("corner");
             _toasts = _root.Q<VisualElement>("toasts");
             _subtitles = _root.Q<VisualElement>("subtitles");
             _healthFill = _root.Q<VisualElement>("health-fill");
@@ -181,7 +187,7 @@ namespace HeroGame.Runtime.UI
                 _subtitles.Add(row);
             }
 
-            _fps.style.display = s.ShowFps ? DisplayStyle.Flex : DisplayStyle.None;
+            _fps.style.display = s.ShowFps && _screen != Screen.Pause ? DisplayStyle.Flex : DisplayStyle.None;
             if (s.ShowFps && _fpsTime > 0.5f)
             {
                 _fps.text = Mathf.RoundToInt(_fpsFrames / _fpsTime) + " fps";
@@ -238,13 +244,23 @@ namespace HeroGame.Runtime.UI
             _screen = Screen.None;
             _layer.Clear();
             _layer.pickingMode = PickingMode.Ignore;
+            ShowHud(true);
             UiFocus.Release();
+        }
+
+        /// <summary>The pause screen covers the whole view, so the HUD steps out of its way (the phone keeps it).</summary>
+        private void ShowHud(bool show)
+        {
+            var display = show ? DisplayStyle.Flex : DisplayStyle.None;
+            if (_corner != null) _corner.style.display = display;
+            if (_weapon != null) _weapon.style.display = display;
         }
 
         private void Rebuild()
         {
             _layer.Clear();
             _layer.pickingMode = _screen == Screen.None ? PickingMode.Ignore : PickingMode.Position;
+            ShowHud(_screen != Screen.Pause);
             if (_screen == Screen.Pause) BuildPause(SettingsTab.Audio);
             else if (_screen == Screen.Phone) BuildPhone();
         }
@@ -472,9 +488,16 @@ namespace HeroGame.Runtime.UI
             foreach (var app in new[] { "Messages", "News", "Bank", "Properties", "Inventory", "Map", "Radio", "Ripple", "Loans", "Insurance", "Businesses" })
             {
                 var captured = app;
-                var b = new Button(() => { _app = captured; _status = ""; BuildPhone(); }) { text = app };
+                var b = new Button(() => { _app = captured; _status = ""; BuildPhone(); });
                 b.AddToClassList("g-app");
-                if (app == "Messages" && unread > 0) b.Add(Text(unread.ToString(), "g-app-badge"));
+                var icon = new VisualElement();
+                icon.AddToClassList("g-app-icon");
+                icon.style.backgroundColor = PhoneIcons.TileColor(app);
+                var glyph = PhoneIcons.For(app);
+                if (glyph != null) icon.style.backgroundImage = new StyleBackground(glyph);
+                if (app == "Messages" && unread > 0) icon.Add(Text(unread.ToString(), "g-app-badge"));
+                b.Add(icon);
+                b.Add(Text(app, "g-app-label"));
                 grid.Add(b);
             }
             body.Add(grid);

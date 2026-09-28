@@ -44,7 +44,7 @@ namespace HeroGame.Editor
         /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
         /// stamped with it so the Health Check can say "rebuild the greybox".
         /// </summary>
-        public const int BuilderVersion = 4;
+        public const int BuilderVersion = 5;
         public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
@@ -90,6 +90,7 @@ namespace HeroGame.Editor
                 // HDRP uses physical light units (lux) with exposure handled by the volume stack.
                 dayNight.MaxSunIntensity = 100000f;
                 dayNight.MoonIntensity = 0.3f;
+                BuildSkyVolume();
             }
             var weather = systems.AddComponent<WeatherPresenter>();
             weather.Rain = BuildRain(camera.transform);
@@ -708,6 +709,98 @@ namespace HeroGame.Editor
                 case PlaceKind.Gym: return new Color(0.3f, 0.6f, 0.45f);
                 case PlaceKind.Dock: return new Color(0.4f, 0.35f, 0.3f);
                 default: return new Color(0.6f, 0.6f, 0.6f);
+            }
+        }
+
+        /// <summary>
+        /// HDRP: a global volume with a physically based sky (driven by the sun's rotation), automatic exposure and light
+        /// fog. Without it HDRP falls back to a dim default sky that looks like night under a 100,000 lux sun. Done by
+        /// reflection so this editor script compiles without the HDRP package (the headless compile check has none).
+        /// </summary>
+        private static void BuildSkyVolume()
+        {
+            var volumeType = FindType("UnityEngine.Rendering.Volume");
+            var profileType = FindType("UnityEngine.Rendering.VolumeProfile");
+            if (volumeType == null || profileType == null)
+            {
+                Debug.LogWarning("[Greybox] HDRP volume types not found; the scene keeps HDRP's default sky.");
+                return;
+            }
+            var profilePath = GeneratedFolder + "/GreyboxSky.asset";
+            AssetDatabase.DeleteAsset(profilePath);
+            var profile = ScriptableObject.CreateInstance(profileType);
+            AssetDatabase.CreateAsset(profile, profilePath);
+
+            const string hd = "UnityEngine.Rendering.HighDefinition.";
+            var environment = AddOverride(profile, hd + "VisualEnvironment");
+            SetParameter(environment, "skyType", 4); // SkyType.PhysicallyBased
+            SetParameter(environment, "skyAmbientMode", "Dynamic");
+            AddOverride(profile, hd + "PhysicallyBasedSky"); // Earth defaults
+            var exposure = AddOverride(profile, hd + "Exposure");
+            SetParameter(exposure, "mode", "AutomaticHistogram");
+            SetParameter(exposure, "limitMin", -2f); // moonlit streets
+            SetParameter(exposure, "limitMax", 16f); // Gulf Coast noon
+            var fog = AddOverride(profile, hd + "Fog");
+            SetParameter(fog, "enabled", true);
+            SetParameter(fog, "meanFreePath", 900f);
+            SetParameter(fog, "maximumHeight", 150f);
+            EditorUtility.SetDirty(profile);
+            AssetDatabase.SaveAssets();
+
+            var go = new GameObject("Sky and Exposure");
+            var volume = go.AddComponent(volumeType);
+            volumeType.GetField("isGlobal")?.SetValue(volume, true);
+            volumeType.GetField("sharedProfile")?.SetValue(volume, profile);
+        }
+
+        private static System.Type FindType(string fullName)
+        {
+            foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var type = assembly.GetType(fullName, false);
+                if (type != null) return type;
+            }
+            return null;
+        }
+
+        /// <summary>Adds a volume override (all parameters overridden) and stores it inside the profile asset.</summary>
+        private static Object AddOverride(ScriptableObject profile, string typeName)
+        {
+            var type = FindType(typeName);
+            var add = profile.GetType().GetMethod("Add", new[] { typeof(System.Type), typeof(bool) });
+            if (type == null || add == null)
+            {
+                Debug.LogWarning("[Greybox] Volume override " + typeName + " not available.");
+                return null;
+            }
+            var component = (ScriptableObject)add.Invoke(profile, new object[] { type, true });
+            component.name = type.Name;
+            AssetDatabase.AddObjectToAsset(component, profile);
+            return component;
+        }
+
+        private static void SetParameter(Object component, string field, object value)
+        {
+            if (component == null) return;
+            try
+            {
+                var parameter = component.GetType().GetField(field)?.GetValue(component);
+                var property = parameter?.GetType().GetProperty("value");
+                if (property == null)
+                {
+                    Debug.LogWarning("[Greybox] " + component.GetType().Name + "." + field + " not found.");
+                    return;
+                }
+                var target = property.PropertyType;
+                var converted = target.IsEnum
+                    ? (value is string name ? System.Enum.Parse(target, name) : System.Enum.ToObject(target, value))
+                    : System.Convert.ChangeType(value, target, System.Globalization.CultureInfo.InvariantCulture);
+                property.SetValue(parameter, converted);
+                parameter.GetType().GetProperty("overrideState")?.SetValue(parameter, true);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("[Greybox] Could not set " + component.GetType().Name + "." + field + ": " + e.Message);
             }
         }
 

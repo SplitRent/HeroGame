@@ -191,7 +191,7 @@
 .g-overlay {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
-    background-color: rgba(4, 8, 14, 0.78);
+    background-color: rgba(4, 8, 14, 0.9);
     flex-direction: row;
 }
 
@@ -329,24 +329,38 @@
 
 .g-app {
     width: 84px;
-    height: 84px;
-    margin: 4px;
-    border-radius: 18px;
+    height: 96px;
+    margin: 2px;
+    padding: 4px 0 0 0;
+    align-items: center;
     border-width: 0;
-    background-color: rgba(27, 79, 114, 0.7);
-    font-size: 12px;
-    color: rgb(245, 245, 240);
-    -unity-text-align: lower-center;
-    padding-bottom: 8px;
-    white-space: normal;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0);
 }
 
-.g-app:hover { background-color: rgba(27, 79, 114, 1); }
+.g-app:hover { background-color: rgba(255, 255, 255, 0.06); }
+
+.g-app-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.g-app:hover .g-app-icon { scale: 1.06 1.06; }
+
+.g-app-label {
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgb(235, 238, 242);
+    -unity-text-align: upper-center;
+    white-space: nowrap;
+}
 
 .g-app-badge {
     position: absolute;
-    right: 6px;
-    top: 6px;
+    right: -6px;
+    top: -6px;
     font-size: 11px;
     color: rgb(8, 14, 22);
     background-color: rgb(240, 180, 41);

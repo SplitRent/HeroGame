@@ -1,0 +1,117 @@
+/* Dark styling for Unity's built-in controls (labels, text fields, sliders, toggles, dropdowns, scroll bars), shared by
+   the front end and the in-game interface. The runtime default theme is light, which left field labels dark grey on
+   the dark panels. Loaded by name "UI/Controls" (keep it unique in Resources). */
+
+.unity-base-field__label,
+.unity-label {
+    color: rgb(214, 219, 224);
+}
+
+.unity-base-field__label {
+    font-size: 14px;
+    min-width: 170px;
+    -unity-text-align: middle-left;
+}
+
+.unity-base-field:hover > .unity-base-field__label,
+.unity-base-field:focus > .unity-base-field__label {
+    color: rgb(255, 255, 255);
+}
+
+.unity-base-text-field__input,
+.unity-text-field__input {
+    color: rgb(240, 240, 236);
+    background-color: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.18);
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 2px 8px;
+}
+
+.unity-base-text-field:focus .unity-base-text-field__input,
+.unity-text-field:focus .unity-text-field__input {
+    border-color: rgb(240, 180, 41);
+}
+
+.unity-base-slider__tracker {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0);
+}
+
+.unity-base-slider__dragger {
+    background-color: rgb(240, 180, 41);
+    border-color: rgb(240, 180, 41);
+    border-radius: 3px;
+}
+
+.unity-base-slider__dragger-border {
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.unity-base-slider__text-field {
+    width: 64px;
+    margin-left: 12px;
+}
+
+.unity-toggle__checkmark {
+    background-color: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.35);
+    -unity-background-image-tint-color: rgb(240, 180, 41);
+}
+
+.unity-toggle__text {
+    color: rgb(214, 219, 224);
+    margin-right: 16px;
+}
+
+.unity-base-popup-field__input,
+.unity-popup-field__input,
+.unity-enum-field__input {
+    color: rgb(240, 240, 236);
+    background-color: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.18);
+    border-radius: 3px;
+}
+
+.unity-base-popup-field__text,
+.unity-enum-field__text {
+    color: rgb(240, 240, 236);
+}
+
+.unity-base-popup-field__arrow,
+.unity-enum-field__arrow {
+    -unity-background-image-tint-color: rgb(240, 180, 41);
+}
+
+/* The open dropdown list is added to the panel root, so it is styled here too. */
+.unity-base-dropdown__container-inner {
+    background-color: rgb(16, 24, 36);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.unity-base-dropdown__label {
+    color: rgb(230, 232, 236);
+}
+
+.unity-base-dropdown__item:hover {
+    background-color: rgba(240, 180, 41, 0.25);
+}
+
+.unity-scroller {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+}
+
+.unity-scroller .unity-base-slider__tracker {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.unity-scroller .unity-base-slider__dragger {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0);
+}
+
+.unity-scroller__low-button,
+.unity-scroller__high-button {
+    display: none;
+}

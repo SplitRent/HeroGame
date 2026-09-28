@@ -10,8 +10,17 @@ environment; Unity scripts are verified by compiling against Unity reference ass
 compiled in the editor. The project is on HDRP, with Both input handling and Linear colour space. The game data and
 story data validated with 0 errors. The simulation generated 311 residents and ran 3 days inside the editor. The
 save/load step failed, and the cause was a Health Check bug: it counted residents before the simulation. It is
-fixed and covered by `HealthCheckSaveAndLoad_RoundTripsExactly`. No scene has been played yet, so the rows under
-*Unity runtime* stay IN DEVELOPMENT.
+fixed and covered by `HealthCheckSaveAndLoad_RoundTripsExactly`.
+
+**First play (owner screenshots, same machine).** The main menu, the greybox scene, the HUD, the pause/settings
+screen and the phone all ran. The player walked the street. Four problems showed, and all are fixed in code that
+has not been re-run yet:
+* The main menu was unstyled. Its stylesheet shared a Resources name with the UXML.
+* Field labels were unreadable on the dark panels.
+* The HUD showed through the pause screen.
+* The sky looked like night at 10 AM because the scene had no HDRP sky or exposure volume.
+
+The phone also got drawn app icons. Rows stay IN DEVELOPMENT until each is played deliberately.
 
 _Last updated: combat and weapons, performance pass, UI Toolkit interface, online player view, water. See `reports/DEV_REPORT_004_COMBAT_UI_PERFORMANCE.md`._
 
