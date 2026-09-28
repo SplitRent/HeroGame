@@ -33,6 +33,14 @@ namespace HeroGame.Persistence.Saves
             AtomicFile.WriteAllText(PathFor(accountKey), JsonSetup.Serialize(profile, true));
         }
 
+        public bool Exists(string accountKey) => File.Exists(PathFor(accountKey));
+
+        public void Delete(string accountKey)
+        {
+            var path = PathFor(accountKey);
+            if (File.Exists(path)) File.Delete(path);
+        }
+
         private string PathFor(string key)
         {
             foreach (var c in Path.GetInvalidFileNameChars()) key = key.Replace(c, '_');

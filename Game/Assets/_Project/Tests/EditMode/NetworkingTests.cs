@@ -164,6 +164,50 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void CharacterSlots_AreSeparatePeople_KeepTheirIdentity_AndBadSlotsOrNamesAreHandled()
+        {
+            GameClient JoinAs(string account, int slot, CharacterIdentity identity)
+            {
+                var c = new GameClient { CharacterSlot = slot, Identity = identity };
+                _clients.Add(c);
+                c.ConnectAsync("127.0.0.1", _server.Port, TicketFor(account, "Account Name")).Wait(3000);
+                Until(() => c.State == ClientState.Connected || c.State == ClientState.Disconnected || c.RejectReason.Length > 0);
+                return c;
+            }
+
+            var first = JoinAs("acc-s", 1, new CharacterIdentity { FirstName = "Maya", LastName = "Cole", Age = 29 });
+            Assert.AreEqual(ClientState.Connected, first.State);
+            var maya = _world.Characters[first.Welcome.CharacterId];
+            Assert.AreEqual("Maya Cole", maya.Identity.FullName, "a new character takes the slot's name and look");
+            Assert.AreEqual(29, maya.Identity.Age);
+            Assert.AreEqual(GameServer.AccountEntity("acc-s"), maya.AccountId, "slot 1 keeps the id characters had before slots");
+
+            // The same account on another slot is a different person; the account still has one session at a time.
+            var second = JoinAs("acc-s", 2, new CharacterIdentity { FirstName = "Dre", LastName = "Okafor<>{};", Age = 400 });
+            Until(() => first.State == ClientState.Disconnected);
+            Assert.AreEqual(ClientState.Connected, second.State);
+            Assert.AreNotEqual(first.Welcome.CharacterId, second.Welcome.CharacterId);
+            var dre = _world.Characters[second.Welcome.CharacterId];
+            Assert.AreEqual("Dre Okafor", dre.Identity.FullName, "names are cleaned server side");
+            Assert.AreEqual(IdentityRules.MaxAge, dre.Identity.Age);
+
+            // Coming back to slot 1 finds the same character; the identity it was created with is kept.
+            var back = JoinAs("acc-s", 1, new CharacterIdentity { FirstName = "Someone", LastName = "Else" });
+            Assert.AreEqual(first.Welcome.CharacterId, back.Welcome.CharacterId);
+            Assert.AreEqual("Maya Cole", _world.Characters[back.Welcome.CharacterId].Identity.FullName);
+
+            // No identity (or garbage) falls back to the account's display name.
+            var plain = JoinAs("acc-p", 3, null);
+            Assert.AreEqual("Account Name", _world.Characters[plain.Welcome.CharacterId].Identity.FullName);
+
+            var bad = JoinAs("acc-b", 4, null);
+            Until(() => bad.State == ClientState.Disconnected || bad.RejectReason.Length > 0);
+            StringAssert.Contains("slot", bad.RejectReason);
+            Assert.IsFalse(IdentityCodec.TryDecode("{not json", out _));
+            Assert.IsFalse(IdentityCodec.TryDecode(IdentityCodec.Encode(new CharacterIdentity { FirstName = "!!!", LastName = "" }), out _));
+        }
+
+        [Test]
         public void BadTickets_Bans_Replays_AndVersionMismatches_AreRejected()
         {
             var bad = Join("x", "X", ticket: "garbage.ticket");

@@ -91,6 +91,13 @@ namespace HeroGame.Runtime.Online
         {
             _client?.Dispose();
             _client = new GameClient();
+            // The character chosen in the main menu joins as its own person on the server (slot + name and look).
+            var bootstrap = GameBootstrap.Instance;
+            if (bootstrap != null && bootstrap.Account != null)
+            {
+                _client.CharacterSlot = bootstrap.CharacterSlot;
+                _client.Identity = bootstrap.Account.Character;
+            }
             _client.Connected += OnWelcome;
             _client.SnapshotReceived += OnSnapshot;
             _client.ChatReceived += m => SubtitleFeed.Say(m.FromName, m.Text, 5f);

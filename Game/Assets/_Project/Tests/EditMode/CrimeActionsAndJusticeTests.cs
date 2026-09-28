@@ -255,6 +255,48 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void CustodyScreen_ShowsTheCase_AndWaitingRunsToTheHearingThenRelease()
+        {
+            _player.Record.Convictions = 2; // a repeat offender goes to jail
+            At(_world, 13);
+            _world.Crimes.RobStore(_player, Store(), Bare);
+            Assert.IsTrue(_world.Courts.Arrest(_player, caughtInPursuit: true, resisted: true).Success);
+            var court = _world.Justice.OpenCaseFor(_player.CharacterId);
+
+            var view = _world.Courts.Custody(_player);
+            Assert.IsTrue(view.InCustody);
+            Assert.IsFalse(view.ServingSentence);
+            Assert.AreEqual(2, view.Charges.Count);
+            Assert.AreEqual(court.HearingDay, view.HearingDay);
+            Assert.AreEqual((court.HearingDay + 1) * GameDateTime.SecondsPerDay, view.NextEventSecond, "hearings are decided as their day ends");
+            Assert.AreEqual(court.BailCents, view.BailCents);
+            Assert.AreEqual(court.BailCents > 0, view.CanPostBail);
+            Assert.IsTrue(view.CanHireAttorney);
+            Assert.AreEqual(court.PleaOffered, view.PleaOffered);
+            StringAssert.Contains("hearing", view.NextStep);
+
+            Assert.IsTrue(_world.Courts.AcceptPlea(_player).Success || !court.PleaOffered);
+            var sim = new WorldSimulation(_world);
+            var waited = sim.WaitInCustody(_player);
+            Assert.AreEqual(CaseStage.Closed, court.Stage, "waiting stops once the hearing has been held");
+            Assert.AreEqual(court.HearingDay + 1, _world.Today);
+            Assert.Greater(waited, 0);
+            if (_player.Record.InCustody)
+            {
+                view = _world.Courts.Custody(_player);
+                Assert.IsTrue(view.ServingSentence);
+                Assert.AreEqual(_player.Record.CustodyUntilDay, view.ReleaseDay);
+                StringAssert.Contains("Release", view.NextStep);
+                sim.WaitInCustody(_player);
+                Assert.IsFalse(_player.Record.InCustody, "waiting again serves the sentence");
+                Assert.AreEqual(view.ReleaseDay + 1, _world.Today);
+            }
+            Assert.AreEqual(0, sim.WaitInCustody(_player), "nothing to wait for once free");
+            Assert.IsFalse(_world.Courts.Custody(_player).InCustody);
+            Assert.IsTrue(_world.Ledger.VerifyInvariant(out _));
+        }
+
+        [Test]
         public void GuiltyPlea_IsCertain_Mitigated_AndJailEndsOnTime()
         {
             _player.Record.Convictions = 2; // a repeat offender goes to jail

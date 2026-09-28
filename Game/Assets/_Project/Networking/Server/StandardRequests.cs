@@ -145,7 +145,7 @@ namespace HeroGame.Networking.Server
             r.Register("ripple.post", ctx =>
             {
                 if (ctx.Server.Moderation.IsMuted(ctx.AccountId, ctx.Server.UnixNow)) return RequestContext.Fail("You are muted.");
-                var result = ctx.World.Feed.Post(ctx.Me, ctx.Connection.Ticket?.DisplayName ?? "", ctx.Str("text", Core.Simulation.RippleService.MaxPostLength), out var post);
+                var result = ctx.World.Feed.Post(ctx.Me, GameServer.NameOf(ctx.Connection), ctx.Str("text", Core.Simulation.RippleService.MaxPostLength), out var post);
                 if (!result.Success) return RequestContext.Fail(result.Error);
                 return RequestContext.Ok(new Dictionary<string, string> { ["id"] = post.Id.ToString(CultureInfo.InvariantCulture) });
             });
@@ -203,7 +203,7 @@ namespace HeroGame.Networking.Server
                 if (!Enum.TryParse(ctx.Str("office", 16), out Core.Civic.Office office)) return RequestContext.Fail("Unknown office.");
                 var cityHall = CityHall(ctx.World);
                 if (cityHall != null && !ctx.Near(cityHall.Position, BuildingReach)) return RequestContext.Fail("File in person at City Hall.");
-                return RequestContext.From(ctx.World.Government.FileCandidacy(ctx.Me, office, ctx.OptStr("district", ""), ctx.OptStr("slate", ""), ctx.Connection.Ticket?.DisplayName ?? "Candidate", ctx.Key));
+                return RequestContext.From(ctx.World.Government.FileCandidacy(ctx.Me, office, ctx.OptStr("district", ""), ctx.OptStr("slate", ""), GameServer.NameOf(ctx.Connection), ctx.Key));
             });
             r.Register("civic.donate", ctx => RequestContext.From(ctx.World.Government.Donate(ctx.Me, ctx.Str("election", 96), ctx.Id("candidate"), new Money(ctx.Long("amount", 1)), ctx.Key)));
             r.Register("civic.campaign", ctx => RequestContext.From(ctx.World.Government.SpendCampaign(ctx.Me, ctx.Str("election", 96), new Money(ctx.Long("amount", 1, 100000000)), ctx.Key)));

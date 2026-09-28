@@ -37,6 +37,7 @@ namespace HeroGame.Editor
         public const string GeneratedFolder = "Assets/_Project/Generated";
         private static NpcAvatar _npcPrefab;
         private static Transform _policeStation;
+        private static float _policeStationDepth;
         private static ContentSet _content;
 
         public const string MetroScene = SceneFolder + "/PortArden_Metro_Greybox.unity";
@@ -44,7 +45,7 @@ namespace HeroGame.Editor
         /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
         /// stamped with it so the Health Check can say "rebuild the greybox".
         /// </summary>
-        public const int BuilderVersion = 8;
+        public const int BuilderVersion = 9;
         public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
@@ -62,6 +63,7 @@ namespace HeroGame.Editor
             // Blender kit: make sure its materials carry their textures before buildings are placed.
             KitBuildings.Reset();
             SurfaceMeshes.Reset();
+            _policeStation = null;
             if (KitBuildings.Available) KitMaterials.RefreshAll();
             else Debug.Log("[Greybox] No building kit under " + KitBuildings.Folder + ": lots get greybox boxes.");
             _content = content;
@@ -115,14 +117,13 @@ namespace HeroGame.Editor
 
             if (_policeStation != null)
             {
-                // Holding cell inside the station greybox and the steps outside for release.
+                // A barred holding cell in the yard behind the station (the building itself is solid, and a camera
+                // inside it sees only black), and the front steps for release.
                 var custody = player.AddComponent<CustodyPresenter>();
-                custody.Cell = new GameObject("Holding Cell").transform;
-                custody.Cell.SetParent(_policeStation, false);
-                custody.Cell.localPosition = new Vector3(0f, 0.1f, 0f);
+                custody.Cell = BuildHoldingCell(_policeStation, _policeStationDepth, materials);
                 custody.ReleasePoint = new GameObject("Station Steps").transform;
                 custody.ReleasePoint.SetParent(_policeStation, false);
-                custody.ReleasePoint.localPosition = new Vector3(0f, 0.1f, -14f);
+                custody.ReleasePoint.localPosition = new Vector3(0f, 0.1f, -(_policeStationDepth * 0.5f + 3f));
             }
 
             var story = systems.AddComponent<Runtime.Story.StoryPresenter>();
@@ -325,6 +326,71 @@ namespace HeroGame.Editor
         }
 
         /// <summary>A textured solid (true-scale UVs) with a matching box collider on <paramref name="go"/>.</summary>
+        /// <summary>
+        /// Holding cell behind the station: concrete pad, back wall and roof, steel bars on three sides with a barred
+        /// door, a bench and a ceiling light. Returns the point the player is held at (its forward faces the bars).
+        /// </summary>
+        private static Transform BuildHoldingCell(Transform station, float stationDepth, MaterialLibrary m)
+        {
+            const float w = 6f, d = 5f, h = 3f;
+            var root = new GameObject("Holding Cell");
+            root.transform.SetParent(station, false);
+            // Turned so the solid wall backs onto the station and the bars open onto the yard.
+            root.transform.localPosition = new Vector3(0f, 0f, stationDepth * 0.5f + 1.5f + d * 0.5f);
+            root.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            var concrete = Surface("M_Concrete_Grey", m, "cell_concrete", new Color(0.55f, 0.55f, 0.53f));
+            var steel = Surface("M_Metal_Painted_Dark", m, "cell_steel", new Color(0.16f, 0.17f, 0.19f));
+            var wood = Surface("M_Wood_Slats", m, "cell_bench", new Color(0.45f, 0.33f, 0.22f));
+            void Part(string name, Vector3 size, Vector3 centre, Material material, bool collider = true)
+            {
+                var go = new GameObject(name);
+                go.transform.SetParent(root.transform, false);
+                go.transform.localPosition = centre;
+                Solid(go, size, Vector3.zero, material, collider);
+            }
+            Part("Pad", new Vector3(w + 0.6f, 0.2f, d + 0.6f), new Vector3(0f, 0.1f, 0f), concrete);
+            Part("Back Wall", new Vector3(w + 0.6f, h, 0.3f), new Vector3(0f, 0.2f + h * 0.5f, d * 0.5f + 0.15f), concrete);
+            Part("Roof", new Vector3(w + 0.6f, 0.25f, d + 0.6f), new Vector3(0f, 0.2f + h + 0.125f, 0f), concrete);
+            // Bars: 2.5 cm steel on 12 cm centres, top and bottom rails; the front has a barred door.
+            void Bars(string name, Vector3 from, Vector3 to)
+            {
+                var run = to - from;
+                var count = Mathf.Max(2, Mathf.RoundToInt(run.magnitude / 0.12f));
+                for (var i = 0; i <= count; i++)
+                    Part(name + " Bar", new Vector3(0.025f, h, 0.025f), from + run * (i / (float)count) + new Vector3(0f, 0.2f + h * 0.5f, 0f), steel, false);
+                var mid = (from + to) * 0.5f;
+                var railSize = Mathf.Abs(run.x) > Mathf.Abs(run.z) ? new Vector3(run.magnitude + 0.05f, 0.06f, 0.06f) : new Vector3(0.06f, 0.06f, run.magnitude + 0.05f);
+                foreach (var y in new[] { 0.25f, 1.1f, 0.2f + h - 0.05f }) Part(name + " Rail", railSize, mid + new Vector3(0f, y, 0f), steel, false);
+                // One invisible collider per side keeps anyone from walking through the bars.
+                var wall = new GameObject(name + " Collider");
+                wall.transform.SetParent(root.transform, false);
+                wall.transform.localPosition = mid + new Vector3(0f, 0.2f + h * 0.5f, 0f);
+                wall.AddComponent<BoxCollider>().size = railSize + new Vector3(0f, h, 0f);
+            }
+            var x = w * 0.5f;
+            var z = d * 0.5f;
+            Bars("Front", new Vector3(-x, 0f, -z), new Vector3(x, 0f, -z));
+            Bars("Left", new Vector3(-x, 0f, -z), new Vector3(-x, 0f, z));
+            Bars("Right", new Vector3(x, 0f, -z), new Vector3(x, 0f, z));
+            Part("Door Frame", new Vector3(0.08f, h, 0.08f), new Vector3(-0.5f, 0.2f + h * 0.5f, -z), steel, false);
+            Part("Door Lock", new Vector3(0.18f, 0.25f, 0.12f), new Vector3(-0.42f, 1.2f, -z - 0.05f), steel, false);
+            Part("Bench", new Vector3(w - 0.4f, 0.08f, 0.5f), new Vector3(0f, 0.65f, z - 0.3f), wood);
+            Part("Bench Legs", new Vector3(w - 0.8f, 0.45f, 0.08f), new Vector3(0f, 0.4f, z - 0.3f), steel, false);
+            var lamp = new GameObject("Cell Light");
+            lamp.transform.SetParent(root.transform, false);
+            lamp.transform.localPosition = new Vector3(0f, 0.2f + h - 0.3f, 0.5f);
+            var light = lamp.AddComponent<Light>();
+            light.type = LightType.Point;
+            light.range = 7f;
+            light.color = new Color(1f, 0.93f, 0.8f);
+            light.intensity = IsHdrp() ? 600f : 2.5f;
+            var hold = new GameObject("Held At").transform;
+            hold.SetParent(root.transform, false);
+            hold.localPosition = new Vector3(0f, 0.3f, 0.6f);
+            hold.localRotation = Quaternion.Euler(0f, 180f, 0f); // facing out through the front bars
+            return hold;
+        }
+
         private static void Solid(GameObject go, Vector3 size, Vector3 offset, Material material, bool collider = true)
         {
             var mesh = SurfaceMeshes.Box(size);
@@ -464,6 +530,7 @@ namespace HeroGame.Editor
                 if (p.Kind == PlaceKind.PoliceStation)
                 {
                     _policeStation = go.transform;
+                    _policeStationDepth = e.Depth;
                     var desk = new GameObject("Front Desk");
                     desk.transform.SetParent(go.transform);
                     desk.transform.position = front + Vector3.up;

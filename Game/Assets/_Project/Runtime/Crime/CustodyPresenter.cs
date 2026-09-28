@@ -24,12 +24,14 @@ namespace HeroGame.Runtime.Crime
         private void Update()
         {
             if (!ServiceRegistry.TryGet<GameSession>(out var session) || session.LocalCharacter == null) return;
-            var inCustody = session.LocalCharacter.Record.InCustody;
+            // Online the server decides; the local world is only a presentation copy.
+            var online = Online.NetworkSession.Me;
+            var inCustody = online != null ? online.InCustody : session.LocalCharacter.Record.InCustody;
             if (inCustody && !_held)
             {
                 _held = true;
                 if (Cell != null) _motor.Warp(Cell.position, Cell.rotation);
-                SubtitleFeed.Say("", "You are in custody. Use the desk to post bail or check your case.", 5f);
+                SubtitleFeed.Say("", "You are in custody.", 4f);
             }
             else if (!inCustody && _held)
             {

@@ -26,7 +26,7 @@ namespace HeroGame.Runtime.UI
         public PlayerInteractor Interactor;
         public string MenuScene = "MainMenu";
 
-        private enum Screen { None, Pause, Phone }
+        private enum Screen { None, Pause, Phone, Custody }
         private enum SettingsTab { Audio, Controls, Display, Graphics, Accessibility }
 
         private static GameUi _instance;
@@ -45,6 +45,10 @@ namespace HeroGame.Runtime.UI
         private string _app = "";
         private VisualElement _corner;
         private string _mapQuery = "";
+        private bool _custodyHidden;
+        private string _custodyStatus = "";
+        private Label _custodyCountdown;
+        private Core.Crime.CustodyView _custodyView;
 
         private void OnEnable()
         {
@@ -107,13 +111,27 @@ namespace HeroGame.Runtime.UI
 
             if (input.PausePressed && !UiFocus.EscapeConsumedThisFrame)
             {
-                if (_screen != Screen.None) Close();
+                if (_screen == Screen.Custody) Switch(Screen.Pause);
+                else if (_screen != Screen.None) Close();
                 else if (!UiFocus.Active) Open(Screen.Pause);
             }
             else if (input.PhonePressed && !PhonePanel.ClassicOpen)
             {
                 if (_screen == Screen.Phone) Close();
+                else if (_screen == Screen.Custody) Switch(Screen.Phone);
                 else if (_screen == Screen.None && !UiFocus.Active) Open(Screen.Phone);
+            }
+
+            // Custody: the case screen stays up while the player is held (it returns after the pause menu or phone).
+            if (!InCustody())
+            {
+                _custodyHidden = false;
+                if (_screen == Screen.Custody) Close();
+            }
+            else if (_screen == Screen.None && !UiFocus.Active && (!_custodyHidden || input.InteractPressed))
+            {
+                _custodyHidden = false;
+                Open(Screen.Custody);
             }
 
             _fpsFrames++;
@@ -124,6 +142,7 @@ namespace HeroGame.Runtime.UI
                 RefreshHud();
             }
             RefreshToasts();
+            if (_screen == Screen.Custody) RefreshCustody();
         }
 
         private void RefreshHud()
@@ -164,7 +183,7 @@ namespace HeroGame.Runtime.UI
                 _badge.style.display = unread > 0 ? DisplayStyle.Flex : DisplayStyle.None;
             }
 
-            var prompt = Crime.StreetEncounterPresenter.Active ? Crime.StreetEncounterPresenter.Card : Interactor != null ? Interactor.PromptText : "";
+            var prompt = Crime.StreetEncounterPresenter.Active ? Crime.StreetEncounterPresenter.Card : _custodyHidden && InCustody() ? "Your case, bail and options" : Interactor != null ? Interactor.PromptText : "";
             _prompt.text = string.IsNullOrEmpty(prompt) ? "" : Crime.StreetEncounterPresenter.Active ? "▲  " + prompt : "[E]  " + prompt;
             _prompt.style.display = string.IsNullOrEmpty(prompt) || _screen != Screen.None ? DisplayStyle.None : DisplayStyle.Flex;
 
@@ -238,6 +257,14 @@ namespace HeroGame.Runtime.UI
             Rebuild();
         }
 
+        /// <summary>Changes screen without giving up focus (custody → pause or phone and back).</summary>
+        private void Switch(Screen screen)
+        {
+            _screen = screen;
+            _app = "";
+            Rebuild();
+        }
+
         private void Close()
         {
             if (_screen == Screen.Pause) SettingsService.Commit();
@@ -260,9 +287,10 @@ namespace HeroGame.Runtime.UI
         {
             _layer.Clear();
             _layer.pickingMode = _screen == Screen.None ? PickingMode.Ignore : PickingMode.Position;
-            ShowHud(_screen != Screen.Pause);
+            ShowHud(_screen != Screen.Pause && _screen != Screen.Custody);
             if (_screen == Screen.Pause) BuildPause(SettingsTab.Audio);
             else if (_screen == Screen.Phone) BuildPhone();
+            else if (_screen == Screen.Custody) BuildCustody();
         }
 
         private static Button Nav(string text, Action onClick, bool active = false)
@@ -393,7 +421,127 @@ namespace HeroGame.Runtime.UI
             SettingsService.Commit();
             if (ServiceRegistry.TryGet<GameSession>(out var session)) session.Save();
             Close();
+            // The menu needs the mouse: closing the pause screen re-locked it for gameplay.
+            UiFocus.Reset();
             if (Application.CanStreamedLevelBeLoaded(MenuScene)) SceneManager.LoadScene(MenuScene);
+        }
+
+        // ------------------------------------------------------------------ custody
+
+        private static bool InCustody()
+        {
+            var online = Online.NetworkSession.Me;
+            if (online != null) return online.InCustody;
+            return ServiceRegistry.TryGet<GameSession>(out var s) && s.LocalCharacter != null && s.LocalCharacter.Record.InCustody;
+        }
+
+        /// <summary>What the custody screen shows: the local justice service offline, the server's view online.</summary>
+        private static Core.Crime.CustodyView CurrentCustody()
+        {
+            var online = Online.NetworkSession.Me;
+            if (online != null) return online.Custody ?? new Core.Crime.CustodyView { InCustody = online.InCustody };
+            return ServiceRegistry.TryGet<GameSession>(out var s) && s.LocalCharacter != null ? s.World.Courts.Custody(s.LocalCharacter) : new Core.Crime.CustodyView();
+        }
+
+        private static string Signature(Core.Crime.CustodyView v) =>
+            v.InCustody + "|" + v.ServingSentence + "|" + v.HearingDay + "|" + v.ReleaseDay + "|" + v.BailCents + "|" + v.CanPostBail + "|" + v.Counsel + "|" + v.PleaOffered + "|" + v.PleadedGuilty + "|" + v.Charges.Count;
+
+        private float _nextCustodyCheck;
+
+        private void RefreshCustody()
+        {
+            if (Time.unscaledTime < _nextCustodyCheck) return;
+            _nextCustodyCheck = Time.unscaledTime + 0.5f;
+            var view = CurrentCustody();
+            if (_custodyView == null || Signature(view) != Signature(_custodyView)) BuildCustody();
+            else UpdateCountdown();
+        }
+
+        private void UpdateCountdown()
+        {
+            if (_custodyCountdown == null || _custodyView == null || !ServiceRegistry.TryGet<GameSession>(out var session)) return;
+            var clock = session.World.Clock;
+            var left = _custodyView.NextEventSecond - clock.Now.TotalSeconds;
+            if (_custodyView.NextEventSecond < 0 || left <= 0)
+            {
+                _custodyCountdown.text = _custodyView.NextStep;
+                return;
+            }
+            var realMinutes = Math.Max(1, (int)Math.Ceiling(left / Math.Max(1.0, clock.TimeScale) / 60.0));
+            var gameHours = (int)Math.Ceiling(left / 3600.0);
+            _custodyCountdown.text = _custodyView.NextStep + "  That is " + (gameHours >= 48 ? gameHours / 24 + " days" : gameHours + " hours") +
+                                     " of game time, about " + realMinutes + " real minute" + (realMinutes == 1 ? "" : "s") + ".";
+        }
+
+        private void BuildCustody()
+        {
+            _layer.Clear();
+            var view = _custodyView = CurrentCustody();
+            ServiceRegistry.TryGet<GameSession>(out var session);
+            var online = Online.NetworkSession.Me != null;
+            var overlay = new VisualElement();
+            overlay.AddToClassList("g-custody");
+            var card = new ScrollView();
+            card.AddToClassList("g-custody-card");
+            card.Add(Text("IN CUSTODY", "g-overlay-title"));
+            card.Add(Text(view.Headline, "g-custody-sub"));
+            _custodyCountdown = Text(view.NextStep, "g-custody-line");
+            card.Add(_custodyCountdown);
+            UpdateCountdown();
+            if (view.Charges.Count > 0) card.Add(Text("Charges: " + string.Join(", ", view.Charges) + ".", "g-custody-line"));
+            if (view.BailCents > 0) card.Add(Text("Bail: " + new Money(view.BailCents) + (view.CanPostBail ? "" : " (not available now)"), "g-custody-line"));
+            else if (view.BailCents < 0) card.Add(Text("Bail: denied. You are held until the hearing.", "g-custody-line"));
+            if (!string.IsNullOrEmpty(view.Counsel))
+                card.Add(Text("Counsel: " + view.Counsel + " · case strength " + (int)(view.EvidenceStrength * 100) + "%", "g-custody-line"));
+            if (view.PleadedGuilty) card.Add(Text("Guilty plea entered: the court will take a third off the sentence.", "g-custody-line"));
+            else if (view.PleaOffered) card.Add(Text("The prosecutor offers a plea deal: plead guilty for a third off the sentence.", "g-custody-line"));
+
+            var actions = new VisualElement();
+            actions.AddToClassList("g-custody-actions");
+            var w = session?.World;
+            var me = session?.LocalCharacter;
+            if (view.CanPostBail)
+                actions.Add(ActionButton("Post bail " + new Money(view.BailCents), () => CustodyAct("justice.bail", () => w.Courts.PostBail(me, session.NextRequestKey("bail")), "Bail posted. You are free until your hearing.")));
+            if (view.CanHireAttorney && !view.ServingSentence)
+                actions.Add(ActionButton("Hire an attorney " + new Money(view.AttorneyFeeCents), () => CustodyAct("justice.attorney", () => w.Courts.HireAttorney(me, session.NextRequestKey("attorney")), "Your attorney will argue the case.")));
+            if (view.PleaOffered && !view.PleadedGuilty && !view.ServingSentence)
+                actions.Add(ActionButton("Accept the plea deal", () => CustodyAct("justice.plea", () => w.Courts.AcceptPlea(me), "Plea entered.")));
+            if (!online && session != null && me != null && view.InCustody)
+                actions.Add(ActionButton(view.ServingSentence ? "Serve the sentence" : "Wait for the hearing", () =>
+                {
+                    var days = session.Simulation.WaitInCustody(me);
+                    _custodyStatus = days + " day" + (days == 1 ? "" : "s") + " passed. " + (me.Record.InCustody ? "Check your phone for the verdict." : "");
+                    if (_screen == Screen.Custody) BuildCustody();
+                }));
+            actions.Add(ActionButton("Look around", () => { _custodyHidden = true; Close(); }, quiet: true));
+            actions.Add(ActionButton("Pause menu", () => Switch(Screen.Pause), quiet: true));
+            card.Add(actions);
+            if (!string.IsNullOrEmpty(_custodyStatus)) card.Add(Text(_custodyStatus, "g-note"));
+            card.Add(Text(online
+                ? "Online, time runs on the server for everyone, so the wait is real. Post bail to leave now, or stay and wait; the case goes on while you are offline too."
+                : "Waiting skips time: the city keeps living while you are held, so bills, rent and news still happen.", "g-note"));
+            card.Add(Text("\"Look around\" hides this screen; press E to bring it back.", "g-note"));
+            overlay.Add(card);
+            _layer.Add(overlay);
+        }
+
+        private void CustodyAct(string op, Func<OpResult> offline, string success)
+        {
+            var net = Online.NetworkSession.Current;
+            if (Online.NetworkSession.Replica != null && net != null)
+            {
+                _custodyStatus = "…";
+                BuildCustody();
+                _ = net.Request(op, new Dictionary<string, string>()).ContinueWith(t =>
+                {
+                    _custodyStatus = t.Result.Success ? success : t.Result.Error;
+                    if (_screen == Screen.Custody) BuildCustody();
+                }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+                return;
+            }
+            var r = offline();
+            _custodyStatus = r.Success ? success : r.Error;
+            BuildCustody();
         }
 
         // ------------------------------------------------------------------ phone

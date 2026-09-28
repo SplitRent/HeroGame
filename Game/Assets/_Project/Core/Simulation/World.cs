@@ -422,6 +422,7 @@ namespace HeroGame.Core.Simulation
                 ServerId = ServerId,
                 CreatedDay = Today,
                 LastPosition = spawn,
+                Identity = (account.Character ?? new CharacterIdentity()).Clone(),
             };
             character.CheckingAccount = Ids.Next(EntityKind.LedgerAccount);
             Ledger.Open(character.CheckingAccount, character.CharacterId, LedgerAccountKind.PersonalChecking, account.Character.FullName + " checking");

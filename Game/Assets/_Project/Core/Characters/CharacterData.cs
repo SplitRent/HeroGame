@@ -34,6 +34,13 @@ namespace HeroGame.Core.Characters
         public int FacialHairId;
         public List<NamedValue> FaceMorphs = new List<NamedValue>();
 
+        public AppearanceData Clone()
+        {
+            var copy = (AppearanceData)MemberwiseClone();
+            copy.FaceMorphs = new List<NamedValue>(FaceMorphs ?? new List<NamedValue>());
+            return copy;
+        }
+
         public float GetMorph(string name, float fallback = 0.5f)
         {
             foreach (var m in FaceMorphs) if (m.Name == name) return m.Value;
@@ -72,6 +79,13 @@ namespace HeroGame.Core.Characters
         public AppearanceData Appearance = new AppearanceData();
 
         public string FullName => FirstName + " " + LastName;
+
+        public CharacterIdentity Clone()
+        {
+            var copy = (CharacterIdentity)MemberwiseClone();
+            copy.Appearance = (Appearance ?? new AppearanceData()).Clone();
+            return copy;
+        }
     }
 
     [Serializable]
@@ -154,6 +168,9 @@ namespace HeroGame.Core.Characters
         public string ServerId = "";
         public long CreatedDay;
         public long LastOnlineSecond;
+
+        /// <summary>Name and appearance this character was created with (empty for characters saved before it was kept).</summary>
+        public CharacterIdentity Identity = new CharacterIdentity();
 
         public EntityId CheckingAccount;
         public EntityId SavingsAccount;

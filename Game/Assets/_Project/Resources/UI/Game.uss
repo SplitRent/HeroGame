@@ -275,6 +275,45 @@
 
 .g-action--quiet:hover { background-color: rgba(255, 255, 255, 0.16); }
 
+/* ------------------------------------------------------------------ custody */
+
+.g-custody {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(4, 8, 14, 0.82);
+    align-items: center;
+    justify-content: center;
+}
+
+.g-custody-card {
+    width: 780px;
+    max-width: 92%;
+    max-height: 88%;
+    padding: 36px 44px;
+    background-color: rgb(12, 18, 28);
+    border-top-width: 3px;
+    border-top-color: rgb(240, 180, 41);
+}
+
+.g-custody-sub {
+    font-size: 19px;
+    color: rgb(240, 180, 41);
+    margin-bottom: 14px;
+}
+
+.g-custody-line {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.86);
+    white-space: normal;
+    margin: 3px 0;
+}
+
+.g-custody-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 18px 0 8px 0;
+}
+
 /* ------------------------------------------------------------------ phone */
 
 .g-phone {

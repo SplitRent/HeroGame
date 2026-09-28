@@ -11,13 +11,16 @@ namespace HeroGame.Runtime.UI
     using HeroGame.Core.Population;
     using HeroGame.Core.Servers;
     using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Saves;
     using HeroGame.Persistence.Storage;
     using HeroGame.Runtime.Bootstrap;
 
     /// <summary>
     /// Front end (GDD §6–7): Continue, Story Mode, Servers, Character, Options, Settings, Exit.
-    /// Built on UI Toolkit; layout in Resources/UI/MainMenu.uxml, style in FrontEnd.uss (named apart from the UXML: Resources.Load cannot tell two assets with one name apart). On first run
-    /// the player is sent to CREATE YOUR CHARACTER before anything else.
+    /// Built on UI Toolkit; layout in Resources/UI/MainMenu.uxml, style in FrontEnd.uss (named apart from the UXML:
+    /// Resources.Load cannot tell two assets with one name apart). The player keeps up to three characters
+    /// (<see cref="CharacterSlots"/>), each with its own worlds: the first run opens the character creator as a
+    /// popup, and every later run starts on CHOOSE YOUR CHARACTER.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public sealed class MainMenuController : MonoBehaviour
@@ -27,17 +30,24 @@ namespace HeroGame.Runtime.UI
 
         private UIDocument _document;
         private VisualElement _panel;
-        private AccountProfile _account;
+        private VisualElement _root;
+        private VisualElement _modal;
+        private CharacterSlots _slots;
+        private int _slot = 1;
+        private int _confirmDelete;
+        private AccountProfile _account => _slots?.Get(_slot);
         private readonly ServerFilter _filter = new ServerFilter();
         private List<ServerListing> _servers = new List<ServerListing>();
 
         private void OnEnable()
         {
+            // Whatever the last scene did with the cursor (gameplay locks it), the menu needs the mouse.
+            UiFocus.Reset();
             _document = GetComponent<UIDocument>();
             if (_document.panelSettings == null)
                 _document.panelSettings = PanelSettings != null ? PanelSettings : ScriptableObject.CreateInstance<PanelSettings>();
             if (_document.visualTreeAsset == null) _document.visualTreeAsset = Resources.Load<VisualTreeAsset>("UI/MainMenu");
-            var root = _document.rootVisualElement;
+            var root = _root = _document.rootVisualElement;
             if (root == null) return;
             if (root.childCount == 0 && _document.visualTreeAsset != null) _document.visualTreeAsset.CloneTree(root);
             foreach (var sheet in new[] { "UI/Controls", "UI/FrontEnd" })
@@ -51,18 +61,36 @@ namespace HeroGame.Runtime.UI
             root.Q<Label>("title").text = GameInfo.WorkingTitle;
             root.Q<Label>("footer").text = "Build " + GameInfo.Version + " · Working title · Not for distribution";
 
-            _account = GameBootstrap.Accounts.Load("local");
+            _slots = GameBootstrap.Slots;
+            _slot = _slots.Active;
             Bind(root, "continue", () => Launch(SessionMode.LocalServer, "local-dev", "local-dev"));
             Bind(root, "story", ShowStory);
             Bind(root, "servers", ShowServers);
-            Bind(root, "character", ShowCharacterCreator);
+            Bind(root, "character", ShowCharacters);
             Bind(root, "options", ShowOptions);
             Bind(root, "settings", ShowSettings);
             Bind(root, "exit", Quit);
 
-            root.Q<Button>("continue").style.display = _account != null && _account.CharacterCreated ? DisplayStyle.Flex : DisplayStyle.None;
-            if (_account == null || !_account.CharacterCreated) ShowCharacterCreator();
-            else ShowServers();
+            RefreshContinue();
+            ShowCharacters();
+            // First run: make a character before anything else.
+            if (!_slots.Any) ShowCreator(1, firstRun: true);
+        }
+
+        private void Update()
+        {
+            // Nothing in the front end may hide or trap the mouse.
+            if (UnityEngine.Cursor.lockState != CursorLockMode.None) UnityEngine.Cursor.lockState = CursorLockMode.None;
+            if (!UnityEngine.Cursor.visible) UnityEngine.Cursor.visible = true;
+        }
+
+        private void RefreshContinue()
+        {
+            var button = _root?.Q<Button>("continue");
+            if (button == null) return;
+            var account = _account;
+            button.style.display = account != null ? DisplayStyle.Flex : DisplayStyle.None;
+            if (account != null) button.text = "CONTINUE · " + account.Character.FullName.ToUpperInvariant();
         }
 
         private static void Bind(VisualElement root, string name, Action action)
@@ -85,12 +113,14 @@ namespace HeroGame.Runtime.UI
             var p = BeginPanel("STORY MODE");
             p.Add(Muted("Port Arden, Texas. Grow up in Eastwater, then live the life you choose four years later."));
             p.Add(Muted("Chapter structure is in development (Phase 15–17). This launches the story save slot on the vertical-slice world."));
-            p.Add(new Button(() => Launch(SessionMode.Story, "story", "slot-1")) { text = "BEGIN — SLOT 1" });
+            p.Add(Muted(_account != null ? "Playing as " + _account.Character.FullName + ". Each character has their own story." : "Create a character first."));
+            p.Add(new Button(() => Launch(SessionMode.Story, "story", "slot-1")) { text = "PLAY STORY" });
         }
 
         private void ShowServers()
         {
             var p = BeginPanel("SERVERS");
+            if (_account != null) p.Add(Muted("Playing as " + _account.Character.FullName + " (character " + _slot + "). Each of your characters is a different person on every server."));
             _servers = LoadServerList();
             var search = new TextField("Search") { value = _filter.Search };
             search.AddToClassList("hg-field");
@@ -153,21 +183,157 @@ namespace HeroGame.Runtime.UI
             p.Add(new Button(ShowServers) { text = "BACK" });
         }
 
-        private void ShowCharacterCreator()
+        // ------------------------------------------------------------------ characters
+
+        private void ShowCharacters()
         {
-            var p = BeginPanel("CREATE YOUR CHARACTER");
-            var profile = _account ?? new AccountProfile { AccountId = Core.Foundation.EntityId.Create(Core.Foundation.EntityKind.UserAccount, 1) };
+            var p = BeginPanel("CHOOSE YOUR CHARACTER");
+            p.Add(Muted("Up to " + CharacterSlots.Count + " characters. Each one has their own worlds: their own story, their own homes, money and record on every server."));
+            var row = new VisualElement();
+            row.AddToClassList("hg-slots");
+            for (var slot = 1; slot <= CharacterSlots.Count; slot++) row.Add(SlotCard(slot));
+            p.Add(row);
+        }
+
+        private VisualElement SlotCard(int slot)
+        {
+            var card = new VisualElement();
+            card.AddToClassList("hg-slot");
+            var profile = _slots.Get(slot);
+            var top = new VisualElement();
+            var number = new Label("CHARACTER " + slot + (profile != null && slot == _slot ? "  ·  SELECTED" : ""));
+            number.AddToClassList("hg-slot-number");
+            top.Add(number);
+            var actions = new VisualElement();
+            if (profile == null)
+            {
+                card.AddToClassList("hg-slot--empty");
+                var empty = new Label("Empty");
+                empty.AddToClassList("hg-slot-name");
+                top.Add(empty);
+                top.Add(SlotMeta("A new life in Port Arden."));
+                actions.Add(SlotButton("CREATE CHARACTER", () => ShowCreator(slot, firstRun: false), accent: true));
+            }
+            else
+            {
+                if (slot == _slot) card.AddToClassList("hg-slot--active");
+                var c = profile.Character;
+                var name = new Label(c.FullName);
+                name.AddToClassList("hg-slot-name");
+                top.Add(name);
+                top.Add(SlotMeta("Age " + c.Age + " · " + c.Presentation + " · " + Mathf.RoundToInt(c.Appearance.HeightCm) + " cm"));
+                if (_confirmDelete == slot)
+                {
+                    top.Add(SlotMeta("Delete " + c.FirstName + " and every world they live in? This cannot be undone."));
+                    actions.Add(SlotButton("YES, DELETE", () => DeleteCharacter(slot), danger: true));
+                    actions.Add(SlotButton("KEEP", () => { _confirmDelete = 0; ShowCharacters(); }));
+                }
+                else
+                {
+                    actions.Add(SlotButton("PLAY", () => { Select(slot); Launch(SessionMode.LocalServer, "local-dev", "local-dev"); }, accent: true));
+                    actions.Add(SlotButton("STORY", () => { Select(slot); Launch(SessionMode.Story, "story", "slot-1"); }));
+                    actions.Add(SlotButton("SERVERS", () => { Select(slot); ShowServers(); }));
+                    actions.Add(SlotButton("DELETE", () => { _confirmDelete = slot; ShowCharacters(); }, quiet: true));
+                }
+                card.RegisterCallback<ClickEvent>(e =>
+                {
+                    if (e.target is Button || _slot == slot) return;
+                    Select(slot);
+                    ShowCharacters();
+                });
+            }
+            card.Add(top);
+            card.Add(actions);
+            return card;
+        }
+
+        private void Select(int slot)
+        {
+            if (_slots.IsEmpty(slot)) return;
+            _slot = slot;
+            _slots.Active = slot;
+            RefreshContinue();
+        }
+
+        private void DeleteCharacter(int slot)
+        {
+            _confirmDelete = 0;
+            DeleteWorlds(slot);
+            _slots.Delete(slot);
+            _slot = _slots.Active;
+            RefreshContinue();
+            ShowCharacters();
+            if (!_slots.Any) ShowCreator(1, firstRun: true);
+        }
+
+        /// <summary>A character's worlds go with them (a new character in the slot starts fresh).</summary>
+        private static void DeleteWorlds(int slot)
+        {
+            foreach (var folder in CharacterSlots.WorldFolders(GameSession.SaveRoot, slot))
+            {
+                try { Directory.Delete(folder, true); }
+                catch (IOException ex) { Debug.LogWarning("[Characters] Could not delete " + folder + ": " + ex.Message); }
+                catch (UnauthorizedAccessException ex) { Debug.LogWarning("[Characters] Could not delete " + folder + ": " + ex.Message); }
+            }
+        }
+
+        private static Label SlotMeta(string text)
+        {
+            var l = new Label(text);
+            l.AddToClassList("hg-slot-meta");
+            return l;
+        }
+
+        private static Button SlotButton(string text, Action onClick, bool accent = false, bool quiet = false, bool danger = false)
+        {
+            var b = new Button(onClick) { text = text };
+            b.AddToClassList("hg-button");
+            if (accent) b.AddToClassList("hg-button--accent");
+            if (quiet) b.AddToClassList("hg-button--quiet");
+            if (danger) b.AddToClassList("hg-button--danger");
+            return b;
+        }
+
+        private void CloseModal()
+        {
+            _modal?.RemoveFromHierarchy();
+            _modal = null;
+        }
+
+        /// <summary>The character creator, as a popup over the menu. On the first run it cannot be dismissed.</summary>
+        private void ShowCreator(int slot, bool firstRun)
+        {
+            CloseModal();
+            _modal = new VisualElement();
+            _modal.AddToClassList("hg-modal");
+            var card = new VisualElement();
+            card.AddToClassList("hg-modal-card");
+            _modal.Add(card);
+            _root.Add(_modal);
+
+            var title = new Label(firstRun ? "WELCOME TO PORT ARDEN" : "CREATE CHARACTER " + slot);
+            title.AddToClassList("hg-panel-title");
+            card.Add(title);
+            card.Add(Muted(firstRun
+                ? "Create your first character. You can keep up to " + CharacterSlots.Count + ", each with their own worlds, and play any of them from the main menu."
+                : "A new person with their own worlds. Name and appearance are theirs on every server; money, home, job and powers are lived separately on each."));
+            var p = new ScrollView();
+            p.AddToClassList("hg-modal-body");
+            card.Add(p);
+
+            var profile = CharacterSlots.NewProfile(slot);
             var c = profile.Character;
-            p.Add(Muted("Your name and appearance follow you to every server. Everything else — money, home, job, powers — is lived separately on each one."));
             var first = Field("First name", c.FirstName);
+            first.maxLength = IdentityRules.MaxNameLength;
             var last = Field("Surname", c.LastName);
-            var age = new SliderInt("Age", 18, 70) { value = Mathf.Clamp(c.Age, 18, 70) };
+            last.maxLength = IdentityRules.MaxNameLength;
+            var age = new SliderInt("Age", IdentityRules.MinAge, IdentityRules.MaxAge) { value = Mathf.Clamp(c.Age, IdentityRules.MinAge, IdentityRules.MaxAge), showInputField = true };
             age.AddToClassList("hg-field");
             var presentation = new DropdownField("Presentation", new List<string> { "Feminine", "Masculine", "Androgynous" }, (int)c.Presentation);
             presentation.AddToClassList("hg-field");
-            var height = new Slider("Height (cm)", 150f, 205f) { value = c.Appearance.HeightCm };
+            var height = new Slider("Height (cm)", IdentityRules.MinHeightCm, IdentityRules.MaxHeightCm) { value = c.Appearance.HeightCm, showInputField = true };
             height.AddToClassList("hg-field");
-            var skin = new SliderInt("Skin tone", 0, 9) { value = c.Appearance.SkinTone };
+            var skin = new SliderInt("Skin tone", 0, IdentityRules.SkinTones - 1) { value = c.Appearance.SkinTone };
             skin.AddToClassList("hg-field");
             var build = new Slider("Build", 0f, 1f) { value = c.Appearance.BodyWeight };
             build.AddToClassList("hg-field");
@@ -176,16 +342,19 @@ namespace HeroGame.Runtime.UI
             var nose = new Slider("Nose length", 0f, 1f) { value = c.Appearance.GetMorph("nose_length") };
             nose.AddToClassList("hg-field");
             foreach (var e in new VisualElement[] { first, last, age, presentation, height, skin, build, jaw, nose }) p.Add(e);
+
             var status = Muted("");
-            p.Add(new Button(() =>
+            var buttons = new VisualElement();
+            buttons.AddToClassList("hg-row");
+            buttons.Add(SlotButton("CREATE " + (firstRun ? "AND CONTINUE" : "CHARACTER"), () =>
             {
-                if (string.IsNullOrWhiteSpace(first.value) || string.IsNullOrWhiteSpace(last.value))
+                c.FirstName = first.value;
+                c.LastName = last.value;
+                if (!IdentityRules.IsValid(c))
                 {
-                    status.text = "Enter a first name and surname.";
+                    status.text = "Enter a first name and a surname (letters, spaces, hyphens and apostrophes).";
                     return;
                 }
-                c.FirstName = first.value.Trim();
-                c.LastName = last.value.Trim();
                 c.Age = age.value;
                 c.Presentation = (GenderPresentation)Mathf.Max(0, presentation.index);
                 c.Appearance.HeightCm = height.value;
@@ -193,13 +362,18 @@ namespace HeroGame.Runtime.UI
                 c.Appearance.BodyWeight = build.value;
                 c.Appearance.SetMorph("jaw_width", jaw.value);
                 c.Appearance.SetMorph("nose_length", nose.value);
-                profile.CharacterCreated = true;
-                GameBootstrap.Accounts.Save("local", profile);
-                _account = profile;
-                _document.rootVisualElement.Q<Button>("continue").style.display = DisplayStyle.Flex;
-                status.text = "Saved. " + c.FullName + " is ready.";
-            }) { text = "SAVE CHARACTER" });
-            p.Add(status);
+                // A new person starts in fresh worlds, never in whatever an earlier occupant of the slot left.
+                DeleteWorlds(slot);
+                _slots.Save(slot, profile);
+                _slot = slot;
+                CloseModal();
+                RefreshContinue();
+                ShowCharacters();
+            }, accent: true));
+            if (!firstRun) buttons.Add(SlotButton("CANCEL", CloseModal, quiet: true));
+            card.Add(buttons);
+            card.Add(status);
+            first.Focus();
         }
 
         private void ShowOptions()
@@ -266,14 +440,17 @@ namespace HeroGame.Runtime.UI
             p.Add(more);
         }
 
-        private void Launch(SessionMode mode, string serverId, string slot)
+        private void Launch(SessionMode mode, string serverId, string world)
         {
-            if (_account == null || !_account.CharacterCreated)
+            if (_account == null)
             {
-                ShowCharacterCreator();
+                var empty = _slots.FirstEmpty;
+                if (empty > 0) ShowCreator(empty, firstRun: !_slots.Any);
+                else ShowCharacters();
                 return;
             }
-            LaunchRequest.Set(mode, serverId, slot);
+            _slots.Active = _slot;
+            LaunchRequest.Set(mode, serverId, world, _slot);
             SceneManager.LoadScene(GameplayScene);
         }
 

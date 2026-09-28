@@ -43,6 +43,8 @@ namespace HeroGame.Networking.Protocol
         public List<Insurable> Insurables = new List<Insurable>();
         /// <summary>A mugging in progress, or null.</summary>
         public EncounterView Encounter;
+        /// <summary>Case, bail and release details while the player is in custody, or null.</summary>
+        public Core.Crime.CustodyView Custody;
 
         public sealed class EncounterView
         {
@@ -181,6 +183,7 @@ namespace HeroGame.Networking.Protocol
                     RentCents = e.MonthlyRentIncome.Cents, NetCents = e.MonthlyNet.Cents, Units = e.Units, Occupied = e.OccupiedUnits, Insured = e.Insured, ForSale = e.ForSale,
                     Alerts = new List<string>(e.Alerts),
                 });
+            if (c.Record.InCustody) v.Custody = w.Courts.Custody(c);
             var encounter = w.StreetCrime.ActiveFor(c.CharacterId);
             if (encounter != null)
                 v.Encounter = new EncounterView

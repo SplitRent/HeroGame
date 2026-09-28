@@ -32,6 +32,21 @@ namespace HeroGame.Runtime.UI
             Cursor.visible = true;
         }
 
+        /// <summary>
+        /// Front end: no panel holds focus any more (the scene that held it is gone) and the mouse belongs to the menu.
+        /// Called when the main menu opens, so a cursor locked by gameplay (or by quitting from the pause screen)
+        /// never carries over.
+        /// </summary>
+        public static void Reset()
+        {
+            _holders = 0;
+            // The shared input source outlives scenes: leave it ready for the next time gameplay starts.
+            if (PlayerInputRegistry.Factory != null) PlayerInputRegistry.Factory().GameplayEnabled = true;
+            _input = null;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         public static void Release()
         {
             if (_holders == 0 || --_holders > 0) return;

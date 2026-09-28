@@ -442,6 +442,7 @@ namespace HeroGame.Networking.Server
             else if (_usedNonces.ContainsKey(ticket.Nonce)) reason = "Ticket already used.";
             else if (_moderation.IsBanned(ticket.AccountId, _unixNow())) reason = "You are banned from this server.";
             else if (Players.Count >= _o.MaxPlayers) reason = "Server is full.";
+            else if (hello.CharacterSlot < 1 || hello.CharacterSlot > Hello.MaxCharacterSlots) reason = "Unknown character slot.";
             if (reason != null)
             {
                 c.Send(new Reject { Reason = reason });
@@ -450,7 +451,7 @@ namespace HeroGame.Networking.Server
             }
             _usedNonces[ticket.Nonce] = ticket.ExpiresUnix;
 
-            // One session per account: the newest login wins.
+            // One session per account (whichever character it plays): the newest login wins.
             foreach (var other in Players)
                 if (other.AccountId == ticket.AccountId)
                 {
@@ -459,7 +460,7 @@ namespace HeroGame.Networking.Server
                 }
 
             c.Ticket = ticket;
-            c.Character = CharacterFor(ticket);
+            c.Character = CharacterFor(ticket, hello.CharacterSlot, hello.Identity);
             c.Position = c.Character.LastPosition;
             c.LastStateMs = NowMs;
             c.Send(new Welcome
@@ -481,22 +482,32 @@ namespace HeroGame.Networking.Server
             PlayerJoined?.Invoke(c);
         }
 
-        /// <summary>Stable per-account entity id, so the same account always gets the same character on this server.</summary>
-        public static EntityId AccountEntity(string accountId) =>
-            EntityId.Create(EntityKind.UserAccount, StableHash.Of("account:" + accountId) & 0x00FF_FFFF_FFFF_FFFFUL | 1UL);
+        /// <summary>
+        /// Stable entity id for one of an account's characters, so the same account and slot always get the same
+        /// character on this server. Slot 1 keeps the id characters had before slots existed.
+        /// </summary>
+        public static EntityId AccountEntity(string accountId, int slot = 1) =>
+            EntityId.Create(EntityKind.UserAccount, StableHash.Of("account:" + accountId + (slot > 1 ? ":slot" + slot : "")) & 0x00FF_FFFF_FFFF_FFFFUL | 1UL);
 
-        private ServerCharacter CharacterFor(Ticket ticket)
+        /// <summary>What other players see: the character's own name (the account name for characters from before names were kept).</summary>
+        internal static string NameOf(ServerConnection c)
         {
-            var id = AccountEntity(ticket.AccountId);
+            var name = c.Character?.Identity?.FullName?.Trim();
+            return string.IsNullOrEmpty(name) ? c.Ticket.DisplayName : name;
+        }
+
+        private ServerCharacter CharacterFor(Ticket ticket, int slot, string identity)
+        {
+            var id = AccountEntity(ticket.AccountId, slot);
+            // An existing character keeps the name and look it was created with (no renaming by reconnecting).
             foreach (var ch in _world.Characters.Values) if (ch.AccountId == id) return ch;
-            var name = ticket.DisplayName;
-            var space = name.IndexOf(' ');
-            var profile = new AccountProfile
+            if (!IdentityCodec.TryDecode(identity, out var character))
             {
-                AccountId = id,
-                DisplayName = name,
-                Character = new CharacterIdentity { FirstName = space > 0 ? name.Substring(0, space) : name, LastName = space > 0 ? name.Substring(space + 1) : "" },
-            };
+                var name = IdentityRules.CleanName(ticket.DisplayName);
+                var space = name.IndexOf(' ');
+                character = new CharacterIdentity { FirstName = space > 0 ? name.Substring(0, space) : name, LastName = space > 0 ? name.Substring(space + 1) : "" };
+            }
+            var profile = new AccountProfile { AccountId = id, DisplayName = ticket.DisplayName, Character = character, CharacterCreated = true };
             return _world.CreateCharacter(profile, _o.Spawn);
         }
 
@@ -574,7 +585,7 @@ namespace HeroGame.Networking.Server
                 Violation(c, "announce without permission");
                 return;
             }
-            var message = new ChatMessage { Channel = chat.Channel, FromName = c.Ticket.DisplayName, Text = text };
+            var message = new ChatMessage { Channel = chat.Channel, FromName = NameOf(c), Text = text };
             foreach (var p in Players)
                 if (chat.Channel != ChatChannel.Local || WorldPosition.DistanceXZ(p.Position, c.Position) <= _o.LocalChatRadius) p.Send(message);
         }
@@ -647,7 +658,7 @@ namespace HeroGame.Networking.Server
                 var wanted = _world.Wanted.Get(o.Character.CharacterId);
                 _entries[i] = new RemotePlayer
                 {
-                    CharacterId = o.Character.CharacterId, Name = o.Ticket.DisplayName, Position = o.Position, Heading = o.Heading, Speed = o.Speed,
+                    CharacterId = o.Character.CharacterId, Name = NameOf(o), Position = o.Position, Heading = o.Heading, Speed = o.Speed,
                     WantedLevel = (byte)(wanted != null ? wanted.Level : 0),
                 };
             }

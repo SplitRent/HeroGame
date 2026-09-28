@@ -22,6 +22,14 @@ has not been re-run yet:
 
 The phone also got drawn app icons. Rows stay IN DEVELOPMENT until each is played deliberately.
 
+**Second playtest (owner report).** Three problems, all fixed in code not yet re-run in Unity:
+* The mouse did not work on the main menu after quitting from the pause screen. Closing the pause screen had
+  re-locked the cursor. The menu now frees it.
+* Police arrested the player about two seconds after a punch. Road ETAs are in game time (30× real time).
+* In custody the screen went black, because the holding cell was inside the solid station.
+
+The character creator also now opens as a popup on first run, followed by a choice of three characters.
+
 _Last updated: combat and weapons, performance pass, UI Toolkit interface, online player view, water. See `reports/DEV_REPORT_004_COMBAT_UI_PERFORMANCE.md`._
 
 ## Foundation
@@ -85,6 +93,11 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | Crime actions (shoplifting, pickpocketing, burglary, robbery, vehicle theft, assault, vandalism) | TESTED | `Shoplifting_*`, `Burglary_*`, `StoreRobbery_*`, `VehicleTheft_*`, `Masks_ReduceIdentification_*` |
 | Loot, fences, chop shops (items.json) | TESTED | `StoreRobbery_TakesFromTheTill_AndTheFenceBuysLoot`, `VehicleTheft_*` |
 | Legal system (charging threshold, bail, counsel, plea, verdicts, sentencing, custody, probation, fines, warrants) | TESTED | `Sentencing_*`, `Robbery_Arrest_Bail_Hearing_Sentence_EndToEnd`, `GuiltyPlea_*`, `UnpaidFines_*`, `Arrest_WithoutEvidence_*` |
+| Custody screen data (charges, bail, counsel, plea, hearing/release timing); single-player "wait" runs the world to the hearing, then to release | TESTED | `CustodyScreen_ShowsTheCase_AndWaitingRunsToTheHearingThenRelease` |
+| Police give a player at least 40 real seconds (server setting) before arriving; only a suspect still at the scene is arrested | TESTED | `Police_GivePlayersRealSecondsToRun_AndArrestOnlyWhoStays` |
+| Three characters per player, each with their own worlds; the old single profile becomes character 1; deleting a character deletes their worlds | TESTED | `CharacterSlots_ThreeCharacters_EachWithTheirOwnWorlds` |
+| Character names and appearance sanitised (names: letters, spaces, hyphens, apostrophes; appearance clamped) | TESTED | `IdentityRules_CleanNamesAndClampAppearance` |
+| Online: each character slot is its own person on a server (protocol 2); name and look are kept from creation; one session per account | TESTED | `CharacterSlots_AreSeparatePeople_KeepTheirIdentity_AndBadSlotsOrNamesAreHandled` |
 | Justice persistence (incidents, evidence, cases) | TESTED | `EvidenceAndCases_SurviveSaveAndLoad` |
 | Emergency dispatch (road-ETA unit selection, priority queue, trips, scenes, returns) | TESTED | `MedicalCall_*`, `SurgeOfCalls_*`, `Units_AreCrewedFromServiceFleets` |
 | Police response & arrest on scene | TESTED | `Police_ArrestASuspectStillAtTheScene_ButNotOneWhoLeft` |
@@ -199,7 +212,8 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | NPC presentation (pooled avatars) | IN DEVELOPMENT | compiles |
 | Day/night, weather presentation | IN DEVELOPMENT | compiles |
 | World streaming (cells) | IN DEVELOPMENT | compiles; no cell scenes yet |
-| Main menu, server browser UI, character creator | IN DEVELOPMENT | compiles |
+| Main menu, server browser UI, character creator (first-run popup, choose-your-character screen with 3 slots) | IN DEVELOPMENT | compiles |
+| Custody screen (bail, attorney, plea, wait, look around), holding cell behind the station (builder v9) | IN DEVELOPMENT | compiles |
 | Dev console, world/NPC inspector overlay | IN DEVELOPMENT | dev builds only |
 | NPC conversation, subtitles, interiors with real occupants | IN DEVELOPMENT | compiles |
 | Vehicle controller (WheelCollider), entry/exit, traffic presenter | IN DEVELOPMENT | compiles |

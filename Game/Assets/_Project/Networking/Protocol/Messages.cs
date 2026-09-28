@@ -58,12 +58,39 @@ namespace HeroGame.Networking.Protocol
     /// <summary>Client → server, first message: protocol version and a join ticket from the master server.</summary>
     public sealed class Hello : NetMessage
     {
+        public const int MaxCharacterSlots = 3;
+
         public int ProtocolVersion = Wire.ProtocolVersion;
         public string Ticket = "";
         public string ClientVersion = "";
+        /// <summary>Which of the account's characters is joining (1..<see cref="MaxCharacterSlots"/>); each is a separate person on the server.</summary>
+        public int CharacterSlot = 1;
+        /// <summary>
+        /// The slot's name and appearance (<see cref="IdentityCodec"/>), used only when the server creates that
+        /// character; afterwards the server's copy is kept. Always sanitised server side.
+        /// </summary>
+        public string Identity = "";
         public override MessageType Type => MessageType.Hello;
-        public override void Write(PacketWriter w) { w.Int(ProtocolVersion); w.String(Ticket); w.String(ClientVersion); }
-        public override void Read(PacketReader r) { ProtocolVersion = r.Int(); Ticket = r.String(1024); ClientVersion = r.String(64); }
+
+        public override void Write(PacketWriter w)
+        {
+            w.Int(ProtocolVersion);
+            w.String(Ticket);
+            w.String(ClientVersion);
+            w.Int(CharacterSlot);
+            w.String(Identity);
+        }
+
+        public override void Read(PacketReader r)
+        {
+            ProtocolVersion = r.Int();
+            Ticket = r.String(1024);
+            ClientVersion = r.String(64);
+            // Protocol 1 clients stop here; the server answers them with a version mismatch.
+            if (r.Remaining == 0) return;
+            CharacterSlot = r.Int();
+            Identity = r.String(2048);
+        }
     }
 
     public sealed class Welcome : NetMessage

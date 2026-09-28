@@ -169,7 +169,8 @@ namespace HeroGame.Networking.Protocol
     /// </summary>
     public static class Wire
     {
-        public const int ProtocolVersion = 1;
+        /// <summary>2: Hello carries the character slot and identity (three characters per account).</summary>
+        public const int ProtocolVersion = 2;
         public const int MaxFrameBytes = 64 * 1024;
         public const int MaxStringBytes = 4096;
         /// <summary>Largest single string (building layouts); still bounded by the 64 KiB frame.</summary>

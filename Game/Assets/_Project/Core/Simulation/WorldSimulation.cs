@@ -5,6 +5,7 @@ namespace HeroGame.Core.Simulation
 {
     using Stopwatch = System.Diagnostics.Stopwatch;
     using HeroGame.Core.Business;
+    using HeroGame.Core.Characters;
     using HeroGame.Core.Economy;
     using HeroGame.Core.Foundation;
     using HeroGame.Core.Population;
@@ -85,6 +86,27 @@ namespace HeroGame.Core.Simulation
         {
             _world.Clock.AdvanceGame(days * GameDateTime.SecondsPerDay);
             Update();
+        }
+
+        /// <summary>
+        /// Single-player "wait in the cell": runs the world a day at a time until the character's custody changes
+        /// (the hearing is held, or they are released), at most <paramref name="maxDays"/>. Returns the days waited.
+        /// The world keeps living while you wait, exactly as if the time had passed with you offline.
+        /// </summary>
+        public int WaitInCustody(ServerCharacter c, int maxDays = 120)
+        {
+            if (c == null || !c.Record.InCustody) return 0;
+            var serving = c.Record.ServingSentence;
+            var days = 0;
+            while (c.Record.InCustody && c.Record.ServingSentence == serving && days < maxDays)
+            {
+                // To the start of the next day, so each step ends exactly one day.
+                var next = (_world.Clock.Now.DayIndex + 1) * GameDateTime.SecondsPerDay;
+                _world.Clock.AdvanceGame(next - _world.Clock.Now.TotalSeconds);
+                Update();
+                days++;
+            }
+            return days;
         }
 
         private void OnHour(GameDateTime t)

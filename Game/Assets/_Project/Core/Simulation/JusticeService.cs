@@ -211,6 +211,33 @@ namespace HeroGame.Core.Simulation
                 Message(owner, "Police recovered your stolen vehicle " + v.Plate + ". Collect it from the impound lot (no fee).");
         }
 
+        /// <summary>The custody screen's contents for one character (also sent to online players in their view).</summary>
+        public CustodyView Custody(ServerCharacter c)
+        {
+            var r = c.Record;
+            var v = new CustodyView { InCustody = r.InCustody, ServingSentence = r.ServingSentence, Today = _w.Today };
+            var court = S.OpenCaseFor(c.CharacterId);
+            if (court != null)
+            {
+                v.HearingDay = court.HearingDay;
+                v.CaseSummary = court.Summary;
+                foreach (var name in ChargeNames(court)) v.Charges.Add(name);
+                v.BailCents = court.Stage == CaseStage.Charged || court.Stage == CaseStage.HeldInCustody ? court.BailCents : 0;
+                v.CanPostBail = r.InCustody && court.Stage == CaseStage.Charged && court.BailCents > 0;
+                v.Counsel = court.Counsel == Counsel.PrivateAttorney ? "Private attorney" : "Public defender";
+                v.CanHireAttorney = court.Counsel == Counsel.PublicDefender;
+                v.AttorneyFeeCents = (long)(SentencingGuidelines.PrivateAttorneyFeeCents * _w.Macro.PriceLevel);
+                v.PleaOffered = court.PleaOffered;
+                v.PleadedGuilty = court.PleadedGuilty;
+                v.EvidenceStrength = court.EvidenceStrength;
+            }
+            if (r.InCustody && r.ServingSentence && r.CustodyUntilDay >= 0) v.ReleaseDay = r.CustodyUntilDay;
+            // Hearings and releases are decided when their day ends.
+            var day = r.InCustody ? (r.ServingSentence ? v.ReleaseDay : v.HearingDay) : -1;
+            if (day >= 0) v.NextEventSecond = (day + 1) * Time.GameDateTime.SecondsPerDay;
+            return v;
+        }
+
         /// <summary>Surrendering at a police station: arrested without a resisting charge; cooperation is noted by the court.</summary>
         public OpResult TurnSelfIn(ServerCharacter c)
         {

@@ -33,6 +33,8 @@ namespace HeroGame.Runtime.Bootstrap
         public GameSession Session { get; private set; }
         public ContentSet Content { get; private set; }
         public AccountProfile Account { get; private set; }
+        /// <summary>The character slot (1..3) this session plays.</summary>
+        public int CharacterSlot { get; private set; } = 1;
 
         public static GameBootstrap Instance { get; private set; }
 
@@ -44,12 +46,18 @@ namespace HeroGame.Runtime.Bootstrap
                 return;
             }
             Instance = this;
+            var slots = Slots;
             if (LaunchRequest.TryConsume(out var mode, out var serverId, out var slot))
             {
                 Mode = mode;
                 if (!string.IsNullOrEmpty(serverId)) ServerId = serverId;
                 if (!string.IsNullOrEmpty(slot)) SaveSlot = slot;
+                CharacterSlot = LaunchRequest.CharacterSlot;
             }
+            else CharacterSlot = slots.Active; // scene opened directly in the editor
+            if (CharacterSlot < 1 || CharacterSlot > CharacterSlots.Count) CharacterSlot = 1;
+            // Every character lives in its own copy of each world.
+            SaveSlot = CharacterSlots.WorldId(SaveSlot, CharacterSlot);
 
             var folder = Mode == SessionMode.Story ? Path.Combine(GameSession.SaveRoot, "story", SaveSlot) : Path.Combine(GameSession.SaveRoot, "servers", SaveSlot);
             var layout = new WorldSaveSystem(folder).RecordedLayoutFile() ?? (string.IsNullOrEmpty(LayoutFile) ? ContentLoader.DefaultLayout : LayoutFile);
@@ -58,7 +66,7 @@ namespace HeroGame.Runtime.Bootstrap
             foreach (var m in report.Messages) Debug.LogWarning("[Content] " + m);
             if (report.HasErrors) throw new InvalidDataException("Content validation failed; see warnings above.");
 
-            Account = LoadOrCreateAccount();
+            Account = LoadAccount(slots, CharacterSlot);
             StoryDefinition story = null;
             Core.Time.GameDateTime? start = null;
             if (Mode == SessionMode.Story)
@@ -113,21 +121,18 @@ namespace HeroGame.Runtime.Bootstrap
             return Core.Time.GameDateTime.FromCalendar(int.Parse(p[0]), int.Parse(p[1]), int.Parse(p[2]), int.Parse(p[3]), int.Parse(p[4]));
         }
 
-        public static AccountStore Accounts => new AccountStore(Path.Combine(GameSession.SaveRoot, "accounts"));
+        /// <summary>The player's three characters on this machine (profiles under Saves/accounts).</summary>
+        public static CharacterSlots Slots => new CharacterSlots(Path.Combine(GameSession.SaveRoot, "accounts"));
 
-        private static AccountProfile LoadOrCreateAccount()
+        private static AccountProfile LoadAccount(CharacterSlots slots, int slot)
         {
-            var store = Accounts;
-            var profile = store.Load("local");
+            var profile = slots.Get(slot);
             if (profile != null) return profile;
-            // Offline default until the character creator has run. Online, the account service issues ids.
-            profile = new AccountProfile
-            {
-                AccountId = EntityId.Create(EntityKind.UserAccount, 1),
-                DisplayName = Environment.UserName,
-                Character = new CharacterIdentity { FirstName = "Alex", LastName = "Rivera", Age = 21 },
-            };
-            store.Save("local", profile);
+            // Scene played directly with no character made yet: a stand-in that is not saved, so the main menu
+            // still asks for a real character. Online, the account service issues ids.
+            profile = CharacterSlots.NewProfile(slot);
+            profile.DisplayName = Environment.UserName;
+            profile.Character = new CharacterIdentity { FirstName = "Alex", LastName = "Rivera", Age = 21 };
             return profile;
         }
     }

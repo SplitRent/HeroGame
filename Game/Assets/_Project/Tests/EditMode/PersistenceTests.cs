@@ -26,6 +26,77 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void CharacterSlots_ThreeCharacters_EachWithTheirOwnWorlds()
+        {
+            var root = TestContent.TempDirectory("slots");
+            var accounts = Path.Combine(root, "accounts");
+            // Before slots there was one "local" profile: it becomes character 1 and keeps its worlds.
+            new AccountStore(accounts).Save(CharacterSlots.LegacyKey, Account("Legacy"));
+            var slots = new CharacterSlots(accounts);
+            Assert.AreEqual("Legacy Tester", slots.Get(1).Character.FullName);
+            Assert.AreEqual(CharacterSlots.AccountIdFor(1), slots.Get(1).AccountId);
+            Assert.IsTrue(slots.IsEmpty(2));
+            Assert.AreEqual(2, slots.FirstEmpty);
+            Assert.AreEqual(1, slots.Active);
+
+            var profile = CharacterSlots.NewProfile(3);
+            profile.Character.FirstName = "  Nia ";
+            profile.Character.LastName = "Brooks#1";
+            profile.Character.Age = 9;
+            slots.Save(3, profile);
+            var nia = new CharacterSlots(accounts).Get(3);
+            Assert.AreEqual("Nia Brooks", nia.Character.FullName, "names are cleaned when saved");
+            Assert.AreEqual(IdentityRules.MinAge, nia.Character.Age);
+            Assert.AreEqual(CharacterSlots.AccountIdFor(3), nia.AccountId);
+            Assert.AreEqual(3, slots.Active, "a new character becomes the active one");
+            Assert.Throws<System.ArgumentException>(() => slots.Save(2, CharacterSlots.NewProfile(2)), "no nameless characters");
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => slots.Get(4));
+
+            // Worlds: slot 1 keeps the plain folder names, the others get their own copies.
+            Assert.AreEqual("local-dev", CharacterSlots.WorldId("local-dev", 1));
+            Assert.AreEqual("local-dev-c3", CharacterSlots.WorldId("local-dev", 3));
+            Assert.AreEqual("slot-1-c2", CharacterSlots.WorldId("slot-1", 2));
+            var saves = Path.Combine(root, "saves");
+            foreach (var folder in new[] { "servers/local-dev", "servers/local-dev-c3", "story/slot-1", "story/slot-1-c3", "servers/srv-9-c2" })
+                Directory.CreateDirectory(Path.Combine(saves, folder));
+            var three = CharacterSlots.WorldFolders(saves, 3);
+            CollectionAssert.AreEquivalent(new[] { Path.Combine(saves, "servers", "local-dev-c3"), Path.Combine(saves, "story", "slot-1-c3") }, three);
+            Assert.AreEqual(2, CharacterSlots.WorldFolders(saves, 1).Count);
+
+            slots.Delete(1);
+            Assert.IsTrue(slots.IsEmpty(1));
+            Assert.IsTrue(new CharacterSlots(accounts).IsEmpty(1), "a deleted character does not come back from the old profile");
+            Assert.AreEqual(3, slots.Active);
+            slots.Delete(3);
+            Assert.IsFalse(slots.Any);
+        }
+
+        [Test]
+        public void IdentityRules_CleanNamesAndClampAppearance()
+        {
+            Assert.AreEqual("Anne-Marie O'Neil", IdentityRules.CleanName("  Anne-Marie  O'Neil!! "));
+            Assert.AreEqual("José", IdentityRules.CleanName("José<{9}>"));
+            Assert.AreEqual("", IdentityRules.CleanName("1234 --"));
+            Assert.AreEqual(IdentityRules.MaxNameLength, IdentityRules.CleanName(new string('a', 200)).Length);
+            var hostile = new CharacterIdentity { FirstName = "Kai", LastName = "Lee", Age = -5, Presentation = (Core.Population.GenderPresentation)42, VoicePresetId = "../../x" };
+            hostile.Appearance.HeightCm = float.NaN;
+            hostile.Appearance.SkinTone = 99;
+            hostile.Appearance.HairColorHex = "red; drop";
+            for (var i = 0; i < 100; i++) hostile.Appearance.FaceMorphs.Add(new NamedValue { Name = "m" + i, Value = 7f });
+            var clean = IdentityRules.Sanitize(hostile);
+            Assert.AreNotSame(hostile, clean);
+            Assert.AreEqual(IdentityRules.MinAge, clean.Age);
+            Assert.AreEqual(Core.Population.GenderPresentation.Androgynous, clean.Presentation);
+            Assert.AreEqual("x", clean.VoicePresetId);
+            Assert.AreEqual(175f, clean.Appearance.HeightCm);
+            Assert.AreEqual(IdentityRules.SkinTones - 1, clean.Appearance.SkinTone);
+            Assert.AreEqual("#2B1B10", clean.Appearance.HairColorHex);
+            Assert.AreEqual(IdentityRules.MaxMorphs, clean.Appearance.FaceMorphs.Count);
+            Assert.AreEqual(1f, clean.Appearance.GetMorph("m0"));
+            Assert.IsTrue(IdentityRules.IsValid(clean));
+        }
+
+        [Test]
         public void Json_RoundTripsCoreTypes()
         {
             var id = EntityId.Create(EntityKind.Business, 77);

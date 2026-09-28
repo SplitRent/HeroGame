@@ -7,12 +7,16 @@ namespace HeroGame.Runtime.Bootstrap
         public static SessionMode Mode { get; private set; }
         public static string ServerId { get; private set; } = "";
         public static string SaveSlot { get; private set; } = "";
+        /// <summary>Which character (1..3) plays; each has its own worlds. Kept after the launch is consumed.</summary>
+        public static int CharacterSlot { get; private set; }
 
-        public static void Set(SessionMode mode, string serverId, string saveSlot)
+        /// <summary><paramref name="saveSlot"/> is the base world name; the character's own copy is picked from it.</summary>
+        public static void Set(SessionMode mode, string serverId, string saveSlot, int characterSlot)
         {
             Mode = mode;
             ServerId = serverId;
             SaveSlot = saveSlot;
+            CharacterSlot = characterSlot;
             Pending = true;
         }
 

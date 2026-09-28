@@ -57,6 +57,10 @@ namespace HeroGame.Networking.Client
 
         public bool Encrypted { get; private set; }
 
+        /// <summary>Which of the account's characters to play (1..3) and its name and look, sent in the hello.</summary>
+        public int CharacterSlot = 1;
+        public Core.Characters.CharacterIdentity Identity;
+
         /// <summary>
         /// Connects and sends the join ticket. Completes when the TCP connection (and TLS, if requested) is up; watch
         /// <see cref="Connected"/>. With <paramref name="tls"/> the server's certificate must match the pinned
@@ -90,7 +94,7 @@ namespace HeroGame.Networking.Client
             State = ClientState.Handshaking;
             var reader = new Thread(ReadLoop) { IsBackground = true, Name = "net-client-read" };
             reader.Start();
-            if (sendHello) Send(new Hello { Ticket = ticket, ClientVersion = clientVersion });
+            if (sendHello) Send(new Hello { Ticket = ticket, ClientVersion = clientVersion, CharacterSlot = CharacterSlot, Identity = IdentityCodec.Encode(Identity) });
         }
 
         private void ReadLoop()
