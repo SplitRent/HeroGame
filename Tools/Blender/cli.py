@@ -7,6 +7,7 @@ Runs with either Blender or the bpy module:
     python Tools/Blender/cli.py kit --only SM_Bench_A --art-root /tmp/art
     python Tools/Blender/cli.py preview --out docs/images/blender_kit_preview.png --textures Game/Assets/_Project/Art/Environment/Textures
     python Tools/Blender/cli.py mcp '{"command": "list_catalog"}'
+    blender -b -P Tools/Blender/cli.py -- human --mpfb "<MPFB extension folder>" --art-root Game/Assets/_Project/Art
 """
 import argparse
 import json
@@ -27,6 +28,13 @@ def main(argv):
     p.add_argument("--out", required=True)
     p.add_argument("--textures", required=True, help="folder with the kit's T_*_BC/_N textures")
     p.add_argument("--samples", type=int, default=64)
+    h = sub.add_parser("human", help="build the realistic human body (blend shapes, rig) from MakeHuman data")
+    src = h.add_mutually_exclusive_group(required=True)
+    src.add_argument("--mpfb", help="the MPFB extension folder (production: CC0 MakeHuman assets)")
+    src.add_argument("--makehuman-dump", help="makehuman-data npm package folder (development only, never commit its output)")
+    h.add_argument("--art-root", help="writes <art-root>/Characters/Human/SK_Human.fbx")
+    h.add_argument("--out", help="output folder instead of the art root")
+    h.add_argument("--check", action="store_true", help="only report what the data provides")
     m = sub.add_parser("mcp", help="run one MCP command given as JSON")
     m.add_argument("payload")
     args = parser.parse_args(argv)
@@ -43,6 +51,25 @@ def main(argv):
     if args.cmd == "preview":
         from hg_pipeline import preview
         print(preview.render(args.out, os.path.abspath(args.textures), samples=args.samples))
+        return 0
+    if args.cmd == "human":
+        from hg_pipeline import makehuman as mh_data
+        data = mh_data.MakeHumanData.from_mpfb(args.mpfb) if args.mpfb else mh_data.MakeHumanData.from_threejs_dump(args.makehuman_dump)
+        print(data.report())
+        if args.check:
+            return 0
+        from hg_pipeline import humans
+        out = args.out or (os.path.join(os.path.abspath(args.art_root), "Characters", "Human") if args.art_root else None)
+        if out is None:
+            print("give --art-root or --out")
+            return 2
+        root = mh_data.MakeHumanData.find_mpfb_data(args.mpfb) if args.mpfb else os.path.join(args.makehuman_dump, "public", "data", "skins")
+        skin = humans.find_skin_texture(root) if root else None
+        print("skin detail from:", skin or "(none: flat tone)")
+        manifest = humans.build_and_export(data, out, skin)
+        print("SK_Human: %d vertices, %d bones, %d macro shapes, missing targets: %s" % (
+            manifest["Vertices"], len(manifest["Bones"]), len(manifest["Macros"]), ", ".join(manifest["MissingTargets"]) or "none"))
+        print("wrote", out)
         return 0
     if args.cmd == "mcp":
         from hg_pipeline import mcp_commands

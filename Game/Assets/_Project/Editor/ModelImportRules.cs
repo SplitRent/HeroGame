@@ -97,6 +97,8 @@ namespace HeroGame.Editor
             if (file.EndsWith("_N", System.StringComparison.Ordinal)) importer.textureType = TextureImporterType.NormalMap;
             // Mask maps (metallic/AO/detail/smoothness) and other data textures are linear.
             if (file.EndsWith("_M", System.StringComparison.Ordinal) || file.EndsWith("_ORM", System.StringComparison.Ordinal)) importer.sRGBTexture = false;
+            // Skin detail stores ratios around 0.5 (the avatar doubles the tone), so it must not be gamma-decoded.
+            if (file.EndsWith("_Detail", System.StringComparison.Ordinal)) importer.sRGBTexture = false;
             importer.mipmapEnabled = true;
             importer.streamingMipmaps = true;
             importer.maxTextureSize = assetPath.Contains("/Hero/") ? 4096 : 2048;

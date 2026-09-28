@@ -7,6 +7,7 @@ namespace HeroGame.Runtime.Population
     using HeroGame.Core.Foundation;
     using HeroGame.Core.Population;
     using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.People;
 
     /// <summary>
     /// The physical body of a persistent NPC while it is near a player. Pooled: when released it keeps
@@ -26,6 +27,8 @@ namespace HeroGame.Runtime.Population
         /// <summary>Face, body, today's clothes and walk (from the character catalogs); null before binding.</summary>
         public NpcLooks Looks { get; private set; }
         private WalkStyle _walk;
+        private HumanAvatar _human;
+        private HumanGait _humanGait;
         private float _gaitPhase;
 
         private NavMeshAgent _agent;
@@ -92,7 +95,8 @@ namespace HeroGame.Runtime.Population
             var step = to / dist * Mathf.Min(dist, speed * Time.deltaTime);
             transform.position += step;
             var yaw = Quaternion.Slerp(Quaternion.Euler(0f, transform.eulerAngles.y, 0f), Quaternion.LookRotation(to), 1f - Mathf.Exp(-8f * Time.deltaTime));
-            transform.rotation = yaw * Gait(speed);
+            // A human body walks with its legs (HumanGait); the placeholder capsule leans and sways instead.
+            transform.rotation = _human != null ? yaw : yaw * Gait(speed);
         }
 
         /// <summary>
@@ -129,6 +133,19 @@ namespace HeroGame.Runtime.Population
                 _walk = w.Content.Animations.Walk(Looks.WalkStyle);
                 if (_walk != null) WalkSpeed = _walk.Speed;
                 _gaitPhase = (record.AppearanceSeed & 0xFFFF) / 65535f * Mathf.PI * 2f;
+                if (_human == null) _human = GetComponentInChildren<HumanAvatar>();
+                if (_humanGait == null) _humanGait = GetComponentInChildren<HumanGait>();
+                if (_human != null)
+                {
+                    // The human body carries height, build, skin and clothes itself.
+                    transform.localScale = Vector3.one;
+                    var age = (int)System.Math.Max(0, (w.Today - record.BirthDay) / 365);
+                    _human.Apply(Looks.Appearance, record.Presentation, age);
+                    _human.Dress(Looks.Outfit, w.Content, record.Presentation);
+                    if (_humanGait != null) _humanGait.Style = _walk;
+                    if (_agent != null) _agent.speed = WalkSpeed;
+                    return;
+                }
                 var build = Looks.Appearance.GetMorph("body_fat") * 0.5f + Looks.Appearance.GetMorph("muscle") * 0.3f;
                 transform.localScale = new Vector3(height * (0.85f + build * 0.4f), height, height * (0.85f + build * 0.4f));
                 color = MainColour(w.Content, Looks.Outfit);

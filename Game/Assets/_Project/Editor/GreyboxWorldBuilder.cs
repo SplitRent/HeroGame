@@ -45,7 +45,7 @@ namespace HeroGame.Editor
         /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
         /// stamped with it so the Health Check can say "rebuild the greybox".
         /// </summary>
-        public const int BuilderVersion = 10;
+        public const int BuilderVersion = 11;
         public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
@@ -610,12 +610,16 @@ namespace HeroGame.Editor
             cc.center = new Vector3(0f, 0.9f, 0f);
             cc.stepOffset = 0.35f;
             cc.slopeLimit = 50f;
-            var body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            body.name = "Body (placeholder)";
-            Object.DestroyImmediate(body.GetComponent<Collider>());
-            body.transform.SetParent(player.transform, false);
-            body.transform.localPosition = new Vector3(0f, 0.9f, 0f);
-            body.transform.localScale = new Vector3(0.64f, 0.9f, 0.64f);
+            if (AddHuman(player.transform) != null) player.AddComponent<Runtime.People.PlayerLooks>();
+            else
+            {
+                var body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                body.name = "Body (placeholder)";
+                Object.DestroyImmediate(body.GetComponent<Collider>());
+                body.transform.SetParent(player.transform, false);
+                body.transform.localPosition = new Vector3(0f, 0.9f, 0f);
+                body.transform.localScale = new Vector3(0.64f, 0.9f, 0.64f);
+            }
 
             player.tag = "Player";
             var motor = player.AddComponent<PlayerMotor>();
@@ -679,8 +683,49 @@ namespace HeroGame.Editor
             return ps;
         }
 
+        public const string HumanModelPath = "Assets/_Project/Art/Characters/Human/SK_Human.fbx";
+        public const string SkinDetailPath = "Assets/_Project/Art/Characters/Human/T_Skin_Detail.png";
+
+        /// <summary>
+        /// The realistic human body (Tools/Blender `human` command, from MakeHuman's CC0 data via MPFB) under
+        /// <paramref name="parent"/>, with its looks and procedural walk; null when the model has not been built yet.
+        /// </summary>
+        private static Runtime.People.HumanAvatar AddHuman(Transform parent)
+        {
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(HumanModelPath);
+            if (model == null) return null;
+            var body = (GameObject)PrefabUtility.InstantiatePrefab(model);
+            body.name = "Human";
+            body.transform.SetParent(parent, false);
+            var avatar = body.AddComponent<Runtime.People.HumanAvatar>();
+            avatar.Body = body.GetComponentInChildren<SkinnedMeshRenderer>();
+            avatar.SkinDetail = AssetDatabase.LoadAssetAtPath<Texture2D>(SkinDetailPath);
+            if (avatar.Body != null) avatar.Body.updateWhenOffscreen = false;
+            body.AddComponent<Runtime.People.HumanGait>();
+            var animator = body.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false; // procedural gait until the animation set exists
+            return avatar;
+        }
+
         private static NpcAvatar BuildNpcPrefab(MaterialLibrary m)
         {
+            var human = AssetDatabase.LoadAssetAtPath<GameObject>(HumanModelPath);
+            if (human != null)
+            {
+                var root = new GameObject("NPC Avatar (human)");
+                var capsule = root.AddComponent<CapsuleCollider>();
+                capsule.height = 1.75f;
+                capsule.radius = 0.3f;
+                capsule.center = new Vector3(0f, 0.875f, 0f);
+                var avatarBody = AddHuman(root.transform);
+                var npc = root.AddComponent<NpcAvatar>();
+                npc.BodyRenderer = avatarBody != null ? avatarBody.Body : null;
+                root.AddComponent<NpcTalkInteractable>();
+                var humanPath = GeneratedFolder + "/NpcAvatar_Human.prefab";
+                var humanPrefab = PrefabUtility.SaveAsPrefabAsset(root, humanPath);
+                Object.DestroyImmediate(root);
+                return humanPrefab.GetComponent<NpcAvatar>();
+            }
             var go = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             go.name = "NPC Avatar (placeholder)";
             go.transform.localScale = new Vector3(0.6f, 0.9f, 0.6f);

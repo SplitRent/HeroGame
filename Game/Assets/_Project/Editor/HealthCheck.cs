@@ -93,6 +93,10 @@ namespace HeroGame.Editor
                 Add(Result.Warn, "Old interface file", ui + "MainMenu.uss is left over from an older version",
                     "Delete MainMenu.uss and MainMenu.uss.meta (keep MainMenu.uxml): the duplicate name leaves the main menu unstyled.");
 
+            var human = File.Exists(GreyboxWorldBuilder.HumanModelPath);
+            Add(human ? Result.Pass : Result.Warn, "Human body model", human ? "SK_Human.fbx present (people use it after rebuilding the greybox)" : "not built yet (people are capsules)",
+                "Install the free MPFB extension in Blender, run Tools/Blender/build_human.bat, then HeroGame ▸ Build Greybox Vertical Slice.");
+
             foreach (var scene in new[] { GreyboxWorldBuilder.GreyboxScene, GreyboxWorldBuilder.MenuScene })
             {
                 var exists = File.Exists(scene);

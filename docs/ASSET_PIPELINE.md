@@ -102,6 +102,45 @@ blender -b -P Tools/Blender/cli.py -- kit --art-root Game/Assets/_Project/Art --
 *`commercial_detail.py`: storefront systems, cornices, curtain walls, walkways, docks and canopies are geometry too. Pieces
 never overlap in a shared plane: that renders as black seams in Cycles and z-fights in Unity.*
 
+## 6b. People (`hg_pipeline/makehuman.py`, `humans.py`)
+Realistic bodies come from **MakeHuman's base mesh and morph targets**, which MakeHuman releases under **CC0** and
+the free **MPFB** Blender extension ships. The pipeline reads MPFB's data files directly (no MPFB code runs) and builds
+one game body:
+
+* **Mesh:** the MakeHuman base mesh, skin faces only, about 14k vertices, with eyeballs built into it.
+* **Blend shapes (141):** a `<slider>_lo` / `<slider>_hi` pair for every creator slider in `appearance.json`, each built
+  from MakeHuman targets (`MORPH_TARGETS`). There are also whole-body shapes:
+  * `feminine`, `masculine`, `age_child` and `age_old`, averaged over MakeHuman's three ancestry sets, so no single
+    ancestry is the default face
+  * `weight_*`, `muscle_*` and `bust_*`
+* **Rig:** 52 bones named for Unity's humanoid auto-mapping, with fingers and toes. MakeHuman's own skin weights are
+  folded into them.
+* **Regions:** material slots for head, hands, torso, upper arms, lower arms, hips, thighs, shins, feet and eyes.
+  Until garment meshes exist, `HumanAvatar` paints clothes onto these regions, and underwear is always on.
+* **Skin:** a tone-free detail map, `T_Skin_Detail` (pores, lips, creases), derived from an MPFB skin texture. Unity
+  multiplies it by the character's tone and undertone.
+
+On Windows:
+1. In Blender, open Edit ▸ Preferences ▸ Get Extensions, search for **MPFB** and install it.
+2. Run `Tools/Blender/build_human.bat`, optionally with your Unity project's `Assets/_Project/Art` folder as the
+   argument.
+
+It writes three files to `Art/Characters/Human`:
+* `SK_Human.fbx`
+* `T_Skin_Detail.png`
+* `HumanShapes.json`
+
+Then run **HeroGame ▸ Build Greybox Vertical Slice** so that NPCs and the player use the body.
+
+```bash
+blender -b -P Tools/Blender/cli.py -- human --mpfb "<MPFB extension folder>" --check      # report only
+blender -b -P Tools/Blender/cli.py -- human --mpfb "<MPFB extension folder>" --art-root Game/Assets/_Project/Art
+```
+
+The `--makehuman-dump` source (the `makehuman-data` npm package) is for developing the pipeline only. Its files carry
+older AGPL notices, so neither they nor anything built from them are committed. `tests/test_makehuman.py` runs on
+synthetic data.
+
 ## 7. Unity import contract (`ModelImportRules`)
 For assets under `Assets/_Project/Art/`: scale factor 1 with file scale, bake axis conversion, no cameras/lights,
 external materials matched by name, Mikk tangents, no generated colliders; `UCX_*` meshes become convex

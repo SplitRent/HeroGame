@@ -51,3 +51,4 @@ docs/images/** -filter -diff -merge binary
 # Unity Hub clones get real files instead of LFS pointers. Hand-made art elsewhere under Art/ still uses LFS.
 Game/Assets/_Project/Art/Environment/** -filter -diff -merge binary
 Game/Assets/_Project/Art/Environment/**/*.json text eol=lf
+*.bat     text eol=crlf
