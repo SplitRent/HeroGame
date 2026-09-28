@@ -19,7 +19,10 @@ namespace HeroGame.Core.Characters
         public const float MaxHeightCm = 205f;
         public const int SkinTones = 10;
         public const int MaxStyleId = 63;
-        public const int MaxMorphs = 32;
+        public const int MaxMorphs = 96;
+        public const int MaxSkinDetails = 16;
+        public const int MaxTattoos = 24;
+        public const int MaxOutfitPieces = 19;
 
         /// <summary>Letters (any alphabet), inner spaces, hyphens and apostrophes; trimmed and length-capped.</summary>
         public static string CleanName(string name)
@@ -59,6 +62,7 @@ namespace HeroGame.Core.Characters
                 Age = Math.Max(MinAge, Math.Min(MaxAge, source.Age)),
                 Presentation = Enum.IsDefined(typeof(GenderPresentation), source.Presentation) ? source.Presentation : GenderPresentation.Androgynous,
                 VoicePresetId = CleanId(source.VoicePresetId),
+                WalkStyleId = CleanId(source.WalkStyleId),
                 Appearance = new AppearanceData
                 {
                     BodyBaseId = Style(a.BodyBaseId),
@@ -71,8 +75,35 @@ namespace HeroGame.Core.Characters
                     EyebrowStyleId = Style(a.EyebrowStyleId),
                     EyeColorHex = Hex(a.EyeColorHex, "#4B3621"),
                     FacialHairId = Style(a.FacialHairId),
+                    HairStyle = CleanId(a.HairStyle),
+                    HairHighlightHex = string.IsNullOrEmpty(a.HairHighlightHex) ? "" : Hex(a.HairHighlightHex, ""),
+                    FacialHairStyle = CleanId(a.FacialHairStyle),
+                    FacialHairColorHex = string.IsNullOrEmpty(a.FacialHairColorHex) ? "" : Hex(a.FacialHairColorHex, ""),
+                    EyebrowStyle = CleanId(a.EyebrowStyle),
+                    EyebrowColorHex = string.IsNullOrEmpty(a.EyebrowColorHex) ? "" : Hex(a.EyebrowColorHex, ""),
+                    SkinUndertone = Clamp(a.SkinUndertone, 0f, 1f, 0.5f),
+                    Makeup = CleanId(a.Makeup),
+                    MakeupIntensity = Clamp(a.MakeupIntensity, 0f, 1f, 0f),
                 },
             };
+            if (a.SkinDetails != null)
+                foreach (var d in a.SkinDetails)
+                {
+                    if (clean.Appearance.SkinDetails.Count >= MaxSkinDetails) break;
+                    var name = CleanId(d.Name);
+                    if (name.Length == 0 || clean.Appearance.SkinDetails.Exists(x => x.Name == name)) continue;
+                    clean.Appearance.SetDetail(name, Clamp(d.Value, 0f, 1f, 0f));
+                }
+            if (a.Tattoos != null)
+                foreach (var t in a.Tattoos)
+                {
+                    if (t == null || clean.Appearance.Tattoos.Count >= MaxTattoos) continue;
+                    var zone = CleanId(t.Zone);
+                    var design = CleanId(t.DesignId);
+                    if (zone.Length == 0 || design.Length == 0) continue;
+                    clean.Appearance.Tattoos.Add(new TattooPlacement { Zone = zone, DesignId = design, Scale = Clamp(t.Scale, 0.5f, 1.5f, 1f), Fade = Clamp(t.Fade, 0f, 1f, 0f) });
+                }
+            clean.StartingOutfit = CleanOutfit(source.StartingOutfit);
             if (a.FaceMorphs != null)
                 foreach (var m in a.FaceMorphs)
                 {
@@ -81,6 +112,24 @@ namespace HeroGame.Core.Characters
                     if (name.Length == 0 || clean.Appearance.FaceMorphs.Exists(x => x.Name == name)) continue;
                     clean.Appearance.SetMorph(name, Clamp(m.Value, 0f, 1f, 0.5f));
                 }
+            return clean;
+        }
+
+        /// <summary>Ids cleaned, at most one piece per item and <see cref="MaxOutfitPieces"/> pieces (slot rules need the catalog: <see cref="WardrobeRules"/>).</summary>
+        public static Outfit CleanOutfit(Outfit outfit)
+        {
+            var clean = new Outfit();
+            if (outfit == null) return clean;
+            clean.Id = CleanId(outfit.Id);
+            clean.Name = CleanName(outfit.Name);
+            if (outfit.Pieces == null) return clean;
+            foreach (var p in outfit.Pieces)
+            {
+                if (p == null || clean.Pieces.Count >= MaxOutfitPieces) continue;
+                var item = CleanId(p.ItemId);
+                if (item.Length == 0 || clean.Pieces.Exists(x => x.ItemId == item)) continue;
+                clean.Pieces.Add(new OutfitPiece { ItemId = item, VariantId = CleanId(p.VariantId) });
+            }
             return clean;
         }
 

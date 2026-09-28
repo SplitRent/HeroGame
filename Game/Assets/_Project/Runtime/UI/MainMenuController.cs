@@ -317,35 +317,46 @@ namespace HeroGame.Runtime.UI
             card.Add(Muted(firstRun
                 ? "Create your first character. You can keep up to " + CharacterSlots.Count + ", each with their own worlds, and play any of them from the main menu."
                 : "A new person with their own worlds. Name and appearance are theirs on every server; money, home, job and powers are lived separately on each."));
-            var p = new ScrollView();
-            p.AddToClassList("hg-modal-body");
-            card.Add(p);
-
             var profile = CharacterSlots.NewProfile(slot);
             var c = profile.Character;
+            var names = new VisualElement();
+            names.AddToClassList("hg-row");
             var first = Field("First name", c.FirstName);
             first.maxLength = IdentityRules.MaxNameLength;
+            first.style.flexGrow = 1;
             var last = Field("Surname", c.LastName);
             last.maxLength = IdentityRules.MaxNameLength;
-            var age = new SliderInt("Age", IdentityRules.MinAge, IdentityRules.MaxAge) { value = Mathf.Clamp(c.Age, IdentityRules.MinAge, IdentityRules.MaxAge), showInputField = true };
-            age.AddToClassList("hg-field");
-            var presentation = new DropdownField("Presentation", new List<string> { "Feminine", "Masculine", "Androgynous" }, (int)c.Presentation);
-            presentation.AddToClassList("hg-field");
-            var height = new Slider("Height (cm)", IdentityRules.MinHeightCm, IdentityRules.MaxHeightCm) { value = c.Appearance.HeightCm, showInputField = true };
-            height.AddToClassList("hg-field");
-            var skin = new SliderInt("Skin tone", 0, IdentityRules.SkinTones - 1) { value = c.Appearance.SkinTone };
-            skin.AddToClassList("hg-field");
-            var build = new Slider("Build", 0f, 1f) { value = c.Appearance.BodyWeight };
-            build.AddToClassList("hg-field");
-            var jaw = new Slider("Jaw width", 0f, 1f) { value = c.Appearance.GetMorph("jaw_width") };
-            jaw.AddToClassList("hg-field");
-            var nose = new Slider("Nose length", 0f, 1f) { value = c.Appearance.GetMorph("nose_length") };
-            nose.AddToClassList("hg-field");
-            foreach (var e in new VisualElement[] { first, last, age, presentation, height, skin, build, jaw, nose }) p.Add(e);
+            last.style.flexGrow = 1;
+            names.Add(first);
+            names.Add(last);
+            card.Add(names);
+
+            var tabs = new VisualElement();
+            tabs.AddToClassList("hg-tabs");
+            card.Add(tabs);
+            var body = new ScrollView();
+            body.AddToClassList("hg-modal-body");
+            card.Add(body);
+            var view = new CharacterCreatorView(body.contentContainer, c);
+            void ShowTab(string tab)
+            {
+                view.Show(tab);
+                tabs.Clear();
+                foreach (var t in CharacterCreatorView.Tabs)
+                {
+                    var name = t;
+                    var b = new Button(() => ShowTab(name)) { text = t };
+                    b.AddToClassList("hg-tab");
+                    if (t == tab) b.AddToClassList("hg-tab--active");
+                    tabs.Add(b);
+                }
+            }
+            ShowTab(CharacterCreatorView.Tabs[0]);
 
             var status = Muted("");
             var buttons = new VisualElement();
             buttons.AddToClassList("hg-row");
+            buttons.Add(SlotButton("RANDOMISE", () => { view.Randomise(Environment.TickCount); ShowTab(view.Tab); }));
             buttons.Add(SlotButton("CREATE " + (firstRun ? "AND CONTINUE" : "CHARACTER"), () =>
             {
                 c.FirstName = first.value;
@@ -355,13 +366,13 @@ namespace HeroGame.Runtime.UI
                     status.text = "Enter a first name and a surname (letters, spaces, hyphens and apostrophes).";
                     return;
                 }
-                c.Age = age.value;
-                c.Presentation = (GenderPresentation)Mathf.Max(0, presentation.index);
-                c.Appearance.HeightCm = height.value;
-                c.Appearance.SkinTone = skin.value;
-                c.Appearance.BodyWeight = build.value;
-                c.Appearance.SetMorph("jaw_width", jaw.value);
-                c.Appearance.SetMorph("nose_length", nose.value);
+                var outfit = WardrobeRules.Validate(c.StartingOutfit, CharacterCreatorView.Catalogs.FindClothing);
+                if (!outfit.Success)
+                {
+                    status.text = "Clothes: " + outfit.Error;
+                    ShowTab("CLOTHES");
+                    return;
+                }
                 // A new person starts in fresh worlds, never in whatever an earlier occupant of the slot left.
                 DeleteWorlds(slot);
                 _slots.Save(slot, profile);

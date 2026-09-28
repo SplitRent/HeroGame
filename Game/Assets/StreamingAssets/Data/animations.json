@@ -1,0 +1,3150 @@
+{
+ "WalkStyles": [
+  {
+   "Id": "casual",
+   "Label": "Casual",
+   "Speed": 1.35,
+   "Stride": 1.0,
+   "ArmSwing": 0.5,
+   "HipSway": 0.25,
+   "Bounce": 0.3,
+   "Lean": 2,
+   "ShoulderRoll": 0.15,
+   "HeadDown": 3,
+   "MinAge": 0,
+   "MaxAge": 120,
+   "Commonness": 3.0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "brisk",
+   "Label": "Brisk commuter",
+   "Speed": 1.6,
+   "Stride": 1.08,
+   "ArmSwing": 0.55,
+   "HipSway": 0.15,
+   "Bounce": 0.25,
+   "Lean": 5,
+   "ShoulderRoll": 0.1,
+   "HeadDown": 4,
+   "MinAge": 18,
+   "MaxAge": 70,
+   "Commonness": 1.4,
+   "Extraversion": 0.0,
+   "Conscientiousness": 1,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "stroll",
+   "Label": "Easy stroll",
+   "Speed": 1.1,
+   "Stride": 0.92,
+   "ArmSwing": 0.4,
+   "HipSway": 0.3,
+   "Bounce": 0.25,
+   "Lean": 0,
+   "ShoulderRoll": 0.15,
+   "HeadDown": 2,
+   "MinAge": 0,
+   "MaxAge": 120,
+   "Commonness": 1.2,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 1,
+   "Situational": false
+  },
+  {
+   "Id": "confident",
+   "Label": "Confident",
+   "Speed": 1.45,
+   "Stride": 1.1,
+   "ArmSwing": 0.6,
+   "HipSway": 0.25,
+   "Bounce": 0.3,
+   "Lean": -1,
+   "ShoulderRoll": 0.25,
+   "HeadDown": -2,
+   "MinAge": 16,
+   "MaxAge": 80,
+   "Commonness": 1.0,
+   "Extraversion": 1,
+   "Conscientiousness": 0.0,
+   "Neuroticism": -1,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "swagger",
+   "Label": "Swagger",
+   "Speed": 1.25,
+   "Stride": 1.05,
+   "ArmSwing": 0.45,
+   "HipSway": 0.2,
+   "Bounce": 0.45,
+   "Lean": -3,
+   "ShoulderRoll": 0.6,
+   "HeadDown": 0,
+   "MinAge": 14,
+   "MaxAge": 45,
+   "Commonness": 0.6,
+   "Extraversion": 1,
+   "Conscientiousness": -1,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "strut",
+   "Label": "Strut",
+   "Speed": 1.4,
+   "Stride": 1.02,
+   "ArmSwing": 0.55,
+   "HipSway": 0.7,
+   "Bounce": 0.3,
+   "Lean": -1,
+   "ShoulderRoll": 0.2,
+   "HeadDown": -2,
+   "MinAge": 16,
+   "MaxAge": 60,
+   "Commonness": 0.5,
+   "Extraversion": 1,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "bouncy",
+   "Label": "Bouncy",
+   "Speed": 1.5,
+   "Stride": 1.0,
+   "ArmSwing": 0.65,
+   "HipSway": 0.2,
+   "Bounce": 0.7,
+   "Lean": 2,
+   "ShoulderRoll": 0.15,
+   "HeadDown": 0,
+   "MinAge": 5,
+   "MaxAge": 30,
+   "Commonness": 0.7,
+   "Extraversion": 1,
+   "Conscientiousness": 0.0,
+   "Neuroticism": -1,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "reserved",
+   "Label": "Reserved",
+   "Speed": 1.25,
+   "Stride": 0.9,
+   "ArmSwing": 0.3,
+   "HipSway": 0.1,
+   "Bounce": 0.2,
+   "Lean": 4,
+   "ShoulderRoll": 0.05,
+   "HeadDown": 8,
+   "MinAge": 12,
+   "MaxAge": 90,
+   "Commonness": 0.8,
+   "Extraversion": -1,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 1,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "hurried",
+   "Label": "Hurried",
+   "Speed": 1.75,
+   "Stride": 1.0,
+   "ArmSwing": 0.6,
+   "HipSway": 0.15,
+   "Bounce": 0.3,
+   "Lean": 8,
+   "ShoulderRoll": 0.1,
+   "HeadDown": 6,
+   "MinAge": 16,
+   "MaxAge": 75,
+   "Commonness": 0.6,
+   "Extraversion": 0.0,
+   "Conscientiousness": 1,
+   "Neuroticism": 1,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "laid_back",
+   "Label": "Laid back",
+   "Speed": 1.15,
+   "Stride": 0.95,
+   "ArmSwing": 0.25,
+   "HipSway": 0.3,
+   "Bounce": 0.25,
+   "Lean": -2,
+   "ShoulderRoll": 0.3,
+   "HeadDown": 0,
+   "MinAge": 14,
+   "MaxAge": 70,
+   "Commonness": 0.8,
+   "Extraversion": 0.0,
+   "Conscientiousness": -1,
+   "Neuroticism": -1,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "upright",
+   "Label": "Upright, measured",
+   "Speed": 1.4,
+   "Stride": 1.05,
+   "ArmSwing": 0.5,
+   "HipSway": 0.1,
+   "Bounce": 0.2,
+   "Lean": -1,
+   "ShoulderRoll": 0.05,
+   "HeadDown": -1,
+   "MinAge": 20,
+   "MaxAge": 90,
+   "Commonness": 0.4,
+   "Extraversion": 0.0,
+   "Conscientiousness": 1,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "heavy",
+   "Label": "Heavy step",
+   "Speed": 1.15,
+   "Stride": 0.9,
+   "ArmSwing": 0.45,
+   "HipSway": 0.35,
+   "Bounce": 0.15,
+   "Lean": 3,
+   "ShoulderRoll": 0.35,
+   "HeadDown": 3,
+   "MinAge": 25,
+   "MaxAge": 90,
+   "Commonness": 0.6,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "tired",
+   "Label": "Tired shuffle",
+   "Speed": 1.0,
+   "Stride": 0.8,
+   "ArmSwing": 0.25,
+   "HipSway": 0.15,
+   "Bounce": 0.1,
+   "Lean": 6,
+   "ShoulderRoll": 0.1,
+   "HeadDown": 10,
+   "MinAge": 16,
+   "MaxAge": 90,
+   "Commonness": 0.4,
+   "Extraversion": 0.0,
+   "Conscientiousness": -1,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "elderly",
+   "Label": "Elderly",
+   "Speed": 0.85,
+   "Stride": 0.72,
+   "ArmSwing": 0.25,
+   "HipSway": 0.1,
+   "Bounce": 0.1,
+   "Lean": 10,
+   "ShoulderRoll": 0.05,
+   "HeadDown": 8,
+   "MinAge": 70,
+   "MaxAge": 120,
+   "Commonness": 3.0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "child",
+   "Label": "Child",
+   "Speed": 1.3,
+   "Stride": 0.85,
+   "ArmSwing": 0.7,
+   "HipSway": 0.2,
+   "Bounce": 0.6,
+   "Lean": 0,
+   "ShoulderRoll": 0.1,
+   "HeadDown": 0,
+   "MinAge": 0,
+   "MaxAge": 12,
+   "Commonness": 3.0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": false
+  },
+  {
+   "Id": "injured",
+   "Label": "Limping",
+   "Speed": 0.7,
+   "Stride": 0.7,
+   "ArmSwing": 0.3,
+   "HipSway": 0.4,
+   "Bounce": 0.1,
+   "Lean": 8,
+   "ShoulderRoll": 0.2,
+   "HeadDown": 6,
+   "MinAge": 0,
+   "MaxAge": 120,
+   "Commonness": 0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": true
+  },
+  {
+   "Id": "drunk",
+   "Label": "Drunk",
+   "Speed": 1.0,
+   "Stride": 0.9,
+   "ArmSwing": 0.6,
+   "HipSway": 0.6,
+   "Bounce": 0.2,
+   "Lean": 4,
+   "ShoulderRoll": 0.4,
+   "HeadDown": 5,
+   "MinAge": 18,
+   "MaxAge": 120,
+   "Commonness": 0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": true
+  },
+  {
+   "Id": "cold",
+   "Label": "Hunched against the cold",
+   "Speed": 1.5,
+   "Stride": 0.9,
+   "ArmSwing": 0.15,
+   "HipSway": 0.1,
+   "Bounce": 0.15,
+   "Lean": 8,
+   "ShoulderRoll": 0.3,
+   "HeadDown": 10,
+   "MinAge": 0,
+   "MaxAge": 120,
+   "Commonness": 0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": true
+  },
+  {
+   "Id": "rain",
+   "Label": "Hurrying out of the rain",
+   "Speed": 1.8,
+   "Stride": 0.95,
+   "ArmSwing": 0.3,
+   "HipSway": 0.1,
+   "Bounce": 0.25,
+   "Lean": 9,
+   "ShoulderRoll": 0.1,
+   "HeadDown": 12,
+   "MinAge": 0,
+   "MaxAge": 120,
+   "Commonness": 0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": true
+  },
+  {
+   "Id": "carrying",
+   "Label": "Carrying something heavy",
+   "Speed": 1.0,
+   "Stride": 0.85,
+   "ArmSwing": 0.0,
+   "HipSway": 0.2,
+   "Bounce": 0.15,
+   "Lean": -4,
+   "ShoulderRoll": 0.0,
+   "HeadDown": 4,
+   "MinAge": 0,
+   "MaxAge": 120,
+   "Commonness": 0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": true
+  },
+  {
+   "Id": "phone",
+   "Label": "Walking while texting",
+   "Speed": 1.1,
+   "Stride": 0.9,
+   "ArmSwing": 0.1,
+   "HipSway": 0.15,
+   "Bounce": 0.2,
+   "Lean": 5,
+   "ShoulderRoll": 0.05,
+   "HeadDown": 25,
+   "MinAge": 12,
+   "MaxAge": 70,
+   "Commonness": 0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": true
+  },
+  {
+   "Id": "sneak",
+   "Label": "Sneaking",
+   "Speed": 0.9,
+   "Stride": 0.8,
+   "ArmSwing": 0.2,
+   "HipSway": 0.1,
+   "Bounce": 0.05,
+   "Lean": 12,
+   "ShoulderRoll": 0.1,
+   "HeadDown": 5,
+   "MinAge": 0,
+   "MaxAge": 120,
+   "Commonness": 0,
+   "Extraversion": 0.0,
+   "Conscientiousness": 0.0,
+   "Neuroticism": 0.0,
+   "Agreeableness": 0.0,
+   "Situational": true
+  }
+ ],
+ "Clips": [
+  {
+   "Id": "loco_casual_idle",
+   "Category": "Locomotion",
+   "Label": "Casual idle",
+   "Loop": true,
+   "WalkStyle": "casual",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_casual_walk",
+   "Category": "Locomotion",
+   "Label": "Casual walk",
+   "Loop": true,
+   "WalkStyle": "casual",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_casual_walk_start",
+   "Category": "Locomotion",
+   "Label": "Casual walk start",
+   "Loop": false,
+   "WalkStyle": "casual",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_casual_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Casual walk stop",
+   "Loop": false,
+   "WalkStyle": "casual",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_casual_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Casual turn left 90",
+   "Loop": false,
+   "WalkStyle": "casual",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_casual_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Casual turn right 90",
+   "Loop": false,
+   "WalkStyle": "casual",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_casual_turn_180",
+   "Category": "Locomotion",
+   "Label": "Casual turn 180",
+   "Loop": false,
+   "WalkStyle": "casual",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_brisk_idle",
+   "Category": "Locomotion",
+   "Label": "Brisk commuter idle",
+   "Loop": true,
+   "WalkStyle": "brisk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_brisk_walk",
+   "Category": "Locomotion",
+   "Label": "Brisk commuter walk",
+   "Loop": true,
+   "WalkStyle": "brisk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_brisk_walk_start",
+   "Category": "Locomotion",
+   "Label": "Brisk commuter walk start",
+   "Loop": false,
+   "WalkStyle": "brisk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_brisk_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Brisk commuter walk stop",
+   "Loop": false,
+   "WalkStyle": "brisk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_brisk_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Brisk commuter turn left 90",
+   "Loop": false,
+   "WalkStyle": "brisk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_brisk_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Brisk commuter turn right 90",
+   "Loop": false,
+   "WalkStyle": "brisk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_brisk_turn_180",
+   "Category": "Locomotion",
+   "Label": "Brisk commuter turn 180",
+   "Loop": false,
+   "WalkStyle": "brisk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_stroll_idle",
+   "Category": "Locomotion",
+   "Label": "Easy stroll idle",
+   "Loop": true,
+   "WalkStyle": "stroll",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_stroll_walk",
+   "Category": "Locomotion",
+   "Label": "Easy stroll walk",
+   "Loop": true,
+   "WalkStyle": "stroll",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_stroll_walk_start",
+   "Category": "Locomotion",
+   "Label": "Easy stroll walk start",
+   "Loop": false,
+   "WalkStyle": "stroll",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_stroll_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Easy stroll walk stop",
+   "Loop": false,
+   "WalkStyle": "stroll",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_stroll_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Easy stroll turn left 90",
+   "Loop": false,
+   "WalkStyle": "stroll",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_stroll_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Easy stroll turn right 90",
+   "Loop": false,
+   "WalkStyle": "stroll",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_stroll_turn_180",
+   "Category": "Locomotion",
+   "Label": "Easy stroll turn 180",
+   "Loop": false,
+   "WalkStyle": "stroll",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_confident_idle",
+   "Category": "Locomotion",
+   "Label": "Confident idle",
+   "Loop": true,
+   "WalkStyle": "confident",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_confident_walk",
+   "Category": "Locomotion",
+   "Label": "Confident walk",
+   "Loop": true,
+   "WalkStyle": "confident",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_confident_walk_start",
+   "Category": "Locomotion",
+   "Label": "Confident walk start",
+   "Loop": false,
+   "WalkStyle": "confident",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_confident_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Confident walk stop",
+   "Loop": false,
+   "WalkStyle": "confident",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_confident_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Confident turn left 90",
+   "Loop": false,
+   "WalkStyle": "confident",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_confident_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Confident turn right 90",
+   "Loop": false,
+   "WalkStyle": "confident",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_confident_turn_180",
+   "Category": "Locomotion",
+   "Label": "Confident turn 180",
+   "Loop": false,
+   "WalkStyle": "confident",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_swagger_idle",
+   "Category": "Locomotion",
+   "Label": "Swagger idle",
+   "Loop": true,
+   "WalkStyle": "swagger",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_swagger_walk",
+   "Category": "Locomotion",
+   "Label": "Swagger walk",
+   "Loop": true,
+   "WalkStyle": "swagger",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_swagger_walk_start",
+   "Category": "Locomotion",
+   "Label": "Swagger walk start",
+   "Loop": false,
+   "WalkStyle": "swagger",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_swagger_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Swagger walk stop",
+   "Loop": false,
+   "WalkStyle": "swagger",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_swagger_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Swagger turn left 90",
+   "Loop": false,
+   "WalkStyle": "swagger",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_swagger_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Swagger turn right 90",
+   "Loop": false,
+   "WalkStyle": "swagger",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_swagger_turn_180",
+   "Category": "Locomotion",
+   "Label": "Swagger turn 180",
+   "Loop": false,
+   "WalkStyle": "swagger",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_strut_idle",
+   "Category": "Locomotion",
+   "Label": "Strut idle",
+   "Loop": true,
+   "WalkStyle": "strut",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_strut_walk",
+   "Category": "Locomotion",
+   "Label": "Strut walk",
+   "Loop": true,
+   "WalkStyle": "strut",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_strut_walk_start",
+   "Category": "Locomotion",
+   "Label": "Strut walk start",
+   "Loop": false,
+   "WalkStyle": "strut",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_strut_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Strut walk stop",
+   "Loop": false,
+   "WalkStyle": "strut",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_strut_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Strut turn left 90",
+   "Loop": false,
+   "WalkStyle": "strut",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_strut_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Strut turn right 90",
+   "Loop": false,
+   "WalkStyle": "strut",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_strut_turn_180",
+   "Category": "Locomotion",
+   "Label": "Strut turn 180",
+   "Loop": false,
+   "WalkStyle": "strut",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_bouncy_idle",
+   "Category": "Locomotion",
+   "Label": "Bouncy idle",
+   "Loop": true,
+   "WalkStyle": "bouncy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_bouncy_walk",
+   "Category": "Locomotion",
+   "Label": "Bouncy walk",
+   "Loop": true,
+   "WalkStyle": "bouncy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_bouncy_walk_start",
+   "Category": "Locomotion",
+   "Label": "Bouncy walk start",
+   "Loop": false,
+   "WalkStyle": "bouncy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_bouncy_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Bouncy walk stop",
+   "Loop": false,
+   "WalkStyle": "bouncy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_bouncy_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Bouncy turn left 90",
+   "Loop": false,
+   "WalkStyle": "bouncy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_bouncy_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Bouncy turn right 90",
+   "Loop": false,
+   "WalkStyle": "bouncy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_bouncy_turn_180",
+   "Category": "Locomotion",
+   "Label": "Bouncy turn 180",
+   "Loop": false,
+   "WalkStyle": "bouncy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_reserved_idle",
+   "Category": "Locomotion",
+   "Label": "Reserved idle",
+   "Loop": true,
+   "WalkStyle": "reserved",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_reserved_walk",
+   "Category": "Locomotion",
+   "Label": "Reserved walk",
+   "Loop": true,
+   "WalkStyle": "reserved",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_reserved_walk_start",
+   "Category": "Locomotion",
+   "Label": "Reserved walk start",
+   "Loop": false,
+   "WalkStyle": "reserved",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_reserved_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Reserved walk stop",
+   "Loop": false,
+   "WalkStyle": "reserved",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_reserved_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Reserved turn left 90",
+   "Loop": false,
+   "WalkStyle": "reserved",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_reserved_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Reserved turn right 90",
+   "Loop": false,
+   "WalkStyle": "reserved",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_reserved_turn_180",
+   "Category": "Locomotion",
+   "Label": "Reserved turn 180",
+   "Loop": false,
+   "WalkStyle": "reserved",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_hurried_idle",
+   "Category": "Locomotion",
+   "Label": "Hurried idle",
+   "Loop": true,
+   "WalkStyle": "hurried",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_hurried_walk",
+   "Category": "Locomotion",
+   "Label": "Hurried walk",
+   "Loop": true,
+   "WalkStyle": "hurried",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_hurried_walk_start",
+   "Category": "Locomotion",
+   "Label": "Hurried walk start",
+   "Loop": false,
+   "WalkStyle": "hurried",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_hurried_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Hurried walk stop",
+   "Loop": false,
+   "WalkStyle": "hurried",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_hurried_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Hurried turn left 90",
+   "Loop": false,
+   "WalkStyle": "hurried",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_hurried_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Hurried turn right 90",
+   "Loop": false,
+   "WalkStyle": "hurried",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_hurried_turn_180",
+   "Category": "Locomotion",
+   "Label": "Hurried turn 180",
+   "Loop": false,
+   "WalkStyle": "hurried",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_laid_back_idle",
+   "Category": "Locomotion",
+   "Label": "Laid back idle",
+   "Loop": true,
+   "WalkStyle": "laid_back",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_laid_back_walk",
+   "Category": "Locomotion",
+   "Label": "Laid back walk",
+   "Loop": true,
+   "WalkStyle": "laid_back",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_laid_back_walk_start",
+   "Category": "Locomotion",
+   "Label": "Laid back walk start",
+   "Loop": false,
+   "WalkStyle": "laid_back",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_laid_back_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Laid back walk stop",
+   "Loop": false,
+   "WalkStyle": "laid_back",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_laid_back_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Laid back turn left 90",
+   "Loop": false,
+   "WalkStyle": "laid_back",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_laid_back_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Laid back turn right 90",
+   "Loop": false,
+   "WalkStyle": "laid_back",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_laid_back_turn_180",
+   "Category": "Locomotion",
+   "Label": "Laid back turn 180",
+   "Loop": false,
+   "WalkStyle": "laid_back",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_upright_idle",
+   "Category": "Locomotion",
+   "Label": "Upright, measured idle",
+   "Loop": true,
+   "WalkStyle": "upright",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_upright_walk",
+   "Category": "Locomotion",
+   "Label": "Upright, measured walk",
+   "Loop": true,
+   "WalkStyle": "upright",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_upright_walk_start",
+   "Category": "Locomotion",
+   "Label": "Upright, measured walk start",
+   "Loop": false,
+   "WalkStyle": "upright",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_upright_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Upright, measured walk stop",
+   "Loop": false,
+   "WalkStyle": "upright",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_upright_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Upright, measured turn left 90",
+   "Loop": false,
+   "WalkStyle": "upright",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_upright_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Upright, measured turn right 90",
+   "Loop": false,
+   "WalkStyle": "upright",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_upright_turn_180",
+   "Category": "Locomotion",
+   "Label": "Upright, measured turn 180",
+   "Loop": false,
+   "WalkStyle": "upright",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_heavy_idle",
+   "Category": "Locomotion",
+   "Label": "Heavy step idle",
+   "Loop": true,
+   "WalkStyle": "heavy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_heavy_walk",
+   "Category": "Locomotion",
+   "Label": "Heavy step walk",
+   "Loop": true,
+   "WalkStyle": "heavy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_heavy_walk_start",
+   "Category": "Locomotion",
+   "Label": "Heavy step walk start",
+   "Loop": false,
+   "WalkStyle": "heavy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_heavy_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Heavy step walk stop",
+   "Loop": false,
+   "WalkStyle": "heavy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_heavy_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Heavy step turn left 90",
+   "Loop": false,
+   "WalkStyle": "heavy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_heavy_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Heavy step turn right 90",
+   "Loop": false,
+   "WalkStyle": "heavy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_heavy_turn_180",
+   "Category": "Locomotion",
+   "Label": "Heavy step turn 180",
+   "Loop": false,
+   "WalkStyle": "heavy",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_tired_idle",
+   "Category": "Locomotion",
+   "Label": "Tired shuffle idle",
+   "Loop": true,
+   "WalkStyle": "tired",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_tired_walk",
+   "Category": "Locomotion",
+   "Label": "Tired shuffle walk",
+   "Loop": true,
+   "WalkStyle": "tired",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_tired_walk_start",
+   "Category": "Locomotion",
+   "Label": "Tired shuffle walk start",
+   "Loop": false,
+   "WalkStyle": "tired",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_tired_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Tired shuffle walk stop",
+   "Loop": false,
+   "WalkStyle": "tired",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_tired_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Tired shuffle turn left 90",
+   "Loop": false,
+   "WalkStyle": "tired",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_tired_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Tired shuffle turn right 90",
+   "Loop": false,
+   "WalkStyle": "tired",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_tired_turn_180",
+   "Category": "Locomotion",
+   "Label": "Tired shuffle turn 180",
+   "Loop": false,
+   "WalkStyle": "tired",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_elderly_idle",
+   "Category": "Locomotion",
+   "Label": "Elderly idle",
+   "Loop": true,
+   "WalkStyle": "elderly",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_elderly_walk",
+   "Category": "Locomotion",
+   "Label": "Elderly walk",
+   "Loop": true,
+   "WalkStyle": "elderly",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_elderly_walk_start",
+   "Category": "Locomotion",
+   "Label": "Elderly walk start",
+   "Loop": false,
+   "WalkStyle": "elderly",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_elderly_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Elderly walk stop",
+   "Loop": false,
+   "WalkStyle": "elderly",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_elderly_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Elderly turn left 90",
+   "Loop": false,
+   "WalkStyle": "elderly",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_elderly_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Elderly turn right 90",
+   "Loop": false,
+   "WalkStyle": "elderly",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_elderly_turn_180",
+   "Category": "Locomotion",
+   "Label": "Elderly turn 180",
+   "Loop": false,
+   "WalkStyle": "elderly",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_child_idle",
+   "Category": "Locomotion",
+   "Label": "Child idle",
+   "Loop": true,
+   "WalkStyle": "child",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_child_walk",
+   "Category": "Locomotion",
+   "Label": "Child walk",
+   "Loop": true,
+   "WalkStyle": "child",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_child_walk_start",
+   "Category": "Locomotion",
+   "Label": "Child walk start",
+   "Loop": false,
+   "WalkStyle": "child",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_child_walk_stop",
+   "Category": "Locomotion",
+   "Label": "Child walk stop",
+   "Loop": false,
+   "WalkStyle": "child",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_child_turn_left_90",
+   "Category": "Locomotion",
+   "Label": "Child turn left 90",
+   "Loop": false,
+   "WalkStyle": "child",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_child_turn_right_90",
+   "Category": "Locomotion",
+   "Label": "Child turn right 90",
+   "Loop": false,
+   "WalkStyle": "child",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_child_turn_180",
+   "Category": "Locomotion",
+   "Label": "Child turn 180",
+   "Loop": false,
+   "WalkStyle": "child",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_injured_walk",
+   "Category": "Locomotion",
+   "Label": "Limping walk",
+   "Loop": true,
+   "WalkStyle": "injured",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_drunk_walk",
+   "Category": "Locomotion",
+   "Label": "Drunk walk",
+   "Loop": true,
+   "WalkStyle": "drunk",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_cold_walk",
+   "Category": "Locomotion",
+   "Label": "Hunched against the cold walk",
+   "Loop": true,
+   "WalkStyle": "cold",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_rain_walk",
+   "Category": "Locomotion",
+   "Label": "Hurrying out of the rain walk",
+   "Loop": true,
+   "WalkStyle": "rain",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_carrying_walk",
+   "Category": "Locomotion",
+   "Label": "Carrying something heavy walk",
+   "Loop": true,
+   "WalkStyle": "carrying",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_phone_walk",
+   "Category": "Locomotion",
+   "Label": "Walking while texting walk",
+   "Loop": true,
+   "WalkStyle": "phone",
+   "Status": "Planned"
+  },
+  {
+   "Id": "loco_sneak_walk",
+   "Category": "Locomotion",
+   "Label": "Sneaking walk",
+   "Loop": true,
+   "WalkStyle": "sneak",
+   "Status": "Planned"
+  },
+  {
+   "Id": "jog",
+   "Category": "Locomotion",
+   "Label": "Jog",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "run",
+   "Category": "Locomotion",
+   "Label": "Run",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sprint",
+   "Category": "Locomotion",
+   "Label": "Sprint",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "run_stop",
+   "Category": "Locomotion",
+   "Label": "Run stop",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "jump",
+   "Category": "Locomotion",
+   "Label": "Jump",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fall_loop",
+   "Category": "Locomotion",
+   "Label": "Fall loop",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "land_soft",
+   "Category": "Locomotion",
+   "Label": "Land soft",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "land_hard",
+   "Category": "Locomotion",
+   "Label": "Land hard",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "climb_low",
+   "Category": "Locomotion",
+   "Label": "Climb low",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "vault",
+   "Category": "Locomotion",
+   "Label": "Vault",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "crouch_idle",
+   "Category": "Locomotion",
+   "Label": "Crouch idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "crouch_walk",
+   "Category": "Locomotion",
+   "Label": "Crouch walk",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "strafe_left",
+   "Category": "Locomotion",
+   "Label": "Strafe left",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "strafe_right",
+   "Category": "Locomotion",
+   "Label": "Strafe right",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "walk_backward",
+   "Category": "Locomotion",
+   "Label": "Walk backward",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stairs_up",
+   "Category": "Locomotion",
+   "Label": "Stairs up",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stairs_down",
+   "Category": "Locomotion",
+   "Label": "Stairs down",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "slope_up",
+   "Category": "Locomotion",
+   "Label": "Slope up",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "slope_down",
+   "Category": "Locomotion",
+   "Label": "Slope down",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "weight_shift",
+   "Category": "Idle",
+   "Label": "Weight shift",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "look_around",
+   "Category": "Idle",
+   "Label": "Look around",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "check_watch",
+   "Category": "Idle",
+   "Label": "Check watch",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stretch",
+   "Category": "Idle",
+   "Label": "Stretch",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "yawn",
+   "Category": "Idle",
+   "Label": "Yawn",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "arms_crossed",
+   "Category": "Idle",
+   "Label": "Arms crossed",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hands_in_pockets",
+   "Category": "Idle",
+   "Label": "Hands in pockets",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hands_on_hips",
+   "Category": "Idle",
+   "Label": "Hands on hips",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "lean_wall",
+   "Category": "Idle",
+   "Label": "Lean wall",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "lean_railing",
+   "Category": "Idle",
+   "Label": "Lean railing",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "tap_foot",
+   "Category": "Idle",
+   "Label": "Tap foot",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "scratch_head",
+   "Category": "Idle",
+   "Label": "Scratch head",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "rub_neck",
+   "Category": "Idle",
+   "Label": "Rub neck",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "adjust_clothes",
+   "Category": "Idle",
+   "Label": "Adjust clothes",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "wait_impatient",
+   "Category": "Idle",
+   "Label": "Wait impatient",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cold_shiver",
+   "Category": "Idle",
+   "Label": "Cold shiver",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "wipe_sweat",
+   "Category": "Idle",
+   "Label": "Wipe sweat",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fix_hair",
+   "Category": "Idle",
+   "Label": "Fix hair",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_neutral_1",
+   "Category": "Conversation",
+   "Label": "Talk neutral 1",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_neutral_2",
+   "Category": "Conversation",
+   "Label": "Talk neutral 2",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_neutral_3",
+   "Category": "Conversation",
+   "Label": "Talk neutral 3",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_explain",
+   "Category": "Conversation",
+   "Label": "Talk explain",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_excited",
+   "Category": "Conversation",
+   "Label": "Talk excited",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_angry",
+   "Category": "Conversation",
+   "Label": "Talk angry",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_sad",
+   "Category": "Conversation",
+   "Label": "Talk sad",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_flirt",
+   "Category": "Conversation",
+   "Label": "Talk flirt",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "talk_whisper",
+   "Category": "Conversation",
+   "Label": "Talk whisper",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "listen",
+   "Category": "Conversation",
+   "Label": "Listen",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "listen_skeptical",
+   "Category": "Conversation",
+   "Label": "Listen skeptical",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "nod",
+   "Category": "Conversation",
+   "Label": "Nod",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "shake_head",
+   "Category": "Conversation",
+   "Label": "Shake head",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "shrug",
+   "Category": "Conversation",
+   "Label": "Shrug",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "laugh",
+   "Category": "Conversation",
+   "Label": "Laugh",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "laugh_big",
+   "Category": "Conversation",
+   "Label": "Laugh big",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "point",
+   "Category": "Conversation",
+   "Label": "Point",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "count_on_fingers",
+   "Category": "Conversation",
+   "Label": "Count on fingers",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "argue",
+   "Category": "Conversation",
+   "Label": "Argue",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "calm_down_gesture",
+   "Category": "Conversation",
+   "Label": "Calm down gesture",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "thinking",
+   "Category": "Conversation",
+   "Label": "Thinking",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "surprised",
+   "Category": "Conversation",
+   "Label": "Surprised",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "disgusted",
+   "Category": "Conversation",
+   "Label": "Disgusted",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sigh",
+   "Category": "Conversation",
+   "Label": "Sigh",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "wave",
+   "Category": "Social",
+   "Label": "Wave",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "wave_big",
+   "Category": "Social",
+   "Label": "Wave big",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "handshake",
+   "Category": "Social",
+   "Label": "Handshake",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hug",
+   "Category": "Social",
+   "Label": "Hug",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fist_bump",
+   "Category": "Social",
+   "Label": "Fist bump",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "high_five",
+   "Category": "Social",
+   "Label": "High five",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dap",
+   "Category": "Social",
+   "Label": "Dap",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "kiss_cheek",
+   "Category": "Social",
+   "Label": "Kiss cheek",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "bow",
+   "Category": "Social",
+   "Label": "Bow",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "salute",
+   "Category": "Social",
+   "Label": "Salute",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "beckon",
+   "Category": "Social",
+   "Label": "Beckon",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "shoo_away",
+   "Category": "Social",
+   "Label": "Shoo away",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pat_shoulder",
+   "Category": "Social",
+   "Label": "Pat shoulder",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "comfort",
+   "Category": "Social",
+   "Label": "Comfort",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "introduce",
+   "Category": "Social",
+   "Label": "Introduce",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cheer",
+   "Category": "Emote",
+   "Label": "Cheer",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "clap",
+   "Category": "Emote",
+   "Label": "Clap",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "facepalm",
+   "Category": "Emote",
+   "Label": "Facepalm",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "thumbs_up",
+   "Category": "Emote",
+   "Label": "Thumbs up",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "thumbs_down",
+   "Category": "Emote",
+   "Label": "Thumbs down",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "celebrate",
+   "Category": "Emote",
+   "Label": "Celebrate",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cry",
+   "Category": "Emote",
+   "Label": "Cry",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "flex",
+   "Category": "Emote",
+   "Label": "Flex",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "air_guitar",
+   "Category": "Emote",
+   "Label": "Air guitar",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "peace_sign",
+   "Category": "Emote",
+   "Label": "Peace sign",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "shush",
+   "Category": "Emote",
+   "Label": "Shush",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "blow_kiss",
+   "Category": "Emote",
+   "Label": "Blow kiss",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "rage",
+   "Category": "Emote",
+   "Label": "Rage",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pray",
+   "Category": "Emote",
+   "Label": "Pray",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cross_fingers",
+   "Category": "Emote",
+   "Label": "Cross fingers",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_two_step",
+   "Category": "Dance",
+   "Label": "Dance two step",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_sway",
+   "Category": "Dance",
+   "Label": "Dance sway",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_club_1",
+   "Category": "Dance",
+   "Label": "Dance club 1",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_club_2",
+   "Category": "Dance",
+   "Label": "Dance club 2",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_hip_hop_1",
+   "Category": "Dance",
+   "Label": "Dance hip hop 1",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_hip_hop_2",
+   "Category": "Dance",
+   "Label": "Dance hip hop 2",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_zydeco",
+   "Category": "Dance",
+   "Label": "Dance zydeco",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_line",
+   "Category": "Dance",
+   "Label": "Dance line",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_slow_couple",
+   "Category": "Dance",
+   "Label": "Dance slow couple",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dance_silly",
+   "Category": "Dance",
+   "Label": "Dance silly",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_text",
+   "Category": "Phone",
+   "Label": "Phone text",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_call",
+   "Category": "Phone",
+   "Label": "Phone call",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_scroll",
+   "Category": "Phone",
+   "Label": "Phone scroll",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_photo",
+   "Category": "Phone",
+   "Label": "Phone photo",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_selfie",
+   "Category": "Phone",
+   "Label": "Phone selfie",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_put_away",
+   "Category": "Phone",
+   "Label": "Phone put away",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_video_call",
+   "Category": "Phone",
+   "Label": "Phone video call",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "phone_walk_text",
+   "Category": "Phone",
+   "Label": "Phone walk text",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_chair",
+   "Category": "Sit",
+   "Label": "Sit chair",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_chair_idle",
+   "Category": "Sit",
+   "Label": "Sit chair idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_chair_talk",
+   "Category": "Sit",
+   "Label": "Sit chair talk",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_bench",
+   "Category": "Sit",
+   "Label": "Sit bench",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_bench_relaxed",
+   "Category": "Sit",
+   "Label": "Sit bench relaxed",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_ground",
+   "Category": "Sit",
+   "Label": "Sit ground",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_bar_stool",
+   "Category": "Sit",
+   "Label": "Sit bar stool",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sit_car_passenger",
+   "Category": "Sit",
+   "Label": "Sit car passenger",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stand_up",
+   "Category": "Sit",
+   "Label": "Stand up",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "lie_down",
+   "Category": "Sit",
+   "Label": "Lie down",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "lie_idle",
+   "Category": "Sit",
+   "Label": "Lie idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sleep",
+   "Category": "Sit",
+   "Label": "Sleep",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "eat_standing",
+   "Category": "Eat",
+   "Label": "Eat standing",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "eat_seated",
+   "Category": "Eat",
+   "Label": "Eat seated",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "drink_cup",
+   "Category": "Eat",
+   "Label": "Drink cup",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "drink_bottle",
+   "Category": "Eat",
+   "Label": "Drink bottle",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "drink_can",
+   "Category": "Eat",
+   "Label": "Drink can",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "toast_glass",
+   "Category": "Eat",
+   "Label": "Toast glass",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "eat_sandwich",
+   "Category": "Eat",
+   "Label": "Eat sandwich",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "type_laptop",
+   "Category": "Work",
+   "Label": "Type laptop",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "type_desk",
+   "Category": "Work",
+   "Label": "Type desk",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cash_register",
+   "Category": "Work",
+   "Label": "Cash register",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sweep",
+   "Category": "Work",
+   "Label": "Sweep",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "mop",
+   "Category": "Work",
+   "Label": "Mop",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "carry_box",
+   "Category": "Work",
+   "Label": "Carry box",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stack_boxes",
+   "Category": "Work",
+   "Label": "Stack boxes",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hammer",
+   "Category": "Work",
+   "Label": "Hammer",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "saw",
+   "Category": "Work",
+   "Label": "Saw",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "drill",
+   "Category": "Work",
+   "Label": "Drill",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cook_stove",
+   "Category": "Work",
+   "Label": "Cook stove",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "chop",
+   "Category": "Work",
+   "Label": "Chop",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "serve_plate",
+   "Category": "Work",
+   "Label": "Serve plate",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "wipe_table",
+   "Category": "Work",
+   "Label": "Wipe table",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "write_notes",
+   "Category": "Work",
+   "Label": "Write notes",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "read_book",
+   "Category": "Work",
+   "Label": "Read book",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "read_newspaper",
+   "Category": "Work",
+   "Label": "Read newspaper",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pour_drink",
+   "Category": "Work",
+   "Label": "Pour drink",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cut_hair",
+   "Category": "Work",
+   "Label": "Cut hair",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fold_laundry",
+   "Category": "Work",
+   "Label": "Fold laundry",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stock_shelves",
+   "Category": "Work",
+   "Label": "Stock shelves",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fix_car_under",
+   "Category": "Work",
+   "Label": "Fix car under",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fix_car_hood",
+   "Category": "Work",
+   "Label": "Fix car hood",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pump_gas",
+   "Category": "Work",
+   "Label": "Pump gas",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "direct_traffic",
+   "Category": "Work",
+   "Label": "Direct traffic",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "treat_patient",
+   "Category": "Work",
+   "Label": "Treat patient",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "write_ticket",
+   "Category": "Work",
+   "Label": "Write ticket",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "flinch",
+   "Category": "Reaction",
+   "Label": "Flinch",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "startle",
+   "Category": "Reaction",
+   "Label": "Startle",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cower",
+   "Category": "Reaction",
+   "Label": "Cower",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hands_up",
+   "Category": "Reaction",
+   "Label": "Hands up",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "panic_run",
+   "Category": "Reaction",
+   "Label": "Panic run",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fall_down",
+   "Category": "Reaction",
+   "Label": "Fall down",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "get_up_front",
+   "Category": "Reaction",
+   "Label": "Get up front",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "get_up_back",
+   "Category": "Reaction",
+   "Label": "Get up back",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hit_front",
+   "Category": "Reaction",
+   "Label": "Hit front",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hit_back",
+   "Category": "Reaction",
+   "Label": "Hit back",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hit_left",
+   "Category": "Reaction",
+   "Label": "Hit left",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hit_right",
+   "Category": "Reaction",
+   "Label": "Hit right",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stagger",
+   "Category": "Reaction",
+   "Label": "Stagger",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "knockdown",
+   "Category": "Reaction",
+   "Label": "Knockdown",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "look_at_explosion",
+   "Category": "Reaction",
+   "Label": "Look at explosion",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cover_ears",
+   "Category": "Reaction",
+   "Label": "Cover ears",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "duck",
+   "Category": "Reaction",
+   "Label": "Duck",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "shield_eyes",
+   "Category": "Reaction",
+   "Label": "Shield eyes",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "vomit",
+   "Category": "Reaction",
+   "Label": "Vomit",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cough",
+   "Category": "Reaction",
+   "Label": "Cough",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "sneeze",
+   "Category": "Reaction",
+   "Label": "Sneeze",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "limp_hurt",
+   "Category": "Reaction",
+   "Label": "Limp hurt",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "clutch_arm",
+   "Category": "Reaction",
+   "Label": "Clutch arm",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "guard_idle",
+   "Category": "Combat",
+   "Label": "Guard idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "jab",
+   "Category": "Combat",
+   "Label": "Jab",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cross",
+   "Category": "Combat",
+   "Label": "Cross",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hook",
+   "Category": "Combat",
+   "Label": "Hook",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "uppercut",
+   "Category": "Combat",
+   "Label": "Uppercut",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "kick_front",
+   "Category": "Combat",
+   "Label": "Kick front",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "block",
+   "Category": "Combat",
+   "Label": "Block",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dodge_left",
+   "Category": "Combat",
+   "Label": "Dodge left",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "dodge_right",
+   "Category": "Combat",
+   "Label": "Dodge right",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "grapple",
+   "Category": "Combat",
+   "Label": "Grapple",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "shove",
+   "Category": "Combat",
+   "Label": "Shove",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "swing_bat",
+   "Category": "Combat",
+   "Label": "Swing bat",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stab",
+   "Category": "Combat",
+   "Label": "Stab",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pistol_idle",
+   "Category": "Combat",
+   "Label": "Pistol idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pistol_aim",
+   "Category": "Combat",
+   "Label": "Pistol aim",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pistol_fire",
+   "Category": "Combat",
+   "Label": "Pistol fire",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pistol_reload",
+   "Category": "Combat",
+   "Label": "Pistol reload",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "pistol_holster",
+   "Category": "Combat",
+   "Label": "Pistol holster",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "stun_fire",
+   "Category": "Combat",
+   "Label": "Stun fire",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "surrender_kneel",
+   "Category": "Combat",
+   "Label": "Surrender kneel",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "cuffed_idle",
+   "Category": "Combat",
+   "Label": "Cuffed idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "arrest_cuff",
+   "Category": "Combat",
+   "Label": "Arrest cuff",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_enter_left",
+   "Category": "Vehicle",
+   "Label": "Car enter left",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_enter_right",
+   "Category": "Vehicle",
+   "Label": "Car enter right",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_exit_left",
+   "Category": "Vehicle",
+   "Label": "Car exit left",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_exit_right",
+   "Category": "Vehicle",
+   "Label": "Car exit right",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_drive_idle",
+   "Category": "Vehicle",
+   "Label": "Car drive idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_steer_left",
+   "Category": "Vehicle",
+   "Label": "Car steer left",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_steer_right",
+   "Category": "Vehicle",
+   "Label": "Car steer right",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_passenger_idle",
+   "Category": "Vehicle",
+   "Label": "Car passenger idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "car_horn",
+   "Category": "Vehicle",
+   "Label": "Car horn",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "bike_ride",
+   "Category": "Vehicle",
+   "Label": "Bike ride",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "bus_stand_hold",
+   "Category": "Vehicle",
+   "Label": "Bus stand hold",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "tread_water",
+   "Category": "Swim",
+   "Label": "Tread water",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "swim",
+   "Category": "Swim",
+   "Label": "Swim",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "swim_fast",
+   "Category": "Swim",
+   "Label": "Swim fast",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "climb_out_water",
+   "Category": "Swim",
+   "Label": "Climb out water",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "wade",
+   "Category": "Swim",
+   "Label": "Wade",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "power_cast",
+   "Category": "Power",
+   "Label": "Power cast",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "power_channel",
+   "Category": "Power",
+   "Label": "Power channel",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "power_blast",
+   "Category": "Power",
+   "Label": "Power blast",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "hover_idle",
+   "Category": "Power",
+   "Label": "Hover idle",
+   "Loop": true,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fly_forward",
+   "Category": "Power",
+   "Label": "Fly forward",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "fly_fast",
+   "Category": "Power",
+   "Label": "Fly fast",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "land_super",
+   "Category": "Power",
+   "Label": "Land super",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "teleport_in",
+   "Category": "Power",
+   "Label": "Teleport in",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "teleport_out",
+   "Category": "Power",
+   "Label": "Teleport out",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  },
+  {
+   "Id": "power_overload",
+   "Category": "Power",
+   "Label": "Power overload",
+   "Loop": false,
+   "WalkStyle": "",
+   "Status": "Planned"
+  }
+ ]
+}

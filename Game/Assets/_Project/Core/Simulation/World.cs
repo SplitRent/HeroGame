@@ -163,6 +163,7 @@ namespace HeroGame.Core.Simulation
         public JusticeState Justice = new JusticeState();
         public readonly CrimeService Crimes;
         public readonly JusticeService Courts;
+        public readonly WardrobeService Wardrobe;
         /// <summary>Emergency incidents and unit assignments (persisted in the emergency chunk).</summary>
         public EmergencyState Emergency = new EmergencyState();
         /// <summary>Story Mode progress; null on player servers.</summary>
@@ -253,6 +254,7 @@ namespace HeroGame.Core.Simulation
             BusinessOps = new BusinessOperations(this);
             Crimes = new CrimeService(this);
             Courts = new JusticeService(this);
+            Wardrobe = new WardrobeService(this);
             Dispatch = new EmergencyDispatch(this);
             PowerUse = new PowerService(this);
             Government = new CivicService(this);
@@ -443,6 +445,7 @@ namespace HeroGame.Core.Simulation
                     Money = LedgerTransaction.Transfer(Accounts.External, character.CheckingAccount, new Money(Config.Economy.StartingCashCents), TransactionReason.StartingFunds),
                 });
             }
+            Wardrobe.GiveStarter(character, account.Character?.StartingOutfit);
             Dirty.Mark(SaveChunks.CharacterPrefix + character.CharacterId);
             return character;
         }

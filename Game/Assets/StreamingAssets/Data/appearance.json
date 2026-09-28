@@ -1,0 +1,2097 @@
+{
+ "Morphs": [
+  {
+   "Id": "head_size",
+   "Label": "Head size",
+   "Group": "Face",
+   "Region": "Head",
+   "NaturalSpread": 0.1
+  },
+  {
+   "Id": "head_width",
+   "Label": "Head width",
+   "Group": "Face",
+   "Region": "Head",
+   "NaturalSpread": 0.14
+  },
+  {
+   "Id": "face_length",
+   "Label": "Face length",
+   "Group": "Face",
+   "Region": "Head",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "temple_width",
+   "Label": "Temple width",
+   "Group": "Face",
+   "Region": "Head",
+   "NaturalSpread": 0.12
+  },
+  {
+   "Id": "forehead_height",
+   "Label": "Forehead height",
+   "Group": "Face",
+   "Region": "Forehead",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "forehead_slope",
+   "Label": "Forehead slope",
+   "Group": "Face",
+   "Region": "Forehead",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "brow_height",
+   "Label": "Brow height",
+   "Group": "Face",
+   "Region": "Brow",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "brow_ridge",
+   "Label": "Brow ridge",
+   "Group": "Face",
+   "Region": "Brow",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "brow_angle",
+   "Label": "Brow angle",
+   "Group": "Face",
+   "Region": "Brow",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "eye_size",
+   "Label": "Eye size",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "eye_spacing",
+   "Label": "Eye spacing",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "eye_height",
+   "Label": "Eye height",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.12
+  },
+  {
+   "Id": "eye_tilt",
+   "Label": "Eye tilt",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "eye_depth",
+   "Label": "Eye depth",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "eyelid_hood",
+   "Label": "Hooded lids",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.22
+  },
+  {
+   "Id": "epicanthic_fold",
+   "Label": "Inner eyelid fold",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.25
+  },
+  {
+   "Id": "eye_bags",
+   "Label": "Under-eye bags",
+   "Group": "Face",
+   "Region": "Eyes",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "nose_width",
+   "Label": "Nose width",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "nose_length",
+   "Label": "Nose length",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "nose_bridge_height",
+   "Label": "Bridge height",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "nose_bridge_curve",
+   "Label": "Bridge curve",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "nose_tip_height",
+   "Label": "Tip height",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "nose_tip_size",
+   "Label": "Tip size",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "nostril_flare",
+   "Label": "Nostril flare",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "nose_crookedness",
+   "Label": "Crooked nose",
+   "Group": "Face",
+   "Region": "Nose",
+   "NaturalSpread": 0.06
+  },
+  {
+   "Id": "cheekbone_height",
+   "Label": "Cheekbone height",
+   "Group": "Face",
+   "Region": "Cheeks",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "cheekbone_width",
+   "Label": "Cheekbone width",
+   "Group": "Face",
+   "Region": "Cheeks",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "cheek_fullness",
+   "Label": "Cheek fullness",
+   "Group": "Face",
+   "Region": "Cheeks",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "cheek_hollow",
+   "Label": "Hollow cheeks",
+   "Group": "Face",
+   "Region": "Cheeks",
+   "NaturalSpread": 0.14
+  },
+  {
+   "Id": "dimples",
+   "Label": "Dimples",
+   "Group": "Face",
+   "Region": "Cheeks",
+   "NaturalSpread": 0.15
+  },
+  {
+   "Id": "mouth_width",
+   "Label": "Mouth width",
+   "Group": "Face",
+   "Region": "Mouth",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "mouth_height",
+   "Label": "Mouth height",
+   "Group": "Face",
+   "Region": "Mouth",
+   "NaturalSpread": 0.1
+  },
+  {
+   "Id": "lip_upper_fullness",
+   "Label": "Upper lip",
+   "Group": "Face",
+   "Region": "Mouth",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "lip_lower_fullness",
+   "Label": "Lower lip",
+   "Group": "Face",
+   "Region": "Mouth",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "lip_corner_tilt",
+   "Label": "Lip corners",
+   "Group": "Face",
+   "Region": "Mouth",
+   "NaturalSpread": 0.14
+  },
+  {
+   "Id": "philtrum_depth",
+   "Label": "Philtrum",
+   "Group": "Face",
+   "Region": "Mouth",
+   "NaturalSpread": 0.14
+  },
+  {
+   "Id": "overbite",
+   "Label": "Overbite",
+   "Group": "Face",
+   "Region": "Mouth",
+   "NaturalSpread": 0.1
+  },
+  {
+   "Id": "jaw_width",
+   "Label": "Jaw width",
+   "Group": "Face",
+   "Region": "Jaw",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "jaw_angle",
+   "Label": "Jaw angle",
+   "Group": "Face",
+   "Region": "Jaw",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "jaw_definition",
+   "Label": "Jawline definition",
+   "Group": "Face",
+   "Region": "Jaw",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "double_chin",
+   "Label": "Double chin",
+   "Group": "Face",
+   "Region": "Jaw",
+   "NaturalSpread": 0.12
+  },
+  {
+   "Id": "chin_length",
+   "Label": "Chin length",
+   "Group": "Face",
+   "Region": "Chin",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "chin_width",
+   "Label": "Chin width",
+   "Group": "Face",
+   "Region": "Chin",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "chin_projection",
+   "Label": "Chin projection",
+   "Group": "Face",
+   "Region": "Chin",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "chin_cleft",
+   "Label": "Chin cleft",
+   "Group": "Face",
+   "Region": "Chin",
+   "NaturalSpread": 0.12
+  },
+  {
+   "Id": "ear_size",
+   "Label": "Ear size",
+   "Group": "Face",
+   "Region": "Ears",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "ear_angle",
+   "Label": "Ears stick out",
+   "Group": "Face",
+   "Region": "Ears",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "ear_lobe",
+   "Label": "Lobe size",
+   "Group": "Face",
+   "Region": "Ears",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "ear_point",
+   "Label": "Ear tip shape",
+   "Group": "Face",
+   "Region": "Ears",
+   "NaturalSpread": 0.1
+  },
+  {
+   "Id": "neck_thickness",
+   "Label": "Neck thickness",
+   "Group": "Face",
+   "Region": "Neck",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "adams_apple",
+   "Label": "Adam's apple",
+   "Group": "Face",
+   "Region": "Neck",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "body_fat",
+   "Label": "Body fat",
+   "Group": "Body",
+   "Region": "Build",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "muscle",
+   "Label": "Muscle",
+   "Group": "Body",
+   "Region": "Build",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "posture",
+   "Label": "Posture (upright ↔ slouched)",
+   "Group": "Body",
+   "Region": "Build",
+   "NaturalSpread": 0.14
+  },
+  {
+   "Id": "shoulder_width",
+   "Label": "Shoulder width",
+   "Group": "Body",
+   "Region": "Torso",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "chest_size",
+   "Label": "Chest",
+   "Group": "Body",
+   "Region": "Torso",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "bust_size",
+   "Label": "Bust",
+   "Group": "Body",
+   "Region": "Torso",
+   "NaturalSpread": 0.22
+  },
+  {
+   "Id": "waist_width",
+   "Label": "Waist",
+   "Group": "Body",
+   "Region": "Torso",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "stomach",
+   "Label": "Stomach",
+   "Group": "Body",
+   "Region": "Torso",
+   "NaturalSpread": 0.2
+  },
+  {
+   "Id": "torso_length",
+   "Label": "Torso length",
+   "Group": "Body",
+   "Region": "Torso",
+   "NaturalSpread": 0.12
+  },
+  {
+   "Id": "back_width",
+   "Label": "Back width",
+   "Group": "Body",
+   "Region": "Torso",
+   "NaturalSpread": 0.14
+  },
+  {
+   "Id": "hip_width",
+   "Label": "Hips",
+   "Group": "Body",
+   "Region": "Hips",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "glutes",
+   "Label": "Glutes",
+   "Group": "Body",
+   "Region": "Hips",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "arm_length",
+   "Label": "Arm length",
+   "Group": "Body",
+   "Region": "Arms",
+   "NaturalSpread": 0.08
+  },
+  {
+   "Id": "upper_arm_size",
+   "Label": "Upper arms",
+   "Group": "Body",
+   "Region": "Arms",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "forearm_size",
+   "Label": "Forearms",
+   "Group": "Body",
+   "Region": "Arms",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "hand_size",
+   "Label": "Hands",
+   "Group": "Body",
+   "Region": "Arms",
+   "NaturalSpread": 0.12
+  },
+  {
+   "Id": "leg_length",
+   "Label": "Leg length",
+   "Group": "Body",
+   "Region": "Legs",
+   "NaturalSpread": 0.1
+  },
+  {
+   "Id": "thigh_size",
+   "Label": "Thighs",
+   "Group": "Body",
+   "Region": "Legs",
+   "NaturalSpread": 0.18
+  },
+  {
+   "Id": "calf_size",
+   "Label": "Calves",
+   "Group": "Body",
+   "Region": "Legs",
+   "NaturalSpread": 0.16
+  },
+  {
+   "Id": "foot_size",
+   "Label": "Feet",
+   "Group": "Body",
+   "Region": "Legs",
+   "NaturalSpread": 0.12
+  },
+  {
+   "Id": "neck_length",
+   "Label": "Neck length",
+   "Group": "Body",
+   "Region": "Neck",
+   "NaturalSpread": 0.12
+  }
+ ],
+ "HairStyles": [
+  {
+   "Id": "bald",
+   "Label": "Bald",
+   "Tags": [
+    "none",
+    "bald",
+    "masculine"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "shaved",
+   "Label": "Shaved (clippers)",
+   "Tags": [
+    "short",
+    "masculine"
+   ],
+   "Commonness": 0.7
+  },
+  {
+   "Id": "buzz",
+   "Label": "Buzz cut",
+   "Tags": [
+    "short"
+   ],
+   "Commonness": 1.2
+  },
+  {
+   "Id": "crew",
+   "Label": "Crew cut",
+   "Tags": [
+    "short",
+    "masculine"
+   ],
+   "Commonness": 1.4
+  },
+  {
+   "Id": "fade_low",
+   "Label": "Low fade",
+   "Tags": [
+    "short",
+    "masculine"
+   ],
+   "Commonness": 1.3
+  },
+  {
+   "Id": "fade_high",
+   "Label": "High fade",
+   "Tags": [
+    "short",
+    "masculine"
+   ],
+   "Commonness": 1.1
+  },
+  {
+   "Id": "taper_curls",
+   "Label": "Taper with curls on top",
+   "Tags": [
+    "short",
+    "curly",
+    "masculine"
+   ],
+   "Commonness": 0.9
+  },
+  {
+   "Id": "caesar",
+   "Label": "Caesar",
+   "Tags": [
+    "short",
+    "masculine"
+   ],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "crop_textured",
+   "Label": "Textured crop",
+   "Tags": [
+    "short",
+    "masculine"
+   ],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "side_part",
+   "Label": "Side part",
+   "Tags": [
+    "short",
+    "masculine"
+   ],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "slick_back",
+   "Label": "Slicked back",
+   "Tags": [
+    "medium",
+    "masculine"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "pompadour",
+   "Label": "Pompadour",
+   "Tags": [
+    "medium",
+    "masculine"
+   ],
+   "Commonness": 0.3
+  },
+  {
+   "Id": "quiff",
+   "Label": "Quiff",
+   "Tags": [
+    "medium"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "curtains",
+   "Label": "Curtains",
+   "Tags": [
+    "medium"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "messy_medium",
+   "Label": "Messy medium",
+   "Tags": [
+    "medium",
+    "wavy"
+   ],
+   "Commonness": 0.8
+  },
+  {
+   "Id": "shag",
+   "Label": "Shag",
+   "Tags": [
+    "medium",
+    "wavy"
+   ],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "mullet_modern",
+   "Label": "Modern mullet",
+   "Tags": [
+    "medium"
+   ],
+   "Commonness": 0.25
+  },
+  {
+   "Id": "man_bun",
+   "Label": "Bun (tied back)",
+   "Tags": [
+    "long",
+    "masculine"
+   ],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "waves_360",
+   "Label": "360 waves",
+   "Tags": [
+    "short",
+    "coily",
+    "masculine"
+   ],
+   "Commonness": 0.8
+  },
+  {
+   "Id": "cornrows",
+   "Label": "Cornrows",
+   "Tags": [
+    "braided",
+    "coily"
+   ],
+   "Commonness": 0.7
+  },
+  {
+   "Id": "twists_short",
+   "Label": "Short twists",
+   "Tags": [
+    "short",
+    "coily"
+   ],
+   "Commonness": 0.7
+  },
+  {
+   "Id": "locs_short",
+   "Label": "Short locs",
+   "Tags": [
+    "medium",
+    "coily"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "locs_long",
+   "Label": "Long locs",
+   "Tags": [
+    "long",
+    "coily"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "afro_small",
+   "Label": "Small afro",
+   "Tags": [
+    "short",
+    "coily"
+   ],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "afro_large",
+   "Label": "Full afro",
+   "Tags": [
+    "medium",
+    "coily"
+   ],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "twist_out",
+   "Label": "Twist-out",
+   "Tags": [
+    "medium",
+    "coily",
+    "feminine"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "box_braids",
+   "Label": "Box braids",
+   "Tags": [
+    "long",
+    "braided",
+    "feminine"
+   ],
+   "Commonness": 0.8
+  },
+  {
+   "Id": "knotless_braids",
+   "Label": "Knotless braids",
+   "Tags": [
+    "long",
+    "braided",
+    "feminine"
+   ],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "bantu_knots",
+   "Label": "Bantu knots",
+   "Tags": [
+    "short",
+    "coily",
+    "feminine"
+   ],
+   "Commonness": 0.2
+  },
+  {
+   "Id": "silk_press",
+   "Label": "Silk press",
+   "Tags": [
+    "long",
+    "straight",
+    "feminine"
+   ],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "pixie",
+   "Label": "Pixie cut",
+   "Tags": [
+    "short",
+    "feminine"
+   ],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "bob",
+   "Label": "Bob",
+   "Tags": [
+    "medium",
+    "straight",
+    "feminine"
+   ],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "lob_waves",
+   "Label": "Long bob, waves",
+   "Tags": [
+    "medium",
+    "wavy",
+    "feminine"
+   ],
+   "Commonness": 0.9
+  },
+  {
+   "Id": "long_straight",
+   "Label": "Long, straight",
+   "Tags": [
+    "long",
+    "straight",
+    "feminine"
+   ],
+   "Commonness": 1.2
+  },
+  {
+   "Id": "long_waves",
+   "Label": "Long waves",
+   "Tags": [
+    "long",
+    "wavy",
+    "feminine"
+   ],
+   "Commonness": 1.2
+  },
+  {
+   "Id": "long_curls",
+   "Label": "Long curls",
+   "Tags": [
+    "long",
+    "curly",
+    "feminine"
+   ],
+   "Commonness": 0.9
+  },
+  {
+   "Id": "ponytail_high",
+   "Label": "High ponytail",
+   "Tags": [
+    "long",
+    "feminine"
+   ],
+   "Commonness": 0.9
+  },
+  {
+   "Id": "ponytail_low",
+   "Label": "Low ponytail",
+   "Tags": [
+    "long"
+   ],
+   "Commonness": 0.8
+  },
+  {
+   "Id": "bun_messy",
+   "Label": "Messy bun",
+   "Tags": [
+    "long",
+    "feminine"
+   ],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "bun_sleek",
+   "Label": "Sleek bun",
+   "Tags": [
+    "long",
+    "feminine"
+   ],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "half_up",
+   "Label": "Half up",
+   "Tags": [
+    "long",
+    "feminine"
+   ],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "single_braid",
+   "Label": "Single braid",
+   "Tags": [
+    "long",
+    "braided",
+    "feminine"
+   ],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "space_buns",
+   "Label": "Space buns",
+   "Tags": [
+    "long",
+    "feminine"
+   ],
+   "Commonness": 0.15
+  },
+  {
+   "Id": "receding_short",
+   "Label": "Receding, short",
+   "Tags": [
+    "short",
+    "masculine",
+    "older"
+   ],
+   "Commonness": 0.8
+  },
+  {
+   "Id": "thinning_combover",
+   "Label": "Thinning, combed over",
+   "Tags": [
+    "short",
+    "masculine",
+    "older"
+   ],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "silver_bob",
+   "Label": "Short set curls",
+   "Tags": [
+    "short",
+    "curly",
+    "feminine",
+    "older"
+   ],
+   "Commonness": 0.6
+  }
+ ],
+ "FacialHair": [
+  {
+   "Id": "none",
+   "Label": "Clean shaven",
+   "Tags": [],
+   "Commonness": 3.0
+  },
+  {
+   "Id": "stubble_light",
+   "Label": "Light stubble",
+   "Tags": [],
+   "Commonness": 1.4
+  },
+  {
+   "Id": "stubble_heavy",
+   "Label": "Heavy stubble",
+   "Tags": [],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "mustache_chevron",
+   "Label": "Chevron mustache",
+   "Tags": [],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "mustache_pencil",
+   "Label": "Pencil mustache",
+   "Tags": [],
+   "Commonness": 0.15
+  },
+  {
+   "Id": "mustache_handlebar",
+   "Label": "Handlebar mustache",
+   "Tags": [],
+   "Commonness": 0.08
+  },
+  {
+   "Id": "goatee",
+   "Label": "Goatee",
+   "Tags": [],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "circle_beard",
+   "Label": "Circle beard",
+   "Tags": [],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "van_dyke",
+   "Label": "Van Dyke",
+   "Tags": [],
+   "Commonness": 0.3
+  },
+  {
+   "Id": "anchor",
+   "Label": "Anchor beard",
+   "Tags": [],
+   "Commonness": 0.2
+  },
+  {
+   "Id": "chin_strap",
+   "Label": "Chin strap",
+   "Tags": [],
+   "Commonness": 0.3
+  },
+  {
+   "Id": "soul_patch",
+   "Label": "Soul patch",
+   "Tags": [],
+   "Commonness": 0.1
+  },
+  {
+   "Id": "short_boxed",
+   "Label": "Short boxed beard",
+   "Tags": [],
+   "Commonness": 0.8
+  },
+  {
+   "Id": "full_beard",
+   "Label": "Full beard",
+   "Tags": [],
+   "Commonness": 0.7
+  },
+  {
+   "Id": "long_beard",
+   "Label": "Long beard",
+   "Tags": [],
+   "Commonness": 0.2
+  },
+  {
+   "Id": "mutton_chops",
+   "Label": "Mutton chops",
+   "Tags": [],
+   "Commonness": 0.05
+  }
+ ],
+ "Eyebrows": [
+  {
+   "Id": "natural",
+   "Label": "Natural",
+   "Tags": [],
+   "Commonness": 3.0
+  },
+  {
+   "Id": "thin",
+   "Label": "Thin",
+   "Tags": [],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "thick",
+   "Label": "Thick",
+   "Tags": [],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "straight",
+   "Label": "Straight",
+   "Tags": [],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "arched",
+   "Label": "Arched",
+   "Tags": [],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "soft_angle",
+   "Label": "Soft angle",
+   "Tags": [],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "bushy",
+   "Label": "Bushy",
+   "Tags": [],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "groomed",
+   "Label": "Groomed",
+   "Tags": [],
+   "Commonness": 0.8
+  },
+  {
+   "Id": "slit_one",
+   "Label": "One slit",
+   "Tags": [],
+   "Commonness": 0.08
+  },
+  {
+   "Id": "slit_two",
+   "Label": "Two slits",
+   "Tags": [],
+   "Commonness": 0.05
+  },
+  {
+   "Id": "feathered",
+   "Label": "Brushed up",
+   "Tags": [],
+   "Commonness": 0.4
+  }
+ ],
+ "HairColors": [
+  {
+   "Id": "black",
+   "Label": "Black",
+   "Hex": "#0F0C0B",
+   "Natural": true,
+   "Commonness": 3.0
+  },
+  {
+   "Id": "off_black",
+   "Label": "Off black",
+   "Hex": "#1C1512",
+   "Natural": true,
+   "Commonness": 2.5
+  },
+  {
+   "Id": "dark_brown",
+   "Label": "Dark brown",
+   "Hex": "#2E1D14",
+   "Natural": true,
+   "Commonness": 2.5
+  },
+  {
+   "Id": "brown",
+   "Label": "Brown",
+   "Hex": "#4A2F1E",
+   "Natural": true,
+   "Commonness": 2.0
+  },
+  {
+   "Id": "light_brown",
+   "Label": "Light brown",
+   "Hex": "#6B4A2F",
+   "Natural": true,
+   "Commonness": 1.2
+  },
+  {
+   "Id": "dark_blonde",
+   "Label": "Dark blonde",
+   "Hex": "#8A6A43",
+   "Natural": true,
+   "Commonness": 0.9
+  },
+  {
+   "Id": "blonde",
+   "Label": "Blonde",
+   "Hex": "#B8955E",
+   "Natural": true,
+   "Commonness": 0.7
+  },
+  {
+   "Id": "platinum",
+   "Label": "Platinum",
+   "Hex": "#DCCFB4",
+   "Natural": true,
+   "Commonness": 0.2
+  },
+  {
+   "Id": "auburn",
+   "Label": "Auburn",
+   "Hex": "#6E2F1B",
+   "Natural": true,
+   "Commonness": 0.4
+  },
+  {
+   "Id": "ginger",
+   "Label": "Ginger",
+   "Hex": "#A0461F",
+   "Natural": true,
+   "Commonness": 0.3
+  },
+  {
+   "Id": "salt_pepper",
+   "Label": "Salt and pepper",
+   "Hex": "#6F6B67",
+   "Natural": true,
+   "Commonness": 0.7
+  },
+  {
+   "Id": "grey",
+   "Label": "Grey",
+   "Hex": "#9D9A96",
+   "Natural": true,
+   "Commonness": 0.7
+  },
+  {
+   "Id": "white",
+   "Label": "White",
+   "Hex": "#DEDCD8",
+   "Natural": true,
+   "Commonness": 0.4
+  },
+  {
+   "Id": "burgundy",
+   "Label": "Burgundy (dyed)",
+   "Hex": "#5C1523",
+   "Natural": false,
+   "Commonness": 0.15
+  },
+  {
+   "Id": "honey",
+   "Label": "Honey (dyed)",
+   "Hex": "#B07A3A",
+   "Natural": false,
+   "Commonness": 0.2
+  },
+  {
+   "Id": "jet_blue",
+   "Label": "Blue-black (dyed)",
+   "Hex": "#101826",
+   "Natural": false,
+   "Commonness": 0.1
+  },
+  {
+   "Id": "pastel_pink",
+   "Label": "Pastel pink (dyed)",
+   "Hex": "#E4A6B8",
+   "Natural": false,
+   "Commonness": 0.04
+  },
+  {
+   "Id": "electric_blue",
+   "Label": "Electric blue (dyed)",
+   "Hex": "#1F57C8",
+   "Natural": false,
+   "Commonness": 0.03
+  },
+  {
+   "Id": "mint",
+   "Label": "Mint (dyed)",
+   "Hex": "#9ED9C0",
+   "Natural": false,
+   "Commonness": 0.02
+  },
+  {
+   "Id": "violet",
+   "Label": "Violet (dyed)",
+   "Hex": "#5B3A8C",
+   "Natural": false,
+   "Commonness": 0.03
+  },
+  {
+   "Id": "copper_red",
+   "Label": "Copper red (dyed)",
+   "Hex": "#B3401D",
+   "Natural": false,
+   "Commonness": 0.06
+  }
+ ],
+ "EyeColors": [
+  {
+   "Id": "dark_brown",
+   "Label": "Dark brown",
+   "Hex": "#2B1A10",
+   "Natural": true,
+   "Commonness": 4.0
+  },
+  {
+   "Id": "brown",
+   "Label": "Brown",
+   "Hex": "#4B2E1A",
+   "Natural": true,
+   "Commonness": 3.0
+  },
+  {
+   "Id": "hazel",
+   "Label": "Hazel",
+   "Hex": "#7A5A2E",
+   "Natural": true,
+   "Commonness": 1.2
+  },
+  {
+   "Id": "amber",
+   "Label": "Amber",
+   "Hex": "#9B6A1F",
+   "Natural": true,
+   "Commonness": 0.3
+  },
+  {
+   "Id": "green",
+   "Label": "Green",
+   "Hex": "#4E6B3A",
+   "Natural": true,
+   "Commonness": 0.5
+  },
+  {
+   "Id": "grey",
+   "Label": "Grey",
+   "Hex": "#7C858C",
+   "Natural": true,
+   "Commonness": 0.3
+  },
+  {
+   "Id": "blue",
+   "Label": "Blue",
+   "Hex": "#3E6A92",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "light_blue",
+   "Label": "Light blue",
+   "Hex": "#7EA6C8",
+   "Natural": true,
+   "Commonness": 0.4
+  }
+ ],
+ "SkinTones": [
+  {
+   "Id": "porcelain",
+   "Label": "Porcelain",
+   "Hex": "#F3D9C8",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "fair",
+   "Label": "Fair",
+   "Hex": "#E9C5AB",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "light",
+   "Label": "Light",
+   "Hex": "#DDB091",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "light_medium",
+   "Label": "Light medium",
+   "Hex": "#C99772",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "medium",
+   "Label": "Medium",
+   "Hex": "#B07C57",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "tan",
+   "Label": "Tan",
+   "Hex": "#9A6A45",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "medium_deep",
+   "Label": "Medium deep",
+   "Hex": "#7F5436",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "deep",
+   "Label": "Deep",
+   "Hex": "#61402A",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "rich",
+   "Label": "Rich",
+   "Hex": "#4A3021",
+   "Natural": true,
+   "Commonness": 1.0
+  },
+  {
+   "Id": "ebony",
+   "Label": "Ebony",
+   "Hex": "#34221A",
+   "Natural": true,
+   "Commonness": 1.0
+  }
+ ],
+ "SkinDetails": [
+  {
+   "Id": "freckles",
+   "Label": "Freckles",
+   "Tags": [],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "moles",
+   "Label": "Moles and beauty marks",
+   "Tags": [],
+   "Commonness": 0.6
+  },
+  {
+   "Id": "age_lines",
+   "Label": "Age lines",
+   "Tags": [],
+   "Commonness": 1.0
+  },
+  {
+   "Id": "blemishes",
+   "Label": "Blemishes",
+   "Tags": [],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "acne_scars",
+   "Label": "Acne scars",
+   "Tags": [],
+   "Commonness": 0.2
+  },
+  {
+   "Id": "cheek_redness",
+   "Label": "Flushed cheeks",
+   "Tags": [],
+   "Commonness": 0.3
+  },
+  {
+   "Id": "dark_circles",
+   "Label": "Dark circles",
+   "Tags": [],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "sun_damage",
+   "Label": "Sun spots",
+   "Tags": [],
+   "Commonness": 0.3
+  },
+  {
+   "Id": "stretch_marks",
+   "Label": "Stretch marks",
+   "Tags": [],
+   "Commonness": 0.3
+  },
+  {
+   "Id": "scar_face",
+   "Label": "Facial scar",
+   "Tags": [],
+   "Commonness": 0.05
+  },
+  {
+   "Id": "scar_body",
+   "Label": "Body scars",
+   "Tags": [],
+   "Commonness": 0.08
+  },
+  {
+   "Id": "vitiligo",
+   "Label": "Vitiligo",
+   "Tags": [],
+   "Commonness": 0.02
+  },
+  {
+   "Id": "birthmark",
+   "Label": "Birthmark",
+   "Tags": [],
+   "Commonness": 0.06
+  }
+ ],
+ "Makeup": [
+  {
+   "Id": "none",
+   "Label": "None",
+   "Tags": [],
+   "Commonness": 3.0
+  },
+  {
+   "Id": "natural",
+   "Label": "Natural",
+   "Tags": [],
+   "Commonness": 1.5
+  },
+  {
+   "Id": "soft_glam",
+   "Label": "Soft glam",
+   "Tags": [],
+   "Commonness": 0.7
+  },
+  {
+   "Id": "smoky",
+   "Label": "Smoky eye",
+   "Tags": [],
+   "Commonness": 0.4
+  },
+  {
+   "Id": "winged",
+   "Label": "Winged liner",
+   "Tags": [],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "bold_lip",
+   "Label": "Bold lip",
+   "Tags": [],
+   "Commonness": 0.5
+  },
+  {
+   "Id": "glitter",
+   "Label": "Glitter",
+   "Tags": [],
+   "Commonness": 0.08
+  },
+  {
+   "Id": "goth",
+   "Label": "Dark",
+   "Tags": [],
+   "Commonness": 0.08
+  }
+ ],
+ "TattooZones": [
+  "face",
+  "neck_front",
+  "neck_side",
+  "chest",
+  "stomach",
+  "upper_back",
+  "lower_back",
+  "left_shoulder",
+  "left_upper_arm",
+  "left_forearm",
+  "left_hand",
+  "left_fingers",
+  "right_shoulder",
+  "right_upper_arm",
+  "right_forearm",
+  "right_hand",
+  "right_fingers",
+  "left_thigh",
+  "left_calf",
+  "right_thigh",
+  "right_calf",
+  "ankle"
+ ],
+ "TattooDesigns": [
+  {
+   "Id": "rose",
+   "Label": "Rose",
+   "Style": "Traditional",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "neck_side",
+    "left_hand",
+    "right_hand",
+    "ankle",
+    "left_forearm",
+    "right_forearm",
+    "chest"
+   ]
+  },
+  {
+   "Id": "anchor",
+   "Label": "Anchor",
+   "Style": "Traditional",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "chest"
+   ]
+  },
+  {
+   "Id": "swallows",
+   "Label": "Swallows",
+   "Style": "Traditional",
+   "Zones": [
+    "chest",
+    "neck_side",
+    "left_hand",
+    "right_hand"
+   ]
+  },
+  {
+   "Id": "compass",
+   "Label": "Compass",
+   "Style": "Fine line",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "chest",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "dagger_heart",
+   "Label": "Dagger through a heart",
+   "Style": "Traditional",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf"
+   ]
+  },
+  {
+   "Id": "pelican",
+   "Label": "Pelican",
+   "Style": "Illustrative",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "magnolia",
+   "Label": "Magnolia",
+   "Style": "Fine line",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "chest",
+    "stomach",
+    "upper_back",
+    "lower_back",
+    "neck_side"
+   ]
+  },
+  {
+   "Id": "koi",
+   "Label": "Koi",
+   "Style": "Japanese-inspired",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "snake",
+   "Label": "Snake",
+   "Style": "Blackwork",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "neck_side"
+   ]
+  },
+  {
+   "Id": "wolf",
+   "Label": "Wolf head",
+   "Style": "Realism",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "lion",
+   "Label": "Lion",
+   "Style": "Realism",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "clock_roses",
+   "Label": "Clock and roses",
+   "Style": "Black and grey",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest"
+   ]
+  },
+  {
+   "Id": "praying_hands",
+   "Label": "Praying hands",
+   "Style": "Black and grey",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "skull",
+   "Label": "Skull",
+   "Style": "Black and grey",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "left_hand",
+    "right_hand"
+   ]
+  },
+  {
+   "Id": "script_name",
+   "Label": "Script name",
+   "Style": "Lettering",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "stomach",
+    "upper_back",
+    "lower_back",
+    "neck_front",
+    "neck_side"
+   ]
+  },
+  {
+   "Id": "date_numerals",
+   "Label": "Date in numerals",
+   "Style": "Lettering",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "left_hand",
+    "right_hand"
+   ]
+  },
+  {
+   "Id": "tribal_band",
+   "Label": "Tribal band",
+   "Style": "Blackwork",
+   "Zones": [
+    "left_upper_arm",
+    "right_upper_arm",
+    "left_calf",
+    "right_calf"
+   ]
+  },
+  {
+   "Id": "geometric_sleeve",
+   "Label": "Geometric sleeve",
+   "Style": "Dotwork",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder"
+   ]
+  },
+  {
+   "Id": "mandala",
+   "Label": "Mandala",
+   "Style": "Dotwork",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "stomach",
+    "upper_back",
+    "lower_back",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf"
+   ]
+  },
+  {
+   "Id": "butterfly",
+   "Label": "Butterfly",
+   "Style": "Fine line",
+   "Zones": [
+    "neck_side",
+    "left_hand",
+    "right_hand",
+    "ankle",
+    "left_forearm",
+    "right_forearm",
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "lower_back",
+    "chest"
+   ]
+  },
+  {
+   "Id": "crescent_moon",
+   "Label": "Crescent moon",
+   "Style": "Fine line",
+   "Zones": [
+    "neck_side",
+    "left_hand",
+    "right_hand",
+    "ankle",
+    "left_forearm",
+    "right_forearm",
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder"
+   ]
+  },
+  {
+   "Id": "stars",
+   "Label": "Stars",
+   "Style": "Fine line",
+   "Zones": [
+    "neck_side",
+    "left_hand",
+    "right_hand",
+    "ankle",
+    "left_forearm",
+    "right_forearm",
+    "face",
+    "neck_side"
+   ]
+  },
+  {
+   "Id": "feather",
+   "Label": "Feather",
+   "Style": "Fine line",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "neck_side",
+    "left_hand",
+    "right_hand",
+    "ankle",
+    "left_forearm",
+    "right_forearm",
+    "lower_back"
+   ]
+  },
+  {
+   "Id": "barbed_band",
+   "Label": "Barbed wire band",
+   "Style": "Blackwork",
+   "Zones": [
+    "left_upper_arm",
+    "right_upper_arm"
+   ]
+  },
+  {
+   "Id": "skyline",
+   "Label": "Port Arden skyline",
+   "Style": "Black and grey",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "portrait",
+   "Label": "Portrait",
+   "Style": "Realism",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest",
+    "upper_back",
+    "left_thigh",
+    "right_thigh"
+   ]
+  },
+  {
+   "Id": "teardrop",
+   "Label": "Teardrop",
+   "Style": "Traditional",
+   "Zones": [
+    "face"
+   ]
+  },
+  {
+   "Id": "cross",
+   "Label": "Cross",
+   "Style": "Black and grey",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "neck_side",
+    "left_hand",
+    "right_hand",
+    "ankle",
+    "left_forearm",
+    "right_forearm",
+    "chest",
+    "neck_side"
+   ]
+  },
+  {
+   "Id": "heartbeat",
+   "Label": "Heartbeat line",
+   "Style": "Fine line",
+   "Zones": [
+    "neck_side",
+    "left_hand",
+    "right_hand",
+    "ankle",
+    "left_forearm",
+    "right_forearm",
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "chest"
+   ]
+  },
+  {
+   "Id": "knuckle_letters",
+   "Label": "Knuckle lettering",
+   "Style": "Lettering",
+   "Zones": [
+    "left_fingers",
+    "right_fingers"
+   ]
+  },
+  {
+   "Id": "finger_rings",
+   "Label": "Finger bands",
+   "Style": "Fine line",
+   "Zones": [
+    "left_fingers",
+    "right_fingers"
+   ]
+  },
+  {
+   "Id": "back_piece",
+   "Label": "Full back piece",
+   "Style": "Japanese-inspired",
+   "Zones": [
+    "upper_back",
+    "lower_back"
+   ]
+  },
+  {
+   "Id": "chest_eagle",
+   "Label": "Eagle across the chest",
+   "Style": "Traditional",
+   "Zones": [
+    "chest",
+    "upper_back"
+   ]
+  },
+  {
+   "Id": "hand_rose",
+   "Label": "Rose on the hand",
+   "Style": "Black and grey",
+   "Zones": [
+    "left_hand",
+    "right_hand"
+   ]
+  },
+  {
+   "Id": "neck_script",
+   "Label": "Throat lettering",
+   "Style": "Lettering",
+   "Zones": [
+    "neck_front"
+   ]
+  },
+  {
+   "Id": "wave",
+   "Label": "Wave",
+   "Style": "Japanese-inspired",
+   "Zones": [
+    "left_upper_arm",
+    "left_forearm",
+    "right_upper_arm",
+    "right_forearm",
+    "left_shoulder",
+    "right_shoulder",
+    "left_thigh",
+    "left_calf",
+    "right_thigh",
+    "right_calf",
+    "ankle"
+   ]
+  }
+ ]
+}

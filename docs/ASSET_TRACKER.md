@@ -6,8 +6,15 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 |---|---|---|---|---|
 | All buildings in the greybox scene | coloured boxes generated from layout data | `GreyboxWorldBuilder` | swap to Blender kit meshes per `PlaceKind`, then artist variants | PLACEHOLDER |
 | Greybox materials `M_Greybox_*` | flat colour | `Assets/_Project/Generated` | real PBR materials with texture sets | PLACEHOLDER |
-| Player body | capsule | greybox player rig | humanoid character + animation set (Phase 1) | PLACEHOLDER |
-| NPC avatars | capsules tinted by appearance seed | `NpcAvatar_Placeholder.prefab` | modular character system driven by `AppearanceSeed` | PLACEHOLDER |
+| Player body | capsule | greybox player rig | realistic human base mesh with blend shapes for every `appearance.json` morph, humanoid rig | PLACEHOLDER |
+| NPC avatars | capsules scaled to height and build, tinted with the main garment's colour, moving at their walk style's speed with a procedural lean/sway | `NpcAvatar` | the same human mesh, dressed from `LooksGenerator` | PLACEHOLDER |
+| Human base mesh and face/body blend shapes (72 morphs in `appearance.json`) | none: the data, creator sliders and generator exist, the mesh does not | — | CC0 MakeHuman/MPFB base built by the Blender pipeline, or a licensed character system (owner decision pending) | MISSING |
+| Hair meshes (46 styles), facial hair (16), eyebrows (11) | none (ids and colours only) | `appearance.json` | hair cards per style, grooming shaders | MISSING |
+| Skin detail, makeup and tattoo decals (13 details, 8 looks, 36 tattoo designs over 22 zones) | none (ids and amounts only) | `appearance.json` | skin texture sets per tone, detail masks, original tattoo artwork as decals | MISSING |
+| Clothing and accessory meshes (179 items, 912 colourways: tops, outerwear, dresses, bottoms, belts, shoes, socks, hats, glasses, jewellery, grills, watches, bags, gloves) | none; colours tint the capsule | `clothing.json` | garment meshes fitted to the base body (shrink-wrap to blend shapes), material tints per colourway | MISSING |
+| Animation set (338 clips: 15 personal walk styles × 7 locomotion clips, 7 situational walks, idles, conversation, social, emotes, dances, phone, sitting, eating, work, reactions, combat, vehicles, swimming, powers) | none; listed as Planned in `animations.json` | `animations.json` | procedural Blender gait generator for the walk set, then motion capture / keyframed clips | MISSING |
+| Character creator preview | text only (no 3D preview) | `CharacterCreatorView` | turntable of the human mesh with live blend shapes | PLACEHOLDER |
+| Clothes store screen, Wardrobe phone app | UI Toolkit lists with colour swatches, no try-on preview | `GameUi` | 3D try-on with the dressed character | FIRST PASS |
 | Ground / canal water | plane / cube | greybox | terrain, water system | PLACEHOLDER |
 | Rain | stretched particles | greybox | VFX Graph rain, splashes, wet shader | PLACEHOLDER |
 | HUD | IMGUI `PrototypeHud` | Runtime/UI | UI Toolkit HUD (Phase 24) | PLACEHOLDER |

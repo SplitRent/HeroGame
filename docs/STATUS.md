@@ -98,6 +98,9 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | Three characters per player, each with their own worlds; the old single profile becomes character 1; deleting a character deletes their worlds | TESTED | `CharacterSlots_ThreeCharacters_EachWithTheirOwnWorlds` |
 | Character names and appearance sanitised (names: letters, spaces, hyphens, apostrophes; appearance clamped) | TESTED | `IdentityRules_CleanNamesAndClampAppearance` |
 | Online: each character slot is its own person on a server (protocol 2); name and look are kept from creation; one session per account | TESTED | `CharacterSlots_AreSeparatePeople_KeepTheirIdentity_AndBadSlotsOrNamesAreHandled` |
+| Character catalogs: 72 face/body morphs, 46 hairstyles, 36 tattoo designs, 179 garments and accessories in 912 colourways (incl. belts, watches, grills, glasses, jewellery), 22 walk styles, 338 planned animation clips; loader validation | TESTED | `Catalogs_AreBigAndDetailed`, `generate_catalogs.py --check` |
+| Townspeople looks: deterministic face/body/hair/skin/tattoos/walk from the appearance seed, clothes daily by age, job, income, personality and weather; every outfit valid | TESTED | `TownspeopleLook_TheSameEveryTime_ButChangeClothesDaily`, `EveryGeneratedOutfit_*`, `PeopleDressForTheWeather_AndForWork` |
+| Wardrobe: outfit rules (one per slot, dresses fill top and bottom, belts need loops, covered), starter clothes from the creator (starter range only), clothes stores through the ledger, outfits; online requests | TESTED | `WardrobeRules_*`, `NewCharacters_WearTheirStarterPicks_*`, `ClothesStores_*`, `Wardrobe_BuyAtTheStoreAndWear_OverTheWire` |
 | Justice persistence (incidents, evidence, cases) | TESTED | `EvidenceAndCases_SurviveSaveAndLoad` |
 | Emergency dispatch (road-ETA unit selection, priority queue, trips, scenes, returns) | TESTED | `MedicalCall_*`, `SurgeOfCalls_*`, `Units_AreCrewedFromServiceFleets` |
 | Police response & arrest on scene | TESTED | `Police_ArrestASuspectStillAtTheScene_ButNotOneWhoLeft` |
@@ -213,6 +216,9 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | Day/night, weather presentation | IN DEVELOPMENT | compiles |
 | World streaming (cells) | IN DEVELOPMENT | compiles; no cell scenes yet |
 | Main menu, server browser UI, character creator (first-run popup, choose-your-character screen with 3 slots) | IN DEVELOPMENT | compiles |
+| Character creator pages: basics, 51 face and 21 body sliders, skin (tone, undertone, eyes, 13 details, makeup), hair/brows/facial hair with colours and highlights, up to 24 tattoos, starting clothes, walk; realistic randomise | IN DEVELOPMENT | compiles; no 3D preview until the human mesh exists |
+| Clothes store screen (every shop that stocks clothing), Wardrobe phone app (outfits, wear, edit, delete), online and offline | IN DEVELOPMENT | compiles |
+| NPC avatars use generated looks: height, build, garment colour, personal walk speed and gait | IN DEVELOPMENT | compiles; bodies are still capsules |
 | Custody screen (bail, attorney, plea, wait, look around), holding cell behind the station (builder v9) | IN DEVELOPMENT | compiles |
 | Dev console, world/NPC inspector overlay | IN DEVELOPMENT | dev builds only |
 | NPC conversation, subtitles, interiors with real occupants | IN DEVELOPMENT | compiles |

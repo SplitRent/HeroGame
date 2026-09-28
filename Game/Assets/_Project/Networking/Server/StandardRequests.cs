@@ -136,6 +136,11 @@ namespace HeroGame.Networking.Server
                 return RequestContext.From(ctx.World.Combat.ApplyForFirearmPermit(ctx.Me, ctx.Key));
             });
 
+            r.Register("wardrobe.buy", ctx => AtShop(ctx, b => ctx.World.Wardrobe.Buy(ctx.Me, b, ctx.Str("item", 32), ctx.Str("variant", 32), ctx.Key)));
+            r.Register("wardrobe.wear", ctx => RequestContext.From(ctx.World.Wardrobe.Wear(ctx.Me,
+                Core.Characters.WardrobeRules.DecodePieces(ctx.Str("pieces", 1400), ctx.OptStr("id", ""), ctx.OptStr("name", "")))));
+            r.Register("wardrobe.delete", ctx => RequestContext.From(ctx.World.Wardrobe.DeleteOutfit(ctx.Me, ctx.Str("id", 32))));
+
             r.Register("justice.bail", ctx => RequestContext.From(ctx.World.Courts.PostBail(ctx.Me, ctx.Key)));
             r.Register("justice.fines", ctx => RequestContext.From(ctx.World.Courts.PayFines(ctx.Me, new Money(ctx.Long("amount", 1)), ctx.Key)));
             r.Register("justice.attorney", ctx => RequestContext.From(ctx.World.Courts.HireAttorney(ctx.Me, ctx.Key)));

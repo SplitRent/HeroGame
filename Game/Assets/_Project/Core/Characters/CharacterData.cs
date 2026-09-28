@@ -32,12 +32,50 @@ namespace HeroGame.Core.Characters
         public int EyebrowStyleId;
         public string EyeColorHex = "#4B3621";
         public int FacialHairId;
+        /// <summary>Face and body sliders by morph id (see <see cref="AppearanceCatalog.Morphs"/>); 0.5 = average.</summary>
         public List<NamedValue> FaceMorphs = new List<NamedValue>();
+
+        // Catalog-based looks (appearance.json). The numeric style ids above are from before the catalog and unused.
+        public string HairStyle = "";
+        public string HairHighlightHex = "";
+        public string FacialHairStyle = "";
+        public string FacialHairColorHex = "";
+        public string EyebrowStyle = "";
+        public string EyebrowColorHex = "";
+        /// <summary>0 = cool (pink) undertone, 1 = warm (golden/olive).</summary>
+        public float SkinUndertone = 0.5f;
+        /// <summary>Freckles, moles, age lines, blemishes… by id, 0..1.</summary>
+        public List<NamedValue> SkinDetails = new List<NamedValue>();
+        public string Makeup = "";
+        public float MakeupIntensity;
+        public List<TattooPlacement> Tattoos = new List<TattooPlacement>();
+
+        public float GetDetail(string name)
+        {
+            foreach (var d in SkinDetails) if (d.Name == name) return d.Value;
+            return 0f;
+        }
+
+        public void SetDetail(string name, float value)
+        {
+            value = Math.Max(0f, Math.Min(1f, value));
+            for (var i = 0; i < SkinDetails.Count; i++)
+            {
+                if (SkinDetails[i].Name != name) continue;
+                SkinDetails[i] = new NamedValue { Name = name, Value = value };
+                return;
+            }
+            SkinDetails.Add(new NamedValue { Name = name, Value = value });
+        }
 
         public AppearanceData Clone()
         {
             var copy = (AppearanceData)MemberwiseClone();
             copy.FaceMorphs = new List<NamedValue>(FaceMorphs ?? new List<NamedValue>());
+            copy.SkinDetails = new List<NamedValue>(SkinDetails ?? new List<NamedValue>());
+            copy.Tattoos = new List<TattooPlacement>();
+            if (Tattoos != null)
+                foreach (var t in Tattoos) copy.Tattoos.Add(new TattooPlacement { Zone = t.Zone, DesignId = t.DesignId, Scale = t.Scale, Fade = t.Fade });
             return copy;
         }
 
@@ -77,6 +115,10 @@ namespace HeroGame.Core.Characters
         public GenderPresentation Presentation;
         public string VoicePresetId = "";
         public AppearanceData Appearance = new AppearanceData();
+        /// <summary>How this person walks (animations.json walk styles).</summary>
+        public string WalkStyleId = "";
+        /// <summary>Clothes picked in the creator from the starter range; each new world gives them to the character.</summary>
+        public Outfit StartingOutfit = new Outfit();
 
         public string FullName => FirstName + " " + LastName;
 
@@ -84,6 +126,7 @@ namespace HeroGame.Core.Characters
         {
             var copy = (CharacterIdentity)MemberwiseClone();
             copy.Appearance = (Appearance ?? new AppearanceData()).Clone();
+            copy.StartingOutfit = (StartingOutfit ?? new Outfit()).Copy();
             return copy;
         }
     }
@@ -187,7 +230,10 @@ namespace HeroGame.Core.Characters
 
         public List<InventoryStack> Inventory = new List<InventoryStack>();
         public List<string> OwnedOutfits = new List<string>();
+        /// <summary>Id of the outfit being worn (one of <see cref="Outfits"/>, or an alias costume).</summary>
         public string CurrentOutfit = "";
+        /// <summary>Saved outfits. The garments themselves are inventory items ("wear:item:variant").</summary>
+        public List<Outfit> Outfits = new List<Outfit>();
         public List<CareerEntry> Careers = new List<CareerEntry>();
         public EducationLevel Education = EducationLevel.HighSchool;
         public List<License> Licenses = new List<License>();

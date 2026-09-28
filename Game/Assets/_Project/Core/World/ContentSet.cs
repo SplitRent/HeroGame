@@ -38,6 +38,18 @@ namespace HeroGame.Core.World
         public List<Audio.RadioStation> RadioStations = new List<Audio.RadioStation>();
         public List<DestructibleKind> Destructibles = new List<DestructibleKind>();
         public List<Combat.WeaponDefinition> Weapons = new List<Combat.WeaponDefinition>();
+        /// <summary>Creator options and the ranges townspeople are generated from (appearance.json).</summary>
+        public Characters.AppearanceCatalog Looks = new Characters.AppearanceCatalog();
+        /// <summary>Every garment and accessory (clothing.json).</summary>
+        public List<Characters.ClothingItem> Clothing = new List<Characters.ClothingItem>();
+        /// <summary>Walk styles and the animation set (animations.json).</summary>
+        public Characters.AnimationCatalog Animations = new Characters.AnimationCatalog();
+
+        public Characters.ClothingItem FindClothing(string id)
+        {
+            foreach (var c in Clothing) if (c.Id == id) return c;
+            return null;
+        }
 
         public Combat.WeaponDefinition FindWeapon(string id)
         {

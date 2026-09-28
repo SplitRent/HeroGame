@@ -208,6 +208,32 @@ namespace HeroGame.Tests
         }
 
         [Test]
+        public void Wardrobe_BuyAtTheStoreAndWear_OverTheWire()
+        {
+            var c = Join("acc-w", "Wren Hale");
+            var me = _world.Characters[c.Welcome.CharacterId];
+            Until(() => c.Me != null && c.Me.Outfits.Count > 0);
+            Assert.AreEqual("starter", c.Me.CurrentOutfit, "new characters arrive dressed");
+            var boutique = _world.Businesses.Values.OrderBy(b => b.Id).First(b => b.TemplateId == "clothing_boutique");
+            var shop = _world.Geography.GetPlace(boutique.Place);
+            var now = _world.Clock.Now;
+            var target = now.StartOfDay.AddHours(13);
+            if (target <= now) target = target.AddDays(1);
+            _world.Clock.AdvanceGame(target.TotalSeconds - now.TotalSeconds);
+            _world.AdminGrant(me.CheckingAccount, new Money(100000), "test", "cash");
+            var args = new Dictionary<string, string> { ["business"] = boutique.Id.ToString(), ["item"] = "bomber", ["variant"] = "olive" };
+            StringAssert.Contains("not there", Call(c, "wardrobe.buy", args).Error, "you have to be in the store");
+            _server.Players.Single(p => p.Character == me).Position = shop.Position;
+            Assert.IsTrue(Call(c, "wardrobe.buy", args).Success);
+            var outfit = WardrobeRules.DecodePieces(WardrobeRules.EncodePieces(_world.Wardrobe.Worn(me)) + ",bomber:olive", "", "Evening");
+            var wear = Call(c, "wardrobe.wear", new Dictionary<string, string> { ["pieces"] = WardrobeRules.EncodePieces(outfit), ["name"] = "Evening" });
+            Assert.IsTrue(wear.Success, wear.Error);
+            Until(() => c.Me.Outfits.Any(o => o.Name == "Evening") && c.Me.Clothes.Any(p => p.ItemId == "bomber"));
+            Assert.AreEqual(_world.Wardrobe.Worn(me).Id, c.Me.CurrentOutfit);
+            StringAssert.Contains("don't own", Call(c, "wardrobe.wear", new Dictionary<string, string> { ["pieces"] = "tee_crew:white,chinos:khaki,watch_gold:gold" }).Error);
+        }
+
+        [Test]
         public void BadTickets_Bans_Replays_AndVersionMismatches_AreRejected()
         {
             var bad = Join("x", "X", ticket: "garbage.ticket");

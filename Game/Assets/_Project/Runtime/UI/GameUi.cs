@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Characters;
     using HeroGame.Core.Foundation;
     using HeroGame.Core.Presentation;
     using HeroGame.Runtime.Bootstrap;
@@ -26,7 +27,7 @@ namespace HeroGame.Runtime.UI
         public PlayerInteractor Interactor;
         public string MenuScene = "MainMenu";
 
-        private enum Screen { None, Pause, Phone, Custody }
+        private enum Screen { None, Pause, Phone, Custody, Store }
         private enum SettingsTab { Audio, Controls, Display, Graphics, Accessibility }
 
         private static GameUi _instance;
@@ -49,6 +50,10 @@ namespace HeroGame.Runtime.UI
         private string _custodyStatus = "";
         private Label _custodyCountdown;
         private Core.Crime.CustodyView _custodyView;
+        private EntityId _store;
+        private string _storeFilter = "Tops";
+        private string _storeStatus = "";
+        private readonly Dictionary<string, string> _storeColour = new Dictionary<string, string>();
 
         private void OnEnable()
         {
@@ -287,10 +292,11 @@ namespace HeroGame.Runtime.UI
         {
             _layer.Clear();
             _layer.pickingMode = _screen == Screen.None ? PickingMode.Ignore : PickingMode.Position;
-            ShowHud(_screen != Screen.Pause && _screen != Screen.Custody);
+            ShowHud(_screen != Screen.Pause && _screen != Screen.Custody && _screen != Screen.Store);
             if (_screen == Screen.Pause) BuildPause(SettingsTab.Audio);
             else if (_screen == Screen.Phone) BuildPhone();
             else if (_screen == Screen.Custody) BuildCustody();
+            else if (_screen == Screen.Store) BuildStore();
         }
 
         private static Button Nav(string text, Action onClick, bool active = false)
@@ -544,6 +550,201 @@ namespace HeroGame.Runtime.UI
             BuildCustody();
         }
 
+        // ------------------------------------------------------------------ clothes store and wardrobe
+
+        private static readonly (string name, ClothingSlot[] slots)[] StoreSections =
+        {
+            ("Tops", new[] { ClothingSlot.Top }),
+            ("Outerwear", new[] { ClothingSlot.Outer }),
+            ("Dresses", new[] { ClothingSlot.FullBody }),
+            ("Bottoms", new[] { ClothingSlot.Bottom, ClothingSlot.Belt }),
+            ("Shoes", new[] { ClothingSlot.Shoes, ClothingSlot.Socks }),
+            ("Hats & glasses", new[] { ClothingSlot.Hat, ClothingSlot.Glasses, ClothingSlot.Mask }),
+            ("Jewellery", new[] { ClothingSlot.Necklace, ClothingSlot.Earrings, ClothingSlot.FacePiercing, ClothingSlot.Rings, ClothingSlot.Bracelet, ClothingSlot.Teeth }),
+            ("Watches", new[] { ClothingSlot.Watch }),
+            ("Bags & gloves", new[] { ClothingSlot.Bag, ClothingSlot.Gloves }),
+        };
+
+        /// <summary>Opens a clothes store's racks (called by the store's interactable).</summary>
+        public static void OpenStore(EntityId business)
+        {
+            if (!Active || _instance._screen != Screen.None || UiFocus.Active) return;
+            _instance._store = business;
+            _instance._storeStatus = "";
+            _instance.Open(Screen.Store);
+        }
+
+        private static bool OwnsClothes(GameSession session, string item, string variant)
+        {
+            var online = Online.NetworkSession.Me;
+            if (online != null) return online.Clothes.Exists(p => p.ItemId == item && p.VariantId == variant);
+            return session.LocalCharacter != null && session.World.Wardrobe.Owns(session.LocalCharacter, item, variant);
+        }
+
+        private void BuildStore()
+        {
+            _layer.Clear();
+            if (!ServiceRegistry.TryGet<GameSession>(out var session) || session.LocalCharacter == null) return;
+            var w = session.World;
+            if (!w.Businesses.TryGetValue(_store, out var shop)) { Close(); return; }
+            var stock = w.Wardrobe.Stock(shop);
+            var overlay = new VisualElement();
+            overlay.AddToClassList("g-overlay");
+            var nav = new VisualElement();
+            nav.AddToClassList("g-overlay-nav");
+            nav.Add(Text(shop.Name.ToUpperInvariant(), "g-overlay-title"));
+            var online = Online.NetworkSession.Me;
+            nav.Add(Text("Cash " + (online != null ? new Money(online.CashCents) : w.Ledger.BalanceOf(session.LocalCharacter.CheckingAccount)), "g-note"));
+            foreach (var section in StoreSections)
+            {
+                var count = stock.FindAll(i => Array.IndexOf(section.slots, i.Slot) >= 0).Count;
+                if (count == 0) continue;
+                var name = section.name;
+                nav.Add(Nav(name.ToUpperInvariant() + "  " + count, () => { _storeFilter = name; BuildStore(); }, name == _storeFilter));
+            }
+            nav.Add(Nav("LEAVE", Close));
+            overlay.Add(nav);
+
+            var content = new ScrollView();
+            content.AddToClassList("g-content");
+            if (!string.IsNullOrEmpty(_storeStatus)) content.Add(Text(_storeStatus, "g-custody-sub"));
+            var slots = Array.Find(StoreSections, x => x.name == _storeFilter).slots ?? StoreSections[0].slots;
+            foreach (var item in stock)
+            {
+                if (Array.IndexOf(slots, item.Slot) < 0) continue;
+                var row = new VisualElement();
+                row.AddToClassList("g-store-row");
+                var info = new VisualElement();
+                info.style.flexGrow = 1;
+                if (!_storeColour.TryGetValue(item.Id, out var variantId) || item.Variant(variantId) == null) variantId = item.Variants[0].Id;
+                var variant = item.Variant(variantId);
+                info.Add(Text(item.Label, "g-store-name"));
+                info.Add(Text(item.Category + " · " + variant.Label + " · " + w.Wardrobe.PriceOf(item, variantId), "g-note"));
+                var swatches = new VisualElement();
+                swatches.AddToClassList("g-swatches");
+                foreach (var v in item.Variants)
+                {
+                    var vid = v.Id;
+                    var swatch = new Button(() => { _storeColour[item.Id] = vid; BuildStore(); }) { tooltip = v.Label };
+                    swatch.AddToClassList("g-swatch");
+                    if (ColorUtility.TryParseHtmlString(v.Hex, out var col)) swatch.style.backgroundColor = col;
+                    if (vid == variantId) swatch.AddToClassList("g-swatch--selected");
+                    swatches.Add(swatch);
+                }
+                info.Add(swatches);
+                row.Add(info);
+                var owned = OwnsClothes(session, item.Id, variantId);
+                var buy = ActionButton(owned ? "Owned" : "Buy", () =>
+                {
+                    var me = session.LocalCharacter;
+                    StoreAct("wardrobe.buy", new Dictionary<string, string> { ["business"] = shop.Id.ToString(), ["item"] = item.Id, ["variant"] = variantId },
+                        () => w.Wardrobe.Buy(me, shop, item.Id, variantId, session.NextRequestKey("clothes")), "Bought: " + item.Label + " (" + variant.Label + "). Put it on in the Wardrobe app.");
+                }, quiet: owned);
+                buy.SetEnabled(!owned);
+                row.Add(buy);
+                content.Add(row);
+            }
+            overlay.Add(content);
+            _layer.Add(overlay);
+        }
+
+        private void StoreAct(string op, Dictionary<string, string> args, Func<OpResult> offline, string success)
+        {
+            var net = Online.NetworkSession.Current;
+            if (Online.NetworkSession.Replica != null && net != null)
+            {
+                _storeStatus = "…";
+                BuildStore();
+                _ = net.Request(op, args).ContinueWith(t =>
+                {
+                    _storeStatus = t.Result.Success ? success : t.Result.Error;
+                    if (_screen == Screen.Store) BuildStore();
+                }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+                return;
+            }
+            var r = offline();
+            _storeStatus = r.Success ? success : r.Error;
+            BuildStore();
+        }
+
+        private Outfit _draftOutfit;
+
+        /// <summary>Phone app: saved outfits (wear, delete) and a builder that combines the clothes you own.</summary>
+        private void BuildWardrobe(VisualElement body, GameSession session, Networking.Protocol.PlayerViewData online)
+        {
+            var w = session.World;
+            var me = session.LocalCharacter;
+            var outfits = online != null ? online.Outfits : me.Outfits;
+            var current = online != null ? online.CurrentOutfit : me.CurrentOutfit;
+            var owned = online != null ? online.Clothes : w.Wardrobe.Owned(me);
+            body.Add(Text("Outfits", "g-section"));
+            foreach (var o in outfits)
+            {
+                var outfit = o;
+                var names = new List<string>();
+                foreach (var p in o.Pieces) names.Add(w.Content.FindClothing(p.ItemId)?.Label ?? p.ItemId);
+                body.Add(Item(o.Name + (o.Id == current ? "  (wearing)" : ""), string.Join(", ", names), o.Id == current));
+                var row = new VisualElement();
+                row.style.flexDirection = FlexDirection.Row;
+                if (o.Id != current)
+                {
+                    row.Add(ActionButton("Wear", () => Act("wardrobe.wear", new Dictionary<string, string> { ["pieces"] = WardrobeRules.EncodePieces(outfit), ["id"] = outfit.Id, ["name"] = outfit.Name },
+                        () => w.Wardrobe.Wear(me, outfit), "Changed into " + outfit.Name + ".")));
+                    row.Add(ActionButton("Delete", () => Act("wardrobe.delete", new Dictionary<string, string> { ["id"] = outfit.Id },
+                        () => w.Wardrobe.DeleteOutfit(me, outfit.Id), "Deleted."), quiet: true));
+                }
+                row.Add(ActionButton("Edit", () => { _draftOutfit = outfit.Copy(); BuildPhone(); }, quiet: true));
+                body.Add(row);
+            }
+            body.Add(Text(_draftOutfit != null && !string.IsNullOrEmpty(_draftOutfit.Id) ? "Edit " + _draftOutfit.Name : "New outfit", "g-section"));
+            if (_draftOutfit == null) _draftOutfit = new Outfit { Name = "Outfit " + (outfits.Count + 1) };
+            var draft = _draftOutfit;
+            var nameField = new TextField("Name") { value = draft.Name, maxLength = 24 };
+            nameField.AddToClassList("g-field");
+            nameField.RegisterValueChangedCallback(e => draft.Name = e.newValue);
+            body.Add(nameField);
+            foreach (ClothingSlot slot in Enum.GetValues(typeof(ClothingSlot)))
+            {
+                var mine = owned.FindAll(p => w.Content.FindClothing(p.ItemId)?.Slot == slot);
+                if (mine.Count == 0) continue;
+                var labels = new List<string> { "None" };
+                foreach (var p in mine)
+                {
+                    var item = w.Content.FindClothing(p.ItemId);
+                    labels.Add(item.Label + " (" + (item.Variant(p.VariantId)?.Label ?? p.VariantId) + ")");
+                }
+                var chosen = draft.Pieces.Find(p => w.Content.FindClothing(p.ItemId)?.Slot == slot);
+                var index = chosen == null ? 0 : mine.FindIndex(p => p.ItemId == chosen.ItemId && p.VariantId == chosen.VariantId) + 1;
+                var s = slot;
+                var dropdown = new DropdownField(WardrobeRules.SlotName(slot), labels, Math.Max(0, index));
+                dropdown.AddToClassList("g-field");
+                dropdown.RegisterValueChangedCallback(e =>
+                {
+                    draft.Pieces.RemoveAll(p => w.Content.FindClothing(p.ItemId)?.Slot == s);
+                    if (dropdown.index > 0) draft.Pieces.Add(mine[dropdown.index - 1].Copy());
+                });
+                body.Add(dropdown);
+            }
+            var actions = new VisualElement();
+            actions.style.flexDirection = FlexDirection.Row;
+            actions.Add(ActionButton("Save and wear", () =>
+            {
+                var rules = WardrobeRules.Validate(draft, w.Content.FindClothing);
+                if (!rules.Success)
+                {
+                    _status = rules.Error;
+                    BuildPhone();
+                    return;
+                }
+                _draftOutfit = null;
+                Act("wardrobe.wear", new Dictionary<string, string> { ["pieces"] = WardrobeRules.EncodePieces(draft), ["id"] = draft.Id, ["name"] = draft.Name },
+                    () => w.Wardrobe.Wear(me, draft), "Changed into " + draft.Name + ".");
+            }));
+            actions.Add(ActionButton("Clear", () => { _draftOutfit = null; BuildPhone(); }, quiet: true));
+            body.Add(actions);
+            body.Add(Text("Buy more at clothes stores: boutiques, sporting goods, hardware stores and pharmacies each stock their own range.", "g-note"));
+        }
+
         // ------------------------------------------------------------------ phone
 
         private void BuildPhone()
@@ -581,10 +782,11 @@ namespace HeroGame.Runtime.UI
                 phone.Add(status2);
             }
             var online = Online.NetworkSession.Me;
-            if (_app == "Radio" || _app == "Ripple" || _app == "Loans" || _app == "Insurance" || _app == "Businesses")
+            if (_app == "Radio" || _app == "Ripple" || _app == "Loans" || _app == "Insurance" || _app == "Businesses" || _app == "Wardrobe")
             {
                 switch (_app)
                 {
+                    case "Wardrobe": BuildWardrobe(body, session, online); break;
                     case "Radio": BuildRadio(body, w); break;
                     case "Ripple": BuildRipple(body, session); break;
                     case "Loans": BuildLoans(body, session, online); break;
@@ -623,7 +825,7 @@ namespace HeroGame.Runtime.UI
             var unread = w.Phone.UnreadCount(me);
             var online = Online.NetworkSession.Me;
             if (online != null) unread = online.Unread;
-            foreach (var app in new[] { "Messages", "News", "Bank", "Properties", "Inventory", "Map", "Radio", "Ripple", "Loans", "Insurance", "Businesses" })
+            foreach (var app in new[] { "Messages", "News", "Bank", "Properties", "Inventory", "Wardrobe", "Map", "Radio", "Ripple", "Loans", "Insurance", "Businesses" })
             {
                 var captured = app;
                 var b = new Button(() => { _app = captured; _status = ""; BuildPhone(); });

@@ -43,6 +43,10 @@ namespace HeroGame.Networking.Protocol
         public List<Insurable> Insurables = new List<Insurable>();
         /// <summary>A mugging in progress, or null.</summary>
         public EncounterView Encounter;
+        /// <summary>Clothes the player owns, their saved outfits and which one is on.</summary>
+        public List<Core.Characters.OutfitPiece> Clothes = new List<Core.Characters.OutfitPiece>();
+        public List<Core.Characters.Outfit> Outfits = new List<Core.Characters.Outfit>();
+        public string CurrentOutfit = "";
         /// <summary>Case, bail and release details while the player is in custody, or null.</summary>
         public Core.Crime.CustodyView Custody;
 
@@ -184,6 +188,9 @@ namespace HeroGame.Networking.Protocol
                     Alerts = new List<string>(e.Alerts),
                 });
             if (c.Record.InCustody) v.Custody = w.Courts.Custody(c);
+            v.Clothes = w.Wardrobe.Owned(c);
+            foreach (var o in c.Outfits) v.Outfits.Add(o.Copy());
+            v.CurrentOutfit = c.CurrentOutfit;
             var encounter = w.StreetCrime.ActiveFor(c.CharacterId);
             if (encounter != null)
                 v.Encounter = new EncounterView

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -40,6 +41,9 @@ namespace HeroGame.Persistence.Content
         public const string RadioStations = "radio_stations.json";
         public const string Destructibles = "destructibles.json";
         public const string Weapons = "weapons.json";
+        public const string Appearance = "appearance.json";
+        public const string Clothing = "clothing.json";
+        public const string Animations = "animations.json";
 
         /// <summary>Story Mode content (not needed by player servers).</summary>
         public static Core.Story.StoryDefinition LoadStory(string dataDirectory, string file = Story) => Read<Core.Story.StoryDefinition>(dataDirectory, file);
@@ -282,8 +286,98 @@ namespace HeroGame.Persistence.Content
                 RadioStations = Read<List<Core.Audio.RadioStation>>(dataDirectory, RadioStations),
                 Destructibles = Read<List<DestructibleKind>>(dataDirectory, Destructibles),
                 Weapons = Read<List<Core.Combat.WeaponDefinition>>(dataDirectory, Weapons),
+                Looks = Read<Core.Characters.AppearanceCatalog>(dataDirectory, Appearance),
+                Clothing = Read<List<Core.Characters.ClothingItem>>(dataDirectory, Clothing),
+                Animations = Read<Core.Characters.AnimationCatalog>(dataDirectory, Animations),
             };
             return set;
+        }
+
+        private static bool IsHex(string hex)
+        {
+            if (hex == null || hex.Length != 7 || hex[0] != '#') return false;
+            for (var i = 1; i < 7; i++) if (!Uri.IsHexDigit(hex[i])) return false;
+            return true;
+        }
+
+        private static bool IsId(string id)
+        {
+            if (string.IsNullOrEmpty(id) || id.Length > 32) return false;
+            foreach (var ch in id) if (!((ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9') || ch == '_')) return false;
+            return true;
+        }
+
+        /// <summary>appearance.json, clothing.json, animations.json: ids characters store, colours, shops and required pieces.</summary>
+        private static void ValidateLooks(ContentSet c, HashSet<string> templateIds, ValidationReport r)
+        {
+            var looks = c.Looks;
+            void Ids<T>(string path, IEnumerable<T> list, Func<T, string> id)
+            {
+                var seen = new HashSet<string>();
+                foreach (var x in list)
+                    if (!IsId(id(x)) || !seen.Add(id(x))) r.Error(path, "Missing, malformed or duplicate id '" + id(x) + "' (lower-case letters, digits, underscores).");
+            }
+            Ids("appearance.morphs", looks.Morphs, m => m.Id);
+            foreach (var m in looks.Morphs)
+            {
+                if (m.Group != "Face" && m.Group != "Body") r.Error("appearance.morphs." + m.Id, "Group must be Face or Body.");
+                if (m.NaturalSpread < 0f || m.NaturalSpread > 0.5f) r.Error("appearance.morphs." + m.Id, "NaturalSpread must be 0..0.5.");
+            }
+            if (looks.Morphs.Count > Core.Characters.IdentityRules.MaxMorphs) r.Error("appearance.morphs", "More morphs than a character can store.");
+            Ids("appearance.hair", looks.HairStyles, h => h.Id);
+            Ids("appearance.facial_hair", looks.FacialHair, h => h.Id);
+            Ids("appearance.eyebrows", looks.Eyebrows, h => h.Id);
+            Ids("appearance.skin_details", looks.SkinDetails, h => h.Id);
+            Ids("appearance.makeup", looks.Makeup, h => h.Id);
+            if (looks.SkinDetails.Count > Core.Characters.IdentityRules.MaxSkinDetails) r.Error("appearance.skin_details", "More details than a character can store.");
+            foreach (var list in new[] { looks.HairColors, looks.EyeColors, looks.SkinTones })
+            {
+                Ids("appearance.colors", list, x => x.Id);
+                foreach (var col in list) if (!IsHex(col.Hex)) r.Error("appearance.colors." + col.Id, "Colour must be #RRGGBB.");
+            }
+            if (looks.SkinTones.Count != Core.Characters.IdentityRules.SkinTones) r.Error("appearance.skin_tones", "Expected " + Core.Characters.IdentityRules.SkinTones + " skin tones.");
+            if (looks.FacialHair.Find(f => f.Id == "none") == null || looks.Makeup.Find(f => f.Id == "none") == null) r.Error("appearance", "Facial hair and makeup need a 'none' option.");
+            var zones = new HashSet<string>(looks.TattooZones);
+            if (zones.Count != looks.TattooZones.Count) r.Error("appearance.tattoo_zones", "Duplicate zone.");
+            Ids("appearance.tattoos", looks.TattooDesigns, t => t.Id);
+            foreach (var t in looks.TattooDesigns)
+            {
+                if (t.Zones.Count == 0) r.Error("appearance.tattoos." + t.Id, "A design needs at least one zone.");
+                foreach (var z in t.Zones) if (!zones.Contains(z)) r.Error("appearance.tattoos." + t.Id, "Unknown zone " + z);
+            }
+
+            Ids("clothing", c.Clothing, i => i.Id);
+            var starterSlots = new HashSet<Core.Characters.ClothingSlot>();
+            foreach (var i in c.Clothing)
+            {
+                var path = "clothing." + i.Id;
+                if (string.IsNullOrEmpty(i.Label)) r.Error(path, "Missing label.");
+                if (i.Variants.Count == 0) r.Error(path, "At least one colourway.");
+                Ids(path + ".variants", i.Variants, v => v.Id);
+                foreach (var v in i.Variants)
+                {
+                    if (!IsHex(v.Hex) || (!string.IsNullOrEmpty(v.TrimHex) && !IsHex(v.TrimHex))) r.Error(path + "." + v.Id, "Colours must be #RRGGBB.");
+                    if (v.PriceFactor <= 0f || v.PriceFactor > 20f) r.Error(path + "." + v.Id, "PriceFactor out of range.");
+                }
+                foreach (var t in i.SoldBy) if (!templateIds.Contains(t)) r.Error(path, "Unknown shop template " + t);
+                if (i.SoldBy.Count > 0 && i.PriceCents <= 0) r.Error(path, "Sold items need a price.");
+                if (i.Warmth < 0f || i.Warmth > 1f || i.Formality < 0f || i.Formality > 1f || i.Commonness < 0f) r.Error(path, "Warmth and formality are 0..1; commonness is not negative.");
+                if (i.Starter) starterSlots.Add(i.Slot);
+            }
+            foreach (var required in new[] { Core.Characters.ClothingSlot.Top, Core.Characters.ClothingSlot.Bottom, Core.Characters.ClothingSlot.Shoes })
+                if (!starterSlots.Contains(required)) r.Error("clothing", "The creator needs starter " + required + " items.");
+
+            var anim = c.Animations;
+            Ids("animations.walks", anim.WalkStyles, w => w.Id);
+            foreach (var w in anim.WalkStyles)
+                if (w.Speed < 0.3f || w.Speed > 3f || w.Stride <= 0f || w.MinAge > w.MaxAge) r.Error("animations.walks." + w.Id, "Speed 0.3..3, stride > 0, MinAge <= MaxAge.");
+            if (anim.Walk("casual") == null) r.Error("animations.walks", "Missing required walk casual.");
+            Ids("animations.clips", anim.Clips, x => x.Id);
+            foreach (var clip in anim.Clips)
+                if (!string.IsNullOrEmpty(clip.WalkStyle) && anim.Walk(clip.WalkStyle) == null) r.Error("animations.clips." + clip.Id, "Unknown walk style " + clip.WalkStyle);
+            foreach (var w in anim.WalkStyles)
+                if (!w.Situational && !anim.Clips.Exists(x => x.WalkStyle == w.Id && x.Id.EndsWith("_walk", StringComparison.Ordinal)))
+                    r.Error("animations.walks." + w.Id, "No walk clip for this style.");
         }
 
         public static ServerConfig LoadServerConfig(string path)
@@ -524,6 +618,7 @@ namespace HeroGame.Persistence.Content
                 if (wpn.SoldBy.Count > 0 && wpn.PriceCents <= 0) r.Error(path, "Sold weapons need a price.");
             }
             if (c.FindWeapon("fists") == null) r.Error("weapons", "Missing required weapon fists.");
+            ValidateLooks(c, templateIds, r);
             foreach (var required in new[] { "homicide", "unlawful_discharge", "unlicensed_firearm", "street_robbery" })
                 if (c.FindCrime(required) == null) r.Error("crime_types", "Missing required crime " + required + ".");
 

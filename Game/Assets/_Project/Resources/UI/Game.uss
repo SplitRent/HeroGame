@@ -314,6 +314,45 @@
     margin: 18px 0 8px 0;
 }
 
+/* ------------------------------------------------------------------ clothes store */
+
+.g-store-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 14px;
+    margin: 3px 0;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-left-width: 3px;
+    border-left-color: rgb(168, 64, 92);
+}
+
+.g-store-name {
+    font-size: 17px;
+    -unity-font-style: bold;
+    color: rgb(240, 240, 240);
+}
+
+.g-swatches {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.g-swatch {
+    width: 24px;
+    height: 24px;
+    margin: 0 6px 4px 0;
+    padding: 0;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+}
+
+.g-swatch--selected {
+    border-width: 3px;
+    border-color: rgb(240, 180, 41);
+}
+
 /* ------------------------------------------------------------------ phone */
 
 .g-phone {

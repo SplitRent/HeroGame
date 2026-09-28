@@ -145,6 +145,8 @@ namespace HeroGame.Core.Presentation
             foreach (var s in c.Inventory)
             {
                 if (s.Quantity <= 0) continue;
+                // Clothes live in the wardrobe screen, not in the item list.
+                if (s.ItemId.StartsWith(WardrobeRules.StackPrefix, StringComparison.Ordinal)) continue;
                 var def = content.FindItem(s.ItemId);
                 var key = s.Instance.IsValid ? s.ItemId + "#" + s.Instance : s.ItemId + (s.Stolen ? "#stolen" : "");
                 if (!byKey.TryGetValue(key, out var line))

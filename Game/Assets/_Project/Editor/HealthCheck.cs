@@ -68,7 +68,8 @@ namespace HeroGame.Editor
                 var report = ContentLoader.Validate(content);
                 var errors = report.Messages.Count(m => m.Severity == Core.Foundation.Severity.Error);
                 Add(errors == 0 ? Result.Pass : Result.Fail, "Game data", content.Occupations.Count + " occupations, " + content.BusinessTemplates.Count + " business templates, " +
-                    content.Items.Count + " items, " + content.Ordinances.Count + " ordinances, " + content.RadioStations.Count + " radio stations; " + errors + " errors (" +
+                    content.Items.Count + " items, " + content.Ordinances.Count + " ordinances, " + content.RadioStations.Count + " radio stations, " + content.Clothing.Count + " clothing items, " +
+                    content.Looks.Morphs.Count + " face/body sliders, " + content.Animations.WalkStyles.Count + " walk styles; " + errors + " errors (" +
                     watch.ElapsedMilliseconds + " ms)", errors == 0 ? "" : "Run HeroGame ▸ Validate ▸ Content Data and read the Console.");
                 var story = ContentLoader.ValidateStory(ContentLoader.LoadStory(GameSession.DataDirectory), content);
                 var storyErrors = story.Messages.Count(m => m.Severity == Core.Foundation.Severity.Error);

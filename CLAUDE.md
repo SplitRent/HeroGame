@@ -12,6 +12,7 @@ dotnet build Headless/UnityCompileCheck -p:ModernBcl=true           # all Unity 
 python3 Tools/Unity/shadow_check.py                                 # no future Unity/.NET type name can clash with ours
 python3 Tools/Unity/unity_meta.py generate && python3 Tools/Unity/unity_meta.py check   # after adding assets
 python -m unittest discover -s Tools/Blender/tests                  # pipeline tests (bpy tests need bpy==4.2.0, py3.11)
+python3 Tools/Characters/generate_catalogs.py --check              # appearance/clothing/animation JSON matches its generator
 ```
 
 ## Rules

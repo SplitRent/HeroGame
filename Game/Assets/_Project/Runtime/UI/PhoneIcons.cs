@@ -28,6 +28,7 @@ namespace HeroGame.Runtime.UI
             { "Loans", new Color32(96, 120, 56, 255) },
             { "Insurance", new Color32(62, 88, 140, 255) },
             { "Businesses", new Color32(150, 98, 48, 255) },
+            { "Wardrobe", new Color32(168, 64, 92, 255) },
         };
 
         /// <summary>The tile colour behind an app's glyph.</summary>
@@ -102,6 +103,9 @@ namespace HeroGame.Runtime.UI
                 case "Businesses":
                     return Sub(Union(Box(0.5f, 0.41f, 0.29f, 0.19f, 0.04f), Sub(Box(0.5f, 0.63f, 0.11f, 0.07f, 0.03f), Box(0.5f, 0.62f, 0.065f, 0.04f, 0.01f))),
                         Seg(0.21f, 0.45f, 0.79f, 0.45f, 0.025f));
+                case "Wardrobe":
+                    return Union(Seg(0.5f, 0.62f, 0.2f, 0.36f, 0.04f), Seg(0.2f, 0.36f, 0.8f, 0.36f, 0.04f), Seg(0.8f, 0.36f, 0.5f, 0.62f, 0.04f),
+                        Seg(0.5f, 0.62f, 0.5f, 0.68f, 0.035f), Intersect(Ring(0.5f, 0.74f, 0.06f, 0.035f), Above(0.72f)));
                 default:
                     return null;
             }

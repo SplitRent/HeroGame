@@ -45,7 +45,7 @@ namespace HeroGame.Editor
         /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
         /// stamped with it so the Health Check can say "rebuild the greybox".
         /// </summary>
-        public const int BuilderVersion = 9;
+        public const int BuilderVersion = 10;
         public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
@@ -586,6 +586,14 @@ namespace HeroGame.Editor
                         weapons.transform.position = front + go.transform.rotation * new Vector3(0f, 1f, 2.5f);
                         weapons.AddComponent<BoxCollider>().isTrigger = true;
                         weapons.AddComponent<Runtime.Combat.WeaponCounter>().Place = marker;
+                    }
+                    if (_content != null && _content.Clothing.Exists(i => i.SoldBy.Contains(e.Business.TemplateId)))
+                    {
+                        var racks = new GameObject("Clothes Racks");
+                        racks.transform.SetParent(go.transform);
+                        racks.transform.position = front + go.transform.rotation * new Vector3(-2.5f, 1f, 1.5f);
+                        racks.AddComponent<BoxCollider>().isTrigger = true;
+                        racks.AddComponent<ClothesRack>().Place = marker;
                     }
                 }
             }

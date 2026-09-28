@@ -3,8 +3,10 @@ using UnityEngine.AI;
 
 namespace HeroGame.Runtime.Population
 {
+    using HeroGame.Core.Characters;
     using HeroGame.Core.Foundation;
     using HeroGame.Core.Population;
+    using HeroGame.Runtime.Bootstrap;
 
     /// <summary>
     /// The physical body of a persistent NPC while it is near a player. Pooled: when released it keeps
@@ -20,6 +22,11 @@ namespace HeroGame.Runtime.Population
 
         public float WalkSpeed = 1.35f;
         public Renderer BodyRenderer;
+
+        /// <summary>Face, body, today's clothes and walk (from the character catalogs); null before binding.</summary>
+        public NpcLooks Looks { get; private set; }
+        private WalkStyle _walk;
+        private float _gaitPhase;
 
         private NavMeshAgent _agent;
         private Vector3 _target;
@@ -84,20 +91,74 @@ namespace HeroGame.Runtime.Population
             var speed = Activity == ActivityKind.Commuting ? WalkSpeed * 1.2f : WalkSpeed;
             var step = to / dist * Mathf.Min(dist, speed * Time.deltaTime);
             transform.position += step;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(to), 1f - Mathf.Exp(-8f * Time.deltaTime));
+            var yaw = Quaternion.Slerp(Quaternion.Euler(0f, transform.eulerAngles.y, 0f), Quaternion.LookRotation(to), 1f - Mathf.Exp(-8f * Time.deltaTime));
+            transform.rotation = yaw * Gait(speed);
         }
 
-        /// <summary>Placeholder appearance from the NPC's persistent appearance seed (replaced by the character system).</summary>
+        /// <summary>
+        /// Procedural gait layer (until the locomotion clips exist): each walk style's lean and hip sway, stepped at a
+        /// cadence set by its speed and stride, so the town does not move in lockstep.
+        /// </summary>
+        private Quaternion Gait(float speed)
+        {
+            if (_walk == null) return Quaternion.identity;
+            var stepLength = 0.7f * Mathf.Max(0.3f, _walk.Stride) * Mathf.Clamp(transform.localScale.y, 0.4f, 1.2f);
+            _gaitPhase += Time.deltaTime * speed / stepLength * Mathf.PI;
+            var sway = Mathf.Sin(_gaitPhase) * (2f + 6f * _walk.HipSway);
+            var pitch = _walk.Lean + _walk.HeadDown * 0.2f + Mathf.Abs(Mathf.Sin(_gaitPhase)) * _walk.Bounce * 2f;
+            return Quaternion.Euler(pitch, Mathf.Sin(_gaitPhase) * _walk.ShoulderRoll * 6f, sway * 0.5f);
+        }
+
+        /// <summary>
+        /// Looks from the character catalogs: height, build, clothes for today's weather and a personal walk. The body is
+        /// still a placeholder capsule tinted with the main garment's colour until the human model is in
+        /// (docs/ASSET_TRACKER.md).
+        /// </summary>
         private void ApplyAppearance(NpcRecord record)
         {
-            transform.localScale = Vector3.one * Mathf.Clamp(record.HeightCm / 175f, 0.35f, 1.2f);
+            var height = Mathf.Clamp(record.HeightCm / 175f, 0.35f, 1.2f);
+            Looks = null;
+            _walk = null;
+            Color color;
+            if (ServiceRegistry.TryGet<GameSession>(out var session) && session.World.Content.Clothing.Count > 0)
+            {
+                var w = session.World;
+                var weather = w.Weather.State.Current;
+                var raining = weather.Kind >= Core.Weather.WeatherKind.LightRain;
+                Looks = LooksGenerator.ForNpc(record, w.Today, w.Content, weather.TemperatureC, raining);
+                _walk = w.Content.Animations.Walk(Looks.WalkStyle);
+                if (_walk != null) WalkSpeed = _walk.Speed;
+                _gaitPhase = (record.AppearanceSeed & 0xFFFF) / 65535f * Mathf.PI * 2f;
+                var build = Looks.Appearance.GetMorph("body_fat") * 0.5f + Looks.Appearance.GetMorph("muscle") * 0.3f;
+                transform.localScale = new Vector3(height * (0.85f + build * 0.4f), height, height * (0.85f + build * 0.4f));
+                color = MainColour(w.Content, Looks.Outfit);
+            }
+            else
+            {
+                transform.localScale = Vector3.one * height;
+                var rng = new DeterministicRandom(record.AppearanceSeed);
+                color = Color.HSVToRGB(rng.NextFloat(), 0.35f + rng.NextFloat() * 0.4f, 0.45f + rng.NextFloat() * 0.45f);
+            }
+            if (_agent != null) _agent.speed = WalkSpeed;
             if (BodyRenderer == null) return;
-            var rng = new DeterministicRandom(record.AppearanceSeed);
             var block = new MaterialPropertyBlock();
-            var color = Color.HSVToRGB(rng.NextFloat(), 0.35f + rng.NextFloat() * 0.4f, 0.45f + rng.NextFloat() * 0.45f);
             block.SetColor("_BaseColor", color);
             block.SetColor("_Color", color);
             BodyRenderer.SetPropertyBlock(block);
+        }
+
+        /// <summary>The colour most of the body shows: the jacket, else the dress, else the top.</summary>
+        private static Color MainColour(Core.World.ContentSet content, Outfit outfit)
+        {
+            foreach (var slot in new[] { ClothingSlot.Outer, ClothingSlot.FullBody, ClothingSlot.Top })
+                foreach (var p in outfit.Pieces)
+                {
+                    var item = content.FindClothing(p.ItemId);
+                    if (item == null || item.Slot != slot) continue;
+                    var v = item.Variant(p.VariantId);
+                    if (v != null && ColorUtility.TryParseHtmlString(v.Hex, out var c)) return c;
+                }
+            return new Color(0.6f, 0.55f, 0.5f);
         }
     }
 }
