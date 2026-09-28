@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="FrontEnd.uss" />
+    <ui:VisualElement name="root" class="hg-root">
+        <ui:VisualElement name="backdrop" class="hg-backdrop" />
+        <ui:VisualElement name="left" class="hg-left">
+            <ui:VisualElement class="hg-brand">
+                <ui:Label name="title" text="WORKING TITLE" class="hg-title" />
+                <ui:Label name="city" text="PORT ARDEN" class="hg-city" />
+            </ui:VisualElement>
+            <ui:VisualElement name="menu" class="hg-menu">
+                <ui:Button name="continue" text="CONTINUE" class="hg-menu-button hg-menu-button--accent" />
+                <ui:Button name="story" text="STORY MODE" class="hg-menu-button" />
+                <ui:Button name="servers" text="SERVERS" class="hg-menu-button" />
+                <ui:Button name="character" text="CHARACTER" class="hg-menu-button" />
+                <ui:Button name="options" text="OPTIONS" class="hg-menu-button" />
+                <ui:Button name="settings" text="SETTINGS" class="hg-menu-button" />
+                <ui:Button name="exit" text="EXIT" class="hg-menu-button" />
+            </ui:VisualElement>
+            <ui:Label name="footer" text="" class="hg-footer" />
+        </ui:VisualElement>
+        <ui:VisualElement name="panel" class="hg-panel" />
+    </ui:VisualElement>
+</ui:UXML>

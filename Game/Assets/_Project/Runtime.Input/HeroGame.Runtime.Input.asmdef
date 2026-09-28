@@ -1,0 +1,17 @@
+{
+  "name": "HeroGame.Runtime.Input",
+  "rootNamespace": "HeroGame.Runtime.Input",
+  "references": [
+    "HeroGame.Runtime",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,0 +1,1118 @@
+[
+  {
+    "Id": "cashier",
+    "Title": "Cashier",
+    "Category": "Retail",
+    "MinSalaryCents": 2200000,
+    "MaxSalaryCents": 3000000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 124,
+    "WorkplaceKinds": [
+      "Shop",
+      "GasStation"
+    ],
+    "LayoffRisk": 0.06,
+    "DemandWeight": 3.0,
+    "PromotesTo": "shift_lead",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "shift_lead",
+    "Title": "Shift Lead",
+    "Category": "Retail",
+    "MinSalaryCents": 3000000,
+    "MaxSalaryCents": 3800000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Shop",
+      "GasStation"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 0.8,
+    "PromotesTo": "store_manager",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "store_manager",
+    "Title": "Store Manager",
+    "Category": "Retail",
+    "MinSalaryCents": 4500000,
+    "MaxSalaryCents": 6800000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Shop"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "line_cook",
+    "Title": "Line Cook",
+    "Category": "Food Service",
+    "MinSalaryCents": 2600000,
+    "MaxSalaryCents": 3400000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 600,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 121,
+    "WorkplaceKinds": [
+      "Restaurant"
+    ],
+    "LayoffRisk": 0.07,
+    "DemandWeight": 2.2,
+    "PromotesTo": "head_chef",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "head_chef",
+    "Title": "Head Chef",
+    "Category": "Food Service",
+    "MinSalaryCents": 4200000,
+    "MaxSalaryCents": 6500000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 540,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 124,
+    "WorkplaceKinds": [
+      "Restaurant"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "server",
+    "Title": "Server",
+    "Category": "Food Service",
+    "MinSalaryCents": 2100000,
+    "MaxSalaryCents": 3600000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 960,
+    "ShiftLengthMinutes": 420,
+    "WorkDaysMask": 121,
+    "WorkplaceKinds": [
+      "Restaurant"
+    ],
+    "LayoffRisk": 0.07,
+    "DemandWeight": 2.0,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "bartender",
+    "Title": "Bartender",
+    "Category": "Hospitality",
+    "MinSalaryCents": 2400000,
+    "MaxSalaryCents": 4200000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 1140,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 121,
+    "WorkplaceKinds": [
+      "Nightlife"
+    ],
+    "LayoffRisk": 0.07,
+    "DemandWeight": 1.0,
+    "PromotesTo": "bar_manager",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "bar_manager",
+    "Title": "Bar Manager",
+    "Category": "Hospitality",
+    "MinSalaryCents": 4000000,
+    "MaxSalaryCents": 6000000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 1020,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 124,
+    "WorkplaceKinds": [
+      "Nightlife"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 0.3,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "mechanic",
+    "Title": "Mechanic",
+    "Category": "Trades",
+    "MinSalaryCents": 3600000,
+    "MaxSalaryCents": 6200000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 126,
+    "WorkplaceKinds": [
+      "Garage",
+      "GasStation"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 1.2,
+    "PromotesTo": "service_manager",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "service_manager",
+    "Title": "Service Manager",
+    "Category": "Trades",
+    "MinSalaryCents": 5500000,
+    "MaxSalaryCents": 7800000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Garage"
+    ],
+    "LayoffRisk": 0.03,
+    "DemandWeight": 0.2,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "construction_worker",
+    "Title": "Construction Worker",
+    "Category": "Trades",
+    "MinSalaryCents": 3400000,
+    "MaxSalaryCents": 5200000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 390,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 126,
+    "WorkplaceKinds": [
+      "Warehouse"
+    ],
+    "LayoffRisk": 0.08,
+    "DemandWeight": 1.6,
+    "PromotesTo": "site_foreman",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "site_foreman",
+    "Title": "Site Foreman",
+    "Category": "Trades",
+    "MinSalaryCents": 5800000,
+    "MaxSalaryCents": 8200000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Warehouse"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 0.3,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "warehouse_associate",
+    "Title": "Warehouse Associate",
+    "Category": "Logistics",
+    "MinSalaryCents": 2900000,
+    "MaxSalaryCents": 3800000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Warehouse",
+      "Dock"
+    ],
+    "LayoffRisk": 0.07,
+    "DemandWeight": 2.4,
+    "PromotesTo": "warehouse_supervisor",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "warehouse_associate_night",
+    "Title": "Warehouse Associate (Nights)",
+    "Category": "Logistics",
+    "MinSalaryCents": 3200000,
+    "MaxSalaryCents": 4100000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 1320,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 31,
+    "WorkplaceKinds": [
+      "Warehouse"
+    ],
+    "LayoffRisk": 0.07,
+    "DemandWeight": 1.0,
+    "PromotesTo": "warehouse_supervisor",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "warehouse_supervisor",
+    "Title": "Warehouse Supervisor",
+    "Category": "Logistics",
+    "MinSalaryCents": 4800000,
+    "MaxSalaryCents": 6400000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Warehouse"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "truck_driver",
+    "Title": "Truck Driver",
+    "Category": "Logistics",
+    "MinSalaryCents": 4500000,
+    "MaxSalaryCents": 7000000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 300,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Warehouse",
+      "Dock"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 1.3,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "delivery_driver",
+    "Title": "Delivery Driver",
+    "Category": "Logistics",
+    "MinSalaryCents": 2800000,
+    "MaxSalaryCents": 4000000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 660,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 121,
+    "WorkplaceKinds": [
+      "Restaurant",
+      "Warehouse"
+    ],
+    "LayoffRisk": 0.08,
+    "DemandWeight": 1.2,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "plant_operator",
+    "Title": "Plant Operator",
+    "Category": "Industry",
+    "MinSalaryCents": 5200000,
+    "MaxSalaryCents": 8500000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 106,
+    "WorkplaceKinds": [
+      "Factory"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 1.4,
+    "PromotesTo": "plant_supervisor",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "plant_operator_night",
+    "Title": "Plant Operator (Nights)",
+    "Category": "Industry",
+    "MinSalaryCents": 5600000,
+    "MaxSalaryCents": 8900000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 1080,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 15,
+    "WorkplaceKinds": [
+      "Factory"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 0.8,
+    "PromotesTo": "plant_supervisor",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "plant_supervisor",
+    "Title": "Plant Supervisor",
+    "Category": "Industry",
+    "MinSalaryCents": 8000000,
+    "MaxSalaryCents": 11500000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Factory"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.2,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "chemical_engineer",
+    "Title": "Chemical Engineer",
+    "Category": "Industry",
+    "MinSalaryCents": 8500000,
+    "MaxSalaryCents": 14000000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 450,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Factory",
+      "Office"
+    ],
+    "LayoffRisk": 0.03,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "longshore_worker",
+    "Title": "Longshore Worker",
+    "Category": "Port",
+    "MinSalaryCents": 4800000,
+    "MaxSalaryCents": 8200000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 110,
+    "WorkplaceKinds": [
+      "Dock"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 1.2,
+    "PromotesTo": "crane_operator",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "crane_operator",
+    "Title": "Crane Operator",
+    "Category": "Port",
+    "MinSalaryCents": 6800000,
+    "MaxSalaryCents": 9800000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Dock"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.3,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "teacher",
+    "Title": "Teacher",
+    "Category": "Education",
+    "MinSalaryCents": 4800000,
+    "MaxSalaryCents": 6800000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 435,
+    "ShiftLengthMinutes": 510,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "School"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 1.2,
+    "PromotesTo": "assistant_principal",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "assistant_principal",
+    "Title": "Assistant Principal",
+    "Category": "Education",
+    "MinSalaryCents": 7200000,
+    "MaxSalaryCents": 9200000,
+    "MinEducation": "Masters",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "School"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.1,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "school_custodian",
+    "Title": "School Custodian",
+    "Category": "Education",
+    "MinSalaryCents": 2700000,
+    "MaxSalaryCents": 3500000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "School"
+    ],
+    "LayoffRisk": 0.03,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "nurse",
+    "Title": "Registered Nurse",
+    "Category": "Healthcare",
+    "MinSalaryCents": 6200000,
+    "MaxSalaryCents": 9200000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 106,
+    "WorkplaceKinds": [
+      "Hospital"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 1.3,
+    "PromotesTo": "charge_nurse",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "nurse_night",
+    "Title": "Registered Nurse (Nights)",
+    "Category": "Healthcare",
+    "MinSalaryCents": 6600000,
+    "MaxSalaryCents": 9800000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 1140,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 15,
+    "WorkplaceKinds": [
+      "Hospital"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.7,
+    "PromotesTo": "charge_nurse",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "charge_nurse",
+    "Title": "Charge Nurse",
+    "Category": "Healthcare",
+    "MinSalaryCents": 8800000,
+    "MaxSalaryCents": 11200000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Hospital"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.2,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "medical_assistant",
+    "Title": "Medical Assistant",
+    "Category": "Healthcare",
+    "MinSalaryCents": 3200000,
+    "MaxSalaryCents": 4200000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Hospital"
+    ],
+    "LayoffRisk": 0.03,
+    "DemandWeight": 0.8,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "physician",
+    "Title": "Physician",
+    "Category": "Healthcare",
+    "MinSalaryCents": 18000000,
+    "MaxSalaryCents": 32000000,
+    "MinEducation": "Doctorate",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Hospital"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.25,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "paramedic",
+    "Title": "Paramedic",
+    "Category": "Emergency Services",
+    "MinSalaryCents": 4200000,
+    "MaxSalaryCents": 6200000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 106,
+    "WorkplaceKinds": [
+      "FireStation",
+      "Hospital"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.6,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "firefighter",
+    "Title": "Firefighter",
+    "Category": "Emergency Services",
+    "MinSalaryCents": 4800000,
+    "MaxSalaryCents": 7600000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 15,
+    "WorkplaceKinds": [
+      "FireStation"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.6,
+    "PromotesTo": "fire_captain",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "fire_captain",
+    "Title": "Fire Captain",
+    "Category": "Emergency Services",
+    "MinSalaryCents": 8200000,
+    "MaxSalaryCents": 10500000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 720,
+    "WorkDaysMask": 113,
+    "WorkplaceKinds": [
+      "FireStation"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.1,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "police_officer",
+    "Title": "Police Officer",
+    "Category": "Law Enforcement",
+    "MinSalaryCents": 5500000,
+    "MaxSalaryCents": 7800000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "PoliceStation"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.9,
+    "PromotesTo": "police_sergeant",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "police_officer_night",
+    "Title": "Police Officer (Nights)",
+    "Category": "Law Enforcement",
+    "MinSalaryCents": 5800000,
+    "MaxSalaryCents": 8200000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 1080,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 115,
+    "WorkplaceKinds": [
+      "PoliceStation"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.6,
+    "PromotesTo": "police_sergeant",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "police_sergeant",
+    "Title": "Police Sergeant",
+    "Category": "Law Enforcement",
+    "MinSalaryCents": 8000000,
+    "MaxSalaryCents": 9800000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "PoliceStation"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.15,
+    "PromotesTo": "police_detective",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "police_detective",
+    "Title": "Detective",
+    "Category": "Law Enforcement",
+    "MinSalaryCents": 8500000,
+    "MaxSalaryCents": 11200000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "PoliceStation"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.1,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "security_guard",
+    "Title": "Security Guard",
+    "Category": "Security",
+    "MinSalaryCents": 2800000,
+    "MaxSalaryCents": 4000000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 1320,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 31,
+    "WorkplaceKinds": [
+      "Office",
+      "Warehouse",
+      "Hospital",
+      "Shop"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 1.1,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "accountant",
+    "Title": "Accountant",
+    "Category": "Professional",
+    "MinSalaryCents": 5800000,
+    "MaxSalaryCents": 9500000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 510,
+    "ShiftLengthMinutes": 510,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.03,
+    "DemandWeight": 0.7,
+    "PromotesTo": "senior_accountant",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "senior_accountant",
+    "Title": "Senior Accountant",
+    "Category": "Professional",
+    "MinSalaryCents": 8800000,
+    "MaxSalaryCents": 12500000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 510,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.03,
+    "DemandWeight": 0.2,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "lawyer",
+    "Title": "Attorney",
+    "Category": "Professional",
+    "MinSalaryCents": 9000000,
+    "MaxSalaryCents": 21000000,
+    "MinEducation": "Doctorate",
+    "ShiftStartMinute": 510,
+    "ShiftLengthMinutes": 600,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.3,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "paralegal",
+    "Title": "Paralegal",
+    "Category": "Professional",
+    "MinSalaryCents": 4200000,
+    "MaxSalaryCents": 6200000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 510,
+    "ShiftLengthMinutes": 510,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "software_developer",
+    "Title": "Software Developer",
+    "Category": "Technology",
+    "MinSalaryCents": 8200000,
+    "MaxSalaryCents": 15000000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 570,
+    "ShiftLengthMinutes": 510,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 0.6,
+    "PromotesTo": "engineering_manager",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "engineering_manager",
+    "Title": "Engineering Manager",
+    "Category": "Technology",
+    "MinSalaryCents": 13500000,
+    "MaxSalaryCents": 18500000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 540,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.1,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "office_administrator",
+    "Title": "Office Administrator",
+    "Category": "Administration",
+    "MinSalaryCents": 3400000,
+    "MaxSalaryCents": 4800000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 510,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office",
+      "Hospital",
+      "School",
+      "Government"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 1.2,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "bank_teller",
+    "Title": "Bank Teller",
+    "Category": "Finance",
+    "MinSalaryCents": 3000000,
+    "MaxSalaryCents": 4000000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 510,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 126,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.05,
+    "DemandWeight": 0.5,
+    "PromotesTo": "loan_officer",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "loan_officer",
+    "Title": "Loan Officer",
+    "Category": "Finance",
+    "MinSalaryCents": 5500000,
+    "MaxSalaryCents": 9000000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 510,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.2,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "real_estate_agent",
+    "Title": "Real Estate Agent",
+    "Category": "Real Estate",
+    "MinSalaryCents": 3500000,
+    "MaxSalaryCents": 12000000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 540,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 124,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.06,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "journalist",
+    "Title": "Reporter",
+    "Category": "Media",
+    "MinSalaryCents": 4200000,
+    "MaxSalaryCents": 7200000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 540,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Office"
+    ],
+    "LayoffRisk": 0.06,
+    "DemandWeight": 0.25,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "electrician",
+    "Title": "Electrician",
+    "Category": "Trades",
+    "MinSalaryCents": 4800000,
+    "MaxSalaryCents": 7800000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Garage",
+      "Warehouse",
+      "Factory"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.7,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "plumber",
+    "Title": "Plumber",
+    "Category": "Trades",
+    "MinSalaryCents": 4600000,
+    "MaxSalaryCents": 7400000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 420,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Garage",
+      "Warehouse"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.5,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "personal_trainer",
+    "Title": "Personal Trainer",
+    "Category": "Fitness",
+    "MinSalaryCents": 2800000,
+    "MaxSalaryCents": 5800000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 125,
+    "WorkplaceKinds": [
+      "Gym"
+    ],
+    "LayoffRisk": 0.06,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "pastor",
+    "Title": "Pastor",
+    "Category": "Community",
+    "MinSalaryCents": 3800000,
+    "MaxSalaryCents": 6200000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 540,
+    "ShiftLengthMinutes": 480,
+    "WorkDaysMask": 31,
+    "WorkplaceKinds": [
+      "Church"
+    ],
+    "LayoffRisk": 0.01,
+    "DemandWeight": 0.1,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "city_clerk",
+    "Title": "City Clerk",
+    "Category": "Government",
+    "MinSalaryCents": 4000000,
+    "MaxSalaryCents": 5800000,
+    "MinEducation": "HighSchool",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 510,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Government"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.4,
+    "PromotesTo": "city_program_manager",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "city_program_manager",
+    "Title": "Program Manager",
+    "Category": "Government",
+    "MinSalaryCents": 6200000,
+    "MaxSalaryCents": 8800000,
+    "MinEducation": "Bachelors",
+    "ShiftStartMinute": 480,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Government"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.1,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "musician",
+    "Title": "Musician",
+    "Category": "Entertainment",
+    "MinSalaryCents": 1800000,
+    "MaxSalaryCents": 6000000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 1200,
+    "ShiftLengthMinutes": 360,
+    "WorkDaysMask": 113,
+    "WorkplaceKinds": [
+      "Nightlife"
+    ],
+    "LayoffRisk": 0.08,
+    "DemandWeight": 0.2,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  },
+  {
+    "Id": "dj",
+    "Title": "DJ",
+    "Category": "Entertainment",
+    "MinSalaryCents": 2200000,
+    "MaxSalaryCents": 7000000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 1320,
+    "ShiftLengthMinutes": 360,
+    "WorkDaysMask": 113,
+    "WorkplaceKinds": [
+      "Nightlife"
+    ],
+    "LayoffRisk": 0.08,
+    "DemandWeight": 0.15,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "barber",
+    "Title": "Barber",
+    "Category": "Personal Services",
+    "MinSalaryCents": 2600000,
+    "MaxSalaryCents": 5200000,
+    "MinEducation": "Vocational",
+    "ShiftStartMinute": 540,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 124,
+    "WorkplaceKinds": [
+      "Shop"
+    ],
+    "LayoffRisk": 0.04,
+    "DemandWeight": 0.4,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "pharmacist",
+    "Title": "Pharmacist",
+    "Category": "Healthcare",
+    "MinSalaryCents": 11500000,
+    "MaxSalaryCents": 14500000,
+    "MinEducation": "Doctorate",
+    "ShiftStartMinute": 540,
+    "ShiftLengthMinutes": 540,
+    "WorkDaysMask": 62,
+    "WorkplaceKinds": [
+      "Shop",
+      "Hospital"
+    ],
+    "LayoffRisk": 0.02,
+    "DemandWeight": 0.15,
+    "PromotesTo": "",
+    "PlayerCareer": false
+  },
+  {
+    "Id": "barista",
+    "Title": "Barista",
+    "Category": "Food Service",
+    "MinSalaryCents": 2100000,
+    "MaxSalaryCents": 2900000,
+    "MinEducation": "None",
+    "ShiftStartMinute": 360,
+    "ShiftLengthMinutes": 420,
+    "WorkDaysMask": 121,
+    "WorkplaceKinds": [
+      "Restaurant"
+    ],
+    "LayoffRisk": 0.08,
+    "DemandWeight": 0.9,
+    "PromotesTo": "",
+    "PlayerCareer": true
+  }
+]

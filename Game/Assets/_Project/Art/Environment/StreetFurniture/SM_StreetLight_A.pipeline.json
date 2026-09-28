@@ -1,0 +1,26 @@
+{
+  "asset": "SM_StreetLight_A",
+  "category": "StreetFurniture",
+  "fbx": "SM_StreetLight_A.fbx",
+  "lods": {
+    "SM_StreetLight_A_LOD0": 444,
+    "SM_StreetLight_A_LOD1": 222,
+    "SM_StreetLight_A_LOD2": 88
+  },
+  "collision_hulls": [
+    "UCX_SM_StreetLight_A_01"
+  ],
+  "materials": [
+    "M_Concrete_Grey",
+    "M_Lamp_Emissive",
+    "M_Metal_Painted_Dark"
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "object": "SM_StreetLight_A_LOD1",
+      "message": "8 n-gons (triangulated on export)"
+    }
+  ],
+  "tool": "hg_pipeline"
+}

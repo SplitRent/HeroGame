@@ -1,0 +1,32 @@
+{
+  "asset": "SM_House_2F_A",
+  "category": "Buildings",
+  "fbx": "SM_House_2F_A.fbx",
+  "lods": {
+    "SM_House_2F_A_LOD0": 16300,
+    "SM_House_2F_A_LOD1": 7334,
+    "SM_House_2F_A_LOD2": 3260,
+    "SM_House_2F_A_LOD3": 2718
+  },
+  "collision_hulls": [
+    "UCX_SM_House_2F_A_01"
+  ],
+  "materials": [
+    "M_Board_Yellow",
+    "M_Brick_Red",
+    "M_Concrete_Grey",
+    "M_Door_Garage",
+    "M_Door_Painted_64",
+    "M_Glass_Dark",
+    "M_Gutter_White",
+    "M_Lamp_Brass",
+    "M_Metal_Grey",
+    "M_Roof_Shingle",
+    "M_Shutter_64",
+    "M_Soffit_White",
+    "M_Trim_White",
+    "M_Vent_Dark"
+  ],
+  "issues": [],
+  "tool": "hg_pipeline"
+}

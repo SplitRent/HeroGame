@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Runs the Unity EditMode test sources (Game/Assets/_Project/Tests/EditMode) under dotnet test.
+    NUnit is pinned to 3.x and tests use only classic asserts available in Unity's bundled NUnit.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(GameAssets)/Tests/EditMode/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HeroGame.Core/HeroGame.Core.csproj" />
+    <ProjectReference Include="../HeroGame.Persistence/HeroGame.Persistence.csproj" />
+    <ProjectReference Include="../HeroGame.Networking/HeroGame.Networking.csproj" />
+  </ItemGroup>
+</Project>

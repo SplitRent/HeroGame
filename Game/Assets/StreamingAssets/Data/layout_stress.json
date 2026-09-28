@@ -1,0 +1,1413 @@
+{
+  "Id": "stress",
+  "DisplayName": "Stress test (large population)",
+  "Districts": [
+    {
+      "Key": "eastwater",
+      "Name": "Eastwater",
+      "Type": "InnerCity",
+      "Wealth": 0.32,
+      "CrimeBaseline": 0.38,
+      "FootTraffic": 0.9,
+      "PoliceTrust": 0.42,
+      "FloodRisk": 0.55,
+      "CenterX": -160,
+      "CenterZ": -40,
+      "Radius": 320,
+      "Description": "One of Port Arden's oldest neighborhoods: shotgun houses and brick fourplexes on the bayou side of Tidewater Avenue. Tight-knit, underinvested, fiercely proud.",
+      "Places": [
+        {
+          "Key": "ew_lupes",
+          "Name": "Lupe's Corner Market",
+          "Kind": "Shop",
+          "X": -290,
+          "Z": 68,
+          "Width": 18,
+          "Depth": 16,
+          "Height": 5,
+          "RotationY": 0,
+          "Capacity": 8,
+          "OpenMinute": 420,
+          "CloseMinute": 1380,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 180,
+            "LotAreaSqm": 360,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 42000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "corner_store",
+            "Name": "Lupe's Corner Market",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "ew_marea",
+          "Name": "Taqueria La Marea",
+          "Kind": "Restaurant",
+          "X": -250,
+          "Z": 68,
+          "Width": 18,
+          "Depth": 16,
+          "Height": 5,
+          "RotationY": 0,
+          "Capacity": 30,
+          "OpenMinute": 420,
+          "CloseMinute": 1380,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 210,
+            "LotAreaSqm": 420,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 48000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "taqueria",
+            "Name": "Taqueria La Marea",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "ew_suds",
+          "Name": "Bayou Suds Laundromat",
+          "Kind": "Shop",
+          "X": -210,
+          "Z": 68,
+          "Width": 18,
+          "Depth": 16,
+          "Height": 5,
+          "RotationY": 0,
+          "Capacity": 15,
+          "OpenMinute": 360,
+          "CloseMinute": 1380,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 160,
+            "LotAreaSqm": 320,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 30000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "laundromat",
+            "Name": "Bayou Suds Laundromat",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "ew_pelican",
+          "Name": "Iron Pelican Gym",
+          "Kind": "Gym",
+          "X": -165,
+          "Z": 70,
+          "Width": 26,
+          "Depth": 20,
+          "Height": 7,
+          "RotationY": 0,
+          "Capacity": 40,
+          "OpenMinute": 300,
+          "CloseMinute": 1380,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 420,
+            "LotAreaSqm": 840,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 65000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "gym",
+            "Name": "Iron Pelican Gym",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "ew_delacroix",
+          "Name": "Delacroix Auto & Tire",
+          "Kind": "Garage",
+          "X": -115,
+          "Z": 72,
+          "Width": 32,
+          "Depth": 24,
+          "Height": 7,
+          "RotationY": 0,
+          "Capacity": 10,
+          "OpenMinute": 480,
+          "CloseMinute": 1080,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 520,
+            "LotAreaSqm": 1040,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 72000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "auto_garage",
+            "Name": "Delacroix Auto & Tire",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "ew_fade",
+          "Name": "Clean Fade Barbershop",
+          "Kind": "Shop",
+          "X": -75,
+          "Z": 68,
+          "Width": 14,
+          "Depth": 14,
+          "Height": 5,
+          "RotationY": 0,
+          "Capacity": 8,
+          "OpenMinute": 540,
+          "CloseMinute": 1140,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 110,
+            "LotAreaSqm": 220,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 26000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "barbershop",
+            "Name": "Clean Fade Barbershop",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "ew_center",
+          "Name": "Eastwater Community Center",
+          "Kind": "Government",
+          "X": -35,
+          "Z": 72,
+          "Width": 30,
+          "Depth": 24,
+          "Height": 7,
+          "RotationY": 0,
+          "Capacity": 80,
+          "OpenMinute": 480,
+          "CloseMinute": 1260,
+          "Tags": []
+        },
+        {
+          "Key": "ew_school",
+          "Name": "Eastwater High School",
+          "Kind": "School",
+          "X": -150,
+          "Z": 140,
+          "Width": 90,
+          "Depth": 60,
+          "Height": 11,
+          "RotationY": 0,
+          "Capacity": 900,
+          "OpenMinute": 420,
+          "CloseMinute": 1020,
+          "Tags": []
+        },
+        {
+          "Key": "ew_park",
+          "Name": "Cypress Bend Park",
+          "Kind": "Park",
+          "X": -40,
+          "Z": 140,
+          "Width": 70,
+          "Depth": 60,
+          "Height": 0,
+          "RotationY": 0,
+          "Capacity": 120,
+          "OpenMinute": 360,
+          "CloseMinute": 1380,
+          "Tags": []
+        },
+        {
+          "Key": "ew_chapel",
+          "Name": "Eastwater Grace Chapel",
+          "Kind": "Church",
+          "X": -290,
+          "Z": 125,
+          "Width": 24,
+          "Depth": 30,
+          "Height": 12,
+          "RotationY": 0,
+          "Capacity": 200,
+          "OpenMinute": 480,
+          "CloseMinute": 1260,
+          "Tags": []
+        },
+        {
+          "Key": "ew_bayouvista",
+          "Name": "Bayou Vista Apartments",
+          "Kind": "ApartmentBuilding",
+          "X": -300,
+          "Z": 195,
+          "Width": 44,
+          "Depth": 30,
+          "Height": 14,
+          "RotationY": 0,
+          "Capacity": 36,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Apartment",
+            "Zoning": "Residential",
+            "FloorAreaSqm": 2600,
+            "LotAreaSqm": 1700,
+            "Bedrooms": 0,
+            "Floors": 4,
+            "BaseValueCents": 310000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "ew_tidewatercourts",
+          "Name": "Tidewater Courts",
+          "Kind": "ApartmentBuilding",
+          "X": 40,
+          "Z": 200,
+          "Width": 40,
+          "Depth": 30,
+          "Height": 11,
+          "RotationY": 0,
+          "Capacity": 24,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Apartment",
+            "Zoning": "Residential",
+            "FloorAreaSqm": 1800,
+            "LotAreaSqm": 1400,
+            "Bedrooms": 0,
+            "Floors": 3,
+            "BaseValueCents": 220000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        }
+      ],
+      "Blocks": [
+        {
+          "KeyPrefix": "ew_house",
+          "Kind": "Residence",
+          "OriginX": -300,
+          "OriginZ": -220,
+          "Rows": 60,
+          "Columns": 60,
+          "SpacingX": 32,
+          "SpacingZ": 40,
+          "Width": 12,
+          "Depth": 14,
+          "MinHeight": 4.5,
+          "MaxHeight": 7,
+          "MinCapacity": 3,
+          "MaxCapacity": 5,
+          "VacancyRate": 0.07,
+          "StreetNames": [
+            "Magnolia St",
+            "Magnolia St",
+            "Pecan St",
+            "Pecan St",
+            "Lafitte St",
+            "Lafitte St"
+          ],
+          "Property": {
+            "Kind": "House",
+            "Zoning": "Residential",
+            "FloorAreaSqm": 105,
+            "LotAreaSqm": 380,
+            "Bedrooms": 3,
+            "Floors": 1,
+            "BaseValueCents": 16500000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "harbor_row",
+      "Name": "Harbor Row",
+      "Type": "Downtown",
+      "Wealth": 0.58,
+      "CrimeBaseline": 0.22,
+      "FootTraffic": 1.35,
+      "PoliceTrust": 0.64,
+      "FloodRisk": 0.35,
+      "CenterX": 600,
+      "CenterZ": 100,
+      "Radius": 280,
+      "Description": "The commercial strip where Tidewater Avenue meets the old wharves: brick storefronts, new mid-rises, the precinct house and Arden General's east campus.",
+      "Places": [
+        {
+          "Key": "hr_gulfside",
+          "Name": "Gulfside Diner",
+          "Kind": "Restaurant",
+          "X": 430,
+          "Z": 70,
+          "Width": 22,
+          "Depth": 18,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 48,
+          "OpenMinute": 360,
+          "CloseMinute": 1320,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 260,
+            "LotAreaSqm": 520,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 68000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "diner",
+            "Name": "Gulfside Diner",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_steamline",
+          "Name": "Steamline Coffee",
+          "Kind": "Restaurant",
+          "X": 470,
+          "Z": 70,
+          "Width": 14,
+          "Depth": 16,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 24,
+          "OpenMinute": 360,
+          "CloseMinute": 1140,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 140,
+            "LotAreaSqm": 280,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 40000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "coffee_shop",
+            "Name": "Steamline Coffee",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_pharmacy",
+          "Name": "Harbor Row Pharmacy",
+          "Kind": "Shop",
+          "X": 510,
+          "Z": 70,
+          "Width": 22,
+          "Depth": 18,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 20,
+          "OpenMinute": 480,
+          "CloseMinute": 1260,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 300,
+            "LotAreaSqm": 600,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 72000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "pharmacy",
+            "Name": "Harbor Row Pharmacy",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_mercado",
+          "Name": "Tidewater Mercado",
+          "Kind": "Shop",
+          "X": 570,
+          "Z": 72,
+          "Width": 50,
+          "Depth": 36,
+          "Height": 8,
+          "RotationY": 0,
+          "Capacity": 150,
+          "OpenMinute": 420,
+          "CloseMinute": 1320,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 1600,
+            "LotAreaSqm": 3200,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 180000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "supermarket",
+            "Name": "Tidewater Mercado",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_threads",
+          "Name": "Salt & Thread Boutique",
+          "Kind": "Shop",
+          "X": 630,
+          "Z": 70,
+          "Width": 16,
+          "Depth": 16,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 15,
+          "OpenMinute": 600,
+          "CloseMinute": 1200,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 170,
+            "LotAreaSqm": 340,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 55000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "clothing_boutique",
+            "Name": "Salt & Thread Boutique",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_hardware",
+          "Name": "Wharfside Hardware",
+          "Kind": "Shop",
+          "X": 670,
+          "Z": 70,
+          "Width": 24,
+          "Depth": 18,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 20,
+          "OpenMinute": 420,
+          "CloseMinute": 1200,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 350,
+            "LotAreaSqm": 700,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 70000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "hardware_store",
+            "Name": "Wharfside Hardware",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_pilothouse",
+          "Name": "The Pilot House",
+          "Kind": "Nightlife",
+          "X": 720,
+          "Z": 70,
+          "Width": 20,
+          "Depth": 18,
+          "Height": 7,
+          "RotationY": 0,
+          "Capacity": 60,
+          "OpenMinute": 900,
+          "CloseMinute": 120,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 260,
+            "LotAreaSqm": 520,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 62000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "neighborhood_bar",
+            "Name": "The Pilot House",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_lowtide",
+          "Name": "Low Tide Club",
+          "Kind": "Nightlife",
+          "X": 780,
+          "Z": 72,
+          "Width": 36,
+          "Depth": 28,
+          "Height": 10,
+          "RotationY": 0,
+          "Capacity": 300,
+          "OpenMinute": 1260,
+          "CloseMinute": 180,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 900,
+            "LotAreaSqm": 1800,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 210000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "nightclub",
+            "Name": "Low Tide Club",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_gas",
+          "Name": "Tidewater Fuel Stop",
+          "Kind": "GasStation",
+          "X": 440,
+          "Z": 10,
+          "Width": 30,
+          "Depth": 24,
+          "Height": 5,
+          "RotationY": 0,
+          "Capacity": 12,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 220,
+            "LotAreaSqm": 440,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 95000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "gas_station",
+            "Name": "Tidewater Fuel Stop",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_bank",
+          "Name": "Gulf Tidewater Bank - Harbor Row",
+          "Kind": "Office",
+          "X": 520,
+          "Z": 10,
+          "Width": 24,
+          "Depth": 20,
+          "Height": 9,
+          "RotationY": 0,
+          "Capacity": 40,
+          "OpenMinute": 540,
+          "CloseMinute": 1020,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 600,
+            "LotAreaSqm": 1200,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 150000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "bank_branch",
+            "Name": "Gulf Tidewater Bank",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_offices",
+          "Name": "Wharf Exchange Offices",
+          "Kind": "Office",
+          "X": 590,
+          "Z": 5,
+          "Width": 40,
+          "Depth": 26,
+          "Height": 24,
+          "RotationY": 0,
+          "Capacity": 400,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 4200,
+            "LotAreaSqm": 1800,
+            "Bedrooms": 0,
+            "Floors": 6,
+            "BaseValueCents": 85000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "hr_legal",
+          "Name": "Marchetti & Oyelaran Law",
+          "Kind": "Office",
+          "X": 650,
+          "Z": 10,
+          "Width": 20,
+          "Depth": 18,
+          "Height": 12,
+          "RotationY": 0,
+          "Capacity": 40,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 700,
+            "LotAreaSqm": 1400,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 120000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "hr_ledger",
+          "Name": "The Arden Ledger Newsroom",
+          "Kind": "Office",
+          "X": 700,
+          "Z": 10,
+          "Width": 26,
+          "Depth": 20,
+          "Height": 14,
+          "RotationY": 0,
+          "Capacity": 80,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 1200,
+            "LotAreaSqm": 2400,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 140000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "hr_precinct",
+          "Name": "PAPD Harbor Row Precinct",
+          "Kind": "PoliceStation",
+          "X": 760,
+          "Z": 160,
+          "Width": 40,
+          "Depth": 30,
+          "Height": 10,
+          "RotationY": 0,
+          "Capacity": 120,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": []
+        },
+        {
+          "Key": "hr_fire",
+          "Name": "Port Arden Fire Rescue Station 7",
+          "Kind": "FireStation",
+          "X": 820,
+          "Z": 160,
+          "Width": 30,
+          "Depth": 26,
+          "Height": 9,
+          "RotationY": 0,
+          "Capacity": 40,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": []
+        },
+        {
+          "Key": "hr_hospital",
+          "Name": "Arden General Hospital - East Campus",
+          "Kind": "Hospital",
+          "X": 860,
+          "Z": 260,
+          "Width": 80,
+          "Depth": 60,
+          "Height": 28,
+          "RotationY": 0,
+          "Capacity": 1200,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": []
+        },
+        {
+          "Key": "hr_municipal",
+          "Name": "Harbor Row Municipal Annex",
+          "Kind": "Government",
+          "X": 690,
+          "Z": 160,
+          "Width": 34,
+          "Depth": 26,
+          "Height": 12,
+          "RotationY": 0,
+          "Capacity": 150,
+          "OpenMinute": 480,
+          "CloseMinute": 1020,
+          "Tags": []
+        },
+        {
+          "Key": "hr_seafood",
+          "Name": "Brackwater Oyster House",
+          "Kind": "Restaurant",
+          "X": 620,
+          "Z": 160,
+          "Width": 26,
+          "Depth": 22,
+          "Height": 7,
+          "RotationY": 0,
+          "Capacity": 90,
+          "OpenMinute": 660,
+          "CloseMinute": 1320,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 420,
+            "LotAreaSqm": 840,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 110000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "seafood_restaurant",
+            "Name": "Brackwater Oyster House",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "hr_lofts",
+          "Name": "Cotton Exchange Lofts",
+          "Kind": "ApartmentBuilding",
+          "X": 500,
+          "Z": 180,
+          "Width": 40,
+          "Depth": 30,
+          "Height": 26,
+          "RotationY": 0,
+          "Capacity": 60,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Apartment",
+            "Zoning": "MixedUse",
+            "FloorAreaSqm": 5200,
+            "LotAreaSqm": 1800,
+            "Bedrooms": 0,
+            "Floors": 8,
+            "BaseValueCents": 680000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "hr_harborview",
+          "Name": "Harborview Residences",
+          "Kind": "ApartmentBuilding",
+          "X": 560,
+          "Z": 200,
+          "Width": 34,
+          "Depth": 30,
+          "Height": 32,
+          "RotationY": 0,
+          "Capacity": 48,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Apartment",
+            "Zoning": "Residential",
+            "FloorAreaSqm": 4600,
+            "LotAreaSqm": 1500,
+            "Bedrooms": 0,
+            "Floors": 10,
+            "BaseValueCents": 740000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "hr_waterfront",
+          "Name": "Wharf Promenade",
+          "Kind": "Park",
+          "X": 650,
+          "Z": 230,
+          "Width": 80,
+          "Depth": 30,
+          "Height": 0,
+          "RotationY": 0,
+          "Capacity": 200,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": []
+        },
+        {
+          "Key": "hr_dealer",
+          "Name": "Gulfline Motors",
+          "Kind": "Shop",
+          "X": 805,
+          "Z": 5,
+          "Width": 40,
+          "Depth": 28,
+          "Height": 7,
+          "RotationY": 0,
+          "Capacity": 30,
+          "OpenMinute": 540,
+          "CloseMinute": 1200,
+          "Tags": [
+            "dealership"
+          ],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 1400,
+            "LotAreaSqm": 4000,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 240000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "car_dealership",
+            "Name": "Gulfline Motors",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        }
+      ],
+      "Blocks": [
+        {
+          "KeyPrefix": "hr_rowhouse",
+          "Kind": "Residence",
+          "OriginX": 420,
+          "OriginZ": 260,
+          "Rows": 20,
+          "Columns": 40,
+          "SpacingX": 22,
+          "SpacingZ": 36,
+          "Width": 9,
+          "Depth": 14,
+          "MinHeight": 8,
+          "MaxHeight": 11,
+          "MinCapacity": 2,
+          "MaxCapacity": 4,
+          "VacancyRate": 0.05,
+          "StreetNames": [
+            "Cotton Row",
+            "Cotton Row"
+          ],
+          "Property": {
+            "Kind": "House",
+            "Zoning": "Residential",
+            "FloorAreaSqm": 140,
+            "LotAreaSqm": 160,
+            "Bedrooms": 2,
+            "Floors": 3,
+            "BaseValueCents": 31000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "channelside",
+      "Name": "Channelside",
+      "Type": "Industrial",
+      "Wealth": 0.2,
+      "CrimeBaseline": 0.42,
+      "FootTraffic": 0.45,
+      "PoliceTrust": 0.4,
+      "FloodRisk": 0.6,
+      "CenterX": 300,
+      "CenterZ": -520,
+      "Radius": 320,
+      "Description": "Warehouses, truck yards and the flare stacks of Calloway Chemical along the Arden Ship Canal. Twenty-four-hour work, empty at night except for the trucks.",
+      "Places": [
+        {
+          "Key": "cs_calloway",
+          "Name": "Calloway Chemical Works",
+          "Kind": "Factory",
+          "X": 480,
+          "Z": -620,
+          "Width": 130,
+          "Depth": 90,
+          "Height": 22,
+          "RotationY": 0,
+          "Capacity": 600,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Industrial",
+            "Zoning": "Industrial",
+            "FloorAreaSqm": 11000,
+            "LotAreaSqm": 30000,
+            "Bedrooms": 0,
+            "Floors": 2,
+            "BaseValueCents": 420000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "cs_dock",
+          "Name": "Channelside Terminal 3",
+          "Kind": "Dock",
+          "X": 300,
+          "Z": -760,
+          "Width": 160,
+          "Depth": 50,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 400,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Industrial",
+            "Zoning": "Industrial",
+            "FloorAreaSqm": 8000,
+            "LotAreaSqm": 20000,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 360000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        },
+        {
+          "Key": "cs_depot",
+          "Name": "Bayline Logistics Depot",
+          "Kind": "Warehouse",
+          "X": 140,
+          "Z": -610,
+          "Width": 80,
+          "Depth": 50,
+          "Height": 11,
+          "RotationY": 0,
+          "Capacity": 120,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Warehouse",
+            "Zoning": "Industrial",
+            "FloorAreaSqm": 4000,
+            "LotAreaSqm": 9000,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 160000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "logistics_depot",
+            "Name": "Bayline Logistics",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "cs_abandoned",
+          "Name": "Former Gulfmark Cold Storage",
+          "Kind": "Warehouse",
+          "X": 40,
+          "Z": -470,
+          "Width": 70,
+          "Depth": 45,
+          "Height": 10,
+          "RotationY": 0,
+          "Capacity": 0,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [
+            "conversion_candidate"
+          ],
+          "Property": {
+            "Kind": "Warehouse",
+            "Zoning": "Industrial",
+            "FloorAreaSqm": 3100,
+            "LotAreaSqm": 6500,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 69000000,
+            "Variation": 0.12,
+            "Owner": "market"
+          }
+        },
+        {
+          "Key": "cs_slacktide",
+          "Name": "The Slack Tide",
+          "Kind": "Nightlife",
+          "X": 250,
+          "Z": -330,
+          "Width": 18,
+          "Depth": 16,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 40,
+          "OpenMinute": 840,
+          "CloseMinute": 60,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 220,
+            "LotAreaSqm": 440,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 30000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "neighborhood_bar",
+            "Name": "The Slack Tide",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "cs_truckstop",
+          "Name": "Canal Road Truck Stop",
+          "Kind": "GasStation",
+          "X": 380,
+          "Z": -330,
+          "Width": 34,
+          "Depth": 26,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 12,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Commercial",
+            "Zoning": "Commercial",
+            "FloorAreaSqm": 300,
+            "LotAreaSqm": 600,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 85000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          },
+          "Business": {
+            "TemplateId": "gas_station",
+            "Name": "Canal Road Truck Stop",
+            "Owner": "npc",
+            "Staff": -1
+          }
+        },
+        {
+          "Key": "cs_yard",
+          "Name": "Lopez Brothers Construction Yard",
+          "Kind": "Warehouse",
+          "X": 560,
+          "Z": -480,
+          "Width": 60,
+          "Depth": 50,
+          "Height": 6,
+          "RotationY": 0,
+          "Capacity": 60,
+          "OpenMinute": 0,
+          "CloseMinute": 0,
+          "Tags": [],
+          "Property": {
+            "Kind": "Warehouse",
+            "Zoning": "Industrial",
+            "FloorAreaSqm": 900,
+            "LotAreaSqm": 5000,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 90000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        }
+      ],
+      "Blocks": [
+        {
+          "KeyPrefix": "cs_whse",
+          "Kind": "Warehouse",
+          "OriginX": 120,
+          "OriginZ": -470,
+          "Rows": 2,
+          "Columns": 4,
+          "SpacingX": 110,
+          "SpacingZ": 80,
+          "Width": 60,
+          "Depth": 40,
+          "MinHeight": 8,
+          "MaxHeight": 12,
+          "MinCapacity": 20,
+          "MaxCapacity": 60,
+          "VacancyRate": 0.2,
+          "StreetNames": [
+            "Turning Basin Rd",
+            "Wharfage Ln"
+          ],
+          "Property": {
+            "Kind": "Warehouse",
+            "Zoning": "Industrial",
+            "FloorAreaSqm": 2400,
+            "LotAreaSqm": 5000,
+            "Bedrooms": 0,
+            "Floors": 1,
+            "BaseValueCents": 130000000,
+            "Variation": 0.12,
+            "Owner": "npc"
+          }
+        }
+      ]
+    }
+  ],
+  "Roads": [
+    {
+      "Name": "Tidewater Avenue",
+      "Width": 16,
+      "Kind": "avenue",
+      "Points": [
+        -360,
+        40,
+        900,
+        40
+      ]
+    },
+    {
+      "Name": "Magnolia St",
+      "Width": 10,
+      "Kind": "street",
+      "Points": [
+        -330,
+        -200,
+        20,
+        -200
+      ]
+    },
+    {
+      "Name": "Pecan St",
+      "Width": 10,
+      "Kind": "street",
+      "Points": [
+        -330,
+        -120,
+        20,
+        -120
+      ]
+    },
+    {
+      "Name": "Lafitte St",
+      "Width": 10,
+      "Kind": "street",
+      "Points": [
+        -330,
+        -40,
+        20,
+        -40
+      ]
+    },
+    {
+      "Name": "Bayou Bend Dr",
+      "Width": 10,
+      "Kind": "street",
+      "Points": [
+        -330,
+        -240,
+        -330,
+        240
+      ]
+    },
+    {
+      "Name": "Cypress St",
+      "Width": 10,
+      "Kind": "street",
+      "Points": [
+        15,
+        -240,
+        15,
+        240
+      ]
+    },
+    {
+      "Name": "Schoolhouse Rd",
+      "Width": 10,
+      "Kind": "street",
+      "Points": [
+        -330,
+        100,
+        90,
+        100
+      ]
+    },
+    {
+      "Name": "Wharf Street",
+      "Width": 12,
+      "Kind": "street",
+      "Points": [
+        400,
+        130,
+        900,
+        130
+      ]
+    },
+    {
+      "Name": "Cotton Row",
+      "Width": 9,
+      "Kind": "street",
+      "Points": [
+        400,
+        240,
+        560,
+        240
+      ]
+    },
+    {
+      "Name": "Harbor Row",
+      "Width": 12,
+      "Kind": "street",
+      "Points": [
+        400,
+        -20,
+        400,
+        300
+      ]
+    },
+    {
+      "Name": "Refinery Road",
+      "Width": 14,
+      "Kind": "avenue",
+      "Points": [
+        300,
+        40,
+        300,
+        -720
+      ]
+    },
+    {
+      "Name": "Turning Basin Rd",
+      "Width": 12,
+      "Kind": "street",
+      "Points": [
+        80,
+        -420,
+        620,
+        -420
+      ]
+    },
+    {
+      "Name": "Canal Road",
+      "Width": 12,
+      "Kind": "street",
+      "Points": [
+        60,
+        -700,
+        620,
+        -700
+      ]
+    },
+    {
+      "Name": "Tidewater Bridge",
+      "Width": 14,
+      "Kind": "bridge",
+      "Points": [
+        90,
+        40,
+        400,
+        40
+      ]
+    }
+  ]
+}

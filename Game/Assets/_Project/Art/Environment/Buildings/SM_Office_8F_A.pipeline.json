@@ -1,0 +1,35 @@
+{
+  "asset": "SM_Office_8F_A",
+  "category": "Buildings",
+  "fbx": "SM_Office_8F_A.fbx",
+  "lods": {
+    "SM_Office_8F_A_LOD0": 5568,
+    "SM_Office_8F_A_LOD1": 2504,
+    "SM_Office_8F_A_LOD2": 1112,
+    "SM_Office_8F_A_LOD3": 928
+  },
+  "collision_hulls": [
+    "UCX_SM_Office_8F_A_01"
+  ],
+  "materials": [
+    "M_Aluminium_Bronze",
+    "M_Concrete_Grey",
+    "M_Door_Steel",
+    "M_Glass_Blue",
+    "M_Glass_Shop",
+    "M_Granite_Dark",
+    "M_Hvac_Beige",
+    "M_Interior_Office",
+    "M_Interior_Warm",
+    "M_Lamp_Emissive",
+    "M_Metal_Black",
+    "M_Metal_Coping",
+    "M_Metal_Grey",
+    "M_Roof_Membrane",
+    "M_Spandrel",
+    "M_Stone_Limestone",
+    "M_Vent_Dark"
+  ],
+  "issues": [],
+  "tool": "hg_pipeline"
+}

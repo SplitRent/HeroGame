@@ -1,0 +1,30 @@
+{
+  "asset": "SM_FireHydrant_A",
+  "category": "StreetFurniture",
+  "fbx": "SM_FireHydrant_A.fbx",
+  "lods": {
+    "SM_FireHydrant_A_LOD0": 776,
+    "SM_FireHydrant_A_LOD1": 388,
+    "SM_FireHydrant_A_LOD2": 154
+  },
+  "collision_hulls": [
+    "UCX_SM_FireHydrant_A_01"
+  ],
+  "materials": [
+    "M_Metal_Brass",
+    "M_Paint_Red"
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "object": "SM_FireHydrant_A_LOD1",
+      "message": "24 n-gons (triangulated on export)"
+    },
+    {
+      "severity": "warning",
+      "object": "SM_FireHydrant_A_LOD2",
+      "message": "3 n-gons (triangulated on export)"
+    }
+  ],
+  "tool": "hg_pipeline"
+}

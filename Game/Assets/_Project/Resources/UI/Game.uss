@@ -1,0 +1,484 @@
+/* In-game UI (HUD, toasts, pause/settings, phone). Same palette as the front end: harbour blue and sodium amber. */
+
+.g-root {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+}
+
+/* ------------------------------------------------------------------ HUD */
+
+.g-hud-corner {
+    position: absolute;
+    left: 20px;
+    top: 16px;
+    padding: 10px 14px;
+    background-color: rgba(8, 14, 22, 0.55);
+    border-left-width: 3px;
+    border-left-color: rgb(240, 180, 41);
+    border-radius: 2px;
+}
+
+.g-clock {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+}
+
+.g-weather, .g-cash, .g-meta {
+    font-size: 14px;
+    color: rgba(235, 238, 240, 0.85);
+}
+
+.g-cash {
+    color: rgb(150, 220, 160);
+    -unity-font-style: bold;
+    font-size: 16px;
+}
+
+.g-bar {
+    width: 180px;
+    height: 6px;
+    margin-top: 6px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.g-bar-fill {
+    height: 6px;
+    border-radius: 3px;
+    background-color: rgb(110, 200, 120);
+}
+
+.g-bar-fill--hurt { background-color: rgb(240, 180, 41); }
+.g-bar-fill--critical { background-color: rgb(230, 80, 70); }
+
+.g-wanted {
+    font-size: 20px;
+    color: rgb(240, 180, 41);
+    margin-top: 4px;
+    letter-spacing: 2px;
+}
+
+.g-badge {
+    font-size: 13px;
+    color: rgb(8, 14, 22);
+    background-color: rgb(240, 180, 41);
+    padding: 1px 8px;
+    border-radius: 9px;
+    margin-top: 6px;
+    align-self: flex-start;
+}
+
+.g-weapon {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    padding: 8px 14px;
+    background-color: rgba(8, 14, 22, 0.55);
+    border-right-width: 3px;
+    border-right-color: rgb(240, 180, 41);
+    -unity-text-align: middle-right;
+    font-size: 16px;
+    color: rgb(235, 238, 240);
+}
+
+.g-prompt {
+    position: absolute;
+    bottom: 120px;
+    left: 30%;
+    right: 30%;
+    -unity-text-align: middle-center;
+    font-size: 18px;
+    padding: 8px 16px;
+    color: rgb(245, 245, 240);
+    background-color: rgba(8, 14, 22, 0.7);
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(240, 180, 41);
+}
+
+.g-subtitles {
+    position: absolute;
+    bottom: 170px;
+    left: 15%;
+    right: 15%;
+    align-items: center;
+}
+
+.g-subtitle {
+    font-size: 19px;
+    color: rgb(250, 250, 245);
+    -unity-text-align: middle-center;
+    white-space: normal;
+    background-color: rgba(0, 0, 0, 0.55);
+    padding: 3px 10px;
+    margin: 2px 0;
+}
+
+.g-subtitle-speaker {
+    color: rgb(240, 180, 41);
+    -unity-font-style: bold;
+}
+
+.g-feedback {
+    position: absolute;
+    top: 62%;
+    left: 30%;
+    right: 30%;
+    -unity-text-align: middle-center;
+    font-size: 17px;
+    color: rgb(250, 250, 245);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.g-fps {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ------------------------------------------------------------------ toasts */
+
+.g-toasts {
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    width: 360px;
+}
+
+.g-toast {
+    flex-direction: row;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background-color: rgba(8, 14, 22, 0.88);
+    border-left-width: 4px;
+    border-left-color: rgb(27, 79, 114);
+    border-radius: 2px;
+    transition-duration: 0.2s;
+}
+
+.g-toast--Money { border-left-color: rgb(110, 200, 120); }
+.g-toast--Warning { border-left-color: rgb(240, 180, 41); }
+.g-toast--Danger { border-left-color: rgb(230, 80, 70); }
+.g-toast--Social { border-left-color: rgb(120, 160, 240); }
+
+.g-toast-symbol {
+    width: 24px;
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: rgb(240, 180, 41);
+}
+
+.g-toast-body {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.g-toast-title {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.g-toast-text {
+    font-size: 15px;
+    color: rgb(245, 245, 240);
+    white-space: normal;
+}
+
+/* ------------------------------------------------------------------ full-screen overlays */
+
+.g-overlay {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(4, 8, 14, 0.9);
+    flex-direction: row;
+}
+
+.g-overlay-nav {
+    width: 280px;
+    padding: 56px 24px 32px 48px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-right-width: 1px;
+    border-right-color: rgba(240, 180, 41, 0.35);
+}
+
+.g-overlay-title {
+    font-size: 34px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+    letter-spacing: 5px;
+    margin-bottom: 28px;
+}
+
+.g-nav-button {
+    height: 44px;
+    margin: 3px 0;
+    padding-left: 14px;
+    -unity-text-align: middle-left;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: rgb(220, 224, 228);
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 0;
+    border-left-width: 3px;
+    border-left-color: rgba(240, 180, 41, 0);
+}
+
+.g-nav-button:hover, .g-nav-button:focus, .g-nav-button--active {
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-left-color: rgb(240, 180, 41);
+}
+
+.g-content {
+    flex-grow: 1;
+    padding: 56px 64px;
+}
+
+.g-section {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+    margin: 8px 0 12px 0;
+}
+
+.g-field {
+    margin: 6px 0;
+    max-width: 620px;
+}
+
+.g-note {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+    white-space: normal;
+    margin: 4px 0 10px 0;
+}
+
+.g-action {
+    height: 36px;
+    margin: 6px 8px 6px 0;
+    padding: 0 18px;
+    font-size: 15px;
+    color: rgb(8, 14, 22);
+    background-color: rgb(240, 180, 41);
+    border-width: 0;
+    border-radius: 2px;
+}
+
+.g-action:hover { background-color: rgb(255, 200, 70); }
+
+.g-action--quiet {
+    color: rgb(230, 230, 230);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.g-action--quiet:hover { background-color: rgba(255, 255, 255, 0.16); }
+
+/* ------------------------------------------------------------------ custody */
+
+.g-custody {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(4, 8, 14, 0.82);
+    align-items: center;
+    justify-content: center;
+}
+
+.g-custody-card {
+    width: 780px;
+    max-width: 92%;
+    max-height: 88%;
+    padding: 36px 44px;
+    background-color: rgb(12, 18, 28);
+    border-top-width: 3px;
+    border-top-color: rgb(240, 180, 41);
+}
+
+.g-custody-sub {
+    font-size: 19px;
+    color: rgb(240, 180, 41);
+    margin-bottom: 14px;
+}
+
+.g-custody-line {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.86);
+    white-space: normal;
+    margin: 3px 0;
+}
+
+.g-custody-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 18px 0 8px 0;
+}
+
+/* ------------------------------------------------------------------ clothes store */
+
+.g-store-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 14px;
+    margin: 3px 0;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-left-width: 3px;
+    border-left-color: rgb(168, 64, 92);
+}
+
+.g-store-name {
+    font-size: 17px;
+    -unity-font-style: bold;
+    color: rgb(240, 240, 240);
+}
+
+.g-swatches {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.g-swatch {
+    width: 24px;
+    height: 24px;
+    margin: 0 6px 4px 0;
+    padding: 0;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+}
+
+.g-swatch--selected {
+    border-width: 3px;
+    border-color: rgb(240, 180, 41);
+}
+
+/* ------------------------------------------------------------------ phone */
+
+.g-phone {
+    position: absolute;
+    right: 48px;
+    bottom: 40px;
+    width: 400px;
+    height: 720px;
+    max-height: 90%;
+    padding: 18px 16px;
+    background-color: rgb(12, 18, 28);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.18);
+    border-radius: 28px;
+}
+
+.g-phone-status {
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 8px 8px 8px;
+}
+
+.g-phone-header {
+    flex-direction: row;
+    align-items: center;
+    margin: 4px 4px 10px 4px;
+}
+
+.g-phone-title {
+    flex-grow: 1;
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+}
+
+.g-phone-back {
+    width: 36px;
+    height: 30px;
+    font-size: 16px;
+    color: rgb(240, 180, 41);
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 0;
+}
+
+.g-apps {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.g-app {
+    width: 84px;
+    height: 96px;
+    margin: 2px;
+    padding: 4px 0 0 0;
+    align-items: center;
+    border-width: 0;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.g-app:hover { background-color: rgba(255, 255, 255, 0.06); }
+
+.g-app-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.g-app:hover .g-app-icon { scale: 1.06 1.06; }
+
+.g-app-label {
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgb(235, 238, 242);
+    -unity-text-align: upper-center;
+    white-space: nowrap;
+}
+
+.g-app-badge {
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    font-size: 11px;
+    color: rgb(8, 14, 22);
+    background-color: rgb(240, 180, 41);
+    padding: 0 6px;
+    border-radius: 8px;
+}
+
+.g-list-item {
+    padding: 8px 10px;
+    margin: 3px 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left-width: 3px;
+    border-left-color: rgba(27, 79, 114, 1);
+    border-radius: 2px;
+}
+
+.g-list-item--unread { border-left-color: rgb(240, 180, 41); }
+
+.g-list-title {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(240, 240, 240);
+    white-space: normal;
+}
+
+.g-list-text {
+    font-size: 13px;
+    color: rgba(235, 238, 240, 0.85);
+    white-space: normal;
+}
+
+.g-list-alert {
+    font-size: 12px;
+    color: rgb(240, 180, 41);
+    white-space: normal;
+}
+
+.g-big-number {
+    font-size: 30px;
+    -unity-font-style: bold;
+    color: rgb(150, 220, 160);
+    margin: 6px 0;
+}

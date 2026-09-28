@@ -1,0 +1,81 @@
+name: Unity
+
+# Runs the Unity Test Runner and player builds through GameCI. Requires repository secrets
+# UNITY_LICENSE (or UNITY_SERIAL), UNITY_EMAIL and UNITY_PASSWORD — see docs/BUILD_AND_CI.md.
+# Without them the jobs are skipped (the .NET CI still verifies the simulation and compiles scripts).
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  license:
+    runs-on: ubuntu-latest
+    outputs:
+      available: ${{ steps.check.outputs.available }}
+    steps:
+      - id: check
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        run: |
+          if [ -n "$UNITY_LICENSE" ] || [ -n "$UNITY_SERIAL" ]; then echo "available=true" >> "$GITHUB_OUTPUT"; else echo "available=false" >> "$GITHUB_OUTPUT"; fi
+
+  editmode-tests:
+    needs: license
+    if: needs.license.outputs.available == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/cache@v4
+        with:
+          path: Game/Library
+          key: Library-${{ hashFiles('Game/Packages/manifest.json') }}
+      - uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          projectPath: Game
+          testMode: editmode
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: [license, editmode-tests]
+    if: needs.license.outputs.available == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - target: StandaloneWindows64
+            method: HeroGame.Editor.ProjectTools.BuildWindows
+          - target: StandaloneLinux64
+            method: HeroGame.Editor.ProjectTools.BuildLinuxServer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/cache@v4
+        with:
+          path: Game/Library
+          key: Library-${{ matrix.target }}-${{ hashFiles('Game/Packages/manifest.json') }}
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          HEROGAME_DEV_BUILD: "1"
+        with:
+          projectPath: Game
+          targetPlatform: ${{ matrix.target }}
+          buildMethod: ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.target }}
+          path: Game/Builds

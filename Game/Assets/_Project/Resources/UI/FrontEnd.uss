@@ -1,0 +1,300 @@
+/* Front-end style. Colours are the canonical Port Arden palette (deep harbour blue, sodium amber). */
+.hg-root {
+    flex-grow: 1;
+    flex-direction: row;
+    background-color: rgb(8, 14, 22);
+}
+
+.hg-backdrop {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(27, 79, 114, 0.18);
+}
+
+.hg-left {
+    width: 34%;
+    min-width: 360px;
+    padding: 64px 48px 32px 72px;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-right-width: 1px;
+    border-right-color: rgba(240, 180, 41, 0.35);
+}
+
+.hg-title {
+    font-size: 54px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+    letter-spacing: 6px;
+}
+
+.hg-city {
+    font-size: 16px;
+    color: rgb(240, 180, 41);
+    letter-spacing: 10px;
+    margin-top: 4px;
+}
+
+.hg-menu {
+    margin-top: 48px;
+    flex-grow: 1;
+}
+
+.hg-menu-button {
+    height: 52px;
+    margin: 4px 0;
+    padding-left: 18px;
+    -unity-text-align: middle-left;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: rgb(220, 224, 228);
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 0;
+    border-left-width: 3px;
+    border-left-color: rgba(240, 180, 41, 0);
+    transition-duration: 0.12s;
+}
+
+.hg-menu-button:hover, .hg-menu-button:focus {
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-left-color: rgb(240, 180, 41);
+    padding-left: 26px;
+}
+
+.hg-menu-button--accent {
+    color: rgb(240, 180, 41);
+}
+
+.hg-footer {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.hg-panel {
+    flex-grow: 1;
+    padding: 64px 72px;
+}
+
+.hg-panel-title {
+    font-size: 30px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+}
+
+.hg-row {
+    flex-direction: row;
+    align-items: center;
+    margin: 4px 0;
+}
+
+.hg-server {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 14px;
+    margin: 3px 0;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-left-width: 3px;
+    border-left-color: rgba(27, 79, 114, 1);
+}
+
+.hg-server:hover {
+    background-color: rgba(255, 255, 255, 0.09);
+    border-left-color: rgb(240, 180, 41);
+}
+
+.hg-server-name {
+    font-size: 17px;
+    color: rgb(240, 240, 240);
+    -unity-font-style: bold;
+}
+
+.hg-server-meta {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.hg-muted {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.hg-field {
+    margin: 6px 0;
+    max-width: 560px;
+}
+
+/* ------------------------------------------------------------------ characters */
+
+.hg-slots {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.hg-slot {
+    width: 31%;
+    min-width: 240px;
+    min-height: 280px;
+    margin: 0 16px 16px 0;
+    padding: 22px 22px 16px 22px;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left-width: 3px;
+    border-left-color: rgb(27, 79, 114);
+}
+
+.hg-slot:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.hg-slot--active {
+    border-left-color: rgb(240, 180, 41);
+    background-color: rgba(240, 180, 41, 0.08);
+}
+
+.hg-slot--empty {
+    border-left-color: rgba(255, 255, 255, 0.15);
+}
+
+.hg-slot-number {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: rgb(240, 180, 41);
+    margin-bottom: 10px;
+}
+
+.hg-slot-name {
+    font-size: 26px;
+    -unity-font-style: bold;
+    color: rgb(245, 245, 240);
+    white-space: normal;
+}
+
+.hg-slot-meta {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: normal;
+    margin-top: 6px;
+}
+
+.hg-button {
+    height: 38px;
+    margin: 4px 8px 4px 0;
+    padding: 0 16px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: rgb(230, 232, 235);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-width: 0;
+    border-radius: 2px;
+}
+
+.hg-button:hover { background-color: rgba(255, 255, 255, 0.18); }
+
+.hg-button--accent {
+    color: rgb(8, 14, 22);
+    background-color: rgb(240, 180, 41);
+}
+
+.hg-button--accent:hover { background-color: rgb(255, 200, 70); }
+
+.hg-button--quiet {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.hg-button--danger {
+    color: rgb(255, 255, 255);
+    background-color: rgb(170, 40, 34);
+}
+
+.hg-button--danger:hover { background-color: rgb(200, 52, 44); }
+
+/* The character creator popup. */
+.hg-modal {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(2, 5, 9, 0.78);
+    align-items: center;
+    justify-content: center;
+}
+
+.hg-modal-card {
+    width: 900px;
+    max-width: 94%;
+    height: 90%;
+    padding: 36px 44px 28px 44px;
+    background-color: rgb(12, 18, 28);
+    border-top-width: 3px;
+    border-top-color: rgb(240, 180, 41);
+}
+
+.hg-modal-body {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 12px 0;
+}
+
+.hg-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 10px 0 4px 0;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.hg-tab {
+    height: 34px;
+    margin: 0 2px 0 0;
+    padding: 0 12px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 0;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(240, 180, 41, 0);
+    border-radius: 0;
+}
+
+.hg-tab:hover { color: rgb(255, 255, 255); }
+
+.hg-tab--active {
+    color: rgb(240, 180, 41);
+    border-bottom-color: rgb(240, 180, 41);
+}
+
+.hg-swatches {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 4px 0 8px 0;
+}
+
+.hg-swatch {
+    width: 30px;
+    height: 30px;
+    margin: 0 6px 6px 0;
+    padding: 0;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+}
+
+.hg-swatch:hover { border-color: rgba(255, 255, 255, 0.6); }
+
+.hg-swatch--selected {
+    border-width: 3px;
+    border-color: rgb(240, 180, 41);
+}
+
+.hg-foldout {
+    margin: 6px 0;
+}
+
+.hg-foldout > Toggle {
+    color: rgb(240, 180, 41);
+    -unity-font-style: bold;
+    letter-spacing: 2px;
+}

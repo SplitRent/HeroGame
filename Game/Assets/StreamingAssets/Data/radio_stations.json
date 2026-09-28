@@ -1,0 +1,102 @@
+[
+  {
+    "Id": "bayou_gold",
+    "Name": "Bayou Gold",
+    "Frequency": "98.7 FM",
+    "Format": "Music",
+    "Genre": "Gulf soul and brass",
+    "Host": "Marcel \"Night Owl\" Thibodeaux",
+    "NewsAtTopOfHour": true,
+    "AdsPerHour": 3,
+    "TalkPerHour": 2,
+    "Talk": [
+      "It's {time} on Bayou Gold, {temp} degrees and {weather} out there in {city}.",
+      "Night Owl here keeping you company. If you're driving the causeway tonight, take it easy.",
+      "That one goes out to everybody on the east side still drying out. We see you.",
+      "{headline}. Stay with us, more music after this."
+    ],
+    "Tracks": [
+      { "Id": "bg01", "Title": "Levee Lights", "Artist": "The Canal Street Horns", "Seconds": 214 },
+      { "Id": "bg02", "Title": "Magnolia in the Rain", "Artist": "Odessa Fontaine", "Seconds": 241 },
+      { "Id": "bg03", "Title": "Slow Tide Coming", "Artist": "Rev. Jules & the Tidewater Choir", "Seconds": 198 },
+      { "Id": "bg04", "Title": "Crawfish Sunday", "Artist": "Lil' Beaux Arceneaux", "Seconds": 183 },
+      { "Id": "bg05", "Title": "Second Line for Isadora", "Artist": "Eastwater Brass Collective", "Seconds": 305 },
+      { "Id": "bg06", "Title": "Porch Light Blues", "Artist": "Odessa Fontaine", "Seconds": 226 },
+      { "Id": "bg07", "Title": "Harbor Row Stomp", "Artist": "The Canal Street Horns", "Seconds": 172 },
+      { "Id": "bg08", "Title": "Wait on the Ferry", "Artist": "Delphine Marchand", "Seconds": 237 }
+    ]
+  },
+  {
+    "Id": "the_current",
+    "Name": "The Current",
+    "Frequency": "104.1 FM",
+    "Format": "Music",
+    "Genre": "Hip-hop and pop",
+    "Host": "DJ Kaya Brightwater",
+    "NewsAtTopOfHour": false,
+    "AdsPerHour": 4,
+    "TalkPerHour": 3,
+    "Talk": [
+      "The Current, 104.1, it's {time}! {weather} and {temp}, no excuses, get outside.",
+      "Kaya on the ones and twos. Shout out to everybody posting from {district} right now.",
+      "Y'all saw this? {headline}. Wild. Anyway, here's a banger.",
+      "Hydrate, {city}. Love you, mean it."
+    ],
+    "Tracks": [
+      { "Id": "tc01", "Title": "Channelside", "Artist": "YUNG DELTA", "Seconds": 176 },
+      { "Id": "tc02", "Title": "No Signal (Hurricane Season)", "Artist": "Mira Solace", "Seconds": 203 },
+      { "Id": "tc03", "Title": "Glow Different", "Artist": "Kid Anomaly", "Seconds": 191 },
+      { "Id": "tc04", "Title": "Ride Out", "Artist": "Tidewater Twins", "Seconds": 168 },
+      { "Id": "tc05", "Title": "Pelican Pride", "Artist": "Coach J feat. Eastwater Drumline", "Seconds": 212 },
+      { "Id": "tc06", "Title": "Two Jobs", "Artist": "Nia Boudreaux", "Seconds": 224 },
+      { "Id": "tc07", "Title": "Static in My Hands", "Artist": "Kid Anomaly", "Seconds": 187 },
+      { "Id": "tc08", "Title": "Low Tide Love", "Artist": "Mira Solace", "Seconds": 199 }
+    ]
+  },
+  {
+    "Id": "arden_public",
+    "Name": "Arden Public Radio",
+    "Frequency": "89.3 FM",
+    "Format": "News",
+    "Genre": "News and talk",
+    "Host": "Lorraine Okafor",
+    "NewsAtTopOfHour": true,
+    "AdsPerHour": 0,
+    "TalkPerHour": 4,
+    "Talk": [
+      "This is Arden Public Radio. It's {time}. Conditions downtown: {weather}, {temp} degrees.",
+      "Our listeners are the reason we're here. Thank you for supporting public radio in {city}.",
+      "Coming up: what the city budget means for your street.",
+      "More on today's top story: {headline}."
+    ],
+    "Tracks": [
+      { "Id": "ap01", "Title": "Gulf Coast Morning (theme)", "Artist": "Arden Public Radio", "Seconds": 90 },
+      { "Id": "ap02", "Title": "Nocturne for the Ship Canal", "Artist": "Port Arden Chamber Ensemble", "Seconds": 412 },
+      { "Id": "ap03", "Title": "Interlude in D", "Artist": "Port Arden Chamber Ensemble", "Seconds": 180 }
+    ]
+  },
+  {
+    "Id": "gulf_country",
+    "Name": "Gulf Country",
+    "Frequency": "92.5 FM",
+    "Format": "Music",
+    "Genre": "Country",
+    "Host": "Tammy Ray Lusk",
+    "NewsAtTopOfHour": true,
+    "AdsPerHour": 4,
+    "TalkPerHour": 2,
+    "Talk": [
+      "Gulf Country 92.5, {time}, and it's {weather} with {temp} on the thermometer.",
+      "Tammy Ray with you. If your truck's parked low in {district}, maybe move it tonight.",
+      "{headline}. Prayers up, y'all."
+    ],
+    "Tracks": [
+      { "Id": "gc01", "Title": "Pickup on the Causeway", "Artist": "Wade Hollister", "Seconds": 201 },
+      { "Id": "gc02", "Title": "Shrimp Boat Sunrise", "Artist": "Callie Mae Dupree", "Seconds": 219 },
+      { "Id": "gc03", "Title": "Storm Shutters", "Artist": "The Bayou Ramblers", "Seconds": 188 },
+      { "Id": "gc04", "Title": "Two-Lane to Arden", "Artist": "Wade Hollister", "Seconds": 233 },
+      { "Id": "gc05", "Title": "Dance Hall on Route 9", "Artist": "Callie Mae Dupree", "Seconds": 196 },
+      { "Id": "gc06", "Title": "My Granddaddy's Levee", "Artist": "The Bayou Ramblers", "Seconds": 244 }
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+[
+  { "Id": "street_light", "DisplayName": "Street light", "Material": "Metal", "MaxHealth": 1.0, "RepairCostCents": 180000, "RepairPriority": 1, "WindResistance": 0.6, "Effect": "Darkness", "Mesh": "SM_StreetLight_A" },
+  { "Id": "traffic_signal", "DisplayName": "Traffic signal", "Material": "Metal", "MaxHealth": 1.2, "RepairCostCents": 450000, "RepairPriority": 3, "WindResistance": 0.5, "Effect": "SignalOut", "Mesh": "" },
+  { "Id": "fire_hydrant", "DisplayName": "Fire hydrant", "Material": "Metal", "MaxHealth": 1.5, "RepairCostCents": 250000, "RepairPriority": 2, "WindResistance": 1.0, "Effect": "WaterMain", "Mesh": "SM_FireHydrant_A" },
+  { "Id": "bench", "DisplayName": "Bench", "Material": "Wood", "MaxHealth": 0.6, "RepairCostCents": 60000, "RepairPriority": 0, "WindResistance": 0.9, "Effect": "", "Mesh": "SM_Bench_A" },
+  { "Id": "bus_shelter", "DisplayName": "Bus shelter", "Material": "Glass", "MaxHealth": 0.8, "RepairCostCents": 320000, "RepairPriority": 1, "WindResistance": 0.4, "Effect": "", "Mesh": "SM_BusShelter_A" },
+  { "Id": "dumpster", "DisplayName": "Dumpster", "Material": "Metal", "MaxHealth": 1.4, "RepairCostCents": 90000, "RepairPriority": 0, "WindResistance": 0.95, "Effect": "", "Mesh": "SM_Dumpster_A" },
+  { "Id": "bollard", "DisplayName": "Bollard", "Material": "Concrete", "MaxHealth": 2.0, "RepairCostCents": 40000, "RepairPriority": 0, "WindResistance": 1.0, "Effect": "", "Mesh": "SM_Bollard_A" }
+]

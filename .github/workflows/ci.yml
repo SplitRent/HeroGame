@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulation:
+    name: Simulation core (.NET) — build, tests, Unity compile check, world smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Build solution
+        run: dotnet build Headless/HeroGame.sln -c Release
+      - name: Tests (same NUnit sources Unity runs in EditMode)
+        run: dotnet test Headless/HeroGame.sln -c Release --no-build --logger "trx;LogFileName=results.trx"
+      - name: Unity scripts compile check (editor configuration)
+        run: dotnet build Headless/UnityCompileCheck -c Release
+      - name: Unity scripts compile check (player configuration)
+        run: dotnet build Headless/UnityCompileCheck -c Release -p:UnityEditorBuild=false
+      - name: Unity scripts compile check (newer Unity 6.x class library)
+        run: dotnet build Headless/UnityCompileCheck -c Release -p:ModernBcl=true
+      - name: Unity scripts shadow check (future engine/BCL type names cannot clash)
+        run: python3 Tools/Unity/shadow_check.py
+      - name: World host smoke test (create, simulate 30 days, inspect)
+        run: |
+          HOST=Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world
+          $HOST new --save "$RUNNER_TEMP/world"
+          $HOST run --save "$RUNNER_TEMP/world" --days 30
+          $HOST inspect --save "$RUNNER_TEMP/world" economy
+          $HOST inspect --save "$RUNNER_TEMP/world" news
+      - name: Dedicated server + master server smoke test
+        run: |
+          export HEROGAME_MASTER_SECRET=$(head -c 48 /dev/urandom | base64 -w0)
+          export HEROGAME_DATA="$RUNNER_TEMP/master" HEROGAME_URLS=http://127.0.0.1:5080
+          Headless/HeroGame.MasterServer/bin/Release/net8.0/herogame-master & MASTER=$!
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:5080/health && break; sleep 1; done
+          curl -sf http://127.0.0.1:5080/api/servers
+          kill $MASTER
+          (sleep 5; echo status; sleep 1; echo stop) | timeout 120 Headless/HeroGame.Server/bin/Release/net8.0/herogame-server \
+            --save "$RUNNER_TEMP/server" --dev-secret "$HEROGAME_MASTER_SECRET" --bind 127.0.0.1 --port 0 | tee server.txt
+          grep -q "ledger balanced" server.txt
+          grep -q "Saved and stopped" server.txt
+      - name: Server load test (64 bot clients over TLS, 15 s)
+        run: Headless/HeroGame.Server/bin/Release/net8.0/herogame-server loadtest --clients 64 --seconds 15 --tls | tee loadtest.txt
+      - name: Performance benchmark (10k NPC stress layout)
+        run: Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world bench --days 7 | tee bench.txt
+      - name: Performance benchmark (full metro, ~50k NPCs)
+        run: Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world bench --layout layout_port_arden.json --days 7 | tee bench-metro.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: simulation-results
+          path: |
+            **/TestResults/*.trx
+            bench.txt
+            loadtest.txt
+            bench-metro.txt
+
+  blender:
+    name: Blender asset pipeline — tests and kit export
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Blender as a Python module
+        run: pip install bpy==4.2.0
+      - name: Pipeline tests
+        run: python -m unittest discover -s Tools/Blender/tests -p "test_*.py" -v
+      - name: Export vertical-slice kit (FBX + validation reports)
+        run: python Tools/Blender/cli.py kit --art-root "$RUNNER_TEMP/Art"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: environment-kit-fbx
+          path: ${{ runner.temp }}/Art
+
+  repository:
+    name: Repository hygiene — Unity .meta integrity, data files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Every Unity asset has exactly one .meta (no orphans, no duplicate GUIDs)
+        run: python3 Tools/Unity/unity_meta.py check
+      - name: Every MonoBehaviour lives in a file of the same name (else scenes lose the component)
+        run: python3 Tools/Unity/check_scripts.py
+      - name: The metro layout matches its generator
+        run: python3 Tools/World/generate_metro.py --check
+      - name: Data files are valid JSON
+        run: |
+          for f in Game/Assets/StreamingAssets/Data/*.json; do python3 -m json.tool "$f" > /dev/null || { echo "invalid: $f"; exit 1; }; done

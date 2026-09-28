@@ -1,0 +1,263 @@
+[
+  {
+    "Id": "trespassing",
+    "DisplayName": "Trespassing",
+    "Category": "Petty",
+    "Severity": 1,
+    "BaseFineCents": 25000,
+    "BaseJailDays": 0,
+    "ReportLikelihood": 0.35
+  },
+  {
+    "Id": "shoplifting",
+    "DisplayName": "Shoplifting",
+    "Category": "Petty",
+    "Severity": 1,
+    "BaseFineCents": 50000,
+    "BaseJailDays": 0,
+    "ReportLikelihood": 0.55
+  },
+  {
+    "Id": "pickpocketing",
+    "DisplayName": "Pickpocketing",
+    "Category": "Petty",
+    "Severity": 2,
+    "BaseFineCents": 75000,
+    "BaseJailDays": 1,
+    "ReportLikelihood": 0.5
+  },
+  {
+    "Id": "vandalism",
+    "DisplayName": "Vandalism",
+    "Category": "Property",
+    "Severity": 2,
+    "BaseFineCents": 100000,
+    "BaseJailDays": 0,
+    "ReportLikelihood": 0.45
+  },
+  {
+    "Id": "vehicle_break_in",
+    "DisplayName": "Vehicle Break-in",
+    "Category": "Property",
+    "Severity": 2,
+    "BaseFineCents": 150000,
+    "BaseJailDays": 2,
+    "ReportLikelihood": 0.5
+  },
+  {
+    "Id": "burglary_residential",
+    "DisplayName": "Residential Burglary",
+    "Category": "Property",
+    "Severity": 4,
+    "BaseFineCents": 500000,
+    "BaseJailDays": 30,
+    "ReportLikelihood": 0.7
+  },
+  {
+    "Id": "burglary_commercial",
+    "DisplayName": "Commercial Burglary",
+    "Category": "Property",
+    "Severity": 4,
+    "BaseFineCents": 600000,
+    "BaseJailDays": 30,
+    "ReportLikelihood": 0.65
+  },
+  {
+    "Id": "vehicle_theft",
+    "DisplayName": "Vehicle Theft",
+    "Category": "Property",
+    "Severity": 3,
+    "BaseFineCents": 400000,
+    "BaseJailDays": 14,
+    "ReportLikelihood": 0.6
+  },
+  {
+    "Id": "carjacking",
+    "DisplayName": "Carjacking",
+    "Category": "Violent",
+    "Severity": 6,
+    "BaseFineCents": 1000000,
+    "BaseJailDays": 180,
+    "ReportLikelihood": 0.9
+  },
+  {
+    "Id": "assault",
+    "DisplayName": "Assault",
+    "Category": "Violent",
+    "Severity": 4,
+    "BaseFineCents": 300000,
+    "BaseJailDays": 30,
+    "ReportLikelihood": 0.75
+  },
+  {
+    "Id": "aggravated_assault",
+    "DisplayName": "Aggravated Assault",
+    "Category": "Violent",
+    "Severity": 6,
+    "BaseFineCents": 1000000,
+    "BaseJailDays": 365,
+    "ReportLikelihood": 0.9
+  },
+  {
+    "Id": "store_robbery",
+    "DisplayName": "Armed Store Robbery",
+    "Category": "Violent",
+    "Severity": 6,
+    "BaseFineCents": 1500000,
+    "BaseJailDays": 365,
+    "ReportLikelihood": 0.95
+  },
+  {
+    "Id": "bank_robbery",
+    "DisplayName": "Bank Robbery",
+    "Category": "Major",
+    "Severity": 8,
+    "BaseFineCents": 5000000,
+    "BaseJailDays": 1825,
+    "ReportLikelihood": 1.0
+  },
+  {
+    "Id": "armored_transport_robbery",
+    "DisplayName": "Armored Transport Robbery",
+    "Category": "Major",
+    "Severity": 8,
+    "BaseFineCents": 6000000,
+    "BaseJailDays": 1825,
+    "ReportLikelihood": 1.0
+  },
+  {
+    "Id": "homicide",
+    "DisplayName": "Homicide",
+    "Category": "Violent",
+    "Severity": 10,
+    "BaseFineCents": 0,
+    "BaseJailDays": 7300,
+    "ReportLikelihood": 1.0
+  },
+  {
+    "Id": "drug_dealing",
+    "DisplayName": "Drug Distribution",
+    "Category": "Organized",
+    "Severity": 4,
+    "BaseFineCents": 800000,
+    "BaseJailDays": 180,
+    "ReportLikelihood": 0.3
+  },
+  {
+    "Id": "extortion",
+    "DisplayName": "Extortion",
+    "Category": "Organized",
+    "Severity": 5,
+    "BaseFineCents": 2000000,
+    "BaseJailDays": 365,
+    "ReportLikelihood": 0.25
+  },
+  {
+    "Id": "smuggling",
+    "DisplayName": "Smuggling",
+    "Category": "Organized",
+    "Severity": 5,
+    "BaseFineCents": 2500000,
+    "BaseJailDays": 365,
+    "ReportLikelihood": 0.2
+  },
+  {
+    "Id": "money_laundering",
+    "DisplayName": "Money Laundering",
+    "Category": "Organized",
+    "Severity": 5,
+    "BaseFineCents": 5000000,
+    "BaseJailDays": 730,
+    "ReportLikelihood": 0.05
+  },
+  {
+    "Id": "reckless_driving",
+    "DisplayName": "Reckless Driving",
+    "Category": "Traffic",
+    "Severity": 2,
+    "BaseFineCents": 80000,
+    "BaseJailDays": 0,
+    "ReportLikelihood": 0.4
+  },
+  {
+    "Id": "hit_and_run",
+    "DisplayName": "Hit and Run",
+    "Category": "Traffic",
+    "Severity": 5,
+    "BaseFineCents": 500000,
+    "BaseJailDays": 90,
+    "ReportLikelihood": 0.85
+  },
+  {
+    "Id": "evading_police",
+    "DisplayName": "Evading Police",
+    "Category": "Traffic",
+    "Severity": 4,
+    "BaseFineCents": 300000,
+    "BaseJailDays": 30,
+    "ReportLikelihood": 1.0
+  },
+  {
+    "Id": "assaulting_officer",
+    "DisplayName": "Assaulting an Officer",
+    "Category": "Violent",
+    "Severity": 7,
+    "BaseFineCents": 1500000,
+    "BaseJailDays": 730,
+    "ReportLikelihood": 1.0
+  },
+  {
+    "Id": "powered_assault",
+    "DisplayName": "Assault with Anomalous Ability",
+    "Category": "Anomalous",
+    "Severity": 7,
+    "BaseFineCents": 2000000,
+    "BaseJailDays": 730,
+    "ReportLikelihood": 0.95
+  },
+  {
+    "Id": "anomalous_property_destruction",
+    "DisplayName": "Property Destruction (Anomalous)",
+    "Category": "Anomalous",
+    "Severity": 5,
+    "BaseFineCents": 2500000,
+    "BaseJailDays": 180,
+    "ReportLikelihood": 0.9
+  },
+  {
+    "Id": "unregistered_anomalous_activity",
+    "DisplayName": "Unregistered Anomalous Activity",
+    "Category": "Anomalous",
+    "Severity": 3,
+    "BaseFineCents": 500000,
+    "BaseJailDays": 0,
+    "ReportLikelihood": 0.7
+  },
+  {
+    "Id": "unlawful_discharge",
+    "DisplayName": "Unlawful Discharge of a Firearm",
+    "Category": "Violent",
+    "Severity": 3,
+    "BaseFineCents": 250000,
+    "BaseJailDays": 10,
+    "ReportLikelihood": 0.9
+  },
+  {
+    "Id": "unlicensed_firearm",
+    "DisplayName": "Carrying a Firearm Without a Permit",
+    "Category": "Violent",
+    "Severity": 3,
+    "BaseFineCents": 200000,
+    "BaseJailDays": 5,
+    "ReportLikelihood": 0.5
+  },
+  {
+    "Id": "street_robbery",
+    "DisplayName": "Street Robbery",
+    "Category": "Violent",
+    "Severity": 5,
+    "BaseFineCents": 800000,
+    "BaseJailDays": 180,
+    "ReportLikelihood": 0.8
+  }
+]

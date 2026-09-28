@@ -1,0 +1,9008 @@
+[
+ {
+  "Id": "tee_crew",
+  "Label": "Crew-neck tee",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1400,
+  "SoldBy": [
+   "clothing_boutique",
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": true,
+  "Warmth": 0.2,
+  "Formality": 0.15,
+  "Commonness": 4,
+  "Cut": []
+ },
+ {
+  "Id": "tee_vneck",
+  "Label": "V-neck tee",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1600,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.2,
+  "Formality": 0.2,
+  "Commonness": 1.5,
+  "Cut": []
+ },
+ {
+  "Id": "tee_pocket",
+  "Label": "Pocket tee",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.2,
+  "Formality": 0.2,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "tee_long",
+  "Label": "Long-sleeve tee",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.35,
+  "Formality": 0.2,
+  "Commonness": 1.5,
+  "Cut": []
+ },
+ {
+  "Id": "tee_graphic",
+  "Label": "Graphic tee (Port Arden)",
+  "Slot": "Top",
+  "Category": "Street",
+  "Tags": [
+   "print"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2400,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.2,
+  "Formality": 0.1,
+  "Commonness": 1.5,
+  "Cut": []
+ },
+ {
+  "Id": "tee_oversized",
+  "Label": "Oversized tee",
+  "Slot": "Top",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2600,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.2,
+  "Formality": 0.1,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "tank_athletic",
+  "Label": "Athletic tank",
+  "Slot": "Top",
+  "Category": "Athletic",
+  "Tags": [
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1800,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.1,
+  "Formality": 0.05,
+  "Commonness": 0.9,
+  "Cut": []
+ },
+ {
+  "Id": "tank_ribbed",
+  "Label": "Ribbed tank",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1600,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.1,
+  "Formality": 0.1,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "camisole",
+  "Label": "Camisole",
+  "Slot": "Top",
+  "Category": "Nightlife",
+  "Tags": [
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.1,
+  "Formality": 0.35,
+  "Commonness": 0.6,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "crop_top",
+  "Label": "Crop top",
+  "Slot": "Top",
+  "Category": "Street",
+  "Tags": [
+   "cropped"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.1,
+  "Formality": 0.15,
+  "Commonness": 0.6,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "polo",
+  "Label": "Polo shirt",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [
+   "collar"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3400,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.25,
+  "Formality": 0.45,
+  "Commonness": 1.4,
+  "Cut": []
+ },
+ {
+  "Id": "oxford",
+  "Label": "Oxford button-down",
+  "Slot": "Top",
+  "Category": "Work",
+  "Tags": [
+   "collar",
+   "buttons"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.6,
+  "Commonness": 1.3,
+  "Cut": []
+ },
+ {
+  "Id": "flannel",
+  "Label": "Flannel shirt",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [
+   "collar",
+   "buttons",
+   "plaid"
+  ],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.45,
+  "Formality": 0.3,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "linen_shirt",
+  "Label": "Linen shirt",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [
+   "collar",
+   "buttons"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.15,
+  "Formality": 0.45,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "camp_shirt",
+  "Label": "Camp-collar shirt",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [
+   "collar",
+   "buttons",
+   "print"
+  ],
+  "Variants": [
+   {
+    "Id": "blue_floral",
+    "Label": "Blue floral",
+    "Hex": "#3E5D8C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red_floral",
+    "Label": "Red floral",
+    "Hex": "#A83A3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "yellow_floral",
+    "Label": "Yellow floral",
+    "Hex": "#D9B44A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_floral",
+    "Label": "Black floral",
+    "Hex": "#232325",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.15,
+  "Formality": 0.35,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "dress_shirt",
+  "Label": "Dress shirt",
+  "Slot": "Top",
+  "Category": "Formal",
+  "Tags": [
+   "collar",
+   "buttons",
+   "tucked"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.85,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "henley",
+  "Label": "Henley",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [
+   "buttons"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "sweater_crew",
+  "Label": "Crew-neck sweater",
+  "Slot": "Top",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.65,
+  "Formality": 0.5,
+  "Commonness": 0.9,
+  "Cut": []
+ },
+ {
+  "Id": "turtleneck",
+  "Label": "Turtleneck",
+  "Slot": "Top",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.65,
+  "Formality": 0.65,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "blouse",
+  "Label": "Blouse",
+  "Slot": "Top",
+  "Category": "Work",
+  "Tags": [
+   "buttons"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "blue_floral",
+    "Label": "Blue floral",
+    "Hex": "#3E5D8C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red_floral",
+    "Label": "Red floral",
+    "Hex": "#A83A3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "yellow_floral",
+    "Label": "Yellow floral",
+    "Hex": "#D9B44A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_floral",
+    "Label": "Black floral",
+    "Hex": "#232325",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.25,
+  "Formality": 0.65,
+  "Commonness": 1.0,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "sports_bra",
+  "Label": "Sports bra",
+  "Slot": "Top",
+  "Category": "Athletic",
+  "Tags": [
+   "cropped",
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3500,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.05,
+  "Formality": 0.0,
+  "Commonness": 0.4,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "jersey_basketball",
+  "Label": "Basketball jersey",
+  "Slot": "Top",
+  "Category": "Athletic",
+  "Tags": [
+   "sleeveless",
+   "print"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.1,
+  "Formality": 0.05,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "work_shirt",
+  "Label": "Work shirt with name patch",
+  "Slot": "Top",
+  "Category": "Work",
+  "Tags": [
+   "collar",
+   "buttons",
+   "patch"
+  ],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3000,
+  "SoldBy": [
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.35,
+  "Formality": 0.35,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "scrubs_top",
+  "Label": "Scrubs top",
+  "Slot": "Top",
+  "Category": "Uniform",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "ceil",
+    "Label": "Ceil blue",
+    "Hex": "#7FA5C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#23305A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wine",
+    "Label": "Wine",
+    "Hex": "#6A2335",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#25777A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2800,
+  "SoldBy": [
+   "pharmacy"
+  ],
+  "Starter": false,
+  "Warmth": 0.2,
+  "Formality": 0.3,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "hoodie",
+  "Label": "Pullover hoodie",
+  "Slot": "Outer",
+  "Category": "Street",
+  "Tags": [
+   "hood",
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.6,
+  "Formality": 0.1,
+  "Commonness": 2.0,
+  "Cut": []
+ },
+ {
+  "Id": "zip_hoodie",
+  "Label": "Zip hoodie",
+  "Slot": "Outer",
+  "Category": "Street",
+  "Tags": [
+   "hood",
+   "open_front",
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5000,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.55,
+  "Formality": 0.1,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "crewneck_sweatshirt",
+  "Label": "Crewneck sweatshirt",
+  "Slot": "Outer",
+  "Category": "Casual",
+  "Tags": [
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.55,
+  "Formality": 0.15,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "denim_jacket",
+  "Label": "Denim jacket",
+  "Slot": "Outer",
+  "Category": "Casual",
+  "Tags": [
+   "open_front",
+   "collar"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 7800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.5,
+  "Formality": 0.3,
+  "Commonness": 0.9,
+  "Cut": []
+ },
+ {
+  "Id": "bomber",
+  "Label": "Bomber jacket",
+  "Slot": "Outer",
+  "Category": "Street",
+  "Tags": [
+   "open_front"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 9500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.55,
+  "Formality": 0.35,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "leather_jacket",
+  "Label": "Leather jacket",
+  "Slot": "Outer",
+  "Category": "Nightlife",
+  "Tags": [
+   "open_front",
+   "collar"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 26000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.6,
+  "Formality": 0.45,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "varsity_jacket",
+  "Label": "Varsity jacket",
+  "Slot": "Outer",
+  "Category": "Street",
+  "Tags": [
+   "open_front"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 12000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.55,
+  "Formality": 0.2,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "windbreaker",
+  "Label": "Windbreaker",
+  "Slot": "Outer",
+  "Category": "Athletic",
+  "Tags": [
+   "hood",
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.35,
+  "Formality": 0.1,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "rain_jacket",
+  "Label": "Rain jacket",
+  "Slot": "Outer",
+  "Category": "Outdoor",
+  "Tags": [
+   "hood",
+   "waterproof",
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 8500,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.2,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "puffer",
+  "Label": "Puffer jacket",
+  "Slot": "Outer",
+  "Category": "Outdoor",
+  "Tags": [
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 14000,
+  "SoldBy": [
+   "sporting_goods",
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.9,
+  "Formality": 0.2,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "trench",
+  "Label": "Trench coat",
+  "Slot": "Outer",
+  "Category": "Formal",
+  "Tags": [
+   "open_front",
+   "collar",
+   "long"
+  ],
+  "Variants": [
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 19000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.6,
+  "Formality": 0.75,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "overcoat",
+  "Label": "Wool overcoat",
+  "Slot": "Outer",
+  "Category": "Formal",
+  "Tags": [
+   "open_front",
+   "collar",
+   "long"
+  ],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 24000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.85,
+  "Formality": 0.85,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "blazer",
+  "Label": "Blazer",
+  "Slot": "Outer",
+  "Category": "Work",
+  "Tags": [
+   "open_front",
+   "collar"
+  ],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 15000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.45,
+  "Formality": 0.8,
+  "Commonness": 0.7,
+  "Cut": []
+ },
+ {
+  "Id": "suit_jacket",
+  "Label": "Suit jacket",
+  "Slot": "Outer",
+  "Category": "Formal",
+  "Tags": [
+   "open_front",
+   "collar",
+   "suit"
+  ],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 28000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.45,
+  "Formality": 0.95,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "cardigan",
+  "Label": "Cardigan",
+  "Slot": "Outer",
+  "Category": "Casual",
+  "Tags": [
+   "open_front",
+   "buttons"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.45,
+  "Commonness": 0.7,
+  "Cut": []
+ },
+ {
+  "Id": "fleece",
+  "Label": "Fleece pullover",
+  "Slot": "Outer",
+  "Category": "Outdoor",
+  "Tags": [
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.7,
+  "Formality": 0.15,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "track_jacket",
+  "Label": "Track jacket",
+  "Slot": "Outer",
+  "Category": "Athletic",
+  "Tags": [
+   "open_front",
+   "standalone"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6500,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.1,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "hivis_vest",
+  "Label": "Hi-vis safety vest",
+  "Slot": "Outer",
+  "Category": "Work",
+  "Tags": [
+   "open_front",
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "yellow",
+    "Label": "Hi-vis yellow",
+    "Hex": "#D7E62B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "orange",
+    "Label": "Hi-vis orange",
+    "Hex": "#F07A1A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1500,
+  "SoldBy": [
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.05,
+  "Formality": 0.1,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "quilted_vest",
+  "Label": "Quilted vest",
+  "Slot": "Outer",
+  "Category": "Outdoor",
+  "Tags": [
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 7000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.45,
+  "Formality": 0.3,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "sundress",
+  "Label": "Sundress",
+  "Slot": "FullBody",
+  "Category": "Casual",
+  "Tags": [
+   "dress",
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "blue_floral",
+    "Label": "Blue floral",
+    "Hex": "#3E5D8C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red_floral",
+    "Label": "Red floral",
+    "Hex": "#A83A3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "yellow_floral",
+    "Label": "Yellow floral",
+    "Hex": "#D9B44A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_floral",
+    "Label": "Black floral",
+    "Hex": "#232325",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.1,
+  "Formality": 0.35,
+  "Commonness": 0.9,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "wrap_dress",
+  "Label": "Wrap dress",
+  "Slot": "FullBody",
+  "Category": "Work",
+  "Tags": [
+   "dress"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "blue_floral",
+    "Label": "Blue floral",
+    "Hex": "#3E5D8C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red_floral",
+    "Label": "Red floral",
+    "Hex": "#A83A3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "yellow_floral",
+    "Label": "Yellow floral",
+    "Hex": "#D9B44A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_floral",
+    "Label": "Black floral",
+    "Hex": "#232325",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 8500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.25,
+  "Formality": 0.65,
+  "Commonness": 0.6,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "slip_dress",
+  "Label": "Slip dress",
+  "Slot": "FullBody",
+  "Category": "Nightlife",
+  "Tags": [
+   "dress",
+   "sleeveless"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 9500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.1,
+  "Formality": 0.7,
+  "Commonness": 0.3,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "cocktail_dress",
+  "Label": "Cocktail dress",
+  "Slot": "FullBody",
+  "Category": "Formal",
+  "Tags": [
+   "dress"
+  ],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 16000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.15,
+  "Formality": 0.9,
+  "Commonness": 0.2,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "maxi_dress",
+  "Label": "Maxi dress",
+  "Slot": "FullBody",
+  "Category": "Casual",
+  "Tags": [
+   "dress",
+   "long"
+  ],
+  "Variants": [
+   {
+    "Id": "blue_floral",
+    "Label": "Blue floral",
+    "Hex": "#3E5D8C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red_floral",
+    "Label": "Red floral",
+    "Hex": "#A83A3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "yellow_floral",
+    "Label": "Yellow floral",
+    "Hex": "#D9B44A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_floral",
+    "Label": "Black floral",
+    "Hex": "#232325",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 7000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.2,
+  "Formality": 0.45,
+  "Commonness": 0.5,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "jumpsuit",
+  "Label": "Jumpsuit",
+  "Slot": "FullBody",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 9000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "coveralls",
+  "Label": "Work coveralls",
+  "Slot": "FullBody",
+  "Category": "Work",
+  "Tags": [
+   "uniform"
+  ],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.1,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "overalls",
+  "Label": "Denim overalls",
+  "Slot": "FullBody",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6800,
+  "SoldBy": [
+   "hardware_store",
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.15,
+  "Commonness": 0.25,
+  "Cut": []
+ },
+ {
+  "Id": "jeans_slim",
+  "Label": "Slim jeans",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.45,
+  "Formality": 0.3,
+  "Commonness": 2.5,
+  "Cut": []
+ },
+ {
+  "Id": "jeans_straight",
+  "Label": "Straight jeans",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.45,
+  "Formality": 0.3,
+  "Commonness": 2.5,
+  "Cut": []
+ },
+ {
+  "Id": "jeans_relaxed",
+  "Label": "Relaxed jeans",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.45,
+  "Formality": 0.25,
+  "Commonness": 1.5,
+  "Cut": []
+ },
+ {
+  "Id": "jeans_baggy",
+  "Label": "Baggy jeans",
+  "Slot": "Bottom",
+  "Category": "Street",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.45,
+  "Formality": 0.15,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "jeans_skinny",
+  "Label": "Skinny jeans",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.45,
+  "Formality": 0.3,
+  "Commonness": 1.3,
+  "Cut": []
+ },
+ {
+  "Id": "chinos",
+  "Label": "Chinos",
+  "Slot": "Bottom",
+  "Category": "Work",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.4,
+  "Formality": 0.55,
+  "Commonness": 1.8,
+  "Cut": []
+ },
+ {
+  "Id": "cargo_pants",
+  "Label": "Cargo pants",
+  "Slot": "Bottom",
+  "Category": "Street",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.45,
+  "Formality": 0.15,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "work_pants",
+  "Label": "Work pants",
+  "Slot": "Bottom",
+  "Category": "Work",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.2,
+  "Commonness": 0.9,
+  "Cut": []
+ },
+ {
+  "Id": "dress_trousers",
+  "Label": "Dress trousers",
+  "Slot": "Bottom",
+  "Category": "Formal",
+  "Tags": [
+   "belt_loops",
+   "pressed"
+  ],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 11000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.85,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "suit_trousers",
+  "Label": "Suit trousers",
+  "Slot": "Bottom",
+  "Category": "Formal",
+  "Tags": [
+   "belt_loops",
+   "pressed",
+   "suit"
+  ],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 16000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.95,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "joggers",
+  "Label": "Joggers",
+  "Slot": "Bottom",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.45,
+  "Formality": 0.05,
+  "Commonness": 1.5,
+  "Cut": []
+ },
+ {
+  "Id": "track_pants",
+  "Label": "Track pants",
+  "Slot": "Bottom",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5000,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.05,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "sweatpants",
+  "Label": "Sweatpants",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.0,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "shorts_athletic",
+  "Label": "Athletic shorts",
+  "Slot": "Bottom",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2800,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.05,
+  "Formality": 0.0,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "shorts_chino",
+  "Label": "Chino shorts",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.05,
+  "Formality": 0.2,
+  "Commonness": 1.3,
+  "Cut": []
+ },
+ {
+  "Id": "shorts_denim",
+  "Label": "Denim shorts",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.05,
+  "Formality": 0.15,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "shorts_cargo",
+  "Label": "Cargo shorts",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.05,
+  "Formality": 0.1,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "board_shorts",
+  "Label": "Board shorts",
+  "Slot": "Bottom",
+  "Category": "Swim",
+  "Tags": [
+   "swim"
+  ],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.0,
+  "Formality": 0.0,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "skirt_pencil",
+  "Label": "Pencil skirt",
+  "Slot": "Bottom",
+  "Category": "Work",
+  "Tags": [
+   "skirt"
+  ],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.2,
+  "Formality": 0.8,
+  "Commonness": 0.6,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "skirt_pleated",
+  "Label": "Pleated midi skirt",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "skirt"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.2,
+  "Formality": 0.5,
+  "Commonness": 0.5,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "skirt_denim",
+  "Label": "Denim skirt",
+  "Slot": "Bottom",
+  "Category": "Casual",
+  "Tags": [
+   "skirt",
+   "belt_loops"
+  ],
+  "Variants": [
+   {
+    "Id": "light_wash",
+    "Label": "Light wash",
+    "Hex": "#8FA6BF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mid_wash",
+    "Label": "Mid wash",
+    "Hex": "#4C6488",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "dark_wash",
+    "Label": "Dark wash",
+    "Hex": "#26324A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_denim",
+    "Label": "Black",
+    "Hex": "#232326",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_denim",
+    "Label": "White",
+    "Hex": "#E7E5DF",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.15,
+  "Formality": 0.25,
+  "Commonness": 0.6,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "leggings",
+  "Label": "Leggings",
+  "Slot": "Bottom",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4000,
+  "SoldBy": [
+   "sporting_goods",
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.35,
+  "Formality": 0.05,
+  "Commonness": 1.0,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "scrubs_pants",
+  "Label": "Scrubs pants",
+  "Slot": "Bottom",
+  "Category": "Uniform",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "ceil",
+    "Label": "Ceil blue",
+    "Hex": "#7FA5C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#23305A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wine",
+    "Label": "Wine",
+    "Hex": "#6A2335",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#25777A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2600,
+  "SoldBy": [
+   "pharmacy"
+  ],
+  "Starter": false,
+  "Warmth": 0.35,
+  "Formality": 0.3,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "belt_leather",
+  "Label": "Leather belt",
+  "Slot": "Belt",
+  "Category": "Work",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.0,
+  "Formality": 0.6,
+  "Commonness": 2.0,
+  "Cut": []
+ },
+ {
+  "Id": "belt_woven",
+  "Label": "Woven belt",
+  "Slot": "Belt",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.0,
+  "Formality": 0.35,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "belt_web",
+  "Label": "Canvas web belt",
+  "Slot": "Belt",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1800,
+  "SoldBy": [
+   "sporting_goods",
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.0,
+  "Formality": 0.2,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "belt_studded",
+  "Label": "Studded belt",
+  "Slot": "Belt",
+  "Category": "Nightlife",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.0,
+  "Formality": 0.2,
+  "Commonness": 0.15,
+  "Cut": []
+ },
+ {
+  "Id": "belt_monogram",
+  "Label": "Monogram buckle belt",
+  "Slot": "Belt",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 45000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.0,
+  "Formality": 0.6,
+  "Commonness": 0.05,
+  "Cut": []
+ },
+ {
+  "Id": "belt_western",
+  "Label": "Western buckle belt",
+  "Slot": "Belt",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 7000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.0,
+  "Formality": 0.4,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "sneakers_white",
+  "Label": "Leather court sneakers",
+  "Slot": "Shoes",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1A1A1B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_red",
+    "Label": "White / red",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0,
+    "TrimHex": "#B3261E"
+   },
+   {
+    "Id": "grey_blue",
+    "Label": "Grey / blue",
+    "Hex": "#9A9DA2",
+    "PriceFactor": 1.0,
+    "TrimHex": "#2D4F8C"
+   },
+   {
+    "Id": "cream_gum",
+    "Label": "Cream / gum",
+    "Hex": "#E8DFCB",
+    "PriceFactor": 1.0,
+    "TrimHex": "#9B6A3C"
+   }
+  ],
+  "PriceCents": 8500,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 3.0,
+  "Cut": []
+ },
+ {
+  "Id": "sneakers_canvas",
+  "Label": "Canvas low-tops",
+  "Slot": "Shoes",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1A1A1B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_red",
+    "Label": "White / red",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0,
+    "TrimHex": "#B3261E"
+   },
+   {
+    "Id": "grey_blue",
+    "Label": "Grey / blue",
+    "Hex": "#9A9DA2",
+    "PriceFactor": 1.0,
+    "TrimHex": "#2D4F8C"
+   },
+   {
+    "Id": "cream_gum",
+    "Label": "Cream / gum",
+    "Hex": "#E8DFCB",
+    "PriceFactor": 1.0,
+    "TrimHex": "#9B6A3C"
+   }
+  ],
+  "PriceCents": 5000,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 1.8,
+  "Cut": []
+ },
+ {
+  "Id": "sneakers_high",
+  "Label": "High-top sneakers",
+  "Slot": "Shoes",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1A1A1B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_red",
+    "Label": "White / red",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0,
+    "TrimHex": "#B3261E"
+   },
+   {
+    "Id": "grey_blue",
+    "Label": "Grey / blue",
+    "Hex": "#9A9DA2",
+    "PriceFactor": 1.0,
+    "TrimHex": "#2D4F8C"
+   },
+   {
+    "Id": "cream_gum",
+    "Label": "Cream / gum",
+    "Hex": "#E8DFCB",
+    "PriceFactor": 1.0,
+    "TrimHex": "#9B6A3C"
+   }
+  ],
+  "PriceCents": 9500,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.15,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "running_shoes",
+  "Label": "Running shoes",
+  "Slot": "Shoes",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 11000,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 1.8,
+  "Cut": []
+ },
+ {
+  "Id": "basketball_shoes",
+  "Label": "Basketball shoes",
+  "Slot": "Shoes",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 14000,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "limited_sneakers",
+  "Label": "Limited-run sneakers",
+  "Slot": "Shoes",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1A1A1B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white_red",
+    "Label": "White / red",
+    "Hex": "#F2F2F0",
+    "PriceFactor": 1.0,
+    "TrimHex": "#B3261E"
+   },
+   {
+    "Id": "grey_blue",
+    "Label": "Grey / blue",
+    "Hex": "#9A9DA2",
+    "PriceFactor": 1.0,
+    "TrimHex": "#2D4F8C"
+   },
+   {
+    "Id": "cream_gum",
+    "Label": "Cream / gum",
+    "Hex": "#E8DFCB",
+    "PriceFactor": 1.0,
+    "TrimHex": "#9B6A3C"
+   }
+  ],
+  "PriceCents": 38000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 0.05,
+  "Cut": []
+ },
+ {
+  "Id": "slides",
+  "Label": "Slides",
+  "Slot": "Shoes",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2500,
+  "SoldBy": [
+   "sporting_goods",
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.0,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "flip_flops",
+  "Label": "Flip-flops",
+  "Slot": "Shoes",
+  "Category": "Swim",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1000,
+  "SoldBy": [
+   "corner_store",
+   "gas_station",
+   "pharmacy"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.0,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "work_boots",
+  "Label": "Steel-toe work boots",
+  "Slot": "Shoes",
+  "Category": "Work",
+  "Tags": [
+   "boots"
+  ],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 13000,
+  "SoldBy": [
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.15,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "chelsea_boots",
+  "Label": "Chelsea boots",
+  "Slot": "Shoes",
+  "Category": "Casual",
+  "Tags": [
+   "boots"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 15000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.6,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "combat_boots",
+  "Label": "Combat boots",
+  "Slot": "Shoes",
+  "Category": "Street",
+  "Tags": [
+   "boots"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 12000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.25,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "cowboy_boots",
+  "Label": "Cowboy boots",
+  "Slot": "Shoes",
+  "Category": "Casual",
+  "Tags": [
+   "boots",
+   "heeled"
+  ],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 19000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.4,
+  "Formality": 0.45,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "hiking_boots",
+  "Label": "Hiking boots",
+  "Slot": "Shoes",
+  "Category": "Outdoor",
+  "Tags": [
+   "boots"
+  ],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 14000,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.1,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "loafers",
+  "Label": "Loafers",
+  "Slot": "Shoes",
+  "Category": "Work",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 12000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.7,
+  "Commonness": 0.7,
+  "Cut": []
+ },
+ {
+  "Id": "oxfords",
+  "Label": "Oxford shoes",
+  "Slot": "Shoes",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 16000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.95,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "pumps",
+  "Label": "Pumps",
+  "Slot": "Shoes",
+  "Category": "Formal",
+  "Tags": [
+   "heeled"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 11000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.85,
+  "Commonness": 0.5,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "heeled_sandals",
+  "Label": "Strappy heeled sandals",
+  "Slot": "Shoes",
+  "Category": "Nightlife",
+  "Tags": [
+   "heeled"
+  ],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 9500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.7,
+  "Commonness": 0.3,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "flats",
+  "Label": "Ballet flats",
+  "Slot": "Shoes",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.7,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "rain_boots",
+  "Label": "Rain boots",
+  "Slot": "Shoes",
+  "Category": "Outdoor",
+  "Tags": [
+   "boots",
+   "waterproof"
+  ],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.15,
+  "Cut": []
+ },
+ {
+  "Id": "clogs",
+  "Label": "Work clogs",
+  "Slot": "Shoes",
+  "Category": "Uniform",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 7000,
+  "SoldBy": [
+   "pharmacy"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "socks_crew",
+  "Label": "Crew socks",
+  "Slot": "Socks",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 800,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods",
+   "pharmacy"
+  ],
+  "Starter": true,
+  "Warmth": 0.1,
+  "Formality": 0.1,
+  "Commonness": 3.0,
+  "Cut": []
+ },
+ {
+  "Id": "socks_ankle",
+  "Label": "Ankle socks",
+  "Slot": "Socks",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 700,
+  "SoldBy": [
+   "sporting_goods",
+   "pharmacy"
+  ],
+  "Starter": true,
+  "Warmth": 0.05,
+  "Formality": 0.05,
+  "Commonness": 1.5,
+  "Cut": []
+ },
+ {
+  "Id": "socks_dress",
+  "Label": "Dress socks",
+  "Slot": "Socks",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.1,
+  "Formality": 0.8,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "socks_tall",
+  "Label": "Tall patterned socks",
+  "Slot": "Socks",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1400,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.15,
+  "Formality": 0.1,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "cap_baseball",
+  "Label": "Baseball cap",
+  "Slot": "Hat",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2500,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods",
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 1.5,
+  "Cut": []
+ },
+ {
+  "Id": "cap_snapback",
+  "Label": "Flat-brim snapback",
+  "Slot": "Hat",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3200,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.05,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "cap_trucker",
+  "Label": "Trucker cap",
+  "Slot": "Hat",
+  "Category": "Work",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "khaki",
+    "Label": "Khaki",
+    "Hex": "#B59F77",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "stone",
+    "Label": "Stone",
+    "Hex": "#CFC6B3",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#595C3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#232E47",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#3A3B3E",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1800,
+  "SoldBy": [
+   "corner_store",
+   "gas_station",
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.05,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "bucket_hat",
+  "Label": "Bucket hat",
+  "Slot": "Hat",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2800,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "beanie",
+  "Label": "Beanie",
+  "Slot": "Hat",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2000,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.4,
+  "Formality": 0.1,
+  "Commonness": 0.7,
+  "Cut": []
+ },
+ {
+  "Id": "fedora",
+  "Label": "Fedora",
+  "Slot": "Hat",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 7500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.7,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "cowboy_hat",
+  "Label": "Cowboy hat",
+  "Slot": "Hat",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 12000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.4,
+  "Commonness": 0.25,
+  "Cut": []
+ },
+ {
+  "Id": "sun_hat",
+  "Label": "Wide-brim sun hat",
+  "Slot": "Hat",
+  "Category": "Outdoor",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "visor",
+  "Label": "Sport visor",
+  "Slot": "Hat",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1800,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.05,
+  "Commonness": 0.15,
+  "Cut": []
+ },
+ {
+  "Id": "hard_hat",
+  "Label": "Hard hat",
+  "Slot": "Hat",
+  "Category": "Work",
+  "Tags": [
+   "uniform"
+  ],
+  "Variants": [
+   {
+    "Id": "yellow",
+    "Label": "Hi-vis yellow",
+    "Hex": "#D7E62B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "orange",
+    "Label": "Hi-vis orange",
+    "Hex": "#F07A1A",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2500,
+  "SoldBy": [
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.05,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "durag",
+  "Label": "Durag",
+  "Slot": "Hat",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1200,
+  "SoldBy": [
+   "clothing_boutique",
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.05,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "headwrap",
+  "Label": "Headwrap",
+  "Slot": "Hat",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "blue_floral",
+    "Label": "Blue floral",
+    "Hex": "#3E5D8C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red_floral",
+    "Label": "Red floral",
+    "Hex": "#A83A3A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "yellow_floral",
+    "Label": "Yellow floral",
+    "Hex": "#D9B44A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black_floral",
+    "Label": "Black floral",
+    "Hex": "#232325",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2200,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.4,
+  "Commonness": 0.25,
+  "Cut": []
+ },
+ {
+  "Id": "newsboy_cap",
+  "Label": "Newsboy cap",
+  "Slot": "Hat",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "charcoal",
+    "Label": "Charcoal",
+    "Hex": "#35373B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1D2740",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#141416",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "light_grey",
+    "Label": "Light grey",
+    "Hex": "#8C8E91",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A68B66",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.4,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "glasses_rect",
+  "Label": "Rectangular frames",
+  "Slot": "Glasses",
+  "Category": "Casual",
+  "Tags": [
+   "prescription"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 12000,
+  "SoldBy": [
+   "pharmacy",
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.4,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "glasses_round",
+  "Label": "Round frames",
+  "Slot": "Glasses",
+  "Category": "Casual",
+  "Tags": [
+   "prescription"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold_green",
+    "Label": "Gold / green",
+    "Hex": "#C4A052",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "clear_blue",
+    "Label": "Clear / blue mirror",
+    "Hex": "#B9C4CC",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 13000,
+  "SoldBy": [
+   "pharmacy",
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.45,
+  "Commonness": 0.7,
+  "Cut": []
+ },
+ {
+  "Id": "glasses_cateye",
+  "Label": "Cat-eye frames",
+  "Slot": "Glasses",
+  "Category": "Casual",
+  "Tags": [
+   "prescription"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 14000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.3,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "reading_glasses",
+  "Label": "Reading glasses",
+  "Slot": "Glasses",
+  "Category": "Casual",
+  "Tags": [
+   "prescription"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2000,
+  "SoldBy": [
+   "pharmacy"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "sunglasses_aviator",
+  "Label": "Aviator sunglasses",
+  "Slot": "Glasses",
+  "Category": "Casual",
+  "Tags": [
+   "sun"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold_green",
+    "Label": "Gold / green",
+    "Hex": "#C4A052",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "clear_blue",
+    "Label": "Clear / blue mirror",
+    "Hex": "#B9C4CC",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 9000,
+  "SoldBy": [
+   "clothing_boutique",
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.35,
+  "Commonness": 0.7,
+  "Cut": []
+ },
+ {
+  "Id": "sunglasses_square",
+  "Label": "Square sunglasses",
+  "Slot": "Glasses",
+  "Category": "Casual",
+  "Tags": [
+   "sun"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold_green",
+    "Label": "Gold / green",
+    "Hex": "#C4A052",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "clear_blue",
+    "Label": "Clear / blue mirror",
+    "Hex": "#B9C4CC",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 8000,
+  "SoldBy": [
+   "clothing_boutique",
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.35,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "sunglasses_sport",
+  "Label": "Wraparound sport sunglasses",
+  "Slot": "Glasses",
+  "Category": "Athletic",
+  "Tags": [
+   "sun"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold_green",
+    "Label": "Gold / green",
+    "Hex": "#C4A052",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "clear_blue",
+    "Label": "Clear / blue mirror",
+    "Hex": "#B9C4CC",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 11000,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.05,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "sunglasses_oversized",
+  "Label": "Oversized sunglasses",
+  "Slot": "Glasses",
+  "Category": "Luxury",
+  "Tags": [
+   "sun",
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black / smoke",
+    "Hex": "#141414",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tortoise",
+    "Label": "Tortoise / brown",
+    "Hex": "#5B3A21",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold_green",
+    "Label": "Gold / green",
+    "Hex": "#C4A052",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "clear_blue",
+    "Label": "Clear / blue mirror",
+    "Hex": "#B9C4CC",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 24000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.15,
+  "Cut": []
+ },
+ {
+  "Id": "mask_surgical",
+  "Label": "Surgical mask",
+  "Slot": "Mask",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "ceil",
+    "Label": "Ceil blue",
+    "Hex": "#7FA5C9",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 200,
+  "SoldBy": [
+   "pharmacy"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "bandana_face",
+  "Label": "Bandana (over the face)",
+  "Slot": "Mask",
+  "Category": "Street",
+  "Tags": [
+   "conceals"
+  ],
+  "Variants": [
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#B3261E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "mustard",
+    "Label": "Mustard",
+    "Hex": "#C99A2E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "teal",
+    "Label": "Teal",
+    "Hex": "#1F6E6E",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "coral",
+    "Label": "Coral",
+    "Hex": "#E0735C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "lilac",
+    "Label": "Lilac",
+    "Hex": "#A897C9",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "forest",
+    "Label": "Forest",
+    "Hex": "#27452F",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 800,
+  "SoldBy": [
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.0,
+  "Commonness": 0.0,
+  "Cut": []
+ },
+ {
+  "Id": "earrings_studs",
+  "Label": "Stud earrings",
+  "Slot": "Earrings",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "earrings_hoops_small",
+  "Label": "Small hoops",
+  "Slot": "Earrings",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.45,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "earrings_hoops_large",
+  "Label": "Large hoops",
+  "Slot": "Earrings",
+  "Category": "Nightlife",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 6500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.45,
+  "Commonness": 0.5,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "earrings_drop",
+  "Label": "Drop earrings",
+  "Slot": "Earrings",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 12000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.8,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "earrings_iced_studs",
+  "Label": "Iced-out studs",
+  "Slot": "Earrings",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury",
+   "stones"
+  ],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 90000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.6,
+  "Commonness": 0.05,
+  "Cut": []
+ },
+ {
+  "Id": "ear_gauges",
+  "Label": "Ear gauges",
+  "Slot": "Earrings",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 3000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "nose_stud",
+  "Label": "Nose stud",
+  "Slot": "FacePiercing",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 3000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.4,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "nose_ring",
+  "Label": "Nose ring",
+  "Slot": "FacePiercing",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 3000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "septum_ring",
+  "Label": "Septum ring",
+  "Slot": "FacePiercing",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 3500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 0.15,
+  "Cut": []
+ },
+ {
+  "Id": "eyebrow_bar",
+  "Label": "Eyebrow bar",
+  "Slot": "FacePiercing",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 2500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.05,
+  "Cut": []
+ },
+ {
+  "Id": "lip_ring",
+  "Label": "Lip ring",
+  "Slot": "FacePiercing",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 2500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.05,
+  "Cut": []
+ },
+ {
+  "Id": "chain_thin",
+  "Label": "Thin chain",
+  "Slot": "Necklace",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "chain_cuban",
+  "Label": "Cuban link chain",
+  "Slot": "Necklace",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 140000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.08,
+  "Cut": []
+ },
+ {
+  "Id": "chain_rope",
+  "Label": "Rope chain",
+  "Slot": "Necklace",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 48000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.45,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "pendant_cross",
+  "Label": "Cross pendant",
+  "Slot": "Necklace",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 9000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "pendant_initial",
+  "Label": "Initial pendant",
+  "Slot": "Necklace",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 7500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "pearl_strand",
+  "Label": "Pearl strand",
+  "Slot": "Necklace",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 32000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.9,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "choker",
+  "Label": "Choker",
+  "Slot": "Necklace",
+  "Category": "Nightlife",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.4,
+  "Commonness": 0.15,
+  "Cut": []
+ },
+ {
+  "Id": "dog_tags",
+  "Label": "Dog tags",
+  "Slot": "Necklace",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 2000,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "locket",
+  "Label": "Locket",
+  "Slot": "Necklace",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 11000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.6,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "grill_top6",
+  "Label": "Top six grill",
+  "Slot": "Teeth",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D8B04C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#CDD0D3",
+    "PriceFactor": 0.7
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#CB917B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "iced",
+    "Label": "Iced (stones)",
+    "Hex": "#E9EEF2",
+    "PriceFactor": 3.0
+   }
+  ],
+  "PriceCents": 60000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.0,
+  "Cut": []
+ },
+ {
+  "Id": "grill_full",
+  "Label": "Full top and bottom grill",
+  "Slot": "Teeth",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D8B04C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#CDD0D3",
+    "PriceFactor": 0.7
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#CB917B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "iced",
+    "Label": "Iced (stones)",
+    "Hex": "#E9EEF2",
+    "PriceFactor": 3.0
+   }
+  ],
+  "PriceCents": 180000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.0,
+  "Cut": []
+ },
+ {
+  "Id": "grill_single_cap",
+  "Label": "Single gold cap",
+  "Slot": "Teeth",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D8B04C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#CDD0D3",
+    "PriceFactor": 0.7
+   }
+  ],
+  "PriceCents": 15000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.02,
+  "Cut": []
+ },
+ {
+  "Id": "grill_fangs",
+  "Label": "Fang caps",
+  "Slot": "Teeth",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D8B04C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#CDD0D3",
+    "PriceFactor": 0.7
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#CB917B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "iced",
+    "Label": "Iced (stones)",
+    "Hex": "#E9EEF2",
+    "PriceFactor": 3.0
+   }
+  ],
+  "PriceCents": 25000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 0.0,
+  "Cut": []
+ },
+ {
+  "Id": "watch_digital",
+  "Label": "Digital sport watch",
+  "Slot": "Watch",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4000,
+  "SoldBy": [
+   "sporting_goods",
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "watch_field",
+  "Label": "Steel field watch",
+  "Slot": "Watch",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 18000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "watch_dress_leather",
+  "Label": "Dress watch on leather",
+  "Slot": "Watch",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 26000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.9,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "watch_dive",
+  "Label": "Dive watch",
+  "Slot": "Watch",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 42000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.6,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "watch_smart",
+  "Label": "Smartwatch",
+  "Slot": "Watch",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 30000,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.8,
+  "Cut": []
+ },
+ {
+  "Id": "watch_gold",
+  "Label": "Gold dress watch",
+  "Slot": "Watch",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   }
+  ],
+  "PriceCents": 650000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.9,
+  "Commonness": 0.03,
+  "Cut": []
+ },
+ {
+  "Id": "watch_chronograph",
+  "Label": "Luxury chronograph",
+  "Slot": "Watch",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury",
+   "stones"
+  ],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 1200000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.8,
+  "Commonness": 0.01,
+  "Cut": []
+ },
+ {
+  "Id": "bracelet_beaded",
+  "Label": "Beaded bracelet",
+  "Slot": "Bracelet",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1500,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 0.5,
+  "Cut": []
+ },
+ {
+  "Id": "bracelet_chain",
+  "Label": "Chain bracelet",
+  "Slot": "Bracelet",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 7000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "bracelet_bangle",
+  "Label": "Bangles",
+  "Slot": "Bracelet",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 4000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.5,
+  "Commonness": 0.3,
+  "Cut": [
+   "Feminine"
+  ]
+ },
+ {
+  "Id": "bracelet_tennis",
+  "Label": "Tennis bracelet",
+  "Slot": "Bracelet",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury",
+   "stones"
+  ],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 220000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.85,
+  "Commonness": 0.02,
+  "Cut": []
+ },
+ {
+  "Id": "bracelet_cuff",
+  "Label": "Leather cuff",
+  "Slot": "Bracelet",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.2,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "ring_band",
+  "Label": "Plain band",
+  "Slot": "Rings",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 9000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.6,
+  "Commonness": 1.0,
+  "Cut": []
+ },
+ {
+  "Id": "ring_signet",
+  "Label": "Signet ring",
+  "Slot": "Rings",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 22000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.7,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "rings_stacked",
+  "Label": "Stacked rings",
+  "Slot": "Rings",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 8000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.4,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "ring_statement",
+  "Label": "Statement ring",
+  "Slot": "Rings",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury",
+   "stones"
+  ],
+  "Variants": [
+   {
+    "Id": "silver",
+    "Label": "Silver",
+    "Hex": "#C9CCCF",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "gold",
+    "Label": "Gold",
+    "Hex": "#D1A94A",
+    "PriceFactor": 1.6
+   },
+   {
+    "Id": "rose_gold",
+    "Label": "Rose gold",
+    "Hex": "#C98E78",
+    "PriceFactor": 1.4
+   },
+   {
+    "Id": "gunmetal",
+    "Label": "Gunmetal",
+    "Hex": "#4B4E52",
+    "PriceFactor": 0.9
+   }
+  ],
+  "PriceCents": 150000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.6,
+  "Commonness": 0.02,
+  "Cut": []
+ },
+ {
+  "Id": "gloves_work",
+  "Label": "Work gloves",
+  "Slot": "Gloves",
+  "Category": "Work",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1500,
+  "SoldBy": [
+   "hardware_store"
+  ],
+  "Starter": false,
+  "Warmth": 0.2,
+  "Formality": 0.05,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "gloves_leather",
+  "Label": "Leather gloves",
+  "Slot": "Gloves",
+  "Category": "Formal",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.5,
+  "Formality": 0.8,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "gloves_knit",
+  "Label": "Knit gloves",
+  "Slot": "Gloves",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1800,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.6,
+  "Formality": 0.2,
+  "Commonness": 0.1,
+  "Cut": []
+ },
+ {
+  "Id": "gloves_fingerless",
+  "Label": "Fingerless gloves",
+  "Slot": "Gloves",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 1600,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.05,
+  "Cut": []
+ },
+ {
+  "Id": "backpack",
+  "Label": "Backpack",
+  "Slot": "Bag",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 5500,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.15,
+  "Commonness": 1.2,
+  "Cut": []
+ },
+ {
+  "Id": "messenger_bag",
+  "Label": "Messenger bag",
+  "Slot": "Bag",
+  "Category": "Work",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "brown",
+    "Label": "Brown",
+    "Hex": "#5A3E2B",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan",
+    "Hex": "#A07A52",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "wheat",
+    "Label": "Wheat",
+    "Hex": "#C8A46A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1918",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 7000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.45,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "tote",
+  "Label": "Canvas tote",
+  "Slot": "Bag",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 2500,
+  "SoldBy": [
+   "clothing_boutique",
+   "corner_store",
+   "gas_station"
+  ],
+  "Starter": true,
+  "Warmth": 0.3,
+  "Formality": 0.3,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "crossbody",
+  "Label": "Crossbody bag",
+  "Slot": "Bag",
+  "Category": "Casual",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 6000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.45,
+  "Commonness": 0.6,
+  "Cut": []
+ },
+ {
+  "Id": "belt_bag",
+  "Label": "Belt bag",
+  "Slot": "Bag",
+  "Category": "Street",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#EDEDEA",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#1B1B1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "heather",
+    "Label": "Heather grey",
+    "Hex": "#8E8F92",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "navy",
+    "Label": "Navy",
+    "Hex": "#1F2A44",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "olive",
+    "Label": "Olive",
+    "Hex": "#4F5433",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "burgundy",
+    "Label": "Burgundy",
+    "Hex": "#5B1E28",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sand",
+    "Label": "Sand",
+    "Hex": "#C9B79A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "sky",
+    "Label": "Sky blue",
+    "Hex": "#8FB3D6",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 3500,
+  "SoldBy": [
+   "clothing_boutique",
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.1,
+  "Commonness": 0.4,
+  "Cut": []
+ },
+ {
+  "Id": "duffel",
+  "Label": "Gym duffel",
+  "Slot": "Bag",
+  "Category": "Athletic",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black",
+    "Hex": "#18181A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "white",
+    "Label": "White",
+    "Hex": "#F0F0EE",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "red",
+    "Label": "Red",
+    "Hex": "#C0262D",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "royal",
+    "Label": "Royal blue",
+    "Hex": "#244BA6",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "volt",
+    "Label": "Volt green",
+    "Hex": "#B8E03A",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "grey",
+    "Label": "Grey",
+    "Hex": "#8A8C90",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 4500,
+  "SoldBy": [
+   "sporting_goods"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.05,
+  "Commonness": 0.3,
+  "Cut": []
+ },
+ {
+  "Id": "briefcase",
+  "Label": "Briefcase",
+  "Slot": "Bag",
+  "Category": "Work",
+  "Tags": [],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 18000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.85,
+  "Commonness": 0.2,
+  "Cut": []
+ },
+ {
+  "Id": "handbag_designer",
+  "Label": "Designer-style handbag",
+  "Slot": "Bag",
+  "Category": "Luxury",
+  "Tags": [
+   "luxury"
+  ],
+  "Variants": [
+   {
+    "Id": "black",
+    "Label": "Black leather",
+    "Hex": "#161413",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "brown",
+    "Label": "Brown leather",
+    "Hex": "#4A2E1C",
+    "PriceFactor": 1.0
+   },
+   {
+    "Id": "tan",
+    "Label": "Tan leather",
+    "Hex": "#9A6B42",
+    "PriceFactor": 1.0
+   }
+  ],
+  "PriceCents": 190000,
+  "SoldBy": [
+   "clothing_boutique"
+  ],
+  "Starter": false,
+  "Warmth": 0.3,
+  "Formality": 0.8,
+  "Commonness": 0.03,
+  "Cut": []
+ }
+]
