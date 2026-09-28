@@ -81,6 +81,17 @@ namespace HeroGame.Editor
 
             if (content != null) SimulationSmoke(content, Add);
 
+            // Interface files the menus and HUD load by name (a missing one gives a blank or unstyled screen).
+            const string ui = "Assets/_Project/Resources/UI/";
+            var uiFiles = new[] { "MainMenu.uxml", "FrontEnd.uss", "Controls.uss", "GameHud.uxml", "Game.uss" };
+            var missing = uiFiles.Where(f => !File.Exists(ui + f)).ToList();
+            Add(missing.Count == 0 ? Result.Pass : Result.Fail, "Interface files",
+                missing.Count == 0 ? "all " + uiFiles.Length + " present" : "missing: " + string.Join(", ", missing),
+                "Copy the missing files (and their .meta files) from Game/Assets/_Project/Resources/UI in the download.");
+            if (File.Exists(ui + "MainMenu.uss"))
+                Add(Result.Warn, "Old interface file", ui + "MainMenu.uss is left over from an older version",
+                    "Delete MainMenu.uss and MainMenu.uss.meta (keep MainMenu.uxml): the duplicate name leaves the main menu unstyled.");
+
             foreach (var scene in new[] { GreyboxWorldBuilder.GreyboxScene, GreyboxWorldBuilder.MenuScene })
             {
                 var exists = File.Exists(scene);
