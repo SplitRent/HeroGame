@@ -1,0 +1,225 @@
+{
+ "Buildings": [
+  {
+   "Name": "SM_Storefront_1F_D",
+   "Width": 20,
+   "Depth": 18,
+   "Height": 5.35,
+   "Uses": [
+    "Shop",
+    "Restaurant",
+    "Nightlife",
+    "Gym",
+    "TransitStop",
+    "GasStation"
+   ]
+  },
+  {
+   "Name": "SM_Storefront_2F_A",
+   "Width": 16,
+   "Depth": 14,
+   "Height": 8.75,
+   "Uses": [
+    "Shop",
+    "Restaurant",
+    "Nightlife",
+    "Gym",
+    "TransitStop"
+   ]
+  },
+  {
+   "Name": "SM_Storefront_2F_B",
+   "Width": 12,
+   "Depth": 14,
+   "Height": 8.75,
+   "Uses": [
+    "Shop",
+    "Restaurant",
+    "Nightlife",
+    "Gym",
+    "TransitStop"
+   ]
+  },
+  {
+   "Name": "SM_Storefront_3F_C",
+   "Width": 20,
+   "Depth": 16,
+   "Height": 12.15,
+   "Uses": [
+    "Shop",
+    "Restaurant",
+    "Nightlife",
+    "Gym",
+    "TransitStop",
+    "Office"
+   ]
+  },
+  {
+   "Name": "SM_Office_4F_B",
+   "Width": 26,
+   "Depth": 20,
+   "Height": 17.95,
+   "Uses": [
+    "Office",
+    "Hospital",
+    "PoliceStation",
+    "FireStation",
+    "Government",
+    "School",
+    "University"
+   ]
+  },
+  {
+   "Name": "SM_Office_8F_A",
+   "Width": 26,
+   "Depth": 22,
+   "Height": 31.55,
+   "Uses": [
+    "Office",
+    "Hospital",
+    "PoliceStation",
+    "FireStation",
+    "Government",
+    "School",
+    "University"
+   ]
+  },
+  {
+   "Name": "SM_Office_16F_C",
+   "Width": 30,
+   "Depth": 30,
+   "Height": 58.75,
+   "Uses": [
+    "Office",
+    "Hospital",
+    "PoliceStation",
+    "FireStation",
+    "Government",
+    "School",
+    "University",
+    "ApartmentBuilding"
+   ]
+  },
+  {
+   "Name": "SM_Warehouse_A",
+   "Width": 60,
+   "Depth": 40,
+   "Height": 12.2,
+   "Uses": [
+    "Warehouse",
+    "Factory",
+    "Garage",
+    "Dock",
+    "Stadium"
+   ]
+  },
+  {
+   "Name": "SM_House_Shotgun_A",
+   "Width": 5.2,
+   "Depth": 14,
+   "Height": 6.2,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_House_Shotgun_B",
+   "Width": 5.6,
+   "Depth": 15,
+   "Height": 6.2,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_House_Shotgun_C",
+   "Width": 5.0,
+   "Depth": 13,
+   "Height": 6.2,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_House_1F_A",
+   "Width": 12,
+   "Depth": 14,
+   "Height": 7.19,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_House_1F_B",
+   "Width": 11,
+   "Depth": 13,
+   "Height": 7.19,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_House_1F_C",
+   "Width": 10,
+   "Depth": 13,
+   "Height": 7.19,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_House_2F_A",
+   "Width": 10,
+   "Depth": 12,
+   "Height": 10.09,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_House_2F_B",
+   "Width": 12,
+   "Depth": 13,
+   "Height": 10.09,
+   "Uses": [
+    "Residence"
+   ]
+  },
+  {
+   "Name": "SM_Apartment_4F_A",
+   "Width": 40,
+   "Depth": 26,
+   "Height": 14.3,
+   "Uses": [
+    "ApartmentBuilding"
+   ]
+  },
+  {
+   "Name": "SM_Apartment_8F_B",
+   "Width": 30,
+   "Depth": 30,
+   "Height": 27.9,
+   "Uses": [
+    "ApartmentBuilding"
+   ]
+  },
+  {
+   "Name": "SM_GasStation_A",
+   "Width": 34,
+   "Depth": 26,
+   "Height": 6.2,
+   "Uses": [
+    "GasStation"
+   ]
+  },
+  {
+   "Name": "SM_Church_A",
+   "Width": 16,
+   "Depth": 28,
+   "Height": 25.9,
+   "Uses": [
+    "Church"
+   ]
+  }
+ ]
+}

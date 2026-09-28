@@ -1,0 +1,24 @@
+{
+  "asset": "SM_Office_4F_B",
+  "category": "Buildings",
+  "fbx": "SM_Office_4F_B.fbx",
+  "lods": {
+    "SM_Office_4F_B_LOD0": 7164,
+    "SM_Office_4F_B_LOD1": 3222,
+    "SM_Office_4F_B_LOD2": 1432,
+    "SM_Office_4F_B_LOD3": 1194
+  },
+  "collision_hulls": [
+    "UCX_SM_Office_4F_B_01"
+  ],
+  "materials": [
+    "M_Concrete_Grey",
+    "M_Glass_Blue",
+    "M_Glass_Dark",
+    "M_Metal_Grey",
+    "M_Metal_Mullion",
+    "M_Roof_Tar"
+  ],
+  "issues": [],
+  "tool": "hg_pipeline"
+}

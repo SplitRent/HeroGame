@@ -226,7 +226,8 @@ _Last updated: combat and weapons, performance pass, UI Toolkit interface, onlin
 | Validation (transforms, UVs, materials, budgets, LODs, hulls) | TESTED | `test_every_catalog_asset_validates`, `test_validation_catches_*` |
 | LOD + convex collision generation | TESTED | `test_lods_decrease_and_collision_exists` |
 | FBX export (Unity contract) | TESTED | `test_fbx_round_trip_preserves_metric_dimensions` |
-| Procedural building/prop kit (15 assets) | FUNCTIONAL | blockout quality — see `ASSET_TRACKER.md` |
+| Procedural building/prop kit (26 assets: 20 buildings, 6 street props) with procedural PBR textures | FUNCTIONAL | `python -m unittest discover -s Tools/Blender/tests` (kit builds/validates/exports; textures tile seamlessly); Cycles preview `docs/images/blender_kit_preview.png`; first-pass art — see `ASSET_TRACKER.md` |
+| Kit buildings in Unity (materials from the kit manifest, one building fitted to each lot by kind and size) | IN DEVELOPMENT | compiles; not yet seen in Unity |
 | MCP command surface | FUNCTIONAL | `mcp_commands.run`; exercised via CLI |
 
 ## Not started (PLANNED)

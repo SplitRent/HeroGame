@@ -1,0 +1,24 @@
+{
+  "asset": "SM_House_Shotgun_B",
+  "category": "Buildings",
+  "fbx": "SM_House_Shotgun_B.fbx",
+  "lods": {
+    "SM_House_Shotgun_B_LOD0": 404,
+    "SM_House_Shotgun_B_LOD1": 180,
+    "SM_House_Shotgun_B_LOD2": 80,
+    "SM_House_Shotgun_B_LOD3": 68
+  },
+  "collision_hulls": [
+    "UCX_SM_House_Shotgun_B_01"
+  ],
+  "materials": [
+    "M_Brick_Brown",
+    "M_Door_Painted",
+    "M_Glass_Dark",
+    "M_Roof_Shingle",
+    "M_Siding_Yellow",
+    "M_Trim_White"
+  ],
+  "issues": [],
+  "tool": "hg_pipeline"
+}

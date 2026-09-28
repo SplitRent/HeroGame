@@ -29,7 +29,7 @@ GDD §115: temporary placeholders are allowed during development **only** if tra
 | Dev console / inspector | IMGUI | dev builds only | stays IMGUI (developer-only) | OK (not shipped) |
 | Main menu backdrop | flat colour | FrontEnd.uss | live city flythrough / key art | PLACEHOLDER |
 | Server list | mock JSON | `server_list_mock.json` | master server query (Phase 9) | PLACEHOLDER |
-| Procedural kit: 3 storefronts, office, warehouse, 3 shotgun houses, apartments | blockout-grade generated meshes, flat materials, 4 LODs + UCX | `Tools/Blender` (exported by CI) | artist pass: trims, detail normals, signage, interiors | FIRST PASS |
+| Procedural building kit (20 buildings): 4 storefronts (1–3 floors), 3 offices (4/8/16 floors), warehouse, 3 shotgun houses, 5 suburban houses (1–2 floors, porches, shutters, chimneys, garages), 2 apartment blocks, gas station, church | generated midpoly meshes with 16 procedural tileable PBR textures (brick, stucco, concrete, siding, shingles, gravel roof, corrugated/standing-seam metal, wood: base colour + normal, 512 px per 2 m); 4 LODs + UCX; committed under `Art/Environment` and fitted to every lot by the greybox builder | `Tools/Blender` (`kit`, `textures`), `KitMaterials`, `KitBuildings` | artist pass: recessed windows, trims, signage, weathering, interiors, roof clutter | FIRST PASS |
 | Procedural kit: street light, bench, hydrant, bollard, bus shelter, dumpster | generated meshes, 3 LODs + UCX | `Tools/Blender` | artist pass | FIRST PASS |
 | Names of people | generic common first/last names | `names.json` | expand pools; no real public figures | OK |
 | Business/brand names | original | layout JSON | — | OK |

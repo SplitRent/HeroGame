@@ -1,0 +1,25 @@
+{
+  "asset": "SM_Storefront_2F_B",
+  "category": "Buildings",
+  "fbx": "SM_Storefront_2F_B.fbx",
+  "lods": {
+    "SM_Storefront_2F_B_LOD0": 1716,
+    "SM_Storefront_2F_B_LOD1": 772,
+    "SM_Storefront_2F_B_LOD2": 342,
+    "SM_Storefront_2F_B_LOD3": 286
+  },
+  "collision_hulls": [
+    "UCX_SM_Storefront_2F_B_01"
+  ],
+  "materials": [
+    "M_Awning_12",
+    "M_Door_Wood",
+    "M_Glass_Dark",
+    "M_Metal_Grey",
+    "M_Roof_Tar",
+    "M_Stucco_Teal",
+    "M_Trim_White"
+  ],
+  "issues": [],
+  "tool": "hg_pipeline"
+}

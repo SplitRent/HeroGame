@@ -44,7 +44,7 @@ namespace HeroGame.Editor
         /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
         /// stamped with it so the Health Check can say "rebuild the greybox".
         /// </summary>
-        public const int BuilderVersion = 5;
+        public const int BuilderVersion = 6;
         public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
@@ -59,6 +59,10 @@ namespace HeroGame.Editor
         {
             var dataDir = Path.Combine(Application.streamingAssetsPath, "Data");
             var content = ContentLoader.Load(dataDir, layoutFile);
+            // Blender kit: make sure its materials carry their textures before buildings are placed.
+            KitBuildings.Reset();
+            if (KitBuildings.Available) KitMaterials.RefreshAll();
+            else Debug.Log("[Greybox] No building kit under " + KitBuildings.Folder + ": lots get greybox boxes.");
             _content = content;
             Directory.CreateDirectory(SceneFolder);
             Directory.CreateDirectory(GeneratedFolder);
@@ -310,7 +314,14 @@ namespace HeroGame.Editor
                 marker.PlaceName = p.Name;
                 marker.Kind = p.Kind;
 
+                GameObject kitBuilding = null;
                 if (e.Height > 0.1f && p.Kind != PlaceKind.Vacant)
+                    kitBuilding = KitBuildings.Place(go.transform, p.Kind, e.Width, e.Depth, e.Height, StableHash(p.Name));
+                if (kitBuilding != null)
+                {
+                    // Blender kit building fitted to the lot (Art/Environment/Buildings); collision comes from its UCX hull.
+                }
+                else if (e.Height > 0.1f && p.Kind != PlaceKind.Vacant)
                 {
                     var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     body.name = "Greybox";
@@ -361,7 +372,7 @@ namespace HeroGame.Editor
                     renderer.PreviewMaterial = m.Get("build_invalid", new Color(0.85f, 0.25f, 0.2f));
                     var controller = build.AddComponent<BuildModeController>();
                     controller.Place = marker;
-                    var body = go.transform.Find("Greybox");
+                    var body = kitBuilding != null ? kitBuilding.transform : go.transform.Find("Greybox");
                     if (body != null) controller.Exterior = body.gameObject;
                 }
                 if (e.Business != null || p.Kind == PlaceKind.School || p.Kind == PlaceKind.Hospital || p.Kind == PlaceKind.Church)
@@ -801,6 +812,17 @@ namespace HeroGame.Editor
             catch (System.Exception e)
             {
                 Debug.LogWarning("[Greybox] Could not set " + component.GetType().Name + "." + field + ": " + e.Message);
+            }
+        }
+
+        /// <summary>FNV-1a: the same lot gets the same kit building on every machine and every rebuild.</summary>
+        private static int StableHash(string text)
+        {
+            unchecked
+            {
+                var h = 2166136261u;
+                foreach (var ch in text) h = (h ^ ch) * 16777619u;
+                return (int)(h & 0x7FFFFFFF);
             }
         }
 

@@ -1,0 +1,24 @@
+{
+  "asset": "SM_Apartment_8F_B",
+  "category": "Buildings",
+  "fbx": "SM_Apartment_8F_B.fbx",
+  "lods": {
+    "SM_Apartment_8F_B_LOD0": 14724,
+    "SM_Apartment_8F_B_LOD1": 6624,
+    "SM_Apartment_8F_B_LOD2": 2944,
+    "SM_Apartment_8F_B_LOD3": 2454
+  },
+  "collision_hulls": [
+    "UCX_SM_Apartment_8F_B_01"
+  ],
+  "materials": [
+    "M_Brick_Red",
+    "M_Door_Wood",
+    "M_Glass_Dark",
+    "M_Metal_Grey",
+    "M_Roof_Tar",
+    "M_Trim_White"
+  ],
+  "issues": [],
+  "tool": "hg_pipeline"
+}

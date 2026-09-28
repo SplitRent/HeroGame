@@ -1,0 +1,28 @@
+{
+  "asset": "SM_Warehouse_A",
+  "category": "Buildings",
+  "fbx": "SM_Warehouse_A.fbx",
+  "lods": {
+    "SM_Warehouse_A_LOD0": 176,
+    "SM_Warehouse_A_LOD1": 78,
+    "SM_Warehouse_A_LOD2": 34,
+    "SM_Warehouse_A_LOD3": 30
+  },
+  "collision_hulls": [
+    "UCX_SM_Warehouse_A_01"
+  ],
+  "materials": [
+    "M_Door_Rollup",
+    "M_Metal_Corrugated",
+    "M_Metal_Roof",
+    "M_Trim_Yellow"
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "object": "SM_Warehouse_A_LOD3",
+      "message": "origin not at ground level (min z = 0.300)"
+    }
+  ],
+  "tool": "hg_pipeline"
+}

@@ -46,6 +46,16 @@ namespace HeroGame.Editor
             importer.importAnimation = isCharacter || assetPath.Contains("/Animations/");
         }
 
+        /// <summary>
+        /// Kit materials come from <see cref="KitMaterials"/> (built from the kit's manifest, textures included) instead of
+        /// the colour-only copies the FBX carries, so every building sharing M_Brick_Red shares one material.
+        /// </summary>
+        private Material OnAssignMaterialModel(Material material, Renderer renderer)
+        {
+            if (!Applies || material == null || !material.name.StartsWith("M_", System.StringComparison.Ordinal)) return null;
+            return KitMaterials.GetOrCreate(material.name, material);
+        }
+
         private void OnPostprocessModel(GameObject root)
         {
             if (!Applies) return;

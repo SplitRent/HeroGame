@@ -1,0 +1,20 @@
+{
+  "asset": "SM_Dumpster_A",
+  "category": "Props",
+  "fbx": "SM_Dumpster_A.fbx",
+  "lods": {
+    "SM_Dumpster_A_LOD0": 136,
+    "SM_Dumpster_A_LOD1": 68,
+    "SM_Dumpster_A_LOD2": 26
+  },
+  "collision_hulls": [
+    "UCX_SM_Dumpster_A_01"
+  ],
+  "materials": [
+    "M_Paint_Green_Worn",
+    "M_Plastic_Black",
+    "M_Rubber"
+  ],
+  "issues": [],
+  "tool": "hg_pipeline"
+}
