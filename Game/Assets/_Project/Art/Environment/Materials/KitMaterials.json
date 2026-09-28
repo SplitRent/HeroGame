@@ -1,6 +1,18 @@
 {
  "Materials": [
   {
+   "Name": "M_Asphalt",
+   "Color": [
+    1,
+    1,
+    1
+   ],
+   "Roughness": 0.88,
+   "Metallic": 0.0,
+   "BaseMap": "T_Asphalt_BC",
+   "NormalMap": "T_Asphalt_N"
+  },
+  {
    "Name": "M_Awning_11",
    "Color": [
     0.12,
@@ -107,6 +119,30 @@
    "Metallic": 0.0,
    "BaseMap": "T_Concrete_Grey_BC",
    "NormalMap": "T_Concrete_Grey_N"
+  },
+  {
+   "Name": "M_Curb",
+   "Color": [
+    0.64,
+    0.63,
+    0.6
+   ],
+   "Roughness": 0.8,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
+   "Name": "M_Dirt_Lot",
+   "Color": [
+    1,
+    1,
+    1
+   ],
+   "Roughness": 0.93,
+   "Metallic": 0.0,
+   "BaseMap": "T_Dirt_Lot_BC",
+   "NormalMap": "T_Dirt_Lot_N"
   },
   {
    "Name": "M_Door_Garage",
@@ -265,6 +301,18 @@
    "NormalMap": ""
   },
   {
+   "Name": "M_Grass_Lawn",
+   "Color": [
+    1,
+    1,
+    1
+   ],
+   "Roughness": 0.95,
+   "Metallic": 0.0,
+   "BaseMap": "T_Grass_Lawn_BC",
+   "NormalMap": "T_Grass_Lawn_N"
+  },
+  {
    "Name": "M_Lamp_Emissive",
    "Color": [
     1.0,
@@ -373,13 +421,25 @@
    "NormalMap": ""
   },
   {
+   "Name": "M_Paint_White",
+   "Color": [
+    0.86,
+    0.86,
+    0.82
+   ],
+   "Roughness": 0.6,
+   "Metallic": 0.0,
+   "BaseMap": "",
+   "NormalMap": ""
+  },
+  {
    "Name": "M_Paint_Yellow",
    "Color": [
-    0.85,
-    0.68,
-    0.1
+    0.86,
+    0.66,
+    0.12
    ],
-   "Roughness": 0.55,
+   "Roughness": 0.6,
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
@@ -517,6 +577,18 @@
    "NormalMap": ""
   },
   {
+   "Name": "M_Sidewalk",
+   "Color": [
+    1,
+    1,
+    1
+   ],
+   "Roughness": 0.82,
+   "Metallic": 0.0,
+   "BaseMap": "T_Sidewalk_BC",
+   "NormalMap": "T_Sidewalk_N"
+  },
+  {
    "Name": "M_Siding_Blue",
    "Color": [
     0.45,
@@ -623,6 +695,18 @@
    "Metallic": 0.0,
    "BaseMap": "",
    "NormalMap": ""
+  },
+  {
+   "Name": "M_Water_Harbour",
+   "Color": [
+    1,
+    1,
+    1
+   ],
+   "Roughness": 0.04,
+   "Metallic": 0.0,
+   "BaseMap": "T_Water_Harbour_BC",
+   "NormalMap": "T_Water_Harbour_N"
   },
   {
    "Name": "M_Wood_Slats",

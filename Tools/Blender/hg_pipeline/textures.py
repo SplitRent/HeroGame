@@ -183,6 +183,85 @@ def canvas_stripes(seed, color, stripe=0.25):
     return colour, weave * 0.3
 
 
+def asphalt(seed, color):
+    """Worn asphalt: aggregate speckle, tyre-polished lanes, patch repairs, hairline cracks and oil stains."""
+    x, y = _grid()
+    aggregate = _noise(seed, 0.7)
+    speck = (aggregate > 0.72).astype(float) * 0.5 + (aggregate < 0.22).astype(float) * -0.4
+    wear = _fbm(seed + 1, 80, 3)
+    patch = _fbm(seed + 2, 120, 2) > 0.66
+    colour = _tint(color, 0.5 + 0.18 * speck + 0.3 * (wear - 0.5), 0.35)
+    colour = np.where(patch[..., None], colour * 0.88, colour)  # darker resurfaced patches
+    crack_field = np.abs(_fbm(seed + 3, 50, 3) - 0.5)
+    crack = crack_field < 0.005
+    colour = np.where(crack[..., None], colour * 0.45, colour)
+    stain = _fbm(seed + 4, 35, 2)
+    colour = colour * (1 - 0.12 * np.clip((stain - 0.75) / 0.1, 0, 1))[..., None]
+    height = 0.6 * aggregate + 0.2 * wear
+    height = np.where(crack, 0.0, height)
+    return colour, height
+
+
+def sidewalk(seed, color):
+    """Broom-finished concrete slabs (1 m squares, tooled joints) with the odd stain and hairline crack."""
+    x, y = _grid()
+    slab = _fit(1.0)
+    jx, jy = x % slab, y % slab
+    joint = (np.minimum(jx, slab - jx) < 0.008) | (np.minimum(jy, slab - jy) < 0.008)
+    edge = np.minimum(np.minimum(jx, slab - jx), np.minimum(jy, slab - jy))
+    broom = _noise(seed, 0.6)[:, :1] * 0.5 + _noise(seed + 1, 0.9) * 0.5  # fine lines across the slab
+    rng = np.random.default_rng(seed)
+    per_slab = rng.random((round(TILE_METRES / slab), round(TILE_METRES / slab)))
+    tone = per_slab[(y // slab).astype(int) % per_slab.shape[0], (x // slab).astype(int) % per_slab.shape[1]]
+    stain = _fbm(seed + 2, 60, 3)
+    colour = _tint(color, 0.35 * tone + 0.35 * stain + 0.3 * broom, 0.12)
+    colour = np.where(joint[..., None], colour * 0.55, colour)
+    height = np.clip(edge / 0.02, 0, 1) * 0.7 + 0.3 * broom
+    height = np.where(joint, 0.0, height)
+    return colour, height
+
+
+def lawn(seed, color):
+    """Mown lawn seen from above: dense blade strokes in several greens, thinner patches with soil showing."""
+    x, y = _grid()
+    blades = _noise(seed, 0.5)
+    strokes = _noise(seed + 1, 1.2)
+    clumps = _fbm(seed + 2, 40, 3)
+    soil = _fbm(seed + 3, 90, 2)
+    dry = _fbm(seed + 4, 150, 2)
+    green = np.asarray(color)[None, None, :] * (0.7 + 0.6 * (0.6 * blades + 0.4 * strokes))[..., None]
+    straw = np.asarray((0.42, 0.4, 0.22))[None, None, :] * (0.8 + 0.4 * blades)[..., None]
+    colour = green * (1 - 0.35 * dry[..., None]) + straw * 0.35 * dry[..., None]
+    colour = colour * (0.85 + 0.3 * clumps)[..., None]
+    bare = np.clip((soil - 0.8) / 0.08, 0, 1) * (blades < 0.45) * 0.6
+    colour = colour * (1 - bare[..., None]) + np.asarray((0.28, 0.22, 0.15))[None, None, :] * bare[..., None]
+    return np.clip(colour, 0, 1), 0.6 * blades + 0.4 * clumps
+
+
+def dirt(seed, color):
+    """Packed dirt/gravel lot: pebbles, tyre ruts, a few weeds."""
+    x, y = _grid()
+    pebbles = _noise(seed, 0.9)
+    lumps = _fbm(seed + 1, 30, 3)
+    weeds = (_fbm(seed + 2, 50, 3) > 0.7) & (_noise(seed + 3, 0.6) > 0.55)
+    colour = _tint(color, 0.5 * pebbles + 0.5 * lumps, 0.3)
+    colour = np.where((pebbles > 0.78)[..., None], colour * 1.25, colour)
+    colour = np.where(weeds[..., None], np.asarray((0.2, 0.3, 0.12))[None, None, :], colour)
+    return np.clip(colour, 0, 1), 0.7 * pebbles + 0.3 * lumps
+
+
+def water(seed, color):
+    """Harbour water: colour depth variation; the normal map carries small wind ripples."""
+    x, y = _grid()
+    ripples = 0.0
+    for k, (fx, fy) in enumerate(((3, 1), (2, 5), (7, 2), (5, 9), (11, 4))):
+        phase = np.random.default_rng(seed + k).random() * 2 * np.pi
+        ripples = ripples + np.sin(2 * np.pi * (fx * x + fy * y) / TILE_METRES + phase) / (1 + k * 0.6)
+    ripples = ripples + 0.8 * (_fbm(seed, 12, 3) - 0.5)
+    colour = _tint(color, _fbm(seed + 5, 120, 2), 0.15)
+    return colour, (ripples - ripples.min()) / (ripples.max() - ripples.min())
+
+
 # ---------------------------------------------------------------------- catalogue
 
 # material name -> (generator, args, normal strength). Colours are linear-ish sRGB base colours.
@@ -203,6 +282,25 @@ SURFACES = {
     "M_Roof_Shingle_Red": (shingles, (0.38, 0.18, 0.14), 2.5),
     "M_Roof_Tar": (gravel_roof, (0.2, 0.2, 0.19), 1.5),
     "M_Door_Wood": (wood, (0.3, 0.19, 0.11), 1.0),
+    # Ground surfaces (roads, sidewalks, lawns, lots, water) share the same 2 m tiling so everything lines up.
+    "M_Asphalt": (asphalt, (0.2, 0.2, 0.21), 1.5),
+    "M_Sidewalk": (sidewalk, (0.6, 0.59, 0.56), 1.8),
+    "M_Grass_Lawn": (lawn, (0.2, 0.34, 0.12), 1.2),
+    "M_Dirt_Lot": (dirt, (0.4, 0.34, 0.26), 2.0),
+    "M_Water_Harbour": (water, (0.07, 0.13, 0.15), 0.6),
+}
+
+# Ground materials are not used by any kit mesh but go into the Unity manifest all the same:
+# name -> (colour, roughness, metallic). Colour is white where a texture supplies it.
+GROUND_MATERIALS = {
+    "M_Asphalt": ((1, 1, 1), 0.88, 0.0),
+    "M_Sidewalk": ((1, 1, 1), 0.82, 0.0),
+    "M_Grass_Lawn": ((1, 1, 1), 0.95, 0.0),
+    "M_Dirt_Lot": ((1, 1, 1), 0.93, 0.0),
+    "M_Water_Harbour": ((1, 1, 1), 0.04, 0.0),
+    "M_Paint_White": ((0.86, 0.86, 0.82), 0.6, 0.0),
+    "M_Paint_Yellow": ((0.86, 0.66, 0.12), 0.6, 0.0),
+    "M_Curb": ((0.64, 0.63, 0.6), 0.8, 0.0),
 }
 
 

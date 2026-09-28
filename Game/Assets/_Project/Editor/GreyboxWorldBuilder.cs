@@ -44,7 +44,7 @@ namespace HeroGame.Editor
         /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
         /// stamped with it so the Health Check can say "rebuild the greybox".
         /// </summary>
-        public const int BuilderVersion = 6;
+        public const int BuilderVersion = 7;
         public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
@@ -61,6 +61,7 @@ namespace HeroGame.Editor
             var content = ContentLoader.Load(dataDir, layoutFile);
             // Blender kit: make sure its materials carry their textures before buildings are placed.
             KitBuildings.Reset();
+            SurfaceMeshes.Reset();
             if (KitBuildings.Available) KitMaterials.RefreshAll();
             else Debug.Log("[Greybox] No building kit under " + KitBuildings.Folder + ": lots get greybox boxes.");
             _content = content;
@@ -219,18 +220,20 @@ namespace HeroGame.Editor
                 minZ = Mathf.Min(minZ, d.CenterZ - d.Radius - 200f);
                 maxZ = Mathf.Max(maxZ, d.CenterZ + d.Radius + 200f);
             }
-            var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            ground.name = "Ground";
+            // Lawn at true texture scale (world UVs), with a thin box collider underneath.
+            var ground = new GameObject("Ground");
             ground.transform.SetParent(parent);
-            ground.transform.position = new Vector3((minX + maxX) / 2f, 0f, (minZ + maxZ) / 2f);
-            ground.transform.localScale = new Vector3((maxX - minX) / 10f, 1f, (maxZ - minZ) / 10f);
-            ground.GetComponent<Renderer>().sharedMaterial = m.Get("ground", new Color(0.33f, 0.36f, 0.27f));
+            ground.AddComponent<MeshFilter>().sharedMesh = SurfaceMeshes.WorldQuad(minX, minZ, maxX, maxZ, 0f);
+            ground.AddComponent<MeshRenderer>().sharedMaterial = Surface("M_Grass_Lawn", m, "ground", new Color(0.33f, 0.36f, 0.27f));
+            var groundCollider = ground.AddComponent<BoxCollider>();
+            groundCollider.center = new Vector3((minX + maxX) / 2f, -0.5f, (minZ + maxZ) / 2f);
+            groundCollider.size = new Vector3(maxX - minX, 1f, maxZ - minZ);
             GameObjectUtility.SetStaticEditorFlags(ground, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic);
 
             // Water bodies from the layout (convex polygons, fan-triangulated), just above the ground plane.
             var water = new GameObject("Water").transform;
             water.SetParent(parent);
-            var waterMaterial = m.Get("water", new Color(0.12f, 0.22f, 0.26f));
+            var waterMaterial = Surface("M_Water_Harbour", m, "water", new Color(0.12f, 0.22f, 0.26f));
             foreach (var body in layout.Water)
             {
                 var n = body.Points.Count / 2;
@@ -253,6 +256,7 @@ namespace HeroGame.Editor
                     mesh.RecalculateNormals();
                 }
                 mesh.RecalculateBounds();
+                SurfaceMeshes.WorldUvs(mesh);
                 AssetDatabase.CreateAsset(mesh, GeneratedFolder + "/Water_" + System.Text.RegularExpressions.Regex.Replace(body.Name, "[^A-Za-z0-9]", "") + ".asset");
                 var go = new GameObject(body.Name + " (" + body.Kind + ")");
                 go.transform.SetParent(water);
@@ -272,29 +276,73 @@ namespace HeroGame.Editor
                 {
                     var a = new Vector3(road.Points[i], 0.02f, road.Points[i + 1]);
                     var b = new Vector3(road.Points[i + 2], 0.02f, road.Points[i + 3]);
-                    var seg = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    seg.name = road.Name;
+                    var length = Vector3.Distance(a, b) + road.Width;
+                    var seg = new GameObject(road.Name);
                     seg.transform.SetParent(roads);
                     seg.transform.position = (a + b) * 0.5f;
                     seg.transform.rotation = Quaternion.LookRotation(b - a);
-                    seg.transform.localScale = new Vector3(road.Width, 0.04f, Vector3.Distance(a, b) + road.Width);
-                    var color = road.Kind == "avenue" ? new Color(0.2f, 0.2f, 0.21f) : road.Kind == "bridge" ? new Color(0.35f, 0.35f, 0.36f) : new Color(0.25f, 0.25f, 0.26f);
-                    seg.GetComponent<Renderer>().sharedMaterial = m.Get("road_" + road.Kind, color);
+                    // Asphalt slab 4 cm thick, top at 4 cm; textures at true scale along the road.
+                    Solid(seg, new Vector3(road.Width, 0.04f, length), Vector3.zero,
+                        Surface("M_Asphalt", m, "road_" + road.Kind, road.Kind == "avenue" ? new Color(0.2f, 0.2f, 0.21f) : new Color(0.25f, 0.25f, 0.26f)));
                     GameObjectUtility.SetStaticEditorFlags(seg, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic);
 
-                    // Sidewalks on both sides so pedestrians have somewhere to be.
+                    // Lane paint just above the asphalt.
+                    var edges = SurfaceMeshes.Markings(road.Width, length, road.Kind == "avenue", 0.026f, out var centre);
+                    Paint(seg, "Edge lines", edges, Surface("M_Paint_White", m, "paint_white", new Color(0.86f, 0.86f, 0.82f)));
+                    Paint(seg, "Centre line", centre, Surface("M_Paint_Yellow", m, "paint_yellow", new Color(0.86f, 0.66f, 0.12f)));
+
+                    // Sidewalks (16 cm slabs) on both sides so pedestrians have somewhere to be, with a concrete curb.
+                    if (road.Kind == "bridge") continue;
                     foreach (var side in new[] { -1f, 1f })
                     {
-                        var walk = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        walk.name = road.Name + " sidewalk";
+                        var walk = new GameObject(road.Name + " sidewalk");
                         walk.transform.SetParent(seg.transform, false);
-                        walk.transform.localPosition = new Vector3(side * (0.5f + 1.5f / road.Width), 1.5f, 0f);
-                        walk.transform.localScale = new Vector3(3f / road.Width, 4f, 1f);
-                        walk.GetComponent<Renderer>().sharedMaterial = m.Get("sidewalk", new Color(0.55f, 0.55f, 0.52f));
+                        walk.transform.localPosition = new Vector3(side * (road.Width / 2f + 1.5f), 0.06f, 0f);
+                        Solid(walk, new Vector3(2.8f, 0.16f, length), new Vector3(side * 0.1f, 0f, 0f), Surface("M_Sidewalk", m, "sidewalk", new Color(0.55f, 0.55f, 0.52f)));
+                        var curb = new GameObject("Curb");
+                        curb.transform.SetParent(walk.transform, false);
+                        curb.transform.localPosition = new Vector3(-side * 1.4f, 0.005f, 0f);
+                        Solid(curb, new Vector3(0.2f, 0.17f, length), Vector3.zero, Surface("M_Curb", m, "curb", new Color(0.64f, 0.63f, 0.6f)), collider: false);
+                        GameObjectUtility.SetStaticEditorFlags(walk, StaticEditorFlags.BatchingStatic | StaticEditorFlags.NavigationStatic);
                     }
                 }
             }
         }
+
+        /// <summary>A textured solid (true-scale UVs) with a matching box collider on <paramref name="go"/>.</summary>
+        private static void Solid(GameObject go, Vector3 size, Vector3 offset, Material material, bool collider = true)
+        {
+            var mesh = SurfaceMeshes.Box(size);
+            GameObject target = go;
+            if (offset != Vector3.zero)
+            {
+                target = new GameObject("Mesh");
+                target.transform.SetParent(go.transform, false);
+                target.transform.localPosition = offset;
+            }
+            target.AddComponent<MeshFilter>().sharedMesh = mesh;
+            target.AddComponent<MeshRenderer>().sharedMaterial = material;
+            if (collider)
+            {
+                var box = target.AddComponent<BoxCollider>();
+                box.size = size;
+            }
+        }
+
+        private static void Paint(GameObject road, string name, Mesh mesh, Material material)
+        {
+            if (mesh.vertexCount == 0) return;
+            var go = new GameObject(name);
+            go.transform.SetParent(road.transform, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = material;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+
+        /// <summary>The kit's textured ground material, or a flat-colour greybox one when the kit is not in the project.</summary>
+        private static Material Surface(string kitMaterial, MaterialLibrary m, string fallbackKey, Color fallback) =>
+            (KitBuildings.Available ? KitMaterials.GetOrCreate(kitMaterial) : null) ?? m.Get(fallbackKey, fallback);
 
         private static int BuildPlaces(Transform parent, WorldLayout layout, MaterialLibrary m)
         {
@@ -333,12 +381,12 @@ namespace HeroGame.Editor
                 }
                 else
                 {
-                    var lot = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    lot.name = "Lot";
+                    var lot = new GameObject("Lot");
                     lot.transform.SetParent(go.transform, false);
                     lot.transform.localPosition = new Vector3(0f, 0.03f, 0f);
-                    lot.transform.localScale = new Vector3(e.Width, 0.06f, e.Depth);
-                    lot.GetComponent<Renderer>().sharedMaterial = m.Get("lot_" + p.Kind, p.Kind == PlaceKind.Park ? new Color(0.25f, 0.45f, 0.2f) : new Color(0.42f, 0.38f, 0.3f));
+                    var park = p.Kind == PlaceKind.Park || p.Kind == PlaceKind.Beach;
+                    Solid(lot, new Vector3(e.Width, 0.06f, e.Depth), Vector3.zero,
+                        Surface(park ? "M_Grass_Lawn" : "M_Dirt_Lot", m, "lot_" + p.Kind, park ? new Color(0.25f, 0.45f, 0.2f) : new Color(0.42f, 0.38f, 0.3f)));
                 }
 
                 // Front-facing interaction points: the entrance faces the nearest road (−Z by convention of the layout).

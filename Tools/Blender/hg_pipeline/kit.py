@@ -139,6 +139,9 @@ def build_kit(art_root, only=None, strict=True):
         env = os.path.join(art_root, "Environment")
         textures.write_all(os.path.join(env, "Textures"))
         os.makedirs(os.path.join(env, "Materials"), exist_ok=True)
+        for name, (colour, roughness, metallic) in textures.GROUND_MATERIALS.items():
+            bc, n = textures.texture_names(name) if name in textures.SURFACES else ("", "")
+            materials[name] = {"Name": name, "Color": list(colour), "Roughness": roughness, "Metallic": metallic, "BaseMap": bc, "NormalMap": n}
         with open(os.path.join(env, "Materials", "KitMaterials.json"), "w") as fh:
             json.dump({"Materials": [materials[k] for k in sorted(materials)]}, fh, indent=1)
         with open(os.path.join(env, "Buildings", "KitBuildings.json"), "w") as fh:
