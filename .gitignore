@@ -56,3 +56,11 @@ Thumbs.db
 .idea/
 .vs/
 *.swp
+
+# ---------- Made on your machine by HeroGame menu items / build_human.bat (never committed) ----------
+/Game/Assets/_Project/Scenes/*.unity
+/Game/Assets/_Project/Scenes/*.unity.meta
+/Game/Assets/_Project/Generated/
+/Game/Assets/_Project/Generated.meta
+/Game/Assets/_Project/Art/Characters/
+/Game/Assets/_Project/Art/Characters.meta
