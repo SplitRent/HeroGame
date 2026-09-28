@@ -13,6 +13,7 @@
 dotnet test Headless/HeroGame.sln                        # 63 NUnit tests (same sources Unity runs)
 dotnet build Headless/UnityCompileCheck                  # compile Runtime+Editor against Unity reference assemblies
 dotnet build Headless/UnityCompileCheck -p:UnityEditorBuild=false   # player configuration
+dotnet build Headless/UnityCompileCheck -p:ModernBcl=true           # all Unity code vs the .NET 8 class library (newer Unity 6.x)
 
 cd Headless && dotnet build HeroGame.WorldHost -c Release
 H=HeroGame.WorldHost/bin/Release/net8.0/herogame-world

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using Stopwatch = System.Diagnostics.Stopwatch;
 using HeroGame.Core.Business;
 using HeroGame.Core.Economy;
 using HeroGame.Core.Foundation;

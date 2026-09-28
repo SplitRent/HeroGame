@@ -8,6 +8,7 @@ Read `docs/STATUS.md` and the latest `docs/reports/DEV_REPORT_*.md` before chang
 dotnet test Headless/HeroGame.sln                                   # all simulation/persistence tests
 dotnet build Headless/UnityCompileCheck                             # Unity runtime+editor compile check
 dotnet build Headless/UnityCompileCheck -p:UnityEditorBuild=false   # player configuration
+dotnet build Headless/UnityCompileCheck -p:ModernBcl=true           # all Unity code vs the .NET 8 class library (newer Unity 6.x)
 python3 Tools/Unity/unity_meta.py generate && python3 Tools/Unity/unity_meta.py check   # after adding assets
 python -m unittest discover -s Tools/Blender/tests                  # pipeline tests (bpy tests need bpy==4.2.0, py3.11)
 ```

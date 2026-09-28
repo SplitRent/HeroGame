@@ -62,7 +62,17 @@ every 48 real minutes by default.
 * **The following can't be produced here:** art, animation, voice acting, music and play-testing. That is what stands
   between this and a finished game.
 
-## 5. Next steps
+## 5. First Unity run feedback
+* The first open in a real editor (Unity 6000.5) stopped in Safe Mode on `CS0104`. Newer Unity 6.x releases ship
+  the .NET 8 class library, where `System.Diagnostics.ActivityKind` clashes with the game's `ActivityKind`. The
+  2021.3-based compile check could not see it.
+* Fixed by aliasing `Stopwatch` instead of importing `System.Diagnostics`.
+* Added `dotnet build Headless/UnityCompileCheck -p:ModernBcl=true`, which also runs in CI. It compiles all Unity
+  code, including the EditMode tests, against .NET 8. It reproduces the error without the fix and passes with it.
+* Unity's serialization analyzer also warns (`UAC1001`/`UAC1009`) about dictionaries and nullable fields in Core
+  data classes. These are saved with Newtonsoft JSON, not Unity serialization, so the warnings are harmless.
+
+## 6. Next steps
 1. Run the Unity Health Check and play the greybox, then fix whatever the first run shows.
 2. Plan copy-on-write NPC state to remove the daily save stall.
 3. Commission art for the UI, combat and metro; build UI Toolkit versions of the remaining phone apps.

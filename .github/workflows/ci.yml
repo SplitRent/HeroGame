@@ -27,6 +27,8 @@ jobs:
         run: dotnet build Headless/UnityCompileCheck -c Release
       - name: Unity scripts compile check (player configuration)
         run: dotnet build Headless/UnityCompileCheck -c Release -p:UnityEditorBuild=false
+      - name: Unity scripts compile check (newer Unity 6.x class library)
+        run: dotnet build Headless/UnityCompileCheck -c Release -p:ModernBcl=true
       - name: World host smoke test (create, simulate 30 days, inspect)
         run: |
           HOST=Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world
