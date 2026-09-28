@@ -44,7 +44,7 @@ namespace HeroGame.Editor
         /// Bumped whenever the builder adds something scenes need (new HUD, combat, encounters…). Generated scenes are
         /// stamped with it so the Health Check can say "rebuild the greybox".
         /// </summary>
-        public const int BuilderVersion = 7;
+        public const int BuilderVersion = 8;
         public const string VersionMarker = "Greybox Builder Version";
         public const string MetroLayout = "layout_port_arden.json";
 
@@ -97,6 +97,14 @@ namespace HeroGame.Editor
                 dayNight.MoonIntensity = 0.3f;
                 BuildSkyVolume();
             }
+            // Grass blades on every exposed lawn (mask baked from the same layout the simulation uses).
+            var ground = GroundBounds(content.Layout);
+            var grass = systems.AddComponent<GrassRenderer>();
+            grass.Mask = GrassBaker.BakeMask(content.Layout, ground.xMin, ground.yMin, ground.xMax, ground.yMax,
+                GeneratedFolder + "/GrassMask_" + Path.GetFileNameWithoutExtension(layoutFile) + ".asset");
+            grass.Material = GrassBaker.BladeMaterial(GeneratedFolder + "/M_Grass_Blades.mat", GrassBaker.BladeTexture(GeneratedFolder + "/T_GrassBlade_BC.asset"));
+            grass.Observer = camera.transform;
+
             var weather = systems.AddComponent<WeatherPresenter>();
             weather.Rain = BuildRain(camera.transform);
 
@@ -211,15 +219,8 @@ namespace HeroGame.Editor
 
         private static void BuildGround(Transform parent, WorldLayout layout, MaterialLibrary m)
         {
-            // Cover every district with a margin (a Unity plane is 10 m per unit of scale).
-            float minX = -600f, maxX = 1000f, minZ = -900f, maxZ = 400f;
-            foreach (var d in layout.Districts)
-            {
-                minX = Mathf.Min(minX, d.CenterX - d.Radius - 200f);
-                maxX = Mathf.Max(maxX, d.CenterX + d.Radius + 200f);
-                minZ = Mathf.Min(minZ, d.CenterZ - d.Radius - 200f);
-                maxZ = Mathf.Max(maxZ, d.CenterZ + d.Radius + 200f);
-            }
+            var bounds = GroundBounds(layout);
+            float minX = bounds.xMin, maxX = bounds.xMax, minZ = bounds.yMin, maxZ = bounds.yMax;
             // Lawn at true texture scale (world UVs), with a thin box collider underneath.
             var ground = new GameObject("Ground");
             ground.transform.SetParent(parent);
@@ -264,6 +265,20 @@ namespace HeroGame.Editor
                 go.AddComponent<MeshRenderer>().sharedMaterial = waterMaterial;
                 GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic);
             }
+        }
+
+        /// <summary>The ground rectangle (x, z): every district with a 200 m margin.</summary>
+        private static Rect GroundBounds(WorldLayout layout)
+        {
+            float minX = -600f, maxX = 1000f, minZ = -900f, maxZ = 400f;
+            foreach (var d in layout.Districts)
+            {
+                minX = Mathf.Min(minX, d.CenterX - d.Radius - 200f);
+                maxX = Mathf.Max(maxX, d.CenterX + d.Radius + 200f);
+                minZ = Mathf.Min(minZ, d.CenterZ - d.Radius - 200f);
+                maxZ = Mathf.Max(maxZ, d.CenterZ + d.Radius + 200f);
+            }
+            return Rect.MinMaxRect(minX, minZ, maxX, maxZ);
         }
 
         private static void BuildRoads(Transform parent, WorldLayout layout, MaterialLibrary m)
@@ -384,7 +399,7 @@ namespace HeroGame.Editor
                     var lot = new GameObject("Lot");
                     lot.transform.SetParent(go.transform, false);
                     lot.transform.localPosition = new Vector3(0f, 0.03f, 0f);
-                    var park = p.Kind == PlaceKind.Park || p.Kind == PlaceKind.Beach;
+                    var park = p.Kind == PlaceKind.Park;
                     Solid(lot, new Vector3(e.Width, 0.06f, e.Depth), Vector3.zero,
                         Surface(park ? "M_Grass_Lawn" : "M_Dirt_Lot", m, "lot_" + p.Kind, park ? new Color(0.25f, 0.45f, 0.2f) : new Color(0.42f, 0.38f, 0.3f)));
                 }
