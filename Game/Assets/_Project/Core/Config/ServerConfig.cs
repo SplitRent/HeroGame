@@ -69,6 +69,12 @@ namespace HeroGame.Core.Config
         public bool RoleplayServer = false;
         public float CrimeSeverityMultiplier = 1f;
         public float PoliceResponseMultiplier = 1f;
+        /// <summary>
+        /// Least time, in real seconds, before police reach a crime whose suspect is a player. Road travel is computed in
+        /// game time, which runs about 30× faster than real time, so without this floor officers arrive a second or two
+        /// after a punch and the player never gets the chance to run or talk their way out.
+        /// </summary>
+        public float PoliceResponseRealSeconds = 40f;
         public float NpcDensity = 1f;
         public float TrafficDensity = 1f;
         public bool DynamicWeather = true;

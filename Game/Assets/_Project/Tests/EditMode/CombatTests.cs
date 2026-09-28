@@ -58,6 +58,36 @@ namespace HeroGame.Tests
             });
         }
 
+        [Test]
+        public void Police_GivePlayersRealSecondsToRun_AndArrestOnlyWhoStays()
+        {
+            // Each attempt: throw a punch where people can see, then either stay or walk away before officers arrive.
+            foreach (var stay in new[] { true, false })
+            {
+                _world = NewWorld(stay ? "police-stay" : "police-run");
+                _me = _world.Characters.Values.First();
+                _world.Dispatch.AdvanceTo(_world.Clock.Now); // dispatch is live, as it is in a running game
+                var victim = Someone(out var at);
+                _me.LastPosition = at;
+                Core.Emergency.EmergencyIncident call = null;
+                for (var k = 0; k < 12 && call == null; k++)
+                {
+                    _world.Clock.AdvanceGame(130); // past the self-defence window between swings
+                    Swing("fists", victim, at);
+                    call = _world.Emergency.Incidents.FirstOrDefault(i => i.Kind == Core.Emergency.EmergencyKind.Crime && i.Subject == _me.CharacterId);
+                }
+                Assert.IsNotNull(call, "an assault in public gets reported");
+                var unit = _world.Emergency.Unit(call.Units.First());
+                var eta = unit.ArriveSecond - _world.Clock.Now.TotalSeconds;
+                Assert.GreaterOrEqual(eta, (long)(_world.Config.Gameplay.PoliceResponseRealSeconds * _world.Clock.TimeScale) - 60,
+                    "police take real seconds to come for a player, not one frame of fast game time");
+                if (!stay) _me.LastPosition = new WorldPosition(at.X + Core.Simulation.EmergencyDispatch.ArrestRadius + 30f, 0f, at.Z);
+                _world.Clock.AdvanceGame(eta + 60);
+                _world.Dispatch.AdvanceTo(_world.Clock.Now);
+                Assert.AreEqual(stay, _me.Record.InCustody, stay ? "stayed at the scene: arrested" : "got away before they arrived: not arrested on scene");
+            }
+        }
+
         private void Give(string item, int quantity = 1) => _me.Inventory.Add(new InventoryStack { ItemId = item, Quantity = quantity });
 
         private Core.Business.BusinessRecord Shop(string template)

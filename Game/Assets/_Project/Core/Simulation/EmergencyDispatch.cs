@@ -306,6 +306,9 @@ namespace HeroGame.Core.Simulation
                     var eta = TravelSeconds(candidates[c].unit.PositionAt(now), i.Position, now, out var route);
                     if (eta < bestEta) { bestEta = eta; best = candidates[c].unit; bestRoute = route; }
                 }
+                // Players get a real-time head start (the road ETA is in fast game time).
+                if (i.Kind == EmergencyKind.Crime && service == Service.Police && i.Subject.IsValid && _w.Characters.ContainsKey(i.Subject))
+                    bestEta = Math.Max(bestEta, (long)Math.Ceiling(_w.Config.Gameplay.PoliceResponseRealSeconds * _w.Config.Gameplay.PoliceResponseMultiplier * _w.Clock.TimeScale));
                 best.From = best.PositionAt(now);
                 best.To = i.Position;
                 best.Route = bestRoute ?? new List<int>();
