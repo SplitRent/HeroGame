@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Powers
 {
+    using HeroGame.Core.Foundation;
+
     [Serializable]
     public struct DomainAffinity
     {

@@ -1,17 +1,18 @@
 using System.Collections.Generic;
-using HeroGame.Core.Audio;
-using HeroGame.Core.Combat;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Audio;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Online;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.Population;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Combat
 {
+    using HeroGame.Core.Audio;
+    using HeroGame.Core.Combat;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Audio;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Online;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.Population;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// The player's weapons (GDD crime/action layer): X cycles through what you carry (fists first), left mouse or
     /// the right shoulder attacks whoever is in front of you. Offline the local world resolves the attack; online the
@@ -53,7 +54,7 @@ namespace HeroGame.Runtime.Combat
 
         private bool InBuildOrVehicle()
         {
-            foreach (var b in FindObjectsByType<Building.BuildModeController>(FindObjectsSortMode.None)) if (b.Active) return true;
+            if (Building.BuildModeController.AnyActive) return true;
             return transform.parent != null && transform.parent.GetComponentInParent<Vehicles.VehicleController>() != null;
         }
 

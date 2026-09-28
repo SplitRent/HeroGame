@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Combat
 {
+    using HeroGame.Core.Foundation;
+
     public enum WeaponKind { Melee, Spray, Stun, Firearm }
 
     /// <summary>An original weapon design (weapons.json). Balance lives in data; rules live in CombatService.</summary>

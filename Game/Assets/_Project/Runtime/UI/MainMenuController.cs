@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Population;
-using HeroGame.Core.Servers;
-using HeroGame.Persistence.Json;
-using HeroGame.Persistence.Storage;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Servers;
+    using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Storage;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Front end (GDD §6–7): Continue, Story Mode, Servers, Character, Options, Settings, Exit.
     /// Built on UI Toolkit; layout in Resources/UI/MainMenu.uxml, style in MainMenu.uss. On first run

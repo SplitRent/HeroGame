@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Powers;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Powers;
+
     public enum Sex
     {
         Female,

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Civic
 {
+    using HeroGame.Core.Foundation;
+
     public enum Department
     {
         Police,

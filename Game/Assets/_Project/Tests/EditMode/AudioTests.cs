@@ -1,17 +1,18 @@
 using System;
 using System.Linq;
-using HeroGame.Core.Audio;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
-using HeroGame.Core.World;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Audio;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+    using HeroGame.Core.World;
+
     public class AudioTests
     {
         private static void AssertClean(float[] s, string what)

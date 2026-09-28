@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using HeroGame.Core.Foundation;
-using HeroGame.Networking.Protocol;
 
 namespace HeroGame.Networking.Client
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Networking.Protocol;
+
     public enum ClientState
     {
         Disconnected,

@@ -1,8 +1,9 @@
 using System;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Audio
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>
     /// Deterministic procedural audio (placeholder until recorded/commissioned audio exists, docs/ASSET_TRACKER.md).
     /// Everything returns mono samples in [-1, 1]; loops are built to repeat seamlessly (whole cycles, faded seams).

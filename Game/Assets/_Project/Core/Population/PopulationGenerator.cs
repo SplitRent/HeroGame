@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// Creates the initial population for a world from its residences and workplaces (GDD §12).
     /// Fully deterministic for a given seed and content set, so every server created with the

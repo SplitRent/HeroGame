@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using HeroGame.Core.World;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.WorldProps
 {
+    using HeroGame.Core.World;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Shows the street furniture near the camera and its damage state (GDD Phase 20). Uses the Blender kit prefab
     /// (Resources/Props/&lt;Mesh&gt;) when present, otherwise a greybox shape (ASSET_TRACKER). Broken props leave

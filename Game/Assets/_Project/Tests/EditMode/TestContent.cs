@@ -1,11 +1,12 @@
 using System;
 using System.IO;
-using HeroGame.Core.Config;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Content;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Config;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Content;
+
     /// <summary>
     /// Locates StreamingAssets/Data from either the Unity project root (Unity Test Runner) or a
     /// dotnet test output directory, so the same tests run in both environments.

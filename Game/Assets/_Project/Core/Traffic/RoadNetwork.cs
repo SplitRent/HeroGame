@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Traffic
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.World;
+
     public sealed class RoadNode
     {
         public int Id;

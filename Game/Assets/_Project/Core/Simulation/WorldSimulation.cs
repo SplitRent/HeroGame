@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using Stopwatch = System.Diagnostics.Stopwatch;
-using HeroGame.Core.Business;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using Stopwatch = System.Diagnostics.Stopwatch;
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     /// <summary>Timing of the last simulation step, for the server inspector and dev reports.</summary>
     public sealed class SimulationStats
     {

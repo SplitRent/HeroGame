@@ -1,8 +1,9 @@
 using System;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Economy
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>
     /// Aggregate city economy (GDD §23): a business-cycle index, inflation and unemployment.
     /// Individual transactions are not simulated; businesses and NPCs read these values as

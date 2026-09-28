@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
 
 namespace HeroGame.Core.Presentation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+
     /// <summary>One owned property as the player's property screen shows it.</summary>
     public sealed class PortfolioEntry
     {

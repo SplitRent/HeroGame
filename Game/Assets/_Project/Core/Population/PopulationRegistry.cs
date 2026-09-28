@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>
     /// Stores every NPC and household, plus a reverse index from places to the NPCs that are
     /// associated with them (live, work, study, frequent). The index lets the population director

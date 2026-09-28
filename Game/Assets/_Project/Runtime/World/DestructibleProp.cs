@@ -1,10 +1,11 @@
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Online;
-using HeroGame.Runtime.Vehicles;
 using UnityEngine;
 
 namespace HeroGame.Runtime.WorldProps
 {
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Online;
+    using HeroGame.Runtime.Vehicles;
+
     /// <summary>
     /// A piece of street furniture in the scene. Vehicle hits are reported to the authority: the local world in single
     /// player, or the server (which uses its own speed and position) online.

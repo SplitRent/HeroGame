@@ -1,14 +1,15 @@
 using System.Collections.Generic;
-using HeroGame.Core.Building;
-using HeroGame.Core.Business;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Social;
-using HeroGame.Core.Vehicles;
 
 namespace HeroGame.Core.World
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Social;
+    using HeroGame.Core.Vehicles;
+
     /// <summary>
     /// All data-driven content a world needs (TDD §12). Loaded from JSON by the persistence layer
     /// (<c>ContentLoader</c>) so servers and future mods can extend it without code changes.

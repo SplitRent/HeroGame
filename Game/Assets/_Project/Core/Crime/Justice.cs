@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Crime
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     /// <summary>Item catalog entry (items.json): loot, stolen goods, tools and contraband.</summary>
     [Serializable]
     public sealed class ItemDefinition

@@ -1,16 +1,17 @@
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Phone;
-using HeroGame.Core.Population;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Social;
-using HeroGame.Core.World;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Phone;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Social;
+    using HeroGame.Core.World;
+
     public class SocialAndPhoneTests
     {
         private World _world;

@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Presentation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Interaction;
-using HeroGame.Runtime.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Presentation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Interaction;
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// The in-game interface on UI Toolkit (GDD Phase 24): HUD (clock, weather, cash, health, wanted level, phone badge,
     /// weapon, interaction prompt, subtitles), notification toasts, the pause/settings screen and the phone. Layout in

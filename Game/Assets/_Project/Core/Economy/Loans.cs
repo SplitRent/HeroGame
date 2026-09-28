@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Economy
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     public enum LoanKind
     {
         Personal,

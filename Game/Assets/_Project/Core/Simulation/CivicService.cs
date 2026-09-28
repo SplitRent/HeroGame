@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Civic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.World;
-using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Civic;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.World;
+    using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
+
     /// <summary>
     /// City government (GDD §24–27): a municipal budget whose department funding sets real service levels (police,
     /// fire and ambulance units on duty, flood defences, parks), ordinances with typed effects voted by an elected

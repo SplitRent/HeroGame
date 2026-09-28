@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Phone;
-using HeroGame.Core.Presentation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Persistence.Settings;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Phone;
+    using HeroGame.Core.Presentation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Persistence.Settings;
+
     /// <summary>Phase 24 player UI logic: settings, notifications, the property screen and the inventory screen.</summary>
     public class PlayerUiTests
     {

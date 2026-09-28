@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Building;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.World;
-using HeroGame.Networking.Protocol;
 
 namespace HeroGame.Networking.Server
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.World;
+    using HeroGame.Networking.Protocol;
+
     /// <summary>
     /// Keeps the "published" view of the shared world that clients mirror (broken props, fires, player ownership, sale
     /// signs, damage, rebuilt buildings) and turns changes since the last publish into <see cref="WorldDelta"/>s.

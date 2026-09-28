@@ -22,7 +22,10 @@
     <DefineConstants>UNITY_STANDALONE</DefineConstants>
     <DefineConstants Condition="'$(UnityEditorBuild)' == 'true'">$(DefineConstants);UNITY_EDITOR;DEVELOPMENT_BUILD</DefineConstants>
     <!-- Unity reference assemblies target an older framework profile; conflicts are expected and harmless here. -->
-    <NoWarn>$(NoWarn);MSB3277;NU1701;CS0436</NoWarn>
+    <NoWarn>$(NoWarn);MSB3277;NU1701</NoWarn>
+    <!-- Shadow mode (Tools/Unity/shadow_check.py) needs CS0436 visible to find stubs that duplicate real types. -->
+    <NoWarn Condition="'$(ShadowTypes)' != 'true'">$(NoWarn);CS0436</NoWarn>
+    <WarningsNotAsErrors Condition="'$(ShadowTypes)' == 'true'">$(WarningsNotAsErrors);CS0436</WarningsNotAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(GameAssets)/Runtime/**/*.cs" />
@@ -46,5 +49,8 @@
     <Compile Include="$(GameAssets)/Tests/**/*.cs" Condition="'$(UnityEditorBuild)' == 'true'" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NUnit" Version="3.14.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ShadowTypes)' == 'true'">
+    <Compile Include="$(BaseIntermediateOutputPath)ShadowTypes.g.cs" />
   </ItemGroup>
 </Project>

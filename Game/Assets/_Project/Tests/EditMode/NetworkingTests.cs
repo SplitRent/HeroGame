@@ -4,20 +4,21 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Servers;
-using HeroGame.Core.Simulation;
-using HeroGame.Networking.Auth;
-using HeroGame.Networking.Client;
-using HeroGame.Networking.Protocol;
-using HeroGame.Networking.Server;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Servers;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Networking.Auth;
+    using HeroGame.Networking.Client;
+    using HeroGame.Networking.Protocol;
+    using HeroGame.Networking.Server;
+
     public class NetworkingTests
     {
         private static readonly byte[] MasterSecret = Enumerable.Range(1, 32).Select(i => (byte)i).ToArray();

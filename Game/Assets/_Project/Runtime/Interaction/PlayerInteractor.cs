@@ -1,8 +1,9 @@
-using HeroGame.Runtime.Player;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Interaction
 {
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// Finds the best interactable in front of the player (view ray first, then proximity cone) and
     /// triggers it on the interact input. Exposes the current prompt for the HUD.

@@ -1,14 +1,15 @@
 using System.Linq;
-using HeroGame.Core.Audio;
-using HeroGame.Core.Civic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Audio;
+    using HeroGame.Core.Civic;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     public class RadioTests
     {
         private World _world;

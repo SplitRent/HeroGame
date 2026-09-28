@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Bridges the core <see cref="PopulationDirector"/> to pooled <see cref="NpcAvatar"/>s (TDD §7.3).
     /// Every <see cref="EvaluateInterval"/> seconds it asks who should be present near the observers,

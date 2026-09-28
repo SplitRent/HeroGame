@@ -5,16 +5,17 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Phone;
-using HeroGame.Core.Servers;
-using HeroGame.Core.Simulation;
-using HeroGame.Networking.Auth;
-using HeroGame.Networking.Protocol;
 
 namespace HeroGame.Networking.Server
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Phone;
+    using HeroGame.Core.Servers;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Networking.Auth;
+    using HeroGame.Networking.Protocol;
+
     public sealed class GameServerOptions
     {
         public string ServerId = "local";

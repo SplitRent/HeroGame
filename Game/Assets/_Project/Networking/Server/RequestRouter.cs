@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Servers;
-using HeroGame.Core.Simulation;
-using HeroGame.Networking.Protocol;
 
 namespace HeroGame.Networking.Server
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Servers;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Networking.Protocol;
+
     /// <summary>Everything a request handler may use. Identity comes from the connection, never from arguments.</summary>
     public sealed class RequestContext
     {

@@ -1,9 +1,10 @@
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Interaction;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Story
 {
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Interaction;
+
     /// <summary>A world point for a tagged story objective ("sandbags"); using it reports the tag to the story.</summary>
     public sealed class StoryInteraction : Interactable
     {

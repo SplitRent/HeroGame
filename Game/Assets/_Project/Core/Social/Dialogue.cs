@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
 
 namespace HeroGame.Core.Social
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+
     /// <summary>How an NPC regards a specific player character, derived from memory.</summary>
     public enum Familiarity
     {

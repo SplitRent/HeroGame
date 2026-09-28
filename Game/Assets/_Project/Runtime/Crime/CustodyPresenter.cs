@@ -1,10 +1,11 @@
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Crime
 {
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// Keeps the player in the holding cell while the core says they are in custody, and returns them to the
     /// station steps on release. Custody itself (hearings, sentence length) is decided by the justice service.

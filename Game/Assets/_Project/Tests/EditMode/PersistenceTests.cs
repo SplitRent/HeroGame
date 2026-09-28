@@ -1,16 +1,17 @@
 using System.IO;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Json;
-using HeroGame.Persistence.Saves;
-using HeroGame.Persistence.Storage;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Saves;
+    using HeroGame.Persistence.Storage;
+
     public class PersistenceTests
     {
         private static AccountProfile Account(string name)

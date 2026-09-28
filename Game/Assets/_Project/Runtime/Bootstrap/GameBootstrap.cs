@@ -1,16 +1,17 @@
 using System;
 using System.IO;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Content;
-using HeroGame.Persistence.Saves;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Story;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Bootstrap
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Content;
+    using HeroGame.Persistence.Saves;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Story;
+
     /// <summary>
     /// Composition root for a gameplay scene. Loads content, opens the world session, resolves the
     /// local character and registers services. Everything else receives what it needs from here.

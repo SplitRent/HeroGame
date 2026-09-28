@@ -1,21 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Property;
-using HeroGame.Core.Story;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
-using HeroGame.Core.World;
-using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Story;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+    using HeroGame.Core.World;
+    using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
+
     /// <summary>
     /// Story Mode director (GDD §55–60). Runs authored missions on top of the same living world: cast members are
     /// real NPC records with schedules, objectives complete from what the player actually does (arriving, talking,

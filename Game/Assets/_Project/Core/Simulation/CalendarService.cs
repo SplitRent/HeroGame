@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Civic;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
-using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Civic;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+    using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
+
     /// <summary>
     /// The city calendar and local disasters (GDD §38–40). Dated events (Bayou Carnival, the holidays) shift demand
     /// for the kinds of business people actually visit on those days. Disasters are rolled from the world's state —

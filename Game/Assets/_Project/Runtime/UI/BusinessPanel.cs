@@ -1,13 +1,14 @@
 using System.Collections.Generic;
-using HeroGame.Core.Business;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Simulation;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Owner's office / buyer's view for one business (GDD §18–19). Every button calls a core
     /// <see cref="BusinessOperations"/> method, so the UI holds no rules of its own.

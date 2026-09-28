@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using HeroGame.Core.Civic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Civic;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// City Hall (GDD §24–27): the budget and what it buys, the council's agenda, open elections with polls,
     /// filing, donations and ballots, and anomalous-abilities registration. Every button calls

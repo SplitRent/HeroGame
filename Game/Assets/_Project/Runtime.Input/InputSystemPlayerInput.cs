@@ -1,9 +1,10 @@
-using HeroGame.Runtime.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace HeroGame.Runtime.Input
 {
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// Input System adapter (keyboard/mouse + gamepad). Actions are defined in code so bindings are
     /// reviewable in diffs; a rebinding UI can later load overrides from JSON.

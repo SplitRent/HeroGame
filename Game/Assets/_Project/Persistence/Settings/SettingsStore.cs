@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using HeroGame.Core.Presentation;
-using HeroGame.Persistence.Json;
-using HeroGame.Persistence.Storage;
 
 namespace HeroGame.Persistence.Settings
 {
+    using HeroGame.Core.Presentation;
+    using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Storage;
+
     /// <summary>
     /// Stores <see cref="GameSettings"/> as a flat JSON map (settings.json in the player's data folder). A missing or
     /// damaged file yields defaults; a damaged value yields that value's default. Writes are atomic.

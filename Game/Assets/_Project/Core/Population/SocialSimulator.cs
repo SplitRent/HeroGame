@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>
     /// World-level daily pass for events that involve more than one NPC (GDD §15): relationships
     /// forming, marriages, divorces and births. Iterates in stable id order with a per-day seed,

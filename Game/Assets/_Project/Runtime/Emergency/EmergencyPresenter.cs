@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Traffic;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Emergency
 {
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Traffic;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Shows emergency units near the player driving their dispatched routes (lights flashing while responding)
     /// and parked at scenes. Positions come from the core dispatcher's trip times, so what you see is where the

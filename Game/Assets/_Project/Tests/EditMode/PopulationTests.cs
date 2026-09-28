@@ -1,14 +1,15 @@
 using System.Collections.Generic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     public class PopulationTests
     {
         private static World NewWorld(string id = "test")

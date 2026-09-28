@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
-using HeroGame.Core.World;
-using SimWorld = HeroGame.Core.Simulation.World;
 
 namespace HeroGame.Core.Phone
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+    using HeroGame.Core.World;
+    using SimWorld = HeroGame.Core.Simulation.World;
+
     public enum MessageCategory
     {
         Personal,

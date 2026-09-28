@@ -1,9 +1,10 @@
-using HeroGame.Core.Presentation;
-using HeroGame.Runtime.Player;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Presentation;
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// Pause/settings menu (Esc / gamepad Start): audio, controls, display, accessibility. Changes apply live and are
     /// saved when the menu closes. Placeholder IMGUI (docs/ASSET_TRACKER.md) until the UI Toolkit skin.

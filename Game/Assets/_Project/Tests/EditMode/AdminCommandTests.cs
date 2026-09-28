@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.World;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.World;
+
     public class AdminCommandTests
     {
         private World _world;

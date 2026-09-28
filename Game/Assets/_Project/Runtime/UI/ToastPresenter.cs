@@ -1,11 +1,12 @@
-using HeroGame.Core.Characters;
-using HeroGame.Core.Phone;
-using HeroGame.Core.Presentation;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Phone;
+    using HeroGame.Core.Presentation;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// On-screen notifications: phone messages to the local character (offline) and server notices (online), folded
     /// and prioritised by <see cref="ToastQueue"/>. Placeholder IMGUI (docs/ASSET_TRACKER.md).

@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Audio;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Audio
 {
+    using HeroGame.Core.Audio;
+
     /// <summary>Turns <see cref="Synth"/> sample arrays into cached AudioClips (placeholder audio, ASSET_TRACKER).</summary>
     public static class ProceduralClips
     {

@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using HeroGame.Core.Building;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Content;
-using HeroGame.Persistence.Saves;
-using HeroGame.Persistence.Storage;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Bootstrap
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Content;
+    using HeroGame.Persistence.Saves;
+    using HeroGame.Persistence.Storage;
+
     public enum SessionMode
     {
         /// <summary>Single-player canonical world, saved to story slots.</summary>

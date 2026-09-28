@@ -1,15 +1,16 @@
 using System.Linq;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Combat;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Combat;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+
     /// <summary>Street encounters: the city pushes back at players who are out at night.</summary>
     public class StreetCrimeTests
     {

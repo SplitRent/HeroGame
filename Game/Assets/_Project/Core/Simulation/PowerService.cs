@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Property;
-using HeroGame.Core.Vehicles;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Vehicles;
+    using HeroGame.Core.World;
+
     public sealed class PowerUseRequest
     {
         public int PowerIndex;

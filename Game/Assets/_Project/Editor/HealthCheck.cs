@@ -4,18 +4,19 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Simulation;
-using HeroGame.Persistence.Content;
-using HeroGame.Persistence.Saves;
-using HeroGame.Runtime.Bootstrap;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Debug = UnityEngine.Debug;
 
 namespace HeroGame.Editor
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Persistence.Content;
+    using HeroGame.Persistence.Saves;
+    using HeroGame.Runtime.Bootstrap;
+    using Debug = UnityEngine.Debug;
+
     /// <summary>
     /// "Did it work?" in one click. Checks the things a first Unity run can get wrong — setup steps, render pipeline,
     /// input handling, content, the simulation running inside this editor, saving and loading, generated scenes — and

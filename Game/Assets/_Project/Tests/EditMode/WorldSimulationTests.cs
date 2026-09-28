@@ -1,14 +1,15 @@
-using HeroGame.Core.Business;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
-using HeroGame.Core.World;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+    using HeroGame.Core.World;
+
     public class WorldSimulationTests
     {
         private static World NewWorld(string id = "sim")

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.World;
+
     /// <summary>Data-driven job definition (GDD §16). Loaded from occupations.json.</summary>
     [Serializable]
     public sealed class OccupationDefinition

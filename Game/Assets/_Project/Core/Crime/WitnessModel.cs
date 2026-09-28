@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Crime
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>Something that saw a crime: an NPC, a player, or a camera.</summary>
     public struct Observer
     {

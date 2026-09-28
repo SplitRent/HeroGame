@@ -1,8 +1,9 @@
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Presentation
 {
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Drives the sun from the authoritative world clock (never from local time), so every client on a
     /// server sees the same sky. Latitude ≈ 29.5°N (Gulf Coast). Works with any pipeline: HDRP's

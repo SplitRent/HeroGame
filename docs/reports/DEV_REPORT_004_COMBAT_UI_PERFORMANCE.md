@@ -69,8 +69,18 @@ every 48 real minutes by default.
 * Fixed by aliasing `Stopwatch` instead of importing `System.Diagnostics`.
 * Added `dotnet build Headless/UnityCompileCheck -p:ModernBcl=true`, which also runs in CI. It compiles all Unity
   code, including the EditMode tests, against .NET 8. It reproduces the error without the fix and passes with it.
+* The second open found `CS0104` on `EntityId`: Unity 6.x added `UnityEngine.EntityId`. Instead of aliasing one
+  file at a time, every script now puts its `using HeroGame.*;` directives inside the namespace block. Inner usings
+  take precedence over the engine and class-library imports at the top of the file, so no type name Unity or .NET
+  adds later can make ours ambiguous.
+* `Tools/Unity/shadow_check.py` enforces this in CI. It declares a stub for each of the 562 HeroGame type names in
+  each of the 31 engine and class-library namespaces the scripts import, then compiles everything. Reverting one
+  file to top-level usings makes it fail with exactly the errors Unity showed.
+* Scene searches with `FindObjectsSortMode`, deprecated in newer Unity 6.x, were replaced with static registries on
+  `BuildModeController` and `VehicleController`.
 * Unity's serialization analyzer also warns (`UAC1001`/`UAC1009`) about dictionaries and nullable fields in Core
-  data classes. These are saved with Newtonsoft JSON, not Unity serialization, so the warnings are harmless.
+  data classes. These are saved with Newtonsoft JSON, not Unity serialization, so the warnings are harmless;
+  `Assets/csc.rsp` now silences them.
 
 ## 6. Next steps
 1. Run the Unity Health Check and play the greybox, then fix whatever the first run shows.

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Business;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Building
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Time;
+
     public enum BuildOpKind
     {
         AddWall,

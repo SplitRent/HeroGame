@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Business
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     /// <summary>Per-day inputs to a business simulation (built by the world from district, weather and macro state).</summary>
     public struct BusinessDayContext
     {

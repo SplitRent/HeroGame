@@ -1,17 +1,18 @@
-using HeroGame.Core.Business;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Interaction;
-using HeroGame.Runtime.Presentation;
-using HeroGame.Runtime.UI;
-using HeroGame.Runtime.Vehicles;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Crime
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Interaction;
+    using HeroGame.Runtime.Presentation;
+    using HeroGame.Runtime.UI;
+    using HeroGame.Runtime.Vehicles;
+
     /// <summary>A fence (docks) buys stolen goods; at a garage the back door is a chop shop for stolen cars parked nearby.</summary>
     public sealed class FenceContact : PlaceInteractable
     {
@@ -45,7 +46,7 @@ namespace HeroGame.Runtime.Crime
 
         private VehicleController StolenCarNearby(ServerCharacter me)
         {
-            foreach (var v in FindObjectsByType<VehicleController>(FindObjectsSortMode.None))
+            foreach (var v in VehicleController.All)
                 if (v.Record != null && v.Record.StolenBy == me.CharacterId && (v.transform.position - transform.position).sqrMagnitude < VehicleRadius * VehicleRadius) return v;
             return null;
         }

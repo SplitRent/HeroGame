@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Emergency
 {
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>Flames and smoke on burning buildings near the player, sized by the core fire intensity.</summary>
     public sealed class FirePresenter : MonoBehaviour
     {

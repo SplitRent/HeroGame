@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Business;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Population;
-using HeroGame.Core.Property;
-using HeroGame.Core.Vehicles;
-using HeroGame.Core.World;
-using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Vehicles;
+    using HeroGame.Core.World;
+    using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
+
     public sealed class CrimeResult
     {
         public bool Attempted;

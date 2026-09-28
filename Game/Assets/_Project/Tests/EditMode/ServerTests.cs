@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using HeroGame.Core.Servers;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Servers;
+
     public class ServerTests
     {
         private static List<ServerListing> Listings()

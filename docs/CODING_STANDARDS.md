@@ -23,6 +23,10 @@ docs/                          design docs, status, reports
 * **Language level C# 9** (Unity 6). No records, `init`, file-scoped namespaces, global usings, or required members.
   `Headless/Directory.Build.props` pins `LangVersion 9.0` and **treats warnings as errors**.
 * Block-scoped namespaces matching folders: `HeroGame.<Assembly>.<Folder>`.
+* `using HeroGame.*;` directives and all aliases go **inside** the namespace block; only `System.*`, `UnityEngine.*`,
+  `UnityEditor.*` and third-party usings sit at the top of the file. Inner usings win over outer ones, so types that
+  newer Unity or .NET versions add (`UnityEngine.EntityId`, `System.Diagnostics.ActivityKind`) can never make our
+  names ambiguous. `Tools/Unity/shadow_check.py` enforces this in CI.
 * Naming: `PascalCase` types/methods/properties/public fields; `_camelCase` private fields; `camelCase` locals and
   parameters; `I` prefix for interfaces; constants `PascalCase`.
 * One primary type per file (small closely related types — enums, DTOs — may share a file).

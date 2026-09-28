@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Population;
-using HeroGame.Core.Social;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Social;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// Ripple, the in-world social platform (GDD §51). NPCs post about things that actually happened (every post
     /// traces back to a history record), players post, like, follow and read a feed, and hashtags trend. Player

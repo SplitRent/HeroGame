@@ -1,22 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Story;
-using HeroGame.Core.Time;
-using HeroGame.Persistence.Content;
-using HeroGame.Persistence.Saves;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Story;
+    using HeroGame.Core.Time;
+    using HeroGame.Persistence.Content;
+    using HeroGame.Persistence.Saves;
+
     public class StoryTests
     {
         private static StoryDefinition _story;

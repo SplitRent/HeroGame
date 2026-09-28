@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Powers
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>What part of reality a power touches (GDD §40). Persisted; append only.</summary>
     public enum PowerDomain
     {

@@ -1,14 +1,15 @@
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
 using System.Text;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.Population;
 using UnityEngine;
 
 namespace HeroGame.Runtime.DevTools
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.Population;
+
     /// <summary>
     /// World / NPC / server inspector overlay (GDD §151–153), toggled with F3. Shows live world state,
     /// economy, weather, events, player state and — for the nearest materialised NPC — their full

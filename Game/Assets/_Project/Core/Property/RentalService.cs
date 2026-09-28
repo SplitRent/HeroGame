@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Property
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     public enum RentalEventKind
     {
         RentPaid,

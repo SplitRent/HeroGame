@@ -1,9 +1,9 @@
-using HeroGame.Runtime.Crime;
-using HeroGame.Runtime.Interaction;
-using HeroGame.Runtime.UI;
-
 namespace HeroGame.Runtime.Civic
 {
+    using HeroGame.Runtime.Crime;
+    using HeroGame.Runtime.Interaction;
+    using HeroGame.Runtime.UI;
+
     /// <summary>City Hall counter: budget, council agenda, elections and power registration (GDD §24–27).</summary>
     public sealed class CityHallDesk : PlaceInteractable
     {

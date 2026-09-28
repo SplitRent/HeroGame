@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using HeroGame.Core.Building;
-using HeroGame.Core.Property;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.Presentation;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Building
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Property;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.Presentation;
+
     public enum BuildTool
     {
         Wall,
@@ -58,6 +59,21 @@ namespace HeroGame.Runtime.Building
         private Vector2 _paletteScroll;
 
         public bool Active => _active;
+
+        private static readonly List<BuildModeController> Enabled = new List<BuildModeController>();
+
+        /// <summary>True while any building is in build mode (a registry, not a scene search: no per-frame lookups).</summary>
+        public static bool AnyActive
+        {
+            get
+            {
+                foreach (var b in Enabled) if (b._active) return true;
+                return false;
+            }
+        }
+
+        private void OnEnable() => Enabled.Add(this);
+        private void OnDisable() => Enabled.Remove(this);
 
         private void Awake()
         {

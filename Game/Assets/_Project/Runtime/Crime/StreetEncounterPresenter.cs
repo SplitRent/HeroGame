@@ -1,14 +1,15 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Online;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.Population;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Crime
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Online;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.Population;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// Shows a street encounter: the mugger steps out in front of the player; E hands the money over, attacking
     /// fights back (self-defence), running clears it. Offline the local world decides; online the server does.

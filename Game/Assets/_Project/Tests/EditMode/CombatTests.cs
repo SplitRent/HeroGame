@@ -1,16 +1,17 @@
 using System.Linq;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Combat;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Simulation;
-using HeroGame.Persistence.Saves;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Combat;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Persistence.Saves;
+
     /// <summary>Combat and weapons: grounded fights, reactions, self-defence, firearms and permits, non-lethal options.</summary>
     public class CombatTests
     {

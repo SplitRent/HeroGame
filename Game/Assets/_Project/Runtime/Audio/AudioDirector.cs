@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using HeroGame.Core.Audio;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Audio
 {
+    using HeroGame.Core.Audio;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Plays the world (GDD Phase 23): the core <see cref="SoundscapeMixer"/> says what should be audible where the
     /// camera is — district ambience, night, rain, wind, thunder, crowds, sirens of units really on calls — and this

@@ -1,10 +1,12 @@
-using HeroGame.Core.Vehicles;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Vehicles
 {
+    using HeroGame.Core.Vehicles;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// Arcade-leaning simulation driving on WheelColliders (GDD §33, TDD §10.3): power-limited torque,
     /// speed-sensitive steering, ABS-free braking with reverse, handbrake, downforce and anti-roll bars.
@@ -26,12 +28,19 @@ namespace HeroGame.Runtime.Vehicles
         public VehicleModel Model { get; private set; }
         public float SpeedKph { get; private set; }
 
+        private static readonly List<VehicleController> Enabled = new List<VehicleController>();
+        /// <summary>Every enabled vehicle in the scene (a registry, not a scene search).</summary>
+        public static IReadOnlyList<VehicleController> All => Enabled;
+
         private Rigidbody _body;
         private float _power = 110f, _brakes = 3000f, _grip = 1f, _topSpeed = 180f, _steer = 32f;
         private bool _frontDrive = true, _rearDrive;
         private float _distanceAccumulator;
         private float _speedAccumulator;
         private int _samples;
+
+        private void OnEnable() => Enabled.Add(this);
+        private void OnDisable() => Enabled.Remove(this);
 
         private void Awake()
         {

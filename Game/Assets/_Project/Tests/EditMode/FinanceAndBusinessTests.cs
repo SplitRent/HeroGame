@@ -1,20 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
-using HeroGame.Core.Building;
-using HeroGame.Core.Business;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Saves;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Saves;
+
     public class FinanceAndBusinessTests
     {
         private World _world;

@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
 
 namespace HeroGame.Core.Traffic
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+
     public struct TrafficSpawn
     {
         public int Edge;

@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Config;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Time;
-using HeroGame.Core.Vehicles;
-using HeroGame.Core.World;
-using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
-using Service = HeroGame.Core.Emergency.EmergencyService;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Config;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Vehicles;
+    using HeroGame.Core.World;
+    using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
+    using Service = HeroGame.Core.Emergency.EmergencyService;
+
     /// <summary>
     /// Emergency services (GDD §39–41). Calls become incidents; the dispatcher sends the free unit with the
     /// shortest road travel time (A* over the road graph with live congestion and weather, sirens included);

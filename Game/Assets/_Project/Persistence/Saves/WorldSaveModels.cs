@@ -1,17 +1,18 @@
 using System.Collections.Generic;
-using HeroGame.Core.Business;
-using HeroGame.Core.Config;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
-using HeroGame.Core.World;
 
 namespace HeroGame.Persistence.Saves
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Config;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// The commit record of a snapshot. Written last, atomically. It names the generation of every
     /// chunk file, so a crash mid-save leaves the previous snapshot fully intact (TDD §9.3).

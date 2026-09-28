@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Social
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     /// <summary>A post on Ripple, the in-world social platform (GDD §51).</summary>
     [Serializable]
     public sealed class RipplePost

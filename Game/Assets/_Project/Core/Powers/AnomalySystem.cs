@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Powers
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     /// <summary>An in-world anomalous incident that can expose people (GDD §39, §130).</summary>
     [Serializable]
     public sealed class AnomalyEvent

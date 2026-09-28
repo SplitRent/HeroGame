@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Economy
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     /// <summary>
     /// Who caused a transaction. Player and Admin transactions are journaled (they cannot be
     /// re-derived after a crash). Simulation transactions are deterministic results of world

@@ -3,15 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
-using HeroGame.Runtime.Bootstrap;
 
 namespace HeroGame.Runtime.DevTools
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Developer command set (GDD §150). Kept separate from the console UI so the same commands can
     /// be issued by the headless host, automated tests, or a server admin RPC (which checks

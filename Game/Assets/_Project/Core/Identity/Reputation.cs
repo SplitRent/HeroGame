@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Identity
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>Independent reputation axes (GDD §97). Never collapsed into one number.</summary>
     public enum ReputationDimension
     {

@@ -1,10 +1,11 @@
-using HeroGame.Core.Crime;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Police front desk / court clerk (GDD §32): your record, the open case, bail, counsel, plea, fines and
     /// surrender. Buttons call <see cref="Core.Simulation.JusticeService"/>. Placeholder IMGUI (ASSET_TRACKER).

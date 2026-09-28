@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Audio
 {
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.World;
+
     /// <summary>An audible siren: which kind, where, how loud at the listener.</summary>
     public struct SirenSource
     {

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Vehicles
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Time;
+
     /// <summary>
     /// Vehicle ownership economy (GDD §33–34): dealership sales, registration, fuel, wear, damage, repairs,
     /// customisation, garages, impound. Every payment is an atomic <see cref="WorldTransaction"/>; fuel and

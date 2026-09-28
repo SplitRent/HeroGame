@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Building;
-using HeroGame.Core.Business;
-using HeroGame.Core.Config;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Property;
-using HeroGame.Core.Time;
-using HeroGame.Core.Vehicles;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Config;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Vehicles;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// Builds a brand-new world from configuration and content: institutions and their accounts,
     /// geography, real estate, businesses and the initial population. Deterministic for a seed,

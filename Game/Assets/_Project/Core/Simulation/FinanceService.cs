@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Business;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Time;
-using HeroGame.Core.Vehicles;
-using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Vehicles;
+    using PhoneCategory = HeroGame.Core.Phone.MessageCategory;
+
     /// <summary>
     /// Player banking and insurance (GDD §26–27): savings accounts, underwritten loans and mortgages, early
     /// repayment, policies, premiums and claims. Every operation is a single <see cref="WorldTransaction"/>; the

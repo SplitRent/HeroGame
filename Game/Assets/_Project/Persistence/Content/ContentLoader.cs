@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using System.IO;
-using HeroGame.Core.Business;
-using HeroGame.Core.Config;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Json;
-using HeroGame.Persistence.Storage;
 
 namespace HeroGame.Persistence.Content
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Config;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Storage;
+
     /// <summary>
     /// Loads data-driven content (StreamingAssets/Data/*.json) into a <see cref="ContentSet"/> and
     /// validates cross references. Used identically by the Unity client, the headless server and tests.

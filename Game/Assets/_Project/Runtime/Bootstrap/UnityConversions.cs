@@ -1,8 +1,9 @@
-using HeroGame.Core.Foundation;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Bootstrap
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>The only place engine-agnostic core types are converted to Unity types.</summary>
     public static class UnityConversions
     {

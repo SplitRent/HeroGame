@@ -1,9 +1,10 @@
-using HeroGame.Core.Characters;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// The phone's Ripple app (GDD §51): compose, trending tags and the feed with likes and follows. Drawn inside
     /// the phone panel. Placeholder IMGUI (docs/ASSET_TRACKER.md).

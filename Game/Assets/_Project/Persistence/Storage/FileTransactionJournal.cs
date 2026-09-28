@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using HeroGame.Core.Economy;
-using HeroGame.Persistence.Json;
 
 namespace HeroGame.Persistence.Storage
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Persistence.Json;
+
     /// <summary>
     /// Durable write-ahead journal: one JSON object per line, flushed to disk before
     /// <see cref="Append"/> returns (TDD §9.4). A torn final line (power loss mid-write) is ignored

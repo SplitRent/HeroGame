@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// Where every NPC is, kept current incrementally (TDD §5.3). Each NPC's schedule is resolved once and
     /// cached until the resolver says it expires, so work per update is proportional to the number of

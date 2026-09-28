@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Property
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     /// <summary>Property registry plus the gameplay operations on it (buy, sell, rent, valuation).</summary>
     public sealed class PropertyService
     {

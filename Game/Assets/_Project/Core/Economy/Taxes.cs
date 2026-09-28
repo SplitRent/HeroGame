@@ -1,8 +1,8 @@
-using HeroGame.Core.Config;
-using HeroGame.Core.Foundation;
-
 namespace HeroGame.Core.Economy
 {
+    using HeroGame.Core.Config;
+    using HeroGame.Core.Foundation;
+
     /// <summary>Tax computations driven by server configuration (GDD §24). Pure functions.</summary>
     public sealed class TaxPolicy
     {

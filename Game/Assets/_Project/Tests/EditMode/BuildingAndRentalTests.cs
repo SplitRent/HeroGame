@@ -1,15 +1,16 @@
 using System.Collections.Generic;
-using HeroGame.Core.Building;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+
     public class BuildingAndRentalTests
     {
         private World _world;

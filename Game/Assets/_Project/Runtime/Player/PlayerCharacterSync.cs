@@ -1,8 +1,9 @@
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Player
 {
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Keeps the server-character record in step with the player's body: position for saves, anomaly
     /// exposure and proximity systems; on start, restores the last saved position.

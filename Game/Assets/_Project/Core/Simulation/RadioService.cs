@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Audio;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Audio;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// In-world radio (GDD §53). Each station airs a deterministic hourly running order built from the live world:
     /// bulletins from real history, weather from the simulation, ads for real businesses (those that pay for

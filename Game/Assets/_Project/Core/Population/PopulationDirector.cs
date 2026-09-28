@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     /// <summary>An NPC that should currently exist as a physical agent near an observer.</summary>
     public struct MaterializationRequest
     {

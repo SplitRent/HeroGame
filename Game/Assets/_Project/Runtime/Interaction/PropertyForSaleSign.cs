@@ -1,11 +1,12 @@
-using HeroGame.Core.Business;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Presentation;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Interaction
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Presentation;
+
     /// <summary>
     /// "For Sale" sign: buys the linked property through the same atomic, journaled transaction path a
     /// multiplayer request uses (GDD §173). Demonstrates property + economy + persistence end to end.

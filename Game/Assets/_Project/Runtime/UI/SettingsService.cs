@@ -1,11 +1,12 @@
 using System;
-using HeroGame.Core.Presentation;
-using HeroGame.Persistence.Settings;
-using HeroGame.Runtime.Audio;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Presentation;
+    using HeroGame.Persistence.Settings;
+    using HeroGame.Runtime.Audio;
+
     /// <summary>
     /// The player's settings for this machine (settings.json in the persistent data folder) and applying them to the
     /// engine: audio channels, quality, frame pacing. Camera, subtitles and notifications read <see cref="Current"/>.

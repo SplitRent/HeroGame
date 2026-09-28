@@ -1,11 +1,12 @@
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Interaction;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Vehicles
 {
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Interaction;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// Enter/exit a vehicle (GDD §93). Owners use their keys; anyone else is attempting theft, which is
     /// reported to the crime layer through <see cref="TheftAttempted"/> (Phase 7 wires witnesses & police).

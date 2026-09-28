@@ -1,18 +1,19 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Simulation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Online;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.Population;
-using HeroGame.Runtime.Presentation;
-using HeroGame.Runtime.UI;
-using HeroGame.Runtime.Vehicles;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Powers
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Online;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.Population;
+    using HeroGame.Runtime.Presentation;
+    using HeroGame.Runtime.UI;
+    using HeroGame.Runtime.Vehicles;
+
     /// <summary>
     /// Player ability input and presentation (GDD §41). 1–4 selects a power; hold Q to charge, release to use.
     /// The target is whatever the camera is aimed at (person, vehicle, building or ground). The core

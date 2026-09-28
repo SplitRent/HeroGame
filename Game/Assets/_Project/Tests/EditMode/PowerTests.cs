@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Powers;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Powers;
+
     public class PowerTests
     {
         private static AnomalySignature Neutral()

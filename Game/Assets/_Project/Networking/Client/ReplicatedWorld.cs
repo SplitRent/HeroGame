@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Building;
-using HeroGame.Core.Foundation;
-using HeroGame.Networking.Protocol;
 
 namespace HeroGame.Networking.Client
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Networking.Protocol;
+
     /// <summary>
     /// The client's mirror of shared world state the server replicates (<see cref="WorldDelta"/>): broken street props,
     /// fires, player-owned / for-sale / damaged / rebuilt properties, and fetched building layouts. Presentation reads

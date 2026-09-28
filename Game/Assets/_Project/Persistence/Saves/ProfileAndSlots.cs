@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using HeroGame.Core.Characters;
-using HeroGame.Persistence.Json;
-using HeroGame.Persistence.Storage;
 
 namespace HeroGame.Persistence.Saves
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Storage;
+
     /// <summary>
     /// Local store for global account profiles (name + appearance). In multiplayer the account
     /// service is authoritative and this acts as a cache; offline/Story it is the source of truth.

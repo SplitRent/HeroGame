@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using HeroGame.Persistence.Content;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace HeroGame.Editor
 {
+    using HeroGame.Persistence.Content;
+
     /// <summary>One-time project setup, validation and CI build entry points.</summary>
     public static class ProjectTools
     {

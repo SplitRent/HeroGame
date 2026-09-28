@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.World;
+
     /// <summary>Everything the life simulator reads. Built once per day by the population system.</summary>
     public sealed class LifeSimContext
     {

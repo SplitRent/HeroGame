@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Json;
-using HeroGame.Persistence.Storage;
 
 namespace HeroGame.Persistence.Saves
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Storage;
+
     public sealed class SaveResult
     {
         public int ChunksWritten;

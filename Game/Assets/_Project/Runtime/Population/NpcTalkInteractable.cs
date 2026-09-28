@@ -1,12 +1,13 @@
-using HeroGame.Core.Social;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Interaction;
-using HeroGame.Runtime.UI;
-using HeroGame.Runtime.Player;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Population
 {
+    using HeroGame.Core.Social;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Interaction;
+    using HeroGame.Runtime.UI;
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// Talk to a materialised NPC. The conversation runs through the core InteractionService, so the NPC's
     /// persistent memory changes and they will remember it next time — on any day, after any restart.

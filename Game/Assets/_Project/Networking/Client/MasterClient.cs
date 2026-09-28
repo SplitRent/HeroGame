@@ -4,11 +4,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using HeroGame.Core.Servers;
 using Newtonsoft.Json;
 
 namespace HeroGame.Networking.Client
 {
+    using HeroGame.Core.Servers;
+
     public sealed class LoginResult
     {
         public string AccountId = "";

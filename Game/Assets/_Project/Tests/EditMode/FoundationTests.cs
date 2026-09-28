@@ -1,10 +1,11 @@
-using HeroGame.Core.Config;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Config;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     public class FoundationTests
     {
         [Test]

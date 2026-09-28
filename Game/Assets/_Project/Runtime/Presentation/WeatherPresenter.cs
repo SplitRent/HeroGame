@@ -1,9 +1,10 @@
-using HeroGame.Core.Weather;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Presentation
 {
+    using HeroGame.Core.Weather;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Presents authoritative weather: rain/debris particles, wind, fog and a wet-surface global shader
     /// value. Pipeline-specific volumes (HDRP fog, clouds) subscribe through <see cref="Applied"/>

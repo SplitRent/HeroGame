@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Vehicles;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Vehicles
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Vehicles;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Materialises persistent parked/street vehicles near the player (NPC household cars, the player's own
     /// cars, service fleets) and writes their final position back when they leave the bubble. Vehicles in

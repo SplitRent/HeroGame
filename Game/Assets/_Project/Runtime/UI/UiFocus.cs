@@ -1,8 +1,9 @@
-using HeroGame.Runtime.Player;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// Reference-counted "a menu is open" state: while any panel holds focus the cursor is free and the
     /// player/camera ignore input. Panels call <see cref="Acquire"/> / <see cref="Release"/> in pairs.

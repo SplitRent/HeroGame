@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using HeroGame.Core.Traffic;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Vehicles
 {
+    using HeroGame.Core.Traffic;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Ambient traffic (GDD §35): kinematic cars placed and moved along road edges from the statistical
     /// <see cref="TrafficModel"/>. Counts follow the hour, weather and server density; positions are

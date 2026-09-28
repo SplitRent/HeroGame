@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// The phone (GDD §61): messages, map search, news, radio, Ripple, bank, loans, insurance and businesses.
     /// Every app renders core state and calls core services; the phone holds no rules. Opened with the phone key.

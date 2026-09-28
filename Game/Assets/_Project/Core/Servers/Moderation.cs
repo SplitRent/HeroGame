@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Servers
 {
+    using HeroGame.Core.Time;
+
     [Flags]
     public enum ServerPermission
     {

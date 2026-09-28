@@ -29,6 +29,8 @@ jobs:
         run: dotnet build Headless/UnityCompileCheck -c Release -p:UnityEditorBuild=false
       - name: Unity scripts compile check (newer Unity 6.x class library)
         run: dotnet build Headless/UnityCompileCheck -c Release -p:ModernBcl=true
+      - name: Unity scripts shadow check (future engine/BCL type names cannot clash)
+        run: python3 Tools/Unity/shadow_check.py
       - name: World host smoke test (create, simulate 30 days, inspect)
         run: |
           HOST=Headless/HeroGame.WorldHost/bin/Release/net8.0/herogame-world

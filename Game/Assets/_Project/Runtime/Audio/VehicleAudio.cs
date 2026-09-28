@@ -1,9 +1,10 @@
-using HeroGame.Core.Audio;
-using HeroGame.Runtime.Vehicles;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Audio
 {
+    using HeroGame.Core.Audio;
+    using HeroGame.Runtime.Vehicles;
+
     /// <summary>Engine sound for a vehicle: an idle loop whose pitch and volume follow speed.</summary>
     [RequireComponent(typeof(VehicleController))]
     public sealed class VehicleAudio : MonoBehaviour

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Networking.Protocol
 {
+    using HeroGame.Core.Foundation;
+
     public enum MessageType : ushort
     {
         Hello = 1,

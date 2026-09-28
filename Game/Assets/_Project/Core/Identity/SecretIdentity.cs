@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 
 namespace HeroGame.Core.Identity
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     public enum IdentityExposure
     {
         Unknown,

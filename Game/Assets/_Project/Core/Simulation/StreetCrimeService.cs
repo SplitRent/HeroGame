@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Combat;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Combat;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.World;
+
     public enum EncounterOutcome { Pending, Complied, Robbed, FoughtOff, Escaped }
 
     /// <summary>A mugging in progress: a real local NPC demands money from a player.</summary>

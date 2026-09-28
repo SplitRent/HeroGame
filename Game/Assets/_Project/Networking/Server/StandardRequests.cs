@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using HeroGame.Core.Building;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Servers;
-using HeroGame.Core.Simulation;
-using HeroGame.Networking.Protocol;
 
 namespace HeroGame.Networking.Server
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Servers;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Networking.Protocol;
+
     /// <summary>
     /// The request catalogue a client can call. Handlers are thin: they parse and bound arguments, check that the
     /// player is physically near what they act on (the server's authoritative position), then call the same core

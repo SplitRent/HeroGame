@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
 
 namespace HeroGame.Core.World
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+
     /// <summary>
     /// Authoring format for a region of the city (districts_*.json). Mixes hand-placed landmarks
     /// with procedural parcel blocks so large areas can be described compactly and regenerated

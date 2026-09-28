@@ -1,22 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Civic;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Property;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Content;
-using HeroGame.Persistence.Saves;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Civic;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Content;
+    using HeroGame.Persistence.Saves;
+
     public class CivicAndSocialTests
     {
         private World _world;

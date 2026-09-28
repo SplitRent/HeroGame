@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Phone;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
 
 namespace HeroGame.Core.Characters
 {
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Phone;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+
     // ------------------------------------------------------------------------------------------
     // Data layering (TDD §6.2):
     //   AccountProfile      — global, owned by the platform/account service. Appearance & name.

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Vehicles
 {
+    using HeroGame.Core.Foundation;
+
     public enum VehicleClass
     {
         Compact,

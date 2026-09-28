@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HeroGame.Core.Foundation;
-using HeroGame.Networking.Client;
-using HeroGame.Networking.Protocol;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Online
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Networking.Client;
+    using HeroGame.Networking.Protocol;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.UI;
+
     /// <summary>Other players, interpolated between snapshots (100 ms behind for smoothness).</summary>
     public sealed class RemotePlayerPresenter : MonoBehaviour
     {

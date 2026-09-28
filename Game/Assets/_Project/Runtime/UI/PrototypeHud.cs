@@ -1,10 +1,11 @@
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Interaction;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Interaction;
+
     /// <summary>
     /// Minimal gameplay HUD for the greybox slice: clock, weather, cash, interaction prompt.
     /// Placeholder (tracked in docs/ASSET_TRACKER.md) until the UI Toolkit HUD in Phase 24.

@@ -1,10 +1,11 @@
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
 using System.Collections.Generic;
-using HeroGame.Runtime.Player;
 using UnityEngine;
 
 namespace HeroGame.Runtime.DevTools
 {
+    using HeroGame.Runtime.Player;
+
     /// <summary>
     /// In-game developer console (toggle with `). Compiled only into the editor and development
     /// builds, so it can never ship as player functionality (GDD §150).

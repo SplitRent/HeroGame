@@ -1,8 +1,9 @@
 using System;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Economy
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>Credit standing derived entirely from the server's own loan records (no hidden state to persist).</summary>
     public sealed class CreditProfile
     {

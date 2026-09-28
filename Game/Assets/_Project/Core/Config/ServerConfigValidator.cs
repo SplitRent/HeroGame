@@ -1,9 +1,10 @@
 using System;
 using System.Text.RegularExpressions;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Config
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>
     /// Clamps server configuration into ranges that cannot break server integrity
     /// (GDD §177): owners get wide creative control, but no value can create

@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Building;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Property
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Foundation;
+
     public enum PropertyKind
     {
         Apartment,

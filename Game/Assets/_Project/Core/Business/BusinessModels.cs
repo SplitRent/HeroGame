@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Business
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.World;
+
     /// <summary>Data-driven business type (GDD §18). Loaded from business_templates.json.</summary>
     [Serializable]
     public sealed class BusinessTemplate

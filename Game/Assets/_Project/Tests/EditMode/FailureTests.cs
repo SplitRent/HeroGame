@@ -1,17 +1,18 @@
 using System.IO;
 using System.Linq;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Persistence.Saves;
-using HeroGame.Persistence.Storage;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Persistence.Saves;
+    using HeroGame.Persistence.Storage;
+
     /// <summary>
     /// Phase 26 failure testing: power cuts mid-save, damaged snapshots, garbage in the journal, and a failing save
     /// that must not lose the changes it was trying to write.

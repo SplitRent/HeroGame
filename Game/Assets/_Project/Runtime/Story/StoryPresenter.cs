@@ -1,14 +1,15 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Simulation;
-using HeroGame.Core.Story;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Story
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Core.Story;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// Story Mode presentation (GDD §55–60): the current objective and a marker toward it, the dialogue box with
     /// choices (number keys or click), letterboxed cutscenes, and interaction points for tagged objectives.

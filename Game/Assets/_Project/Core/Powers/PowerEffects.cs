@@ -1,8 +1,9 @@
 using System;
-using HeroGame.Core.Foundation;
 
 namespace HeroGame.Core.Powers
 {
+    using HeroGame.Core.Foundation;
+
     /// <summary>What a use of a power does, in engine terms (GDD §41). The runtime renders it; the server applies it.</summary>
     public enum EffectKind
     {

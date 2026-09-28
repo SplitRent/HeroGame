@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using HeroGame.Core.Building;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Building
 {
+    using HeroGame.Core.Building;
+
     /// <summary>
     /// Builds greybox geometry for a <see cref="BuildingLayout"/>: wall segments split around openings, a
     /// floor slab per room and a sized placeholder box per furniture item. The transform's origin is the

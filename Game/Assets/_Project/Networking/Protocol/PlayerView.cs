@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Presentation;
 
 namespace HeroGame.Networking.Protocol
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Presentation;
+
     /// <summary>
     /// A player's own state as the server knows it (cash, health, messages, statement, inventory, property, businesses):
     /// what the HUD and phone show while online, where the client's local world is only a presentation copy.

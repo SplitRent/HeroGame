@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Presentation;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Presentation;
+
     /// <summary>
     /// Materialises the persistent people who are inside a place (workers on shift, customers, residents
     /// at home) while the player is within the volume, and releases them when the player leaves

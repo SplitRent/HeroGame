@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using HeroGame.Core.Building;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Powers;
-using HeroGame.Core.Simulation;
-using HeroGame.Persistence.Json;
-using HeroGame.Persistence.Saves;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Building;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Powers;
+    using HeroGame.Core.Simulation;
+    using HeroGame.Persistence.Json;
+    using HeroGame.Persistence.Saves;
+
     /// <summary>
     /// Saves copy the population and reuse copy-on-write building layouts so the heavy serialization runs off the
     /// simulation thread. These tests keep those copies honest.

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+
     /// <summary>
     /// Who lives where, counted once per game day and shared by every system that needs it (emergency call rates,
     /// electorates, the budget). Before this each system rescanned the whole population, several times a day.

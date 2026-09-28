@@ -1,10 +1,11 @@
 using System;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.World;
+
     public struct ScheduledActivity
     {
         public ActivityKind Activity;

@@ -2,20 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Civic;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
-using HeroGame.Core.Property;
-using HeroGame.Core.Time;
-using HeroGame.Core.Weather;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Civic;
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.Property;
+    using HeroGame.Core.Time;
+    using HeroGame.Core.Weather;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// World debug/admin commands (GDD §150), engine-free so the Unity dev console, the dedicated server console, a
     /// permission-checked network request and tests all run the same code. Money and ownership changes go through the

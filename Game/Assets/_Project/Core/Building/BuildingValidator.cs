@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Property;
 
 namespace HeroGame.Core.Building
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Property;
+
     /// <summary>
     /// Keeps player construction architecturally believable (GDD §21–22): walls on the grid and inside the lot,
     /// rooms enclosed by walls, every room reachable from an exterior door, egress for large commercial spaces,

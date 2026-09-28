@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HeroGame.Core.Foundation;
-using HeroGame.Networking.Client;
-using HeroGame.Networking.Protocol;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Online
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Networking.Client;
+    using HeroGame.Networking.Protocol;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// Client side of a player-server session (GDD §4, TDD §8): signs in to the master server, fetches a join
     /// ticket, connects, streams the local player's movement at <see cref="SendRate"/>, applies the server's

@@ -1,11 +1,12 @@
-using HeroGame.Core.Characters;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Emergency
 {
+    using HeroGame.Core.Characters;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// Player health on the client side: fall damage from landing speed and damage reported by other systems
     /// (collisions, combat). At zero the core dispatcher takes over — EMS, hospital, bill — and this component

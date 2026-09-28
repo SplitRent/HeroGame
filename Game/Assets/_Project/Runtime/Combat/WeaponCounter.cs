@@ -1,13 +1,14 @@
 using System.Collections.Generic;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Crime;
-using HeroGame.Runtime.Interaction;
-using HeroGame.Runtime.Online;
-using HeroGame.Runtime.UI;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Combat
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Crime;
+    using HeroGame.Runtime.Interaction;
+    using HeroGame.Runtime.Online;
+    using HeroGame.Runtime.UI;
+
     /// <summary>
     /// The weapons counter in shops whose template sells them (hardware, pharmacy, sporting goods). Lists what this shop
     /// stocks with prices; firearms ask for the City Hall permit. Online the purchase is a server request.

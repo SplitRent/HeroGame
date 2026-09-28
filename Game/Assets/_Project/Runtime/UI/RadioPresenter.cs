@@ -1,9 +1,10 @@
-using HeroGame.Core.Audio;
-using HeroGame.Runtime.Bootstrap;
 using UnityEngine;
 
 namespace HeroGame.Runtime.UI
 {
+    using HeroGame.Core.Audio;
+    using HeroGame.Runtime.Bootstrap;
+
     /// <summary>
     /// Plays the tuned station (GDD §53): the core decides what is on air; this shows a ticker with the song or a
     /// subtitle of what is being said, and plays the track's clip from Resources/Radio/&lt;trackId&gt; when one exists.

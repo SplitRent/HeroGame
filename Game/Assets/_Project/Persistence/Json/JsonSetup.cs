@@ -1,12 +1,13 @@
 using System;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Time;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace HeroGame.Persistence.Json
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Time;
+
     /// <summary>Single place that defines how game data maps to JSON (saves, content, network snapshots).</summary>
     public static class JsonSetup
     {

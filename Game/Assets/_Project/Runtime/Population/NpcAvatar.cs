@@ -1,10 +1,11 @@
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Population;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace HeroGame.Runtime.Population
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Population;
+
     /// <summary>
     /// The physical body of a persistent NPC while it is near a player. Pooled: when released it keeps
     /// no identity; when reused it is bound to a (possibly different) <see cref="NpcRecord"/>.

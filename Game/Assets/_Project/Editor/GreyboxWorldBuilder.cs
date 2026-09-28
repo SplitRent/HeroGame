@@ -1,20 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.World;
-using HeroGame.Persistence.Content;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Crime;
-using HeroGame.Runtime.Emergency;
-using HeroGame.Runtime.Building;
-using HeroGame.Runtime.DevTools;
-using HeroGame.Runtime.Interaction;
-using HeroGame.Runtime.Player;
-using HeroGame.Runtime.Population;
-using HeroGame.Runtime.Powers;
-using HeroGame.Runtime.Presentation;
-using HeroGame.Runtime.UI;
-using HeroGame.Runtime.Vehicles;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -22,6 +7,22 @@ using UnityEngine.UIElements;
 
 namespace HeroGame.Editor
 {
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.World;
+    using HeroGame.Persistence.Content;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Crime;
+    using HeroGame.Runtime.Emergency;
+    using HeroGame.Runtime.Building;
+    using HeroGame.Runtime.DevTools;
+    using HeroGame.Runtime.Interaction;
+    using HeroGame.Runtime.Player;
+    using HeroGame.Runtime.Population;
+    using HeroGame.Runtime.Powers;
+    using HeroGame.Runtime.Presentation;
+    using HeroGame.Runtime.UI;
+    using HeroGame.Runtime.Vehicles;
+
     /// <summary>
     /// Builds the playable greybox vertical slice directly from the same layout data the simulation
     /// uses (StreamingAssets/Data/layout_vertical_slice.json): roads, parcels, landmark buildings,

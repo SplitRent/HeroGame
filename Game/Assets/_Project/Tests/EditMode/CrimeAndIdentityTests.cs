@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using HeroGame.Core.Crime;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Time;
 using NUnit.Framework;
 
 namespace HeroGame.Tests
 {
+    using HeroGame.Core.Crime;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Time;
+
     public class CrimeAndIdentityTests
     {
         private static readonly EntityId Suspect = EntityId.Create(EntityKind.Character, 1);

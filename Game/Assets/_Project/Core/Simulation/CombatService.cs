@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
-using HeroGame.Core.Business;
-using HeroGame.Core.Characters;
-using HeroGame.Core.Combat;
-using HeroGame.Core.Economy;
-using HeroGame.Core.Emergency;
-using HeroGame.Core.Foundation;
-using HeroGame.Core.Identity;
-using HeroGame.Core.Population;
-using HeroGame.Core.World;
 
 namespace HeroGame.Core.Simulation
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Characters;
+    using HeroGame.Core.Combat;
+    using HeroGame.Core.Economy;
+    using HeroGame.Core.Emergency;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Core.Identity;
+    using HeroGame.Core.Population;
+    using HeroGame.Core.World;
+
     /// <summary>
     /// Fighting, grounded (GDD §9: violence with non-lethal options and real consequences). The server decides every
     /// hit from data (weapons.json) and a deterministic roll; people react like people (most run, some fight back,

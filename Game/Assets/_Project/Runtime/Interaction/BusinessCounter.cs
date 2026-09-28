@@ -1,11 +1,12 @@
-using HeroGame.Core.Business;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Presentation;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Interaction
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Presentation;
+
     /// <summary>Counter/register at a business: shows live trading data (the business keeps running offline).</summary>
     public sealed class BusinessCounter : Interactable
     {

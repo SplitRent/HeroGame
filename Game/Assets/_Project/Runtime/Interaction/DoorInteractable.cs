@@ -1,11 +1,12 @@
-using HeroGame.Core.Business;
-using HeroGame.Core.Foundation;
-using HeroGame.Runtime.Bootstrap;
-using HeroGame.Runtime.Presentation;
 using UnityEngine;
 
 namespace HeroGame.Runtime.Interaction
 {
+    using HeroGame.Core.Business;
+    using HeroGame.Core.Foundation;
+    using HeroGame.Runtime.Bootstrap;
+    using HeroGame.Runtime.Presentation;
+
     /// <summary>Hinged door. Locked doors respect ownership: owners pass, others need to break in (crime hook).</summary>
     public sealed class DoorInteractable : Interactable
     {
